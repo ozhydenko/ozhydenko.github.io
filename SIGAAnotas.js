@@ -1,14 +1,16 @@
 // Este programa foi feito por Olexandr Zhydenko para usar em SIGAA
 // Se encontrar algum problema favor me enviar um email para olexandr.zhydenko@ufabc.edu.br
 
-String.prototype.stripdiactricandcase=function(){return this.normalize("NFKD").replace(/[\u0300-\u036f]/g, "").toUpperCase()}
 
 function CarregarNotas(){
- var lista=document.getElementsByName("notas")[0].value.split("\n")
+ var Stripdiactricandcase=function(s){return s.normalize("NFKD").replace(/[\u0300-\u036f]/g, "").toUpperCase()}
+
+ var listo=document.getElementsByName("notas")[0].value.split("\n")
+ var lista=listo.map(Stripdiactricandcase)
  
  for(var alunoObj,a=0;alunoObj=J('#linha_'+a)[0];++a){
  
-  var alunoNome=alunoObj.cells[2].innerText.stripdiactricandcase()
+  var alunoNome=Stripdiactricandcase(alunoObj.cells[2].innerText)
   var alunoRA=alunoObj.cells[1].innerText.replace(/[^\d]/g,"")
 
   var l=-1
@@ -20,7 +22,7 @@ function CarregarNotas(){
    }
   }
   if(l>=0){
-   var alunoinf=lista[l].stripdiactricandcase().replace(/[\t; ]+/g," ").split(" ")
+   var alunoinf=lista[l].replace(/[\t; ]+/g," ").split(" ")
 
    var faltas=0
    var nota=-1                        
@@ -39,7 +41,7 @@ function CarregarNotas(){
    el.getChildrenByClassName("faltas")[0].dom.value=faltas
    el.getChildrenByClassName("comboConceito")[0].dom.value=nota
    situacaoConceito([alunoObj],false)
-   lista.splice(l, 1)
+   listo.splice(l, 1)
   }
 
  }
