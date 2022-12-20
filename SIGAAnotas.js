@@ -3,6 +3,7 @@
 
 
 function CarregarNotas(){
+
  var Stripdiactricandcase=function(s){return s.normalize("NFKD").replace(/[\u0300-\u036f]/g, "").toUpperCase()}
 
  var listo=document.getElementsByName("notas")[0].value.split("\n")
@@ -46,7 +47,7 @@ function CarregarNotas(){
 
  }
 
- document.getElementsByName("notas")[0].value=lista.join("\n")
+ document.getElementsByName("notas")[0].value=listo.join("\n")
 
 }
 
