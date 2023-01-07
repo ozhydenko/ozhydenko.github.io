@@ -24,7 +24,6 @@ function CarregarNotas(){
   }
   if(l>=0){
    var alunoinf=lista[l].replace(/[\t; ]+/g," ").split(" ")
-
    var faltas=0
    var nota=-1                        
    for(var i=alunoinf.length;i-->0;){
@@ -37,18 +36,15 @@ function CarregarNotas(){
      if(n>-1){nota=n; break}
     }
    }
-   
    var el=getEl(alunoObj)
    el.getChildrenByClassName("faltas")[0].dom.value=faltas
    el.getChildrenByClassName("comboConceito")[0].dom.value=nota
    situacaoConceito([alunoObj],false)
+   lista.splice(l, 1)
    listo.splice(l, 1)
   }
-
  }
-
  document.getElementsByName("notas")[0].value=listo.join("\n")
-
 }
 
 var MyInterfaceDiv=document.getElementsByClassName("descricaoOperacao")
