@@ -1,0 +1,3795 @@
+(* Content-type: application/mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 7.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       145,          7]
+NotebookDataLength[    161533,       3786]
+NotebookOptionsPosition[    158366,       3690]
+NotebookOutlinePosition[    158733,       3706]
+CellTagsIndexPosition[    158690,       3703]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Inicializa\[CCedilla]\[ATilde]o", "Section",
+ CellChangeTimes->{{3.840644151509432*^9, 3.8406441613286552`*^9}, {
+   3.87209669460089*^9, 3.8720966946476517`*^9}, {3.8720995626507244`*^9, 
+   3.872099563416601*^9}, {3.8721131407474537`*^9, 3.872113141231974*^9}, {
+   3.872268966362991*^9, 3.8722690019714375`*^9}, 3.8722734099852204`*^9},
+ ExpressionUUID -> "eba4cdd1-a33e-41c7-96cc-3f48c77a1b88"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"If", "[", 
+   RowBox[{
+    RowBox[{"!", 
+     RowBox[{"StringQ", "[", "CategoryDirectory", "]"}]}], ",", 
+    RowBox[{"Import", "[", 
+     RowBox[{
+      RowBox[{"NotebookDirectory", "[", "]"}], "<>", "\"\<MoodleXML.m\>\""}], 
+     "]"}]}], "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+  "CategoryDirectory", "=", "\"\<$course$/top/Questoes/Grupo 1/\>\""}], 
+  ";"}]}], "Input",
+ CellChangeTimes->{{3.8406559615167933`*^9, 3.8406559844365087`*^9}, {
+   3.8722721198999796`*^9, 3.872272138601035*^9}, {3.8722725069125605`*^9, 
+   3.872272531899742*^9}, 3.8722726056280365`*^9, 3.8736746744296093`*^9, {
+   3.88384775036246*^9, 3.88384776600883*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+  "FormatAnswer", "=", 
+   "\"\<<h4>`1`</h4><p><b>Marque as proposi\[CCedilla]\[OTilde]es verdadeiras \
+ou falsas:</b></p><ol>`2`</ol>\>\""}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"FormatEachQuestion", "=", 
+   RowBox[{"Function", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"number", ",", "answer", ",", "fraction"}], "}"}], ",", 
+     "\[IndentingNewLine]", 
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{"fraction", ">", "0"}], "\[IndentingNewLine]", ",", 
+       RowBox[{"{", 
+        RowBox[{"\"\<<li>\>\"", ",", 
+         RowBox[{"{", 
+          RowBox[{"1", ",", "\"\<MC\>\"", ",", 
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"{", 
+              RowBox[{"0", ",", "\"\<Desconhe\[CCedilla]o\>\""}], "}"}], ",", 
+             RowBox[{"{", 
+              RowBox[{"100", ",", "\"\<Verdadeira\>\""}], "}"}], ",", 
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"-", "100"}], ",", "\"\<Falsa\>\""}], "}"}]}], "}"}]}],
+           "}"}], ",", "\"\< \>\"", ",", "answer", ",", "\"\<</li>\>\""}], 
+        "}"}], "\[IndentingNewLine]", ",", 
+       RowBox[{"{", 
+        RowBox[{"\"\<<li>\>\"", ",", 
+         RowBox[{"{", 
+          RowBox[{"1", ",", "\"\<MC\>\"", ",", 
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"{", 
+              RowBox[{"0", ",", "\"\<Desconhe\[CCedilla]o\>\""}], "}"}], ",", 
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"-", "100"}], ",", "\"\<Verdadeira\>\""}], "}"}], ",", 
+             RowBox[{"{", 
+              RowBox[{"100", ",", "\"\<Falsa\>\""}], "}"}]}], "}"}]}], "}"}], 
+         ",", "\"\< \>\"", ",", "answer", ",", "\"\<</li>\>\""}], "}"}]}], 
+      "\[IndentingNewLine]", "]"}]}], "\[IndentingNewLine]", "]"}]}], 
+  ";"}]}], "Input",
+ CellChangeTimes->{{3.872097642162059*^9, 3.872097642787242*^9}, {
+   3.872097761509856*^9, 3.8720977627388735`*^9}, {3.8720982446358013`*^9, 
+   3.8720983084154077`*^9}, {3.8720983527035217`*^9, 
+   3.8720983691785283`*^9}, {3.8720992902878885`*^9, 
+   3.8720992974921627`*^9}, {3.872099382788975*^9, 3.8720994043520265`*^9}, {
+   3.872099779742317*^9, 3.8720997801643224`*^9}, {3.8721684269339*^9, 
+   3.872168502673112*^9}, 3.8721685709842596`*^9, {3.872169706960136*^9, 
+   3.872169715335769*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"RestrictNumberOfVariants", "[", "L_List", "]"}], ":=", 
+   RowBox[{"With", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"max", "=", "200"}], ",", 
+       RowBox[{"len", "=", 
+        RowBox[{"L", "//", "Length"}]}]}], "}"}], ",", 
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{"len", ">", "max"}], ",", 
+       RowBox[{"RandomSample", "[", 
+        RowBox[{"L", ",", "max"}], "]"}], ",", "L"}], "]"}]}], "]"}]}], 
+  ";"}], "\n", 
+ RowBox[{
+  RowBox[{"QuestCategoriesList", "=", 
+   RowBox[{"{", "}"}]}], ";"}]}], "Input",
+ CellChangeTimes->{{3.872097642162059*^9, 3.872097642787242*^9}, {
+   3.872097761509856*^9, 3.8720977627388735`*^9}, {3.8720982446358013`*^9, 
+   3.8720983084154077`*^9}, {3.8720983527035217`*^9, 
+   3.8720983691785283`*^9}, {3.8720992902878885`*^9, 
+   3.8720992974921627`*^9}, {3.872099382788975*^9, 3.8720994043520265`*^9}, {
+   3.872099779742317*^9, 3.8720997801643224`*^9}, {3.8721684269339*^9, 
+   3.872168502673112*^9}, {3.8721685709842596`*^9, 3.8721685750568333`*^9}, 
+   3.87216893251877*^9}]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Identifica\[CCedilla]\[ATilde]o das curvas - Q0", "Section",
+ CellChangeTimes->{{3.840644151509432*^9, 3.8406441613286552`*^9}, {
+   3.87209669460089*^9, 3.8720966946476517`*^9}, {3.872101032471466*^9, 
+   3.872101034448104*^9}, {3.872102807483765*^9, 3.8721028131662054`*^9}, 
+   3.8722689609551845`*^9, {3.872275046059305*^9, 3.872275047137047*^9}},
+ ExpressionUUID -> "eba4cdd1-a33e-41c7-96cc-3f48c77a1b88"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"Category", "=", 
+   RowBox[{"CategoryDirectory", "<>", "\"\<Q0\>\""}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+  "Name", "=", "\"\<Identifica\[CCedilla]\[ATilde]o das c\[OHat]nicas\>\""}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Template", "=", 
+   RowBox[{"{", 
+    RowBox[{
+    "\"\<<h4>\>\"", ",", 
+     "\"\<Identifique a c\[OHat]nica dada pela equa\[CCedilla]\[ATilde]o\>\"",
+      ",", 
+     RowBox[{
+      RowBox[{"a", " ", 
+       RowBox[{"x", "^", "2"}]}], "+", 
+      RowBox[{"b", " ", 
+       RowBox[{"y", "^", "2"}]}], "+", 
+      RowBox[{"c", " ", "x"}], "+", 
+      RowBox[{"d", " ", "y"}], "+", "e"}], ",", "\"\<= 0.\>\"", ",", 
+     RowBox[{"Hold", "[", "]"}], ",", "\"\<</h4>\>\""}], "}"}]}], 
+  ";"}]}], "Input",
+ CellChangeTimes->{{3.8406441989747477`*^9, 3.8406442038391733`*^9}, {
+   3.840644233859055*^9, 3.8406446558956013`*^9}, {3.8406447124947033`*^9, 
+   3.840644712637332*^9}, 3.840644757714548*^9, 3.8407127358119183`*^9, 
+   3.8407128339957023`*^9, {3.8407129236411343`*^9, 3.840712940809694*^9}, {
+   3.84071304977917*^9, 3.8407130987385654`*^9}, {3.872096616768129*^9, 
+   3.8720966908531804`*^9}, 3.8720975329727697`*^9, {3.872098398220149*^9, 
+   3.872098508514708*^9}, {3.872098538547307*^9, 3.872098564975086*^9}, {
+   3.8720986117760344`*^9, 3.872098625746702*^9}, {3.8720987166908507`*^9, 
+   3.8720989407693777`*^9}, {3.8720989876784744`*^9, 3.872098991773472*^9}, {
+   3.872100144912511*^9, 3.8721001478633604`*^9}, {3.8721002477422743`*^9, 
+   3.8721002547810993`*^9}, {3.872100285369897*^9, 3.872100366535144*^9}, {
+   3.8721004295983887`*^9, 3.8721005096230307`*^9}, {3.872100543526662*^9, 
+   3.872100546980389*^9}, {3.87210064532697*^9, 3.8721006476874743`*^9}, 
+   3.872101209198415*^9, {3.87210133467894*^9, 3.872101352896247*^9}, {
+   3.872101384371992*^9, 3.8721013943794093`*^9}, {3.872101522143635*^9, 
+   3.8721015569187098`*^9}, {3.8721016772938833`*^9, 
+   3.8721017808568125`*^9}, {3.8721019850158806`*^9, 
+   3.8721019950564785`*^9}, {3.872103085035155*^9, 3.872103089470374*^9}, {
+   3.8721032441336613`*^9, 3.872103358699277*^9}, {3.8721035863410125`*^9, 
+   3.8721036034012213`*^9}, {3.8721036554928713`*^9, 3.872103657055846*^9}, {
+   3.872103689719405*^9, 3.872103692548175*^9}, {3.8721037444909997`*^9, 
+   3.87210376032712*^9}, 3.872103793467173*^9, {3.8721038473327265`*^9, 
+   3.8721038572111235`*^9}, 3.872104476619071*^9, {3.872112591525924*^9, 
+   3.87211262540029*^9}, {3.872112772367344*^9, 3.872112777199628*^9}, 
+   3.872113035574173*^9, {3.872113077027556*^9, 3.8721130774495697`*^9}, {
+   3.872168072663508*^9, 3.872168094610961*^9}, {3.872272295984232*^9, 
+   3.872272305360649*^9}},
+ ExpressionUUID -> "c3687269-d32f-4a39-a2a6-9a69f69e0f63"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"IdentifyConicSection", "[", 
+    RowBox[{
+     RowBox[{"a_", "/;", 
+      RowBox[{"a", ">", "0"}]}], ",", 
+     RowBox[{"b_", "/;", 
+      RowBox[{"b", ">", "0"}]}], ",", "c_", ",", "d_", ",", "e_"}], "]"}], ":=", 
+   RowBox[{"With", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"r", "=", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"(", 
+          FractionBox["c", 
+           RowBox[{"2", "a"}]], ")"}], "^", "2"}], "+", 
+        RowBox[{
+         RowBox[{"(", 
+          FractionBox["d", 
+           RowBox[{"2", "b"}]], ")"}], "^", "2"}], "-", "e"}]}], "}"}], ",", 
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{"r", ">", "0"}], ",", "\"\<ellipse\>\"", ",", 
+       RowBox[{"If", "[", 
+        RowBox[{
+         RowBox[{"r", "<", "0"}], ",", "\"\<no\>\"", ",", "\"\<point\>\""}], 
+        "]"}]}], "]"}]}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"IdentifyConicSection", "[", 
+    RowBox[{
+     RowBox[{"a_", "/;", 
+      RowBox[{"a", "<", "0"}]}], ",", 
+     RowBox[{"b_", "/;", 
+      RowBox[{"b", "<", "0"}]}], ",", "c_", ",", "d_", ",", "e_"}], "]"}], ":=", 
+   RowBox[{"With", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"r", "=", 
+       RowBox[{"e", "-", 
+        RowBox[{
+         RowBox[{"(", 
+          FractionBox["c", 
+           RowBox[{"2", "a"}]], ")"}], "^", "2"}], "-", 
+        RowBox[{
+         RowBox[{"(", 
+          FractionBox["d", 
+           RowBox[{"2", "b"}]], ")"}], "^", "2"}]}]}], "}"}], ",", 
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{"r", ">", "0"}], ",", "\"\<ellipse\>\"", ",", 
+       RowBox[{"If", "[", 
+        RowBox[{
+         RowBox[{"r", "<", "0"}], ",", "\"\<no\>\"", ",", "\"\<point\>\""}], 
+        "]"}]}], "]"}]}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"IdentifyConicSection", "[", 
+    RowBox[{
+     RowBox[{"a_", "/;", 
+      RowBox[{"a", ">", "0"}]}], ",", 
+     RowBox[{"b_", "/;", 
+      RowBox[{"b", "<", "0"}]}], ",", "c_", ",", "d_", ",", "e_"}], "]"}], ":=", 
+   RowBox[{"With", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"r", "=", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"(", 
+          FractionBox["c", 
+           RowBox[{"2", "a"}]], ")"}], "^", "2"}], "-", 
+        RowBox[{
+         RowBox[{"(", 
+          FractionBox["d", 
+           RowBox[{"2", "b"}]], ")"}], "^", "2"}], "-", "e"}]}], "}"}], ",", 
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{"r", "\[NotEqual]", "0"}], ",", "\"\<hiperbole\>\"", ",", 
+       "\"\<intersect\>\""}], "]"}]}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"IdentifyConicSection", "[", 
+    RowBox[{
+     RowBox[{"a_", "/;", 
+      RowBox[{"a", "<", "0"}]}], ",", 
+     RowBox[{"b_", "/;", 
+      RowBox[{"b", ">", "0"}]}], ",", "c_", ",", "d_", ",", "e_"}], "]"}], ":=", 
+   RowBox[{"With", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"r", "=", 
+       RowBox[{
+        RowBox[{"-", 
+         RowBox[{
+          RowBox[{"(", 
+           FractionBox["c", 
+            RowBox[{"2", "a"}]], ")"}], "^", "2"}]}], "+", 
+        RowBox[{
+         RowBox[{"(", 
+          FractionBox["d", 
+           RowBox[{"2", "b"}]], ")"}], "^", "2"}], "-", "e"}]}], "}"}], ",", 
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{"r", "\[NotEqual]", "0"}], ",", "\"\<hiperbole\>\"", ",", 
+       "\"\<intersect\>\""}], "]"}]}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"IdentifyConicSection", "[", 
+    RowBox[{
+     RowBox[{"a_", "/;", 
+      RowBox[{"a", "\[Equal]", "0"}]}], ",", 
+     RowBox[{"b_", "/;", 
+      RowBox[{"b", "\[NotEqual]", "0"}]}], ",", 
+     RowBox[{"c_", "/;", 
+      RowBox[{"c", "\[NotEqual]", "0"}]}], ",", "d_", ",", "e_"}], "]"}], 
+   ":=", "\"\<parabola\>\""}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"IdentifyConicSection", "[", 
+    RowBox[{
+     RowBox[{"a_", "/;", 
+      RowBox[{"a", "\[NotEqual]", "0"}]}], ",", 
+     RowBox[{"b_", "/;", 
+      RowBox[{"b", "\[Equal]", "0"}]}], ",", "c_", ",", 
+     RowBox[{"d_", "/;", 
+      RowBox[{"d", "\[NotEqual]", " ", "0"}]}], ",", "e_"}], "]"}], ":=", 
+   "\"\<parabola\>\""}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"IdentifyConicSection", "[", 
+    RowBox[{
+     RowBox[{"a_", "/;", 
+      RowBox[{"a", "==", "0"}]}], ",", 
+     RowBox[{"b_", "/;", 
+      RowBox[{"b", "\[Equal]", "0"}]}], ",", "c_", ",", "d_", ",", "e_"}], 
+    "]"}], ":=", 
+   RowBox[{"If", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{
+       RowBox[{"c", "^", "2"}], "+", 
+       RowBox[{"d", "^", "2"}]}], ">", "0"}], ",", "\"\<line\>\"", ",", 
+     "\"\<no\>\""}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"IdentifyConicSection", "[", 
+    RowBox[{"_", ",", "_", ",", "_", ",", "_", ",", "_"}], "]"}], ":=", 
+   "\"\<other\>\""}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"CoeffChoice", "[", "]"}], ":=", 
+   RowBox[{"Random", "[", 
+    RowBox[{"Integer", ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"-", "3"}], ",", "3"}], "}"}]}], "]"}]}], ";"}]}], "Input",
+ CellChangeTimes->{{3.8721042162719946`*^9, 3.872104340453885*^9}, {
+  3.872104371904894*^9, 3.872104446808115*^9}, {3.872104480498883*^9, 
+  3.8721044818266664`*^9}, {3.8721045739328766`*^9, 3.872104653352722*^9}, {
+  3.872104686441888*^9, 3.8721047103753824`*^9}, {3.8721047522084026`*^9, 
+  3.8721047596175203`*^9}, {3.8721047903501377`*^9, 3.8721048084596443`*^9}, {
+  3.872104854499585*^9, 3.8721048547181835`*^9}, {3.8721048928753586`*^9, 
+  3.8721049853941526`*^9}, {3.872105037134385*^9, 3.872105045800229*^9}, {
+  3.872105134724247*^9, 3.8721051680020943`*^9}, {3.87210537213227*^9, 
+  3.872105379137186*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"multichoicequestions", "=", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"Table", "[", 
+      RowBox[{
+       RowBox[{"GenerateMultiChoiceQuestion", "[", 
+        RowBox[{"Name", ",", 
+         RowBox[{"Template", "//", "ToMoodleHTMLString"}], ",", 
+         RowBox[{"{", 
+          RowBox[{
+          "\"\<elipse\>\"", ",", "\"\<par\[AAcute]bola\>\"", ",", " ", 
+           "\"\<hip\[EAcute]rbole\>\"", ",", "\"\<nenhuma das acima\>\""}], 
+          "}"}], ",", 
+         RowBox[{"Switch", "[", 
+          RowBox[{
+           RowBox[{"IdentifyConicSection", "[", 
+            RowBox[{"a", ",", "b", ",", "c", ",", "d", ",", "e"}], "]"}], 
+           ",", "\"\<ellipse\>\"", ",", 
+           RowBox[{"{", 
+            RowBox[{"100", ",", "0", ",", "0", ",", "0"}], "}"}], ",", 
+           "\"\<parabola\>\"", ",", 
+           RowBox[{"{", 
+            RowBox[{"0", ",", "100", ",", "0", ",", "0"}], "}"}], ",", 
+           "\"\<hiperbole\>\"", ",", 
+           RowBox[{"{", 
+            RowBox[{"0", ",", "0", ",", "100", ",", "0"}], "}"}], ",", "_", 
+           ",", 
+           RowBox[{"{", 
+            RowBox[{"0", ",", "0", ",", "0", ",", "100"}], "}"}]}], "]"}], 
+         ",", 
+         RowBox[{"single", "\[Rule]", "True"}], ",", 
+         RowBox[{"shuffleanswers", "\[Rule]", "False"}]}], "]"}], ",", 
+       "\[IndentingNewLine]", 
+       RowBox[{"{", 
+        RowBox[{"a", ",", 
+         RowBox[{"-", "2"}], ",", "2"}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"b", ",", 
+         RowBox[{"-", "2"}], ",", "2"}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"c", ",", 
+         RowBox[{"-", "1"}], ",", "1", ",", "2"}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"d", ",", 
+         RowBox[{"-", "1"}], ",", "1", ",", "2"}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"e", ",", 
+         RowBox[{"-", "2"}], ",", "2"}], "}"}]}], "]"}], "//", "Flatten"}], "//",
+     "RestrictNumberOfVariants"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"finalquestlist", "=", 
+   RowBox[{"AddCategoriesToQuestions", "[", 
+    RowBox[{"multichoicequestions", ",", "Category"}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"AppendTo", "[", 
+   RowBox[{"QuestCategoriesList", ",", "finalquestlist"}], "]"}], 
+  ";"}]}], "Input",
+ CellChangeTimes->{{3.87210445403951*^9, 3.872104554137492*^9}, {
+   3.872112491001072*^9, 3.8721125620838203`*^9}, {3.872112669453452*^9, 
+   3.872112711365393*^9}, {3.8721127439431095`*^9, 3.8721127673586984`*^9}, {
+   3.872112846649809*^9, 3.8721130203824573`*^9}, {3.872113092202959*^9, 
+   3.8721131017538614`*^9}, 3.8721131778808007`*^9, {3.872113334129718*^9, 
+   3.872113339503725*^9}, {3.8721134941917486`*^9, 3.8721134965272303`*^9}, {
+   3.8721679907634506`*^9, 3.8721679950955954`*^9}, {3.8721685142587233`*^9, 
+   3.8721685148213997`*^9}}]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Propriedades das c\[OHat]nicas - Q1", "Section",
+ CellChangeTimes->{{3.840644151509432*^9, 3.8406441613286552`*^9}, {
+   3.87209669460089*^9, 3.8720966946476517`*^9}, {3.872101032471466*^9, 
+   3.872101034448104*^9}, {3.872102807483765*^9, 3.8721028131662054`*^9}, 
+   3.872173224036386*^9, 3.872268954678334*^9, {3.8722750498235493`*^9, 
+   3.8722750514646373`*^9}},
+ ExpressionUUID -> "eba4cdd1-a33e-41c7-96cc-3f48c77a1b88"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"Category", "=", 
+   RowBox[{"CategoryDirectory", "<>", "\"\<Q1\>\""}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Name", "=", "\"\<Propriedades das c\[OHat]nicas\>\""}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+  "Quest", "=", 
+   "\"\<Seguem as afirma\[CCedilla]\[OTilde]es sobre as curvas c\[OHat]nicas.\
+\>\""}], ";"}]}], "Input",
+ CellChangeTimes->{{3.872170132931488*^9, 3.872170203662472*^9}, {
+  3.8721716589435635`*^9, 3.8721716589783683`*^9}, {3.872172926473566*^9, 
+  3.872172928534932*^9}, {3.87217321163378*^9, 3.8721732195430984`*^9}, {
+  3.872272318334521*^9, 3.8722723294374914`*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"TrueAnswers", "=", 
+   RowBox[{"{", "\[IndentingNewLine]", 
+    RowBox[{
+    "\"\<Elipse \[EAcute] o conjunto dos pontos de um plano tais que a soma \
+das dist\[AHat]ncias a dois pontos fixos (focos) \[EAcute] uma \
+constante.\>\"", ",", "\[IndentingNewLine]", 
+     "\"\<Hip\[EAcute]rbole \[EAcute] o conjunto dos pontos de um plano tais \
+que a difere\[CCedilla]a das dist\[AHat]ncias a dois pontos fixos (focos) \
+\[EAcute] uma constante.\>\"", ",", "\[IndentingNewLine]", 
+     "\"\<Circunfer\[EHat]ncia \[EAcute] uma intersec\[CCedilla]\[ATilde]o de \
+um plano com uma superf\[IAcute]cie c\[OHat]nica.\>\"", ",", 
+     "\[IndentingNewLine]", 
+     "\"\<Circunfer\[EHat]ncia \[EAcute] um caso especial da elipse quando \
+ambos os focos est\[ATilde]o no mesmo ponto.\>\"", ",", 
+     "\[IndentingNewLine]", 
+     "\"\<Par\[AAcute]bola \[EAcute] o conjunto de pontos em um plano cujas \
+dist\[AHat]ncias a um ponto fixo (foco) e a uma reta fixa (diretriz) s\
+\[ATilde]o iguais.\>\"", ",", "\[IndentingNewLine]", 
+     "\"\<Par\[AAcute]bola possui somente uma diretriz.\>\"", ",", 
+     "\[IndentingNewLine]", 
+     "\"\<Par\[AAcute]bola possui somente um foco.\>\"", ",", 
+     "\[IndentingNewLine]", 
+     "\"\<Hip\[EAcute]rbole sempre possui duas diretrizes.\>\"", ",", 
+     "\[IndentingNewLine]", 
+     "\"\<Hip\[EAcute]rbole sempre possui dois focos.\>\"", ",", 
+     "\[IndentingNewLine]", 
+     RowBox[{"(*", 
+      RowBox[{
+      "\"\<Proje\[CCedilla]\[ATilde]o da circunfer\[EHat]ncia sobre um plano \
+n\[ATilde]o ortogonal \[EAcute] uma elipse.\>\"", ",", "\[IndentingNewLine]", 
+       "\"\<Proje\[CCedilla]\[ATilde]o da elipse sobre um plano n\[ATilde]o \
+ortogonal \[EAcute] uma elipse.\>\"", ",", "\[IndentingNewLine]", 
+       "\"\<Proje\[CCedilla]\[ATilde]o da par\[AAcute]bola sobre um plano n\
+\[ATilde]o ortogonal \[EAcute] uma par\[AAcute]bola.\>\"", ",", 
+       "\[IndentingNewLine]", 
+       "\"\<Proje\[CCedilla]\[ATilde]o da hip\[EAcute]rbole sobre um plano n\
+\[ATilde]o ortogonal \[EAcute] uma hip\[EAcute]rbole.\>\"", ","}], "*)"}], 
+     "\[IndentingNewLine]", 
+     "\"\<Qualquer elipse pode ser obtida atrav\[EAcute]s da intersec\
+\[CCedilla]\[ATilde]o de um plano e uma superf\[IAcute]cie c\[OHat]nica.\>\"",
+      ",", "\[IndentingNewLine]", 
+     "\"\<Qualquer par\[AAcute]bola pode ser obtida atrav\[EAcute]s da \
+intersec\[CCedilla]\[ATilde]o de um plano e uma superf\[IAcute]cie \
+c\[OHat]nica.\>\"", ",", "\[IndentingNewLine]", 
+     "\"\<Qualquer hip\[EAcute]rbole par\[AAcute]bola pode ser obtida atrav\
+\[EAcute]s da intersec\[CCedilla]\[ATilde]o de um plano e uma \
+superf\[IAcute]cie c\[OHat]nica.\>\"", ",", "\[IndentingNewLine]", 
+     "\"\<Qualquer reta pode ser obtida atrav\[EAcute]s da \
+intersec\[CCedilla]\[ATilde]o de um plano e uma superf\[IAcute]cie \
+c\[OHat]nica.\>\"", ",", "\[IndentingNewLine]", 
+     "\"\<A mesma curva c\[OHat]nica pode ser definida pelos diferentes \
+conjuntos de equa\[CCedilla]\[OTilde]es param\[EAcute]tricas.\>\""}], 
+    "\[IndentingNewLine]", "}"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"FalseAnswers", "=", 
+   RowBox[{"{", "\[IndentingNewLine]", 
+    RowBox[{
+    "\"\<Par\[AAcute]bola \[EAcute] o conjunto dos pontos de um plano tais \
+que a soma das dist\[AHat]ncias a dois pontos fixos (focos) \[EAcute] uma \
+constante.\>\"", ",", "\[IndentingNewLine]", 
+     "\"\<Hip\[EAcute]rbole \[EAcute] o conjunto dos pontos de um plano tais \
+que a soma das dist\[AHat]ncias a dois pontos fixos (focos) \[EAcute] uma \
+constante.\>\"", ",", "\[IndentingNewLine]", 
+     "\"\<Elipse \[EAcute] o conjunto dos pontos de um plano tais que a \
+difere\[CCedilla]a das dist\[AHat]ncias a dois pontos fixos (focos) \[EAcute] \
+uma constante.\>\"", ",", "\[IndentingNewLine]", 
+     "\"\<Circunfer\[EHat]ncia \[EAcute] o conjunto dos pontos de um plano \
+tais que a difere\[CCedilla]a das dist\[AHat]ncias a dois pontos fixos \
+(focos) \[EAcute] uma constante.\>\"", ",", "\[IndentingNewLine]", 
+     "\"\<Par\[AAcute]bola \[EAcute] o conjunto dos pontos de um plano tais \
+que a difere\[CCedilla]a das dist\[AHat]ncias a dois pontos fixos (focos) \
+\[EAcute] uma constante.\>\"", ",", "\[IndentingNewLine]", 
+     "\"\<Circunfer\[EHat]ncia \[EAcute] o conjunto de pontos em um plano \
+cujas dist\[AHat]ncias a um ponto fixo (foco) e a uma reta fixa (diretriz) s\
+\[ATilde]o iguais.\>\"", ",", "\[IndentingNewLine]", 
+     "\"\<Elipse \[EAcute] o conjunto de pontos em um plano cujas \
+dist\[AHat]ncias a um ponto fixo (foco) e a uma reta fixa (diretriz) s\
+\[ATilde]o iguais.\>\"", ",", "\[IndentingNewLine]", 
+     "\"\<Par\[AAcute]bola \[EAcute] o conjunto de pontos em um plano cujas \
+dist\[AHat]ncias a um ponto fixo (foco) e a uma reta fixa (diretriz) s\
+\[ATilde]o diferentes.\>\"", ",", "\[IndentingNewLine]", 
+     "\"\<Hiperbole \[EAcute] o conjunto de pontos em um plano cujas dist\
+\[AHat]ncias a um ponto fixo (foco) e a uma reta fixa (diretriz) s\[ATilde]o \
+iguais.\>\"", ",", "\[IndentingNewLine]", 
+     "\"\<Circunfer\[EHat]ncia \[EAcute] um caso especial da \
+hip\[EAcute]rbole quando ambos os focos est\[ATilde]o no mesmo ponto.\>\"", 
+     ",", "\[IndentingNewLine]", 
+     "\"\<Elipse possui somente uma diretriz.\>\"", ",", 
+     "\[IndentingNewLine]", "\"\<Elipse possui somente um foco.\>\"", ",", 
+     "\[IndentingNewLine]", 
+     RowBox[{"(*", 
+      RowBox[{
+      "\"\<Hip\[EAcute]rbole possui somente uma diretriz.\>\"", ",", 
+       "\[IndentingNewLine]", 
+       "\"\<Hip\[EAcute]rbole possui somente um foco.\>\"", ",", 
+       "\[IndentingNewLine]", 
+       "\"\<Proje\[CCedilla]\[ATilde]o da circunfer\[EHat]ncia sobre um plano \
+n\[ATilde]o ortogonal \[EAcute] uma circunfer\[EHat]ncia.\>\"", ",", 
+       "\[IndentingNewLine]", 
+       "\"\<Proje\[CCedilla]\[ATilde]o da par\[AAcute]bola sobre um plano n\
+\[ATilde]o ortogonal \[EAcute] uma hip\[EAcute]rbole.\>\"", ","}], "*)"}], 
+     "\[IndentingNewLine]", 
+     "\"\<Circunfer\[EHat]ncia \[EAcute] um caso especial da curva que n\
+\[ATilde]o pode ser uma intersec\[CCedilla]\[ATilde]o de um plano com uma \
+superf\[IAcute]cie c\[OHat]nica.\>\"", ",", "\[IndentingNewLine]", 
+     "\"\<Diferentes conjuntos de equa\[CCedilla]\[OTilde]es \
+param\[EAcute]tricas sempre representam as curvas diferentes.\>\""}], 
+    "\[IndentingNewLine]", "}"}]}], ";"}]}], "Input",
+ CellChangeTimes->{{3.8721702234927373`*^9, 3.8721702484926186`*^9}, {
+   3.872170290192273*^9, 3.8721703512412906`*^9}, {3.8721704203037868`*^9, 
+   3.872170420538681*^9}, {3.8721704839174232`*^9, 3.8721704974428596`*^9}, 
+   3.8721705572622004`*^9, {3.872170606345105*^9, 3.872170749209171*^9}, {
+   3.872170807003124*^9, 3.8721708934692907`*^9}, {3.872170947088147*^9, 
+   3.872171016119507*^9}, {3.872171650473318*^9, 3.8721716549938936`*^9}, {
+   3.87217172070121*^9, 3.872171824536507*^9}, {3.8721718842341547`*^9, 
+   3.8721718952204075`*^9}, {3.8721721602190285`*^9, 3.872172188790211*^9}, {
+   3.8721723127740693`*^9, 3.872172329960882*^9}, {3.8721723623198133`*^9, 
+   3.8721724150798893`*^9}, {3.8721726362204237`*^9, 
+   3.8721726514600635`*^9}, {3.8721727555398507`*^9, 
+   3.8721728822804656`*^9}, {3.8722744170406985`*^9, 
+   3.8722744390793266`*^9}, {3.872275153192601*^9, 3.8722751682335052`*^9}, {
+   3.8722752801909556`*^9, 3.872275283050716*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"multichoicequestions", "=", 
+   RowBox[{
+    RowBox[{"GenerateMultiChoiceList", "[", 
+     RowBox[{
+     "Name", ",", "Quest", ",", "TrueAnswers", ",", "FalseAnswers", ",", 
+      RowBox[{"answersnum", "\[Rule]", "5"}], ",", 
+      RowBox[{"minwrongnum", "\[Rule]", "2"}], ",", 
+      RowBox[{"mincorrectnum", "\[Rule]", "2"}]}], "]"}], "//", 
+    "RestrictNumberOfVariants"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"clozequestions", "=", 
+   RowBox[{"ConvertMultiChoiceToCloze", "[", 
+    RowBox[{
+    "multichoicequestions", ",", "FormatAnswer", ",", "FormatEachQuestion"}], 
+    "]"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"finalquestlist", "=", 
+   RowBox[{"AddCategoriesToQuestions", "[", 
+    RowBox[{"clozequestions", ",", "Category"}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"AppendTo", "[", 
+   RowBox[{"QuestCategoriesList", ",", "finalquestlist"}], "]"}], 
+  ";"}]}], "Input",
+ CellChangeTimes->{{3.8720965042293077`*^9, 3.8720965063427086`*^9}, {
+   3.872096556105118*^9, 3.8720965757625847`*^9}, {3.872097474043838*^9, 
+   3.872097488871315*^9}, {3.8720996036802406`*^9, 3.8720996496410933`*^9}, 
+   3.8720996937598495`*^9, 3.8720997441991444`*^9, {3.872099813867448*^9, 
+   3.872099825572267*^9}, {3.87210185683136*^9, 3.872101867786251*^9}, 
+   3.87210204523375*^9, {3.8721674821462436`*^9, 3.8721674822401085`*^9}, {
+   3.8721680161421137`*^9, 3.8721680260646753`*^9}, {3.872168144440837*^9, 
+   3.872168146349673*^9}, {3.8721685207341957`*^9, 3.8721685210777173`*^9}, 
+   3.872168551729204*^9, {3.872168606958124*^9, 3.8721686107912245`*^9}, {
+   3.872168670569221*^9, 3.87216867061597*^9}}]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Conta da excentricidade - Q2", "Section",
+ CellChangeTimes->{{3.840644151509432*^9, 3.8406441613286552`*^9}, {
+  3.87209669460089*^9, 3.8720966946476517`*^9}, {3.872101032471466*^9, 
+  3.872101034448104*^9}, {3.8721734578057413`*^9, 3.872173461230648*^9}, {
+  3.8722689444550247`*^9, 3.8722689459313135`*^9}, {3.872275053589388*^9, 
+  3.872275054386486*^9}},
+ ExpressionUUID -> "eba4cdd1-a33e-41c7-96cc-3f48c77a1b88"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"Category", "=", 
+   RowBox[{"CategoryDirectory", "<>", "\"\<Q2\>\""}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Name", "=", "\"\<Conta da excentricidade\>\""}], ";"}]}], "Input",
+ CellChangeTimes->{{3.872176524992449*^9, 3.8721766015533905`*^9}, {
+  3.872177000674597*^9, 3.8721770010154085`*^9}, {3.8722723393569727`*^9, 
+  3.872272341716814*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"questionlist", "=", 
+   RowBox[{"{", "}"}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.8721769526310234`*^9, 3.872176953740322*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"quest", "=", 
+   RowBox[{"{", 
+    RowBox[{
+    "\"\<<h4>Determine a excentricidade da c\[OHat]nica dada pela equa\
+\[CCedilla]\[ATilde]o:<br/>\>\"", ",", 
+     RowBox[{"Hold", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"a", " ", 
+         RowBox[{"x", "^", "2"}]}], "+", 
+        RowBox[{"b", " ", 
+         RowBox[{"y", "^", "2"}]}]}], "=", "c"}], "]"}], ",", 
+     "\"\<</h4><p>(d\[EHat] duas casas decimais ap\[OAcute]s a \
+v\[IAcute]rgula)</p>\>\""}], "}"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"pars", "=", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"Map", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"a", "\[Rule]", "#"}], "&"}], ",", 
+        RowBox[{"Range", "[", 
+         RowBox[{"2", ",", "5"}], "]"}]}], "]"}], ",", 
+      RowBox[{"Map", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"b", "\[Rule]", "#"}], "&"}], ",", 
+        RowBox[{"Range", "[", 
+         RowBox[{"2", ",", "4"}], "]"}]}], "]"}], ",", 
+      RowBox[{"Map", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"c", "\[Rule]", "#"}], "&"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"1", ",", "5", ",", "7"}], "}"}]}], "]"}]}], "}"}], "//", 
+    "Tuples"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"correctanswer", "=", 
+   SqrtBox[
+    RowBox[{"1", "-", 
+     RowBox[{
+      RowBox[{"Min", "[", 
+       RowBox[{"a", ",", "b"}], "]"}], "/", 
+      RowBox[{"Max", "[", 
+       RowBox[{"a", ",", "b"}], "]"}]}]}]]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"AppendTo", "[", 
+   RowBox[{"questionlist", ",", 
+    RowBox[{"GenerateParametrizedQuestion", "[", 
+     RowBox[{"pars", ",", "Name", ",", "quest", ",", 
+      RowBox[{"{", 
+       RowBox[{"correctanswer", ",", "100", ",", "0.01"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"correctanswer", ",", "50", ",", "0.1"}], "}"}]}], "]"}]}], 
+   "]"}], ";"}]}], "Input",
+ CellChangeTimes->{{3.872176614916673*^9, 3.872176749826228*^9}, {
+   3.8721770025661683`*^9, 3.8721770131997547`*^9}, 3.8721775381403575`*^9, 
+   3.872268686610046*^9, 3.872268721380701*^9}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"quest", "=", 
+   RowBox[{"{", 
+    RowBox[{
+    "\"\<<h4>Determine a excentricidade da c\[OHat]nica dada pela equa\
+\[CCedilla]\[ATilde]o:<br/>\>\"", ",", 
+     RowBox[{"Hold", "[", " ", 
+      RowBox[{
+       RowBox[{
+        FractionBox[
+         RowBox[{"x", "^", "2"}], "a"], "+", 
+        FractionBox[
+         RowBox[{"y", "^", "2"}], "b"]}], "=", "1"}], "]"}], ",", 
+     "\"\<</h4><p>(d\[EHat] duas casas decimais ap\[OAcute]s a \
+v\[IAcute]rgula)</p>\>\""}], "}"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"pars", "=", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"Map", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"a", "\[Rule]", "#"}], "&"}], ",", 
+        RowBox[{"Range", "[", 
+         RowBox[{"2", ",", "7"}], "]"}]}], "]"}], ",", 
+      RowBox[{"Map", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"b", "\[Rule]", "#"}], "&"}], ",", 
+        RowBox[{"Range", "[", 
+         RowBox[{"2", ",", "7"}], "]"}]}], "]"}]}], "}"}], "//", "Tuples"}]}],
+   ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"correctanswer", "=", 
+   SqrtBox[
+    RowBox[{"1", "-", 
+     RowBox[{
+      RowBox[{"Min", "[", 
+       RowBox[{"a", ",", "b"}], "]"}], "/", 
+      RowBox[{"Max", "[", 
+       RowBox[{"a", ",", "b"}], "]"}]}]}]]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"AppendTo", "[", 
+   RowBox[{"questionlist", ",", 
+    RowBox[{"GenerateParametrizedQuestion", "[", 
+     RowBox[{"pars", ",", "Name", ",", "quest", ",", 
+      RowBox[{"{", 
+       RowBox[{"correctanswer", ",", "100", ",", "0.01"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"correctanswer", ",", "50", ",", "0.1"}], "}"}]}], "]"}]}], 
+   "]"}], ";"}]}], "Input",
+ CellChangeTimes->{{3.872177317818731*^9, 3.8721773467411356`*^9}, {
+   3.8721774112070856`*^9, 3.872177424298927*^9}, {3.8721775031731033`*^9, 
+   3.8721775285867596`*^9}, 3.8722686850886393`*^9, 3.8722687176215086`*^9}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"quest", "=", 
+   RowBox[{"{", 
+    RowBox[{
+    "\"\<<h4>Determine a excentricidade da c\[OHat]nica dada pela equa\
+\[CCedilla]\[ATilde]o:<br/>\>\"", ",", 
+     RowBox[{"Hold", "[", " ", 
+      RowBox[{
+       RowBox[{
+        FractionBox[
+         RowBox[{"x", "^", "2"}], "a"], "-", 
+        FractionBox[
+         RowBox[{"y", "^", "2"}], "b"]}], "=", "1"}], "]"}], ",", 
+     "\"\<</h4><p>(d\[EHat] duas casas decimais ap\[OAcute]s a \
+v\[IAcute]rgula)</p>\>\""}], "}"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"pars", "=", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"Map", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"a", "\[Rule]", "#"}], "&"}], ",", 
+        RowBox[{"Range", "[", 
+         RowBox[{"2", ",", "7"}], "]"}]}], "]"}], ",", 
+      RowBox[{"Map", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"b", "\[Rule]", "#"}], "&"}], ",", 
+        RowBox[{"Range", "[", 
+         RowBox[{"2", ",", "7"}], "]"}]}], "]"}]}], "}"}], "//", "Tuples"}]}],
+   ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"correctanswer", "=", 
+   SqrtBox[
+    RowBox[{"1", "+", 
+     RowBox[{"b", "/", "a"}]}]]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"AppendTo", "[", 
+   RowBox[{"questionlist", ",", 
+    RowBox[{"GenerateParametrizedQuestion", "[", 
+     RowBox[{"pars", ",", "Name", ",", "quest", ",", 
+      RowBox[{"{", 
+       RowBox[{"correctanswer", ",", "100", ",", "0.01"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"correctanswer", ",", "50", ",", "0.1"}], "}"}]}], "]"}]}], 
+   "]"}], ";"}]}], "Input",
+ CellChangeTimes->{
+  3.872177687959958*^9, {3.872177742031268*^9, 3.8721777462924776`*^9}, {
+   3.8722686838924065`*^9, 3.8722687106913195`*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"quest", "=", 
+   RowBox[{"{", 
+    RowBox[{
+    "\"\<<h4>Determine a excentricidade da c\[OHat]nica dada pela equa\
+\[CCedilla]\[ATilde]o:<br/>\>\"", ",", 
+     RowBox[{"Hold", "[", " ", 
+      RowBox[{
+       RowBox[{
+        FractionBox[
+         RowBox[{"x", "^", "2"}], "a"], "-", 
+        FractionBox[
+         RowBox[{"y", "^", "2"}], "b"]}], "=", 
+       RowBox[{"-", "1"}]}], "]"}], ",", 
+     "\"\<</h4><p>(d\[EHat] duas casas decimais ap\[OAcute]s a \
+v\[IAcute]rgula)</p>\>\""}], "}"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"pars", "=", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"Map", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"a", "\[Rule]", "#"}], "&"}], ",", 
+        RowBox[{"Range", "[", 
+         RowBox[{"2", ",", "7"}], "]"}]}], "]"}], ",", 
+      RowBox[{"Map", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"b", "\[Rule]", "#"}], "&"}], ",", 
+        RowBox[{"Range", "[", 
+         RowBox[{"2", ",", "7"}], "]"}]}], "]"}]}], "}"}], "//", "Tuples"}]}],
+   ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"correctanswer", "=", 
+   SqrtBox[
+    RowBox[{"1", "+", 
+     RowBox[{"a", "/", "b"}]}]]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"AppendTo", "[", 
+   RowBox[{"questionlist", ",", 
+    RowBox[{"GenerateParametrizedQuestion", "[", 
+     RowBox[{"pars", ",", "Name", ",", "quest", ",", 
+      RowBox[{"{", 
+       RowBox[{"correctanswer", ",", "100", ",", "0.01"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"correctanswer", ",", "50", ",", "0.1"}], "}"}]}], "]"}]}], 
+   "]"}], ";"}]}], "Input",
+ CellChangeTimes->{{3.872177761374668*^9, 3.8721777659824567`*^9}, {
+  3.8722686824789515`*^9, 3.872268705814777*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"quest", "=", 
+   RowBox[{"{", 
+    RowBox[{
+    "\"\<<h4>Determine a excentricidade da c\[OHat]nica dada pela equa\
+\[CCedilla]\[ATilde]o:<br/>\>\"", ",", 
+     RowBox[{"Hold", "[", " ", 
+      RowBox[{
+       RowBox[{"x", "^", "2"}], "=", 
+       RowBox[{
+        RowBox[{"a", " ", "y"}], "+", "b"}]}], "]"}], ",", 
+     "\"\<</h4><p>(d\[EHat] duas casas decimais ap\[OAcute]s a \
+v\[IAcute]rgula)</p>\>\""}], "}"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"pars", "=", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"Map", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"a", "\[Rule]", "#"}], "&"}], ",", 
+        RowBox[{"Range", "[", 
+         RowBox[{"2", ",", "8"}], "]"}]}], "]"}], ",", 
+      RowBox[{"Map", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"b", "\[Rule]", "#"}], "&"}], ",", 
+        RowBox[{"Range", "[", 
+         RowBox[{"1", ",", "3"}], "]"}]}], "]"}]}], "}"}], "//", "Tuples"}]}],
+   ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"correctanswer", "=", "1"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"AppendTo", "[", 
+   RowBox[{"questionlist", ",", 
+    RowBox[{"GenerateParametrizedQuestion", "[", 
+     RowBox[{"pars", ",", "Name", ",", "quest", ",", 
+      RowBox[{"{", 
+       RowBox[{"correctanswer", ",", "100", ",", "0.01"}], "}"}]}], "]"}]}], 
+   "]"}], ";"}]}], "Input",
+ CellChangeTimes->{{3.872177761374668*^9, 3.8721778298429627`*^9}, {
+  3.8721778670690413`*^9, 3.872177867450613*^9}, {3.8722686800347767`*^9, 
+  3.8722687013899174`*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"finalquestlist", "=", 
+   RowBox[{"AddCategoriesToQuestions", "[", 
+    RowBox[{"questionlist", ",", "Category"}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"AppendTo", "[", 
+   RowBox[{"QuestCategoriesList", ",", "finalquestlist"}], "]"}], 
+  ";"}]}], "Input",
+ CellChangeTimes->{3.87217698886679*^9}]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+Conta a dist\[AHat]ncia entre os focos - Q3\
+\>", "Section",
+ CellChangeTimes->{{3.840644151509432*^9, 3.8406441613286552`*^9}, {
+   3.87209669460089*^9, 3.8720966946476517`*^9}, {3.872101032471466*^9, 
+   3.872101034448104*^9}, {3.8721734578057413`*^9, 3.872173461230648*^9}, 
+   3.872180587142089*^9, {3.872268940948423*^9, 3.8722689428397627`*^9}, {
+   3.872275056757559*^9, 3.8722750584303765`*^9}},
+ ExpressionUUID -> "eba4cdd1-a33e-41c7-96cc-3f48c77a1b88"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"Category", "=", 
+   RowBox[{"CategoryDirectory", "<>", "\"\<Q3\>\""}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Name", "=", "\"\<Conta da dist\[AHat]ncia entre os focos\>\""}], 
+  ";"}]}], "Input",
+ CellChangeTimes->{{3.872176524992449*^9, 3.8721766015533905`*^9}, {
+  3.872177000674597*^9, 3.8721770010154085`*^9}, {3.872180176811511*^9, 
+  3.8721801891821513`*^9}, {3.8722723502607*^9, 3.8722723522985053`*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"questionlist", "=", 
+   RowBox[{"{", "}"}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.8721769526310234`*^9, 3.872176953740322*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"quest", "=", 
+   RowBox[{"{", 
+    RowBox[{
+    "\"\<<h4>Determine a dist\[AHat]ncia entre dois focos da c\[OHat]nica \
+dada pela equa\[CCedilla]\[ATilde]o:<br/>\>\"", ",", 
+     RowBox[{"Hold", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"a", " ", 
+         RowBox[{"x", "^", "2"}]}], "+", 
+        RowBox[{"b", " ", 
+         RowBox[{"y", "^", "2"}]}]}], "=", "c"}], "]"}], ",", 
+     "\"\<</h4><p>(d\[EHat] duas casas decimais ap\[OAcute]s a \
+v\[IAcute]rgula)</p>\>\""}], "}"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"pars", "=", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"Map", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"a", "\[Rule]", "#"}], "&"}], ",", 
+        RowBox[{"Range", "[", 
+         RowBox[{"2", ",", "5"}], "]"}]}], "]"}], ",", 
+      RowBox[{"Map", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"b", "\[Rule]", "#"}], "&"}], ",", 
+        RowBox[{"Range", "[", 
+         RowBox[{"2", ",", "4"}], "]"}]}], "]"}], ",", 
+      RowBox[{"Map", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"c", "\[Rule]", "#"}], "&"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"1", ",", "5", ",", "7"}], "}"}]}], "]"}]}], "}"}], "//", 
+    "Tuples"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"correctanswer", "=", 
+   RowBox[{"2", 
+    SqrtBox[
+     RowBox[{
+      RowBox[{"c", "/", 
+       RowBox[{"Min", "[", 
+        RowBox[{"a", ",", "b"}], "]"}]}], "-", 
+      RowBox[{"c", "/", 
+       RowBox[{"Max", "[", 
+        RowBox[{"a", ",", "b"}], "]"}]}]}]]}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"AppendTo", "[", 
+   RowBox[{"questionlist", ",", 
+    RowBox[{"GenerateParametrizedQuestion", "[", 
+     RowBox[{"pars", ",", "Name", ",", "quest", ",", 
+      RowBox[{"{", 
+       RowBox[{"correctanswer", ",", "100", ",", "0.01"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"correctanswer", ",", "50", ",", "0.1"}], "}"}]}], "]"}]}], 
+   "]"}], ";"}]}], "Input",
+ CellChangeTimes->{{3.872176614916673*^9, 3.872176749826228*^9}, {
+   3.8721770025661683`*^9, 3.8721770131997547`*^9}, 3.8721775381403575`*^9, {
+   3.872180201673556*^9, 3.872180240795351*^9}, 3.8721802929726143`*^9, {
+   3.8722686298501616`*^9, 3.872268652178274*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"quest", "=", 
+   RowBox[{"{", 
+    RowBox[{
+    "\"\<<h4>Determine a dist\[AHat]ncia entre dois focos da c\[OHat]nica \
+dada pela equa\[CCedilla]\[ATilde]o:<br/>\>\"", ",", 
+     RowBox[{"Hold", "[", " ", 
+      RowBox[{
+       RowBox[{
+        FractionBox[
+         RowBox[{"x", "^", "2"}], "a"], "+", 
+        FractionBox[
+         RowBox[{"y", "^", "2"}], "b"]}], "=", "1"}], "]"}], ",", 
+     "\"\<</h4><p>(d\[EHat] duas casas decimais ap\[OAcute]s a \
+v\[IAcute]rgula)</p>\>\""}], "}"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"pars", "=", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"Map", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"a", "\[Rule]", "#"}], "&"}], ",", 
+        RowBox[{"Range", "[", 
+         RowBox[{"2", ",", "7"}], "]"}]}], "]"}], ",", 
+      RowBox[{"Map", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"b", "\[Rule]", "#"}], "&"}], ",", 
+        RowBox[{"Range", "[", 
+         RowBox[{"2", ",", "7"}], "]"}]}], "]"}]}], "}"}], "//", "Tuples"}]}],
+   ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"correctanswer", "=", 
+   RowBox[{"2", 
+    SqrtBox[
+     RowBox[{
+      RowBox[{"Max", "[", 
+       RowBox[{"a", ",", "b"}], "]"}], "-", 
+      RowBox[{"Min", "[", 
+       RowBox[{"a", ",", "b"}], "]"}]}]]}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"AppendTo", "[", 
+   RowBox[{"questionlist", ",", 
+    RowBox[{"GenerateParametrizedQuestion", "[", 
+     RowBox[{"pars", ",", "Name", ",", "quest", ",", 
+      RowBox[{"{", 
+       RowBox[{"correctanswer", ",", "100", ",", "0.01"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"correctanswer", ",", "50", ",", "0.1"}], "}"}]}], "]"}]}], 
+   "]"}], ";"}]}], "Input",
+ CellChangeTimes->{{3.872177317818731*^9, 3.8721773467411356`*^9}, {
+  3.8721774112070856`*^9, 3.872177424298927*^9}, {3.8721775031731033`*^9, 
+  3.8721775285867596`*^9}, {3.872180326852854*^9, 3.8721803462993584`*^9}, {
+  3.8722686417760153`*^9, 3.872268655228114*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"quest", "=", 
+   RowBox[{"{", 
+    RowBox[{
+    "\"\<<h4>Determine a dist\[AHat]ncia entre dois focos da c\[OHat]nica \
+dada pela equa\[CCedilla]\[ATilde]o:<br/>\>\"", ",", 
+     RowBox[{"Hold", "[", " ", 
+      RowBox[{
+       RowBox[{
+        FractionBox[
+         RowBox[{"x", "^", "2"}], "a"], "-", 
+        FractionBox[
+         RowBox[{"y", "^", "2"}], "b"]}], "=", "1"}], "]"}], ",", 
+     "\"\<</h4><p>(d\[EHat] duas casas decimais ap\[OAcute]s a \
+v\[IAcute]rgula)</p>\>\""}], "}"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"pars", "=", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"Map", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"a", "\[Rule]", "#"}], "&"}], ",", 
+        RowBox[{"Range", "[", 
+         RowBox[{"2", ",", "7"}], "]"}]}], "]"}], ",", 
+      RowBox[{"Map", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"b", "\[Rule]", "#"}], "&"}], ",", 
+        RowBox[{"Range", "[", 
+         RowBox[{"2", ",", "7"}], "]"}]}], "]"}]}], "}"}], "//", "Tuples"}]}],
+   ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"correctanswer", "=", 
+   RowBox[{"2", 
+    SqrtBox[
+     RowBox[{"a", "+", "b"}]]}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"AppendTo", "[", 
+   RowBox[{"questionlist", ",", 
+    RowBox[{"GenerateParametrizedQuestion", "[", 
+     RowBox[{"pars", ",", "Name", ",", "quest", ",", 
+      RowBox[{"{", 
+       RowBox[{"correctanswer", ",", "100", ",", "0.01"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"correctanswer", ",", "50", ",", "0.1"}], "}"}]}], "]"}]}], 
+   "]"}], ";"}]}], "Input",
+ CellChangeTimes->{
+  3.872177687959958*^9, {3.872177742031268*^9, 3.8721777462924776`*^9}, {
+   3.872180428655791*^9, 3.8721804435385056`*^9}, {3.8722686434491205`*^9, 
+   3.872268659967553*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"quest", "=", 
+   RowBox[{"{", 
+    RowBox[{
+    "\"\<<h4>Determine a dist\[AHat]ncia entre dois focos da c\[OHat]nica \
+dada pela equa\[CCedilla]\[ATilde]o:<br/>\>\"", ",", 
+     RowBox[{"Hold", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"a", " ", 
+         RowBox[{"x", "^", "2"}]}], "-", 
+        RowBox[{"b", " ", 
+         RowBox[{"y", "^", "2"}]}]}], "=", "c"}], "]"}], ",", 
+     "\"\<</h4><p>(d\[EHat] duas casas decimais ap\[OAcute]s a \
+v\[IAcute]rgula)</p>\>\""}], "}"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"pars", "=", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"Map", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"a", "\[Rule]", "#"}], "&"}], ",", 
+        RowBox[{"Range", "[", 
+         RowBox[{"2", ",", "5"}], "]"}]}], "]"}], ",", 
+      RowBox[{"Map", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"b", "\[Rule]", "#"}], "&"}], ",", 
+        RowBox[{"Range", "[", 
+         RowBox[{"2", ",", "4"}], "]"}]}], "]"}], ",", 
+      RowBox[{"Map", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"c", "\[Rule]", "#"}], "&"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"1", ",", "5", ",", "7"}], "}"}]}], "]"}]}], "}"}], "//", 
+    "Tuples"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"correctanswer", "=", 
+   RowBox[{"2", 
+    SqrtBox[
+     RowBox[{
+      RowBox[{"c", "/", "a"}], "+", 
+      RowBox[{"c", "/", "b"}]}]]}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"AppendTo", "[", 
+   RowBox[{"questionlist", ",", 
+    RowBox[{"GenerateParametrizedQuestion", "[", 
+     RowBox[{"pars", ",", "Name", ",", "quest", ",", 
+      RowBox[{"{", 
+       RowBox[{"correctanswer", ",", "100", ",", "0.01"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"correctanswer", ",", "50", ",", "0.1"}], "}"}]}], "]"}]}], 
+   "]"}], ";"}]}], "Input",
+ CellChangeTimes->{{3.872180463816801*^9, 3.8721805220044084`*^9}, {
+  3.8722686444295387`*^9, 3.8722686657110744`*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"finalquestlist", "=", 
+   RowBox[{"AddCategoriesToQuestions", "[", 
+    RowBox[{"questionlist", ",", "Category"}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"AppendTo", "[", 
+   RowBox[{"QuestCategoriesList", ",", "finalquestlist"}], "]"}], 
+  ";"}]}], "Input",
+ CellChangeTimes->{3.87217698886679*^9}]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+C\[OHat]nicas em coordenadas polares - Q4\
+\>", "Section",
+ CellChangeTimes->{{3.840644151509432*^9, 3.8406441613286552`*^9}, {
+   3.87209669460089*^9, 3.8720966946476517`*^9}, {3.872101032471466*^9, 
+   3.872101034448104*^9}, {3.8721734578057413`*^9, 3.872173461230648*^9}, 
+   3.872180587142089*^9, {3.872266650522033*^9, 3.872266659521872*^9}, {
+   3.872267475709814*^9, 3.8722674758486423`*^9}, 3.8722689380194764`*^9, {
+   3.8722750600865946`*^9, 3.8722750621184697`*^9}},
+ ExpressionUUID -> "eba4cdd1-a33e-41c7-96cc-3f48c77a1b88"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"Category", "=", 
+   RowBox[{"CategoryDirectory", "<>", "\"\<Q4\>\""}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Name", "=", "\"\<C\[OHat]nicas em coordenadas polares\>\""}], 
+  ";"}]}], "Input",
+ CellChangeTimes->{{3.872176524992449*^9, 3.8721766015533905`*^9}, {
+  3.872177000674597*^9, 3.8721770010154085`*^9}, {3.872180176811511*^9, 
+  3.8721801891821513`*^9}, {3.872266615780593*^9, 3.872266643719967*^9}, {
+  3.872267478384709*^9, 3.872267478498446*^9}, {3.872272359889836*^9, 
+  3.8722723613788385`*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"questionlist", "=", 
+   RowBox[{"{", "}"}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.8721769526310234`*^9, 3.872176953740322*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"quest", "=", 
+   RowBox[{"{", 
+    RowBox[{
+    "\"\<<h4>Dada equa\[CCedilla]\[ATilde]o da c\[OHat]nica em coordenadas \
+polares:<br/>\>\"", ",", 
+     RowBox[{"Hold", "[", 
+      RowBox[{"\[Rho]", "=", 
+       FractionBox["a", 
+        RowBox[{"b", "+", 
+         RowBox[{"c", " ", 
+          RowBox[{"Cos", "[", "\[CurlyPhi]", "]"}]}]}]]}], "]"}], ",", 
+     "\"\<</h4><p>Determine a dist\[AHat]ncia entre o foco (origem) e a \
+diretriz correspondente (d\[EHat] duas casas decimais ap\[OAcute]s a v\
+\[IAcute]rgula).</p>\>\""}], "}"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"pars", "=", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"Map", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"a", "\[Rule]", "#"}], "&"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"1", ",", "5", ",", "7"}], "}"}]}], "]"}], ",", 
+      RowBox[{"Map", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"b", "\[Rule]", "#"}], "&"}], ",", 
+        RowBox[{"Range", "[", 
+         RowBox[{"1", ",", "4"}], "]"}]}], "]"}], ",", 
+      RowBox[{"Map", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"c", "\[Rule]", "#"}], "&"}], ",", 
+        RowBox[{"Range", "[", 
+         RowBox[{"2", ",", "6"}], "]"}]}], "]"}]}], "}"}], "//", "Tuples"}]}],
+   ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"correctanswer", "=", 
+   RowBox[{"a", "/", "c"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"AppendTo", "[", 
+   RowBox[{"questionlist", ",", 
+    RowBox[{"GenerateParametrizedQuestion", "[", 
+     RowBox[{"pars", ",", "Name", ",", "quest", ",", 
+      RowBox[{"{", 
+       RowBox[{"correctanswer", ",", "100", ",", "0.01"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"correctanswer", ",", "50", ",", "0.1"}], "}"}]}], "]"}]}], 
+   "]"}], ";"}]}], "Input",
+ CellChangeTimes->{{3.872176614916673*^9, 3.872176749826228*^9}, {
+   3.8721770025661683`*^9, 3.8721770131997547`*^9}, 3.8721775381403575`*^9, {
+   3.872180201673556*^9, 3.872180240795351*^9}, 3.8721802929726143`*^9, {
+   3.872266684782781*^9, 3.8722667144591484`*^9}, {3.8722667933170824`*^9, 
+   3.872266829848767*^9}, {3.872266867577221*^9, 3.872266979585472*^9}, {
+   3.8722670101445417`*^9, 3.8722671004390087`*^9}, {3.8722671443585405`*^9, 
+   3.872267146743929*^9}, {3.8722671864702053`*^9, 3.8722671869243374`*^9}, {
+   3.8722680217165165`*^9, 3.872268034281705*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"quest", "=", 
+   RowBox[{"{", 
+    RowBox[{
+    "\"\<<h4>Dada equa\[CCedilla]\[ATilde]o da c\[OHat]nica em coordenadas \
+polares:<br/>\>\"", ",", 
+     RowBox[{"Hold", "[", 
+      RowBox[{"\[Rho]", "=", 
+       FractionBox["a", 
+        RowBox[{"b", "-", 
+         RowBox[{"c", " ", 
+          RowBox[{"Cos", "[", "\[CurlyPhi]", "]"}]}]}]]}], "]"}], ",", 
+     "\"\<</h4><p>Determine a dist\[AHat]ncia entre o foco (origem) e a \
+diretriz correspondente (d\[EHat] duas casas decimais ap\[OAcute]s a v\
+\[IAcute]rgula).</p>\>\""}], "}"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"pars", "=", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"Map", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"a", "\[Rule]", "#"}], "&"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"1", ",", "3", ",", "5", ",", "7"}], "}"}]}], "]"}], ",", 
+      RowBox[{"Map", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"b", "\[Rule]", "#"}], "&"}], ",", 
+        RowBox[{"Range", "[", 
+         RowBox[{"1", ",", "6"}], "]"}]}], "]"}], ",", 
+      RowBox[{"Map", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"c", "\[Rule]", "#"}], "&"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"2", ",", "4"}], "}"}]}], "]"}]}], "}"}], "//", "Tuples"}]}],
+   ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"correctanswer", "=", 
+   RowBox[{"a", "/", "c"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"AppendTo", "[", 
+   RowBox[{"questionlist", ",", 
+    RowBox[{"GenerateParametrizedQuestion", "[", 
+     RowBox[{"pars", ",", "Name", ",", "quest", ",", 
+      RowBox[{"{", 
+       RowBox[{"correctanswer", ",", "100", ",", "0.01"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"correctanswer", ",", "50", ",", "0.1"}], "}"}]}], "]"}]}], 
+   "]"}], ";"}]}], "Input",
+ CellChangeTimes->{{3.872176614916673*^9, 3.872176749826228*^9}, {
+   3.8721770025661683`*^9, 3.8721770131997547`*^9}, 3.8721775381403575`*^9, {
+   3.872180201673556*^9, 3.872180240795351*^9}, 3.8721802929726143`*^9, {
+   3.872266684782781*^9, 3.8722667144591484`*^9}, {3.8722667933170824`*^9, 
+   3.872266829848767*^9}, {3.872266867577221*^9, 3.872266979585472*^9}, {
+   3.8722670101445417`*^9, 3.8722671004390087`*^9}, {3.8722671443585405`*^9, 
+   3.872267146743929*^9}, {3.8722671864702053`*^9, 3.8722671869243374`*^9}, {
+   3.8722672314547*^9, 3.8722672674977856`*^9}, {3.87226732302651*^9, 
+   3.8722673279625115`*^9}, {3.872268008562823*^9, 3.8722680370862727`*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"finalquestlist", "=", 
+   RowBox[{"AddCategoriesToQuestions", "[", 
+    RowBox[{"questionlist", ",", "Category"}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"AppendTo", "[", 
+   RowBox[{"QuestCategoriesList", ",", "finalquestlist"}], "]"}], 
+  ";"}]}], "Input",
+ CellChangeTimes->{3.87217698886679*^9}]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+Equa\[CCedilla]\[ATilde]o param\[EAcute]trica da circunfer\[EHat]ncia - Q5\
+\>", "Section",
+ CellChangeTimes->{{3.840644151509432*^9, 3.8406441613286552`*^9}, {
+  3.87209669460089*^9, 3.8720966946476517`*^9}, {3.872101032471466*^9, 
+  3.872101034448104*^9}, {3.8721794080661135`*^9, 3.872179413704602*^9}, {
+  3.8721798280879335`*^9, 3.8721798350120316`*^9}, {3.872268932367832*^9, 
+  3.8722689344460564`*^9}, {3.87227506460612*^9, 3.8722750671434307`*^9}},
+ ExpressionUUID -> "eba4cdd1-a33e-41c7-96cc-3f48c77a1b88"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"Category", "=", 
+   RowBox[{"CategoryDirectory", "<>", "\"\<Q5\>\""}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+  "Name", "=", 
+   "\"\<Equa\[CCedilla]\[ATilde]o param\[EAcute]trica da \
+circunfer\[EHat]ncias\>\""}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+  "Quest", "=", 
+   "\"\<Quais s\[ATilde]o as equa\[CCedilla]\[OTilde]es param\[EAcute]tricas \
+para a circunfer\[EHat]ncia unit\[AAcute]ria com centro em \\((x_0, y_0)\\) e \
+raio \\(R\\)?\>\""}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"TrueAnswers", "=", 
+   RowBox[{"{", "\[IndentingNewLine]", 
+    RowBox[{
+    "\"\<\\( x = x_0 + R~\\\\textrm{cos}~t\\), \\( y = y_0 + \
+R~\\\\textrm{sen}~t \\), com \\(0 \\\\leq t \\\\leq 2\\\\pi\\).\>\"", ",", 
+     "\[IndentingNewLine]", 
+     "\"\<\\( x = x_0 + R~\\\\textrm{cos}~2t\\), \\( y = y_0 + \
+R~\\\\textrm{sen}~2t \\), com \\(0 \\\\leq t \\\\leq \\\\pi\\).\>\"", ",", 
+     "\[IndentingNewLine]", 
+     "\"\<\\( x = x_0 + R~\\\\textrm{cos}~t\\), \\( y = y_0 - \
+R~\\\\textrm{sen}~t \\), com \\(0 \\\\leq t \\\\leq 2\\\\pi\\).\>\"", ",", 
+     "\[IndentingNewLine]", 
+     "\"\<\\( x = x_0 - R~\\\\textrm{cos}~t\\), \\( y = y_0 - \
+R~\\\\textrm{sen}~t \\), com \\(0 \\\\leq t \\\\leq 2\\\\pi\\).\>\"", ",", 
+     "\[IndentingNewLine]", 
+     "\"\<\\( x = x_0 - R~\\\\textrm{cos}~t\\), \\( y = y_0 + \
+R~\\\\textrm{sen}~t \\), com \\(0 \\\\leq t \\\\leq 2\\\\pi\\).\>\""}], 
+    "\[IndentingNewLine]", "}"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"FalseAnswers", "=", 
+   RowBox[{"{", "\[IndentingNewLine]", 
+    RowBox[{
+    "\"\<\\( x = -x_0 + R~\\\\textrm{cos}~t\\), \\( y = y_0 + \
+R~\\\\textrm{sen}~t \\), com \\(0 \\\\leq t \\\\leq 2\\\\pi\\).\>\"", ",", 
+     "\[IndentingNewLine]", 
+     "\"\<\\( x = -x_0 + R~\\\\textrm{cos}~t\\), \\( y = -y_0 + \
+R~\\\\textrm{sen}~t \\), com \\(0 \\\\leq t \\\\leq 2\\\\pi\\).\>\"", ",", 
+     "\[IndentingNewLine]", 
+     "\"\<\\( x = x_0 + R~\\\\textrm{cos}~t\\), \\( y = -y_0 + \
+R~\\\\textrm{sen}~t \\), com \\(0 \\\\leq t \\\\leq 2\\\\pi\\).\>\"", ",", 
+     "\[IndentingNewLine]", 
+     "\"\<\\( x = x_0 - R~\\\\textrm{cos}~t\\), \\( y = -y_0 + \
+R~\\\\textrm{sen}~t \\), com \\(0 \\\\leq t \\\\leq 2\\\\pi\\).\>\"", ",", 
+     "\[IndentingNewLine]", 
+     "\"\<\\( x = -x_0 + R~\\\\textrm{cos}~t\\), \\( y = y_0 - \
+R~\\\\textrm{sen}~t \\), com \\(0 \\\\leq t \\\\leq 2\\\\pi\\).\>\"", ",", 
+     "\[IndentingNewLine]", 
+     "\"\<\\( x = x_0 + R~\\\\textrm{cos}~t\\), \\( y = y_0 + \
+R~\\\\textrm{sen}~t \\), com \\(0 \\\\leq t \\\\leq \\\\pi\\).\>\"", ",", 
+     "\[IndentingNewLine]", 
+     "\"\<\\( x = -x_0 + R~\\\\textrm{cos}~t\\), \\( y = y_0 + \
+R~\\\\textrm{sen}~t \\), com \\(0 \\\\leq t \\\\leq \\\\pi\\).\>\"", ",", 
+     "\[IndentingNewLine]", 
+     "\"\<\\( x = x_0 + R~\\\\textrm{cos}~t\\), \\( y = -y_0 + \
+R~\\\\textrm{sen}~t \\), com \\(0 \\\\leq t \\\\leq \\\\pi\\).\>\"", ",", 
+     "\[IndentingNewLine]", 
+     "\"\<\\( x = -x_0 + R~\\\\textrm{cos}~t\\), \\( y = -y_0 + \
+R~\\\\textrm{sen}~t \\), com \\(0 \\\\leq t \\\\leq \\\\pi\\).\>\""}], 
+    "\[IndentingNewLine]", "}"}]}], ";"}]}], "Input",
+ CellChangeTimes->{{3.872179433093058*^9, 3.8721795091726418`*^9}, {
+   3.8721799478615866`*^9, 3.8721800136855254`*^9}, {3.8721807832207203`*^9, 
+   3.8721807887087545`*^9}, 3.872266612734959*^9, {3.8722723684070954`*^9, 
+   3.8722723715639*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+  "FormatAnswerCI", "=", 
+   "\"\<<h4>`1`</h4><p><b>Marque as equa\[CCedilla]\[OTilde]es \
+corretas:</b></p><ol>`2`</ol>\>\""}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"FormatEachQuestionCI", "=", 
+   RowBox[{"Function", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"number", ",", "answer", ",", "fraction"}], "}"}], ",", 
+     "\[IndentingNewLine]", 
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{"fraction", ">", "0"}], "\[IndentingNewLine]", ",", 
+       RowBox[{"{", 
+        RowBox[{"\"\<<li>\>\"", ",", 
+         RowBox[{"{", 
+          RowBox[{"1", ",", "\"\<MC\>\"", ",", 
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"{", 
+              RowBox[{"0", ",", "\"\<Desconhe\[CCedilla]o\>\""}], "}"}], ",", 
+             RowBox[{"{", 
+              RowBox[{"100", ",", "\"\<Correta\>\""}], "}"}], ",", 
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"-", "100"}], ",", "\"\<Errada\>\""}], "}"}]}], 
+            "}"}]}], "}"}], ",", "\"\< \>\"", ",", "answer", ",", 
+         "\"\<</li>\>\""}], "}"}], "\[IndentingNewLine]", ",", 
+       RowBox[{"{", 
+        RowBox[{"\"\<<li>\>\"", ",", 
+         RowBox[{"{", 
+          RowBox[{"1", ",", "\"\<MC\>\"", ",", 
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"{", 
+              RowBox[{"0", ",", "\"\<Desconhe\[CCedilla]o\>\""}], "}"}], ",", 
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"-", "100"}], ",", "\"\<Correta\>\""}], "}"}], ",", 
+             RowBox[{"{", 
+              RowBox[{"100", ",", "\"\<Errada\>\""}], "}"}]}], "}"}]}], "}"}],
+          ",", "\"\< \>\"", ",", "answer", ",", "\"\<</li>\>\""}], "}"}]}], 
+      "\[IndentingNewLine]", "]"}]}], "\[IndentingNewLine]", "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"multichoicequestions", "=", 
+   RowBox[{
+    RowBox[{"GenerateMultiChoiceList", "[", 
+     RowBox[{
+     "Name", ",", "Quest", ",", "TrueAnswers", ",", "FalseAnswers", ",", 
+      RowBox[{"answersnum", "\[Rule]", "5"}], ",", 
+      RowBox[{"minwrongnum", "\[Rule]", "2"}], ",", 
+      RowBox[{"mincorrectnum", "\[Rule]", "2"}]}], "]"}], "//", 
+    "RestrictNumberOfVariants"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"clozequestions", "=", 
+   RowBox[{"ConvertMultiChoiceToCloze", "[", 
+    RowBox[{
+    "multichoicequestions", ",", "FormatAnswerCI", ",", 
+     "FormatEachQuestionCI"}], "]"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"finalquestlist", "=", 
+   RowBox[{"AddCategoriesToQuestions", "[", 
+    RowBox[{"clozequestions", ",", "Category"}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"AppendTo", "[", 
+   RowBox[{"QuestCategoriesList", ",", "finalquestlist"}], "]"}], 
+  ";"}]}], "Input",
+ CellChangeTimes->{{3.872179433093058*^9, 3.8721795091726418`*^9}, {
+  3.8721799478615866`*^9, 3.872180019021323*^9}, {3.872180977109625*^9, 
+  3.872180980758407*^9}}]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+Identifica\[CCedilla]\[ATilde]o das superf\[IAcute]cies - Q6\
+\>", "Section",
+ CellChangeTimes->{{3.840644151509432*^9, 3.8406441613286552`*^9}, {
+   3.87209669460089*^9, 3.8720966946476517`*^9}, {3.872101032471466*^9, 
+   3.872101034448104*^9}, {3.872102807483765*^9, 3.8721028131662054`*^9}, 
+   3.8722689609551845`*^9, {3.872275070119939*^9, 3.8722750718589573`*^9}, {
+   3.872275836496816*^9, 3.8722758389511375`*^9}},
+ ExpressionUUID -> "eba4cdd1-a33e-41c7-96cc-3f48c77a1b88"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"Category", "=", 
+   RowBox[{"CategoryDirectory", "<>", "\"\<Q6\>\""}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+  "Name", "=", 
+   "\"\<Identifica\[CCedilla]\[ATilde]o das superf\[IAcute]cies\>\""}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"multichoicequestions", "=", 
+   RowBox[{"{", "}"}]}], ";"}]}], "Input",
+ CellChangeTimes->{{3.8406441989747477`*^9, 3.8406442038391733`*^9}, {
+   3.840644233859055*^9, 3.8406446558956013`*^9}, {3.8406447124947033`*^9, 
+   3.840644712637332*^9}, 3.840644757714548*^9, 3.8407127358119183`*^9, 
+   3.8407128339957023`*^9, {3.8407129236411343`*^9, 3.840712940809694*^9}, {
+   3.84071304977917*^9, 3.8407130987385654`*^9}, {3.872096616768129*^9, 
+   3.8720966908531804`*^9}, 3.8720975329727697`*^9, {3.872098398220149*^9, 
+   3.872098508514708*^9}, {3.872098538547307*^9, 3.872098564975086*^9}, {
+   3.8720986117760344`*^9, 3.872098625746702*^9}, {3.8720987166908507`*^9, 
+   3.8720989407693777`*^9}, {3.8720989876784744`*^9, 3.872098991773472*^9}, {
+   3.872100144912511*^9, 3.8721001478633604`*^9}, {3.8721002477422743`*^9, 
+   3.8721002547810993`*^9}, {3.872100285369897*^9, 3.872100366535144*^9}, {
+   3.8721004295983887`*^9, 3.8721005096230307`*^9}, {3.872100543526662*^9, 
+   3.872100546980389*^9}, {3.87210064532697*^9, 3.8721006476874743`*^9}, 
+   3.872101209198415*^9, {3.87210133467894*^9, 3.872101352896247*^9}, {
+   3.872101384371992*^9, 3.8721013943794093`*^9}, {3.872101522143635*^9, 
+   3.8721015569187098`*^9}, {3.8721016772938833`*^9, 
+   3.8721017808568125`*^9}, {3.8721019850158806`*^9, 
+   3.8721019950564785`*^9}, {3.872103085035155*^9, 3.872103089470374*^9}, {
+   3.8721032441336613`*^9, 3.872103358699277*^9}, {3.8721035863410125`*^9, 
+   3.8721036034012213`*^9}, {3.8721036554928713`*^9, 3.872103657055846*^9}, {
+   3.872103689719405*^9, 3.872103692548175*^9}, {3.8721037444909997`*^9, 
+   3.87210376032712*^9}, 3.872103793467173*^9, {3.8721038473327265`*^9, 
+   3.8721038572111235`*^9}, 3.872104476619071*^9, {3.872112591525924*^9, 
+   3.87211262540029*^9}, {3.872112772367344*^9, 3.872112777199628*^9}, 
+   3.872113035574173*^9, {3.872113077027556*^9, 3.8721130774495697`*^9}, {
+   3.872168072663508*^9, 3.872168094610961*^9}, {3.8722698668665257`*^9, 
+   3.872269866960184*^9}, {3.8722698992994394`*^9, 3.872270032350387*^9}, {
+   3.8722700667725277`*^9, 3.8722700724301405`*^9}, {3.8722711315148587`*^9, 
+   3.872271135703143*^9}, {3.87227214929887*^9, 3.8722721528936806`*^9}, {
+   3.8722722037599325`*^9, 3.8722722050870295`*^9}, 3.8722758427881927`*^9},
+ ExpressionUUID -> "c3687269-d32f-4a39-a2a6-9a69f69e0f63"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"Template", "=", 
+   RowBox[{"{", 
+    RowBox[{
+    "\"\<<h4>Identifique a superf\[IAcute]cie dada pela equa\[CCedilla]\
+\[ATilde]o\>\"", ",", 
+     RowBox[{"Hold", "[", 
+      RowBox[{
+       RowBox[{
+        FractionBox[
+         RowBox[{"x", "^", "2"}], "a"], "-", 
+        FractionBox[
+         RowBox[{"y", "^", "2"}], "b"], "-", 
+        FractionBox[
+         RowBox[{"z", "^", "2"}], "c"]}], "=", "0"}], "]"}], ",", 
+     "\"\<.</h4>\>\""}], "}"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Params", "=", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"a", "\[Rule]", "3"}], ",", 
+        RowBox[{"a", "\[Rule]", "5"}], ",", 
+        RowBox[{"a", "\[Rule]", "7"}]}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"b", "\[Rule]", "2"}], ",", 
+        RowBox[{"b", "\[Rule]", "4"}], ",", 
+        RowBox[{"b", "\[Rule]", "6"}], ",", 
+        RowBox[{"b", "\[Rule]", "8"}]}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"c", "\[Rule]", "3"}], ",", 
+        RowBox[{"c", "\[Rule]", "7"}], ",", 
+        RowBox[{"c", "\[Rule]", "8"}]}], "}"}]}], "}"}], "//", "Tuples"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Answers", "=", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\"\<cone\>\"", ",", "100"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<esfera\>\"", ",", 
+       RowBox[{"-", "20"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<elips\[OAcute]ide\>\"", ",", 
+       RowBox[{"-", "20"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<elips\[OAcute]ide parab\[OAcute]lico\>\"", ",", 
+       RowBox[{"-", "100"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<hiperbol\[OAcute]ide\>\"", ",", 
+       RowBox[{"-", "20"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<hiperbol\[OAcute]ide de uma folha\>\"", ",", 
+       RowBox[{"-", "20"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<hiperbol\[OAcute]ide de duas folhas\>\"", ",", 
+       RowBox[{"-", "20"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<hiperbol\[OAcute]ide de tr\[EHat]s folhas\>\"", ",", 
+       RowBox[{"-", "100"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<parabol\[OAcute]ide\>\"", ",", 
+       RowBox[{"-", "20"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<parabol\[OAcute]ide c\[OHat]nico\>\"", ",", 
+       RowBox[{"-", "100"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<parabol\[OAcute]ide el\[IAcute]ptico\>\"", ",", 
+       RowBox[{"-", "20"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<parabol\[OAcute]ide hiperb\[OAcute]lico\>\"", ",", 
+       RowBox[{"-", "20"}]}], "}"}]}], "}"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"AppendTo", "[", 
+   RowBox[{"multichoicequestions", ",", 
+    RowBox[{"Map", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"GenerateMultiChoiceQuestion", "[", 
+        RowBox[{"Name", ",", 
+         RowBox[{
+          RowBox[{"Template", "/.", "#"}], "//", "ToMoodleHTMLString"}], ",", 
+         RowBox[{"First", "/@", "Answers"}], ",", 
+         RowBox[{"Last", "/@", "Answers"}], ",", 
+         RowBox[{"shuffleanswers", "\[Rule]", "False"}]}], "]"}], "&"}], ",", 
+      "Params"}], "]"}]}], "]"}], ";"}]}], "Input",
+ CellChangeTimes->{{3.8406441989747477`*^9, 3.8406442038391733`*^9}, {
+   3.840644233859055*^9, 3.8406446558956013`*^9}, {3.8406447124947033`*^9, 
+   3.840644712637332*^9}, 3.840644757714548*^9, 3.8407127358119183`*^9, 
+   3.8407128339957023`*^9, {3.8407129236411343`*^9, 3.840712940809694*^9}, {
+   3.84071304977917*^9, 3.8407130987385654`*^9}, {3.872096616768129*^9, 
+   3.8720966908531804`*^9}, 3.8720975329727697`*^9, {3.872098398220149*^9, 
+   3.872098508514708*^9}, {3.872098538547307*^9, 3.872098564975086*^9}, {
+   3.8720986117760344`*^9, 3.872098625746702*^9}, {3.8720987166908507`*^9, 
+   3.8720989407693777`*^9}, {3.8720989876784744`*^9, 3.872098991773472*^9}, {
+   3.872100144912511*^9, 3.8721001478633604`*^9}, {3.8721002477422743`*^9, 
+   3.8721002547810993`*^9}, {3.872100285369897*^9, 3.872100366535144*^9}, {
+   3.8721004295983887`*^9, 3.8721005096230307`*^9}, {3.872100543526662*^9, 
+   3.872100546980389*^9}, {3.87210064532697*^9, 3.8721006476874743`*^9}, 
+   3.872101209198415*^9, {3.87210133467894*^9, 3.872101352896247*^9}, {
+   3.872101384371992*^9, 3.8721013943794093`*^9}, {3.872101522143635*^9, 
+   3.8721015569187098`*^9}, {3.8721016772938833`*^9, 
+   3.8721017808568125`*^9}, {3.8721019850158806`*^9, 
+   3.8721019950564785`*^9}, {3.872103085035155*^9, 3.872103089470374*^9}, {
+   3.8721032441336613`*^9, 3.872103358699277*^9}, {3.8721035863410125`*^9, 
+   3.8721036034012213`*^9}, {3.8721036554928713`*^9, 3.872103657055846*^9}, {
+   3.872103689719405*^9, 3.872103692548175*^9}, {3.8721037444909997`*^9, 
+   3.87210376032712*^9}, 3.872103793467173*^9, {3.8721038473327265`*^9, 
+   3.8721038572111235`*^9}, 3.872104476619071*^9, {3.872112591525924*^9, 
+   3.87211262540029*^9}, {3.872112772367344*^9, 3.872112777199628*^9}, 
+   3.872113035574173*^9, {3.872113077027556*^9, 3.8721130774495697`*^9}, {
+   3.872168072663508*^9, 3.872168094610961*^9}, {3.8722698668665257`*^9, 
+   3.872269866960184*^9}, {3.8722698992994394`*^9, 3.872270032350387*^9}, {
+   3.8722700667725277`*^9, 3.872270164136774*^9}, {3.872270237540482*^9, 
+   3.872270330562679*^9}, {3.8722703778977766`*^9, 3.872270428331297*^9}, {
+   3.872270458596798*^9, 3.872270477492733*^9}, {3.8722705270373154`*^9, 
+   3.8722705435828447`*^9}, {3.8722705977221556`*^9, 3.872270716458495*^9}, {
+   3.8722707942888365`*^9, 3.872270800478796*^9}, {3.8722710692952557`*^9, 
+   3.8722711517767477`*^9}, {3.87227131313978*^9, 3.8722713287623677`*^9}, {
+   3.872271409705464*^9, 3.872271441538619*^9}, {3.872271860588627*^9, 
+   3.872271882089796*^9}, {3.8722753515976095`*^9, 3.872275414736561*^9}, {
+   3.872275508434149*^9, 3.872275514220416*^9}, {3.872275554833352*^9, 
+   3.8722756440913687`*^9}},
+ ExpressionUUID -> "c3687269-d32f-4a39-a2a6-9a69f69e0f63"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"Template", "=", 
+   RowBox[{"{", 
+    RowBox[{
+    "\"\<<h4>Identifique a superf\[IAcute]cie dada pela equa\[CCedilla]\
+\[ATilde]o\>\"", ",", 
+     RowBox[{"Hold", "[", 
+      RowBox[{
+       RowBox[{
+        FractionBox[
+         RowBox[{"x", "^", "2"}], "a"], "+", 
+        FractionBox[
+         RowBox[{"y", "^", "2"}], "b"], "-", 
+        FractionBox[
+         RowBox[{"z", "^", "2"}], "c"]}], "=", "0"}], "]"}], ",", 
+     "\"\<.</h4>\>\""}], "}"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Params", "=", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"a", "\[Rule]", "2"}], ",", 
+        RowBox[{"a", "\[Rule]", "4"}], ",", 
+        RowBox[{"a", "\[Rule]", "6"}], ",", 
+        RowBox[{"a", "\[Rule]", "8"}]}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"b", "\[Rule]", "3"}], ",", 
+        RowBox[{"b", "\[Rule]", "7"}], ",", 
+        RowBox[{"b", "\[Rule]", "8"}]}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"c", "\[Rule]", "3"}], ",", 
+        RowBox[{"c", "\[Rule]", "5"}], ",", 
+        RowBox[{"c", "\[Rule]", "7"}]}], "}"}]}], "}"}], "//", "Tuples"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Answers", "=", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\"\<cone\>\"", ",", "100"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<esfera\>\"", ",", 
+       RowBox[{"-", "20"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<elips\[OAcute]ide\>\"", ",", 
+       RowBox[{"-", "20"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<elips\[OAcute]ide parab\[OAcute]lico\>\"", ",", 
+       RowBox[{"-", "100"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<hiperbol\[OAcute]ide\>\"", ",", 
+       RowBox[{"-", "20"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<hiperbol\[OAcute]ide de uma folha\>\"", ",", 
+       RowBox[{"-", "20"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<hiperbol\[OAcute]ide de duas folhas\>\"", ",", 
+       RowBox[{"-", "20"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<hiperbol\[OAcute]ide de tr\[EHat]s folhas\>\"", ",", 
+       RowBox[{"-", "100"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<parabol\[OAcute]ide\>\"", ",", 
+       RowBox[{"-", "20"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<parabol\[OAcute]ide c\[OHat]nico\>\"", ",", 
+       RowBox[{"-", "100"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<parabol\[OAcute]ide el\[IAcute]ptico\>\"", ",", 
+       RowBox[{"-", "20"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<parabol\[OAcute]ide hiperb\[OAcute]lico\>\"", ",", 
+       RowBox[{"-", "20"}]}], "}"}]}], "}"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"AppendTo", "[", 
+   RowBox[{"multichoicequestions", ",", 
+    RowBox[{"Map", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"GenerateMultiChoiceQuestion", "[", 
+        RowBox[{"Name", ",", 
+         RowBox[{
+          RowBox[{"Template", "/.", "#"}], "//", "ToMoodleHTMLString"}], ",", 
+         RowBox[{"First", "/@", "Answers"}], ",", 
+         RowBox[{"Last", "/@", "Answers"}], ",", 
+         RowBox[{"shuffleanswers", "\[Rule]", "False"}]}], "]"}], "&"}], ",", 
+      "Params"}], "]"}]}], "]"}], ";"}]}], "Input",
+ CellChangeTimes->{{3.8406441989747477`*^9, 3.8406442038391733`*^9}, {
+   3.840644233859055*^9, 3.8406446558956013`*^9}, {3.8406447124947033`*^9, 
+   3.840644712637332*^9}, 3.840644757714548*^9, 3.8407127358119183`*^9, 
+   3.8407128339957023`*^9, {3.8407129236411343`*^9, 3.840712940809694*^9}, {
+   3.84071304977917*^9, 3.8407130987385654`*^9}, {3.872096616768129*^9, 
+   3.8720966908531804`*^9}, 3.8720975329727697`*^9, {3.872098398220149*^9, 
+   3.872098508514708*^9}, {3.872098538547307*^9, 3.872098564975086*^9}, {
+   3.8720986117760344`*^9, 3.872098625746702*^9}, {3.8720987166908507`*^9, 
+   3.8720989407693777`*^9}, {3.8720989876784744`*^9, 3.872098991773472*^9}, {
+   3.872100144912511*^9, 3.8721001478633604`*^9}, {3.8721002477422743`*^9, 
+   3.8721002547810993`*^9}, {3.872100285369897*^9, 3.872100366535144*^9}, {
+   3.8721004295983887`*^9, 3.8721005096230307`*^9}, {3.872100543526662*^9, 
+   3.872100546980389*^9}, {3.87210064532697*^9, 3.8721006476874743`*^9}, 
+   3.872101209198415*^9, {3.87210133467894*^9, 3.872101352896247*^9}, {
+   3.872101384371992*^9, 3.8721013943794093`*^9}, {3.872101522143635*^9, 
+   3.8721015569187098`*^9}, {3.8721016772938833`*^9, 
+   3.8721017808568125`*^9}, {3.8721019850158806`*^9, 
+   3.8721019950564785`*^9}, {3.872103085035155*^9, 3.872103089470374*^9}, {
+   3.8721032441336613`*^9, 3.872103358699277*^9}, {3.8721035863410125`*^9, 
+   3.8721036034012213`*^9}, {3.8721036554928713`*^9, 3.872103657055846*^9}, {
+   3.872103689719405*^9, 3.872103692548175*^9}, {3.8721037444909997`*^9, 
+   3.87210376032712*^9}, 3.872103793467173*^9, {3.8721038473327265`*^9, 
+   3.8721038572111235`*^9}, 3.872104476619071*^9, {3.872112591525924*^9, 
+   3.87211262540029*^9}, {3.872112772367344*^9, 3.872112777199628*^9}, 
+   3.872113035574173*^9, {3.872113077027556*^9, 3.8721130774495697`*^9}, {
+   3.872168072663508*^9, 3.872168094610961*^9}, {3.8722698668665257`*^9, 
+   3.872269866960184*^9}, {3.8722698992994394`*^9, 3.872270032350387*^9}, {
+   3.8722700667725277`*^9, 3.872270164136774*^9}, {3.872270237540482*^9, 
+   3.872270330562679*^9}, {3.8722703778977766`*^9, 3.872270428331297*^9}, {
+   3.872270458596798*^9, 3.872270477492733*^9}, {3.8722705270373154`*^9, 
+   3.8722705435828447`*^9}, {3.8722705977221556`*^9, 3.872270716458495*^9}, {
+   3.8722707942888365`*^9, 3.872270800478796*^9}, {3.8722710692952557`*^9, 
+   3.8722711517767477`*^9}, {3.87227131313978*^9, 3.8722713287623677`*^9}, {
+   3.872271409705464*^9, 3.872271441538619*^9}, {3.872271860588627*^9, 
+   3.872271882089796*^9}, {3.8722753515976095`*^9, 3.872275414736561*^9}, {
+   3.872275508434149*^9, 3.872275514220416*^9}, {3.8722756339633493`*^9, 
+   3.872275645707341*^9}},
+ ExpressionUUID -> "c3687269-d32f-4a39-a2a6-9a69f69e0f63"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"Template", "=", 
+   RowBox[{"{", 
+    RowBox[{
+    "\"\<<h4>Identifique a superf\[IAcute]cie dada pela equa\[CCedilla]\
+\[ATilde]o\>\"", ",", 
+     RowBox[{"Hold", "[", 
+      RowBox[{
+       RowBox[{
+        FractionBox[
+         RowBox[{"x", "^", "2"}], "a"], "+", 
+        FractionBox[
+         RowBox[{"y", "^", "2"}], "b"], "+", 
+        FractionBox[
+         RowBox[{"z", "^", "2"}], "c"]}], "=", "1"}], "]"}], ",", 
+     "\"\<.</h4>\>\""}], "}"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Params", "=", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"a", "\[Rule]", "2"}], ",", 
+        RowBox[{"a", "\[Rule]", "4"}], ",", 
+        RowBox[{"a", "\[Rule]", "8"}], ",", 
+        RowBox[{"a", "\[Rule]", "9"}]}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"b", "\[Rule]", "3"}], ",", 
+        RowBox[{"b", "\[Rule]", "7"}], ",", 
+        RowBox[{"b", "\[Rule]", "8"}], ",", 
+        RowBox[{"b", "\[Rule]", "9"}]}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"c", "\[Rule]", "2"}], ",", 
+        RowBox[{"c", "\[Rule]", "3"}], ",", 
+        RowBox[{"c", "\[Rule]", "5"}], ",", 
+        RowBox[{"c", "\[Rule]", "6"}]}], "}"}]}], "}"}], "//", "Tuples"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Answers", "=", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\"\<cone\>\"", ",", 
+       RowBox[{"-", "20"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<esfera\>\"", ",", 
+       RowBox[{"-", "20"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<elips\[OAcute]ide\>\"", ",", "100"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<elips\[OAcute]ide parab\[OAcute]lico\>\"", ",", 
+       RowBox[{"-", "100"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<hiperbol\[OAcute]ide\>\"", ",", 
+       RowBox[{"-", "20"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<hiperbol\[OAcute]ide de uma folha\>\"", ",", 
+       RowBox[{"-", "20"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<hiperbol\[OAcute]ide de duas folhas\>\"", ",", 
+       RowBox[{"-", "20"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<hiperbol\[OAcute]ide de tr\[EHat]s folhas\>\"", ",", 
+       RowBox[{"-", "100"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<parabol\[OAcute]ide\>\"", ",", 
+       RowBox[{"-", "20"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<parabol\[OAcute]ide c\[OHat]nico\>\"", ",", 
+       RowBox[{"-", "100"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<parabol\[OAcute]ide el\[IAcute]ptico\>\"", ",", 
+       RowBox[{"-", "20"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<parabol\[OAcute]ide hiperb\[OAcute]lico\>\"", ",", 
+       RowBox[{"-", "20"}]}], "}"}]}], "}"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"AppendTo", "[", 
+   RowBox[{"multichoicequestions", ",", 
+    RowBox[{"Map", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"GenerateMultiChoiceQuestion", "[", 
+        RowBox[{"Name", ",", 
+         RowBox[{
+          RowBox[{"Template", "/.", "#"}], "//", "ToMoodleHTMLString"}], ",", 
+         RowBox[{"First", "/@", "Answers"}], ",", 
+         RowBox[{"Last", "/@", "Answers"}], ",", 
+         RowBox[{"shuffleanswers", "\[Rule]", "False"}]}], "]"}], "&"}], ",", 
+      "Params"}], "]"}]}], "]"}], ";"}]}], "Input",
+ CellChangeTimes->{{3.8406441989747477`*^9, 3.8406442038391733`*^9}, {
+   3.840644233859055*^9, 3.8406446558956013`*^9}, {3.8406447124947033`*^9, 
+   3.840644712637332*^9}, 3.840644757714548*^9, 3.8407127358119183`*^9, 
+   3.8407128339957023`*^9, {3.8407129236411343`*^9, 3.840712940809694*^9}, {
+   3.84071304977917*^9, 3.8407130987385654`*^9}, {3.872096616768129*^9, 
+   3.8720966908531804`*^9}, 3.8720975329727697`*^9, {3.872098398220149*^9, 
+   3.872098508514708*^9}, {3.872098538547307*^9, 3.872098564975086*^9}, {
+   3.8720986117760344`*^9, 3.872098625746702*^9}, {3.8720987166908507`*^9, 
+   3.8720989407693777`*^9}, {3.8720989876784744`*^9, 3.872098991773472*^9}, {
+   3.872100144912511*^9, 3.8721001478633604`*^9}, {3.8721002477422743`*^9, 
+   3.8721002547810993`*^9}, {3.872100285369897*^9, 3.872100366535144*^9}, {
+   3.8721004295983887`*^9, 3.8721005096230307`*^9}, {3.872100543526662*^9, 
+   3.872100546980389*^9}, {3.87210064532697*^9, 3.8721006476874743`*^9}, 
+   3.872101209198415*^9, {3.87210133467894*^9, 3.872101352896247*^9}, {
+   3.872101384371992*^9, 3.8721013943794093`*^9}, {3.872101522143635*^9, 
+   3.8721015569187098`*^9}, {3.8721016772938833`*^9, 
+   3.8721017808568125`*^9}, {3.8721019850158806`*^9, 
+   3.8721019950564785`*^9}, {3.872103085035155*^9, 3.872103089470374*^9}, {
+   3.8721032441336613`*^9, 3.872103358699277*^9}, {3.8721035863410125`*^9, 
+   3.8721036034012213`*^9}, {3.8721036554928713`*^9, 3.872103657055846*^9}, {
+   3.872103689719405*^9, 3.872103692548175*^9}, {3.8721037444909997`*^9, 
+   3.87210376032712*^9}, 3.872103793467173*^9, {3.8721038473327265`*^9, 
+   3.8721038572111235`*^9}, 3.872104476619071*^9, {3.872112591525924*^9, 
+   3.87211262540029*^9}, {3.872112772367344*^9, 3.872112777199628*^9}, 
+   3.872113035574173*^9, {3.872113077027556*^9, 3.8721130774495697`*^9}, {
+   3.872168072663508*^9, 3.872168094610961*^9}, {3.8722698668665257`*^9, 
+   3.872269866960184*^9}, {3.8722698992994394`*^9, 3.872270032350387*^9}, {
+   3.8722700667725277`*^9, 3.872270164136774*^9}, {3.872270237540482*^9, 
+   3.872270330562679*^9}, {3.8722703778977766`*^9, 3.872270428331297*^9}, {
+   3.872270458596798*^9, 3.872270477492733*^9}, {3.8722705270373154`*^9, 
+   3.8722705435828447`*^9}, {3.8722705977221556`*^9, 3.872270716458495*^9}, {
+   3.8722707942888365`*^9, 3.872270800478796*^9}, {3.8722710692952557`*^9, 
+   3.8722711517767477`*^9}, {3.87227131313978*^9, 3.8722713287623677`*^9}, {
+   3.872271409705464*^9, 3.872271441538619*^9}, {3.872271860588627*^9, 
+   3.872271882089796*^9}, {3.8722756484048157`*^9, 3.8722756578207226`*^9}},
+ ExpressionUUID -> "c3687269-d32f-4a39-a2a6-9a69f69e0f63"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"Template", "=", 
+   RowBox[{"{", 
+    RowBox[{
+    "\"\<<h4>Identifique a superf\[IAcute]cie dada pela equa\[CCedilla]\
+\[ATilde]o\>\"", ",", 
+     RowBox[{"Hold", "[", 
+      RowBox[{
+       RowBox[{
+        FractionBox[
+         RowBox[{"x", "^", "2"}], "a"], "+", 
+        FractionBox[
+         RowBox[{"y", "^", "2"}], "a"], "+", 
+        FractionBox[
+         RowBox[{"z", "^", "2"}], "a"]}], "=", "1"}], "]"}], ",", 
+     "\"\<.</h4>\>\""}], "}"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Params", "=", 
+   RowBox[{"Map", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"a", "\[Rule]", "#"}], "}"}], "&"}], ",", 
+     RowBox[{"Range", "[", 
+      RowBox[{"2", ",", "9"}], "]"}]}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Answers", "=", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\"\<cone\>\"", ",", 
+       RowBox[{"-", "20"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<esfera\>\"", ",", "50"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<elips\[OAcute]ide\>\"", ",", "50"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<elips\[OAcute]ide parab\[OAcute]lico\>\"", ",", 
+       RowBox[{"-", "100"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<hiperbol\[OAcute]ide\>\"", ",", 
+       RowBox[{"-", "20"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<hiperbol\[OAcute]ide de uma folha\>\"", ",", 
+       RowBox[{"-", "20"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<hiperbol\[OAcute]ide de duas folhas\>\"", ",", 
+       RowBox[{"-", "20"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<hiperbol\[OAcute]ide de tr\[EHat]s folhas\>\"", ",", 
+       RowBox[{"-", "100"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<parabol\[OAcute]ide\>\"", ",", 
+       RowBox[{"-", "20"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<parabol\[OAcute]ide c\[OHat]nico\>\"", ",", 
+       RowBox[{"-", "100"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<parabol\[OAcute]ide el\[IAcute]ptico\>\"", ",", 
+       RowBox[{"-", "20"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<parabol\[OAcute]ide hiperb\[OAcute]lico\>\"", ",", 
+       RowBox[{"-", "20"}]}], "}"}]}], "}"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"AppendTo", "[", 
+   RowBox[{"multichoicequestions", ",", 
+    RowBox[{"Map", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"GenerateMultiChoiceQuestion", "[", 
+        RowBox[{"Name", ",", 
+         RowBox[{
+          RowBox[{"Template", "/.", "#"}], "//", "ToMoodleHTMLString"}], ",", 
+         RowBox[{"First", "/@", "Answers"}], ",", 
+         RowBox[{"Last", "/@", "Answers"}], ",", 
+         RowBox[{"shuffleanswers", "\[Rule]", "False"}]}], "]"}], "&"}], ",", 
+      "Params"}], "]"}]}], "]"}], ";"}]}], "Input",
+ CellChangeTimes->{{3.8406441989747477`*^9, 3.8406442038391733`*^9}, {
+   3.840644233859055*^9, 3.8406446558956013`*^9}, {3.8406447124947033`*^9, 
+   3.840644712637332*^9}, 3.840644757714548*^9, 3.8407127358119183`*^9, 
+   3.8407128339957023`*^9, {3.8407129236411343`*^9, 3.840712940809694*^9}, {
+   3.84071304977917*^9, 3.8407130987385654`*^9}, {3.872096616768129*^9, 
+   3.8720966908531804`*^9}, 3.8720975329727697`*^9, {3.872098398220149*^9, 
+   3.872098508514708*^9}, {3.872098538547307*^9, 3.872098564975086*^9}, {
+   3.8720986117760344`*^9, 3.872098625746702*^9}, {3.8720987166908507`*^9, 
+   3.8720989407693777`*^9}, {3.8720989876784744`*^9, 3.872098991773472*^9}, {
+   3.872100144912511*^9, 3.8721001478633604`*^9}, {3.8721002477422743`*^9, 
+   3.8721002547810993`*^9}, {3.872100285369897*^9, 3.872100366535144*^9}, {
+   3.8721004295983887`*^9, 3.8721005096230307`*^9}, {3.872100543526662*^9, 
+   3.872100546980389*^9}, {3.87210064532697*^9, 3.8721006476874743`*^9}, 
+   3.872101209198415*^9, {3.87210133467894*^9, 3.872101352896247*^9}, {
+   3.872101384371992*^9, 3.8721013943794093`*^9}, {3.872101522143635*^9, 
+   3.8721015569187098`*^9}, {3.8721016772938833`*^9, 
+   3.8721017808568125`*^9}, {3.8721019850158806`*^9, 
+   3.8721019950564785`*^9}, {3.872103085035155*^9, 3.872103089470374*^9}, {
+   3.8721032441336613`*^9, 3.872103358699277*^9}, {3.8721035863410125`*^9, 
+   3.8721036034012213`*^9}, {3.8721036554928713`*^9, 3.872103657055846*^9}, {
+   3.872103689719405*^9, 3.872103692548175*^9}, {3.8721037444909997`*^9, 
+   3.87210376032712*^9}, 3.872103793467173*^9, {3.8721038473327265`*^9, 
+   3.8721038572111235`*^9}, 3.872104476619071*^9, {3.872112591525924*^9, 
+   3.87211262540029*^9}, {3.872112772367344*^9, 3.872112777199628*^9}, 
+   3.872113035574173*^9, {3.872113077027556*^9, 3.8721130774495697`*^9}, {
+   3.872168072663508*^9, 3.872168094610961*^9}, {3.8722698668665257`*^9, 
+   3.872269866960184*^9}, {3.8722698992994394`*^9, 3.872270032350387*^9}, {
+   3.8722700667725277`*^9, 3.872270164136774*^9}, {3.872270237540482*^9, 
+   3.872270330562679*^9}, {3.8722703778977766`*^9, 3.872270428331297*^9}, {
+   3.872270458596798*^9, 3.872270477492733*^9}, {3.8722705270373154`*^9, 
+   3.8722705435828447`*^9}, {3.8722705977221556`*^9, 3.872270716458495*^9}, {
+   3.8722707942888365`*^9, 3.872270800478796*^9}, {3.8722710692952557`*^9, 
+   3.8722711517767477`*^9}, {3.87227131313978*^9, 3.8722713287623677`*^9}, {
+   3.872271409705464*^9, 3.872271441538619*^9}, {3.872271860588627*^9, 
+   3.872271938722863*^9}, {3.872271973422058*^9, 3.8722720065069504`*^9}, {
+   3.8722722099657173`*^9, 3.8722722102622285`*^9}, {3.87227566135347*^9, 
+   3.872275672709593*^9}},
+ ExpressionUUID -> "c3687269-d32f-4a39-a2a6-9a69f69e0f63"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"Template", "=", 
+   RowBox[{"{", 
+    RowBox[{
+    "\"\<<h4>Identifique a superf\[IAcute]cie dada pela equa\[CCedilla]\
+\[ATilde]o\>\"", ",", 
+     RowBox[{"Hold", "[", 
+      RowBox[{
+       RowBox[{
+        FractionBox[
+         RowBox[{"x", "^", "2"}], "a"], "+", 
+        FractionBox[
+         RowBox[{"y", "^", "2"}], "b"], "-", 
+        FractionBox[
+         RowBox[{"z", "^", "2"}], "c"]}], "=", "1"}], "]"}], ",", 
+     "\"\<.</h4>\>\""}], "}"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Params", "=", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"a", "\[Rule]", "2"}], ",", 
+        RowBox[{"a", "\[Rule]", "3"}], ",", 
+        RowBox[{"a", "\[Rule]", "4"}], ",", 
+        RowBox[{"a", "\[Rule]", "5"}]}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"b", "\[Rule]", "2"}], ",", 
+        RowBox[{"b", "\[Rule]", "3"}], ",", 
+        RowBox[{"b", "\[Rule]", "4"}], ",", 
+        RowBox[{"b", "\[Rule]", "5"}]}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"c", "\[Rule]", "2"}], ",", 
+        RowBox[{"c", "\[Rule]", "3"}], ",", 
+        RowBox[{"c", "\[Rule]", "4"}], ",", 
+        RowBox[{"c", "\[Rule]", "5"}]}], "}"}]}], "}"}], "//", "Tuples"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Answers", "=", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\"\<cone\>\"", ",", 
+       RowBox[{"-", "20"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<esfera\>\"", ",", 
+       RowBox[{"-", "20"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<elips\[OAcute]ide\>\"", ",", 
+       RowBox[{"-", "20"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<elips\[OAcute]ide parab\[OAcute]lico\>\"", ",", 
+       RowBox[{"-", "100"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<hiperbol\[OAcute]ide\>\"", ",", "50"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<hiperbol\[OAcute]ide de uma folha\>\"", ",", "50"}], "}"}],
+      ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<hiperbol\[OAcute]ide de duas folhas\>\"", ",", 
+       RowBox[{"-", "20"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<hiperbol\[OAcute]ide de tr\[EHat]s folhas\>\"", ",", 
+       RowBox[{"-", "100"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<parabol\[OAcute]ide\>\"", ",", 
+       RowBox[{"-", "20"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<parabol\[OAcute]ide c\[OHat]nico\>\"", ",", 
+       RowBox[{"-", "100"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<parabol\[OAcute]ide el\[IAcute]ptico\>\"", ",", 
+       RowBox[{"-", "20"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<parabol\[OAcute]ide hiperb\[OAcute]lico\>\"", ",", 
+       RowBox[{"-", "20"}]}], "}"}]}], "}"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"AppendTo", "[", 
+   RowBox[{"multichoicequestions", ",", 
+    RowBox[{"Map", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"GenerateMultiChoiceQuestion", "[", 
+        RowBox[{"Name", ",", 
+         RowBox[{
+          RowBox[{"Template", "/.", "#"}], "//", "ToMoodleHTMLString"}], ",", 
+         RowBox[{"First", "/@", "Answers"}], ",", 
+         RowBox[{"Last", "/@", "Answers"}], ",", 
+         RowBox[{"shuffleanswers", "\[Rule]", "False"}]}], "]"}], "&"}], ",", 
+      "Params"}], "]"}]}], "]"}], ";"}]}], "Input",
+ CellChangeTimes->{{3.8406441989747477`*^9, 3.8406442038391733`*^9}, {
+   3.840644233859055*^9, 3.8406446558956013`*^9}, {3.8406447124947033`*^9, 
+   3.840644712637332*^9}, 3.840644757714548*^9, 3.8407127358119183`*^9, 
+   3.8407128339957023`*^9, {3.8407129236411343`*^9, 3.840712940809694*^9}, {
+   3.84071304977917*^9, 3.8407130987385654`*^9}, {3.872096616768129*^9, 
+   3.8720966908531804`*^9}, 3.8720975329727697`*^9, {3.872098398220149*^9, 
+   3.872098508514708*^9}, {3.872098538547307*^9, 3.872098564975086*^9}, {
+   3.8720986117760344`*^9, 3.872098625746702*^9}, {3.8720987166908507`*^9, 
+   3.8720989407693777`*^9}, {3.8720989876784744`*^9, 3.872098991773472*^9}, {
+   3.872100144912511*^9, 3.8721001478633604`*^9}, {3.8721002477422743`*^9, 
+   3.8721002547810993`*^9}, {3.872100285369897*^9, 3.872100366535144*^9}, {
+   3.8721004295983887`*^9, 3.8721005096230307`*^9}, {3.872100543526662*^9, 
+   3.872100546980389*^9}, {3.87210064532697*^9, 3.8721006476874743`*^9}, 
+   3.872101209198415*^9, {3.87210133467894*^9, 3.872101352896247*^9}, {
+   3.872101384371992*^9, 3.8721013943794093`*^9}, {3.872101522143635*^9, 
+   3.8721015569187098`*^9}, {3.8721016772938833`*^9, 
+   3.8721017808568125`*^9}, {3.8721019850158806`*^9, 
+   3.8721019950564785`*^9}, {3.872103085035155*^9, 3.872103089470374*^9}, {
+   3.8721032441336613`*^9, 3.872103358699277*^9}, {3.8721035863410125`*^9, 
+   3.8721036034012213`*^9}, {3.8721036554928713`*^9, 3.872103657055846*^9}, {
+   3.872103689719405*^9, 3.872103692548175*^9}, {3.8721037444909997`*^9, 
+   3.87210376032712*^9}, 3.872103793467173*^9, {3.8721038473327265`*^9, 
+   3.8721038572111235`*^9}, 3.872104476619071*^9, {3.872112591525924*^9, 
+   3.87211262540029*^9}, {3.872112772367344*^9, 3.872112777199628*^9}, 
+   3.872113035574173*^9, {3.872113077027556*^9, 3.8721130774495697`*^9}, {
+   3.872168072663508*^9, 3.872168094610961*^9}, {3.8722698668665257`*^9, 
+   3.872269866960184*^9}, {3.8722698992994394`*^9, 3.872270032350387*^9}, {
+   3.8722700667725277`*^9, 3.872270164136774*^9}, {3.872270237540482*^9, 
+   3.872270330562679*^9}, {3.8722703778977766`*^9, 3.872270428331297*^9}, {
+   3.872270458596798*^9, 3.872270477492733*^9}, {3.8722705270373154`*^9, 
+   3.8722705435828447`*^9}, {3.8722705977221556`*^9, 3.872270716458495*^9}, {
+   3.8722707942888365`*^9, 3.872270800478796*^9}, {3.8722710692952557`*^9, 
+   3.8722711517767477`*^9}, {3.87227131313978*^9, 3.8722713287623677`*^9}, {
+   3.872271409705464*^9, 3.872271441538619*^9}, {3.872271860588627*^9, 
+   3.872271882089796*^9}, 3.872272657369094*^9, {3.872272708771078*^9, 
+   3.8722727515317793`*^9}, {3.8722756786105833`*^9, 3.8722756901563735`*^9}},
+ ExpressionUUID -> "c3687269-d32f-4a39-a2a6-9a69f69e0f63"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"Template", "=", 
+   RowBox[{"{", 
+    RowBox[{
+    "\"\<<h4>Identifique a superf\[IAcute]cie dada pela equa\[CCedilla]\
+\[ATilde]o\>\"", ",", 
+     RowBox[{"Hold", "[", 
+      RowBox[{
+       RowBox[{
+        FractionBox[
+         RowBox[{"x", "^", "2"}], "a"], "-", 
+        FractionBox[
+         RowBox[{"y", "^", "2"}], "b"], "+", 
+        FractionBox[
+         RowBox[{"z", "^", "2"}], "c"]}], "=", "1"}], "]"}], ",", 
+     "\"\<.</h4>\>\""}], "}"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Params", "=", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"a", "\[Rule]", "2"}], ",", 
+        RowBox[{"a", "\[Rule]", "3"}], ",", 
+        RowBox[{"a", "\[Rule]", "4"}], ",", 
+        RowBox[{"a", "\[Rule]", "5"}]}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"b", "\[Rule]", "2"}], ",", 
+        RowBox[{"b", "\[Rule]", "3"}], ",", 
+        RowBox[{"b", "\[Rule]", "4"}], ",", 
+        RowBox[{"b", "\[Rule]", "5"}]}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"c", "\[Rule]", "2"}], ",", 
+        RowBox[{"c", "\[Rule]", "3"}], ",", 
+        RowBox[{"c", "\[Rule]", "4"}], ",", 
+        RowBox[{"c", "\[Rule]", "5"}]}], "}"}]}], "}"}], "//", "Tuples"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Answers", "=", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\"\<cone\>\"", ",", 
+       RowBox[{"-", "20"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<esfera\>\"", ",", 
+       RowBox[{"-", "20"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<elips\[OAcute]ide\>\"", ",", 
+       RowBox[{"-", "20"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<elips\[OAcute]ide parab\[OAcute]lico\>\"", ",", 
+       RowBox[{"-", "100"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<hiperbol\[OAcute]ide\>\"", ",", "50"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<hiperbol\[OAcute]ide de uma folha\>\"", ",", "50"}], "}"}],
+      ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<hiperbol\[OAcute]ide de duas folhas\>\"", ",", 
+       RowBox[{"-", "20"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<hiperbol\[OAcute]ide de tr\[EHat]s folhas\>\"", ",", 
+       RowBox[{"-", "100"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<parabol\[OAcute]ide\>\"", ",", 
+       RowBox[{"-", "20"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<parabol\[OAcute]ide c\[OHat]nico\>\"", ",", 
+       RowBox[{"-", "100"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<parabol\[OAcute]ide el\[IAcute]ptico\>\"", ",", 
+       RowBox[{"-", "20"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<parabol\[OAcute]ide hiperb\[OAcute]lico\>\"", ",", 
+       RowBox[{"-", "20"}]}], "}"}]}], "}"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"AppendTo", "[", 
+   RowBox[{"multichoicequestions", ",", 
+    RowBox[{"Map", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"GenerateMultiChoiceQuestion", "[", 
+        RowBox[{"Name", ",", 
+         RowBox[{
+          RowBox[{"Template", "/.", "#"}], "//", "ToMoodleHTMLString"}], ",", 
+         RowBox[{"First", "/@", "Answers"}], ",", 
+         RowBox[{"Last", "/@", "Answers"}], ",", 
+         RowBox[{"shuffleanswers", "\[Rule]", "False"}]}], "]"}], "&"}], ",", 
+      "Params"}], "]"}]}], "]"}], ";"}]}], "Input",
+ CellChangeTimes->{{3.8406441989747477`*^9, 3.8406442038391733`*^9}, {
+   3.840644233859055*^9, 3.8406446558956013`*^9}, {3.8406447124947033`*^9, 
+   3.840644712637332*^9}, 3.840644757714548*^9, 3.8407127358119183`*^9, 
+   3.8407128339957023`*^9, {3.8407129236411343`*^9, 3.840712940809694*^9}, {
+   3.84071304977917*^9, 3.8407130987385654`*^9}, {3.872096616768129*^9, 
+   3.8720966908531804`*^9}, 3.8720975329727697`*^9, {3.872098398220149*^9, 
+   3.872098508514708*^9}, {3.872098538547307*^9, 3.872098564975086*^9}, {
+   3.8720986117760344`*^9, 3.872098625746702*^9}, {3.8720987166908507`*^9, 
+   3.8720989407693777`*^9}, {3.8720989876784744`*^9, 3.872098991773472*^9}, {
+   3.872100144912511*^9, 3.8721001478633604`*^9}, {3.8721002477422743`*^9, 
+   3.8721002547810993`*^9}, {3.872100285369897*^9, 3.872100366535144*^9}, {
+   3.8721004295983887`*^9, 3.8721005096230307`*^9}, {3.872100543526662*^9, 
+   3.872100546980389*^9}, {3.87210064532697*^9, 3.8721006476874743`*^9}, 
+   3.872101209198415*^9, {3.87210133467894*^9, 3.872101352896247*^9}, {
+   3.872101384371992*^9, 3.8721013943794093`*^9}, {3.872101522143635*^9, 
+   3.8721015569187098`*^9}, {3.8721016772938833`*^9, 
+   3.8721017808568125`*^9}, {3.8721019850158806`*^9, 
+   3.8721019950564785`*^9}, {3.872103085035155*^9, 3.872103089470374*^9}, {
+   3.8721032441336613`*^9, 3.872103358699277*^9}, {3.8721035863410125`*^9, 
+   3.8721036034012213`*^9}, {3.8721036554928713`*^9, 3.872103657055846*^9}, {
+   3.872103689719405*^9, 3.872103692548175*^9}, {3.8721037444909997`*^9, 
+   3.87210376032712*^9}, 3.872103793467173*^9, {3.8721038473327265`*^9, 
+   3.8721038572111235`*^9}, 3.872104476619071*^9, {3.872112591525924*^9, 
+   3.87211262540029*^9}, {3.872112772367344*^9, 3.872112777199628*^9}, 
+   3.872113035574173*^9, {3.872113077027556*^9, 3.8721130774495697`*^9}, {
+   3.872168072663508*^9, 3.872168094610961*^9}, {3.8722698668665257`*^9, 
+   3.872269866960184*^9}, {3.8722698992994394`*^9, 3.872270032350387*^9}, {
+   3.8722700667725277`*^9, 3.872270164136774*^9}, {3.872270237540482*^9, 
+   3.872270330562679*^9}, {3.8722703778977766`*^9, 3.872270428331297*^9}, {
+   3.872270458596798*^9, 3.872270477492733*^9}, {3.8722705270373154`*^9, 
+   3.8722705435828447`*^9}, {3.8722705977221556`*^9, 3.872270716458495*^9}, {
+   3.8722707942888365`*^9, 3.872270800478796*^9}, {3.8722710692952557`*^9, 
+   3.8722711517767477`*^9}, {3.87227131313978*^9, 3.8722713287623677`*^9}, {
+   3.872271409705464*^9, 3.872271441538619*^9}, {3.872271860588627*^9, 
+   3.872271882089796*^9}, 3.872272657369094*^9, {3.872272708771078*^9, 
+   3.8722727515317793`*^9}, {3.8722728654277697`*^9, 
+   3.8722728679279957`*^9}, {3.872275692429041*^9, 3.8722757012443247`*^9}},
+ ExpressionUUID -> "c3687269-d32f-4a39-a2a6-9a69f69e0f63"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"Template", "=", 
+   RowBox[{"{", 
+    RowBox[{
+    "\"\<<h4>Identifique a superf\[IAcute]cie dada pela equa\[CCedilla]\
+\[ATilde]o\>\"", ",", 
+     RowBox[{"Hold", "[", 
+      RowBox[{
+       RowBox[{
+        FractionBox[
+         RowBox[{"x", "^", "2"}], "a"], "-", 
+        FractionBox[
+         RowBox[{"y", "^", "2"}], "b"], "-", 
+        FractionBox[
+         RowBox[{"z", "^", "2"}], "c"]}], "=", "1"}], "]"}], ",", 
+     "\"\<.</h4>\>\""}], "}"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Params", "=", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"a", "\[Rule]", "2"}], ",", 
+        RowBox[{"a", "\[Rule]", "3"}], ",", 
+        RowBox[{"a", "\[Rule]", "4"}], ",", 
+        RowBox[{"a", "\[Rule]", "5"}]}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"b", "\[Rule]", "2"}], ",", 
+        RowBox[{"b", "\[Rule]", "3"}], ",", 
+        RowBox[{"b", "\[Rule]", "4"}], ",", 
+        RowBox[{"b", "\[Rule]", "5"}]}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"c", "\[Rule]", "2"}], ",", 
+        RowBox[{"c", "\[Rule]", "3"}], ",", 
+        RowBox[{"c", "\[Rule]", "4"}], ",", 
+        RowBox[{"c", "\[Rule]", "5"}]}], "}"}]}], "}"}], "//", "Tuples"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Answers", "=", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\"\<cone\>\"", ",", 
+       RowBox[{"-", "20"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<esfera\>\"", ",", 
+       RowBox[{"-", "20"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<elips\[OAcute]ide\>\"", ",", 
+       RowBox[{"-", "20"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<elips\[OAcute]ide parab\[OAcute]lico\>\"", ",", 
+       RowBox[{"-", "100"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<hiperbol\[OAcute]ide\>\"", ",", "50"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<hiperbol\[OAcute]ide de uma folha\>\"", ",", 
+       RowBox[{"-", "20"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<hiperbol\[OAcute]ide de duas folhas\>\"", ",", "50"}], 
+      "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<hiperbol\[OAcute]ide de tr\[EHat]s folhas\>\"", ",", 
+       RowBox[{"-", "100"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<parabol\[OAcute]ide\>\"", ",", 
+       RowBox[{"-", "20"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<parabol\[OAcute]ide c\[OHat]nico\>\"", ",", 
+       RowBox[{"-", "100"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<parabol\[OAcute]ide el\[IAcute]ptico\>\"", ",", 
+       RowBox[{"-", "20"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<parabol\[OAcute]ide hiperb\[OAcute]lico\>\"", ",", 
+       RowBox[{"-", "20"}]}], "}"}]}], "}"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"AppendTo", "[", 
+   RowBox[{"multichoicequestions", ",", 
+    RowBox[{"Map", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"GenerateMultiChoiceQuestion", "[", 
+        RowBox[{"Name", ",", 
+         RowBox[{
+          RowBox[{"Template", "/.", "#"}], "//", "ToMoodleHTMLString"}], ",", 
+         RowBox[{"First", "/@", "Answers"}], ",", 
+         RowBox[{"Last", "/@", "Answers"}], ",", 
+         RowBox[{"shuffleanswers", "\[Rule]", "False"}]}], "]"}], "&"}], ",", 
+      "Params"}], "]"}]}], "]"}], ";"}]}], "Input",
+ CellChangeTimes->{{3.8406441989747477`*^9, 3.8406442038391733`*^9}, {
+   3.840644233859055*^9, 3.8406446558956013`*^9}, {3.8406447124947033`*^9, 
+   3.840644712637332*^9}, 3.840644757714548*^9, 3.8407127358119183`*^9, 
+   3.8407128339957023`*^9, {3.8407129236411343`*^9, 3.840712940809694*^9}, {
+   3.84071304977917*^9, 3.8407130987385654`*^9}, {3.872096616768129*^9, 
+   3.8720966908531804`*^9}, 3.8720975329727697`*^9, {3.872098398220149*^9, 
+   3.872098508514708*^9}, {3.872098538547307*^9, 3.872098564975086*^9}, {
+   3.8720986117760344`*^9, 3.872098625746702*^9}, {3.8720987166908507`*^9, 
+   3.8720989407693777`*^9}, {3.8720989876784744`*^9, 3.872098991773472*^9}, {
+   3.872100144912511*^9, 3.8721001478633604`*^9}, {3.8721002477422743`*^9, 
+   3.8721002547810993`*^9}, {3.872100285369897*^9, 3.872100366535144*^9}, {
+   3.8721004295983887`*^9, 3.8721005096230307`*^9}, {3.872100543526662*^9, 
+   3.872100546980389*^9}, {3.87210064532697*^9, 3.8721006476874743`*^9}, 
+   3.872101209198415*^9, {3.87210133467894*^9, 3.872101352896247*^9}, {
+   3.872101384371992*^9, 3.8721013943794093`*^9}, {3.872101522143635*^9, 
+   3.8721015569187098`*^9}, {3.8721016772938833`*^9, 
+   3.8721017808568125`*^9}, {3.8721019850158806`*^9, 
+   3.8721019950564785`*^9}, {3.872103085035155*^9, 3.872103089470374*^9}, {
+   3.8721032441336613`*^9, 3.872103358699277*^9}, {3.8721035863410125`*^9, 
+   3.8721036034012213`*^9}, {3.8721036554928713`*^9, 3.872103657055846*^9}, {
+   3.872103689719405*^9, 3.872103692548175*^9}, {3.8721037444909997`*^9, 
+   3.87210376032712*^9}, 3.872103793467173*^9, {3.8721038473327265`*^9, 
+   3.8721038572111235`*^9}, 3.872104476619071*^9, {3.872112591525924*^9, 
+   3.87211262540029*^9}, {3.872112772367344*^9, 3.872112777199628*^9}, 
+   3.872113035574173*^9, {3.872113077027556*^9, 3.8721130774495697`*^9}, {
+   3.872168072663508*^9, 3.872168094610961*^9}, {3.8722698668665257`*^9, 
+   3.872269866960184*^9}, {3.8722698992994394`*^9, 3.872270032350387*^9}, {
+   3.8722700667725277`*^9, 3.872270164136774*^9}, {3.872270237540482*^9, 
+   3.872270330562679*^9}, {3.8722703778977766`*^9, 3.872270428331297*^9}, {
+   3.872270458596798*^9, 3.872270477492733*^9}, {3.8722705270373154`*^9, 
+   3.8722705435828447`*^9}, {3.8722705977221556`*^9, 3.872270716458495*^9}, {
+   3.8722707942888365`*^9, 3.872270800478796*^9}, {3.8722710692952557`*^9, 
+   3.8722711517767477`*^9}, {3.87227131313978*^9, 3.8722713287623677`*^9}, {
+   3.872271409705464*^9, 3.872271441538619*^9}, {3.872271860588627*^9, 
+   3.872271882089796*^9}, 3.872272657369094*^9, {3.872272708771078*^9, 
+   3.8722727515317793`*^9}, {3.8722728654277697`*^9, 3.872272885683625*^9}, {
+   3.8722757047951927`*^9, 3.8722757138415284`*^9}},
+ ExpressionUUID -> "c3687269-d32f-4a39-a2a6-9a69f69e0f63"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"Template", "=", 
+   RowBox[{"{", 
+    RowBox[{
+    "\"\<<h4>Identifique a superf\[IAcute]cie dada pela equa\[CCedilla]\
+\[ATilde]o\>\"", ",", 
+     RowBox[{"Hold", "[", 
+      RowBox[{
+       RowBox[{
+        FractionBox[
+         RowBox[{"x", "^", "2"}], "a"], "+", 
+        FractionBox[
+         RowBox[{"y", "^", "2"}], "b"], "-", 
+        FractionBox[
+         RowBox[{"z", "^", "2"}], "c"]}], "=", 
+       RowBox[{"-", "1"}]}], "]"}], ",", "\"\<.</h4>\>\""}], "}"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Params", "=", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"a", "\[Rule]", "2"}], ",", 
+        RowBox[{"a", "\[Rule]", "3"}], ",", 
+        RowBox[{"a", "\[Rule]", "4"}], ",", 
+        RowBox[{"a", "\[Rule]", "5"}]}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"b", "\[Rule]", "2"}], ",", 
+        RowBox[{"b", "\[Rule]", "3"}], ",", 
+        RowBox[{"b", "\[Rule]", "4"}], ",", 
+        RowBox[{"b", "\[Rule]", "5"}]}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"c", "\[Rule]", "2"}], ",", 
+        RowBox[{"c", "\[Rule]", "3"}], ",", 
+        RowBox[{"c", "\[Rule]", "4"}], ",", 
+        RowBox[{"c", "\[Rule]", "5"}]}], "}"}]}], "}"}], "//", "Tuples"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Answers", "=", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\"\<cone\>\"", ",", 
+       RowBox[{"-", "20"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<esfera\>\"", ",", 
+       RowBox[{"-", "20"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<elips\[OAcute]ide\>\"", ",", 
+       RowBox[{"-", "20"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<elips\[OAcute]ide parab\[OAcute]lico\>\"", ",", 
+       RowBox[{"-", "100"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<hiperbol\[OAcute]ide\>\"", ",", "50"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<hiperbol\[OAcute]ide de uma folha\>\"", ",", 
+       RowBox[{"-", "20"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<hiperbol\[OAcute]ide de duas folhas\>\"", ",", "50"}], 
+      "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<hiperbol\[OAcute]ide de tr\[EHat]s folhas\>\"", ",", 
+       RowBox[{"-", "100"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<parabol\[OAcute]ide\>\"", ",", 
+       RowBox[{"-", "20"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<parabol\[OAcute]ide c\[OHat]nico\>\"", ",", 
+       RowBox[{"-", "100"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<parabol\[OAcute]ide el\[IAcute]ptico\>\"", ",", 
+       RowBox[{"-", "20"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<parabol\[OAcute]ide hiperb\[OAcute]lico\>\"", ",", 
+       RowBox[{"-", "20"}]}], "}"}]}], "}"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"AppendTo", "[", 
+   RowBox[{"multichoicequestions", ",", 
+    RowBox[{"Map", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"GenerateMultiChoiceQuestion", "[", 
+        RowBox[{"Name", ",", 
+         RowBox[{
+          RowBox[{"Template", "/.", "#"}], "//", "ToMoodleHTMLString"}], ",", 
+         RowBox[{"First", "/@", "Answers"}], ",", 
+         RowBox[{"Last", "/@", "Answers"}], ",", 
+         RowBox[{"shuffleanswers", "\[Rule]", "False"}]}], "]"}], "&"}], ",", 
+      "Params"}], "]"}]}], "]"}], ";"}]}], "Input",
+ CellChangeTimes->{{3.8406441989747477`*^9, 3.8406442038391733`*^9}, {
+   3.840644233859055*^9, 3.8406446558956013`*^9}, {3.8406447124947033`*^9, 
+   3.840644712637332*^9}, 3.840644757714548*^9, 3.8407127358119183`*^9, 
+   3.8407128339957023`*^9, {3.8407129236411343`*^9, 3.840712940809694*^9}, {
+   3.84071304977917*^9, 3.8407130987385654`*^9}, {3.872096616768129*^9, 
+   3.8720966908531804`*^9}, 3.8720975329727697`*^9, {3.872098398220149*^9, 
+   3.872098508514708*^9}, {3.872098538547307*^9, 3.872098564975086*^9}, {
+   3.8720986117760344`*^9, 3.872098625746702*^9}, {3.8720987166908507`*^9, 
+   3.8720989407693777`*^9}, {3.8720989876784744`*^9, 3.872098991773472*^9}, {
+   3.872100144912511*^9, 3.8721001478633604`*^9}, {3.8721002477422743`*^9, 
+   3.8721002547810993`*^9}, {3.872100285369897*^9, 3.872100366535144*^9}, {
+   3.8721004295983887`*^9, 3.8721005096230307`*^9}, {3.872100543526662*^9, 
+   3.872100546980389*^9}, {3.87210064532697*^9, 3.8721006476874743`*^9}, 
+   3.872101209198415*^9, {3.87210133467894*^9, 3.872101352896247*^9}, {
+   3.872101384371992*^9, 3.8721013943794093`*^9}, {3.872101522143635*^9, 
+   3.8721015569187098`*^9}, {3.8721016772938833`*^9, 
+   3.8721017808568125`*^9}, {3.8721019850158806`*^9, 
+   3.8721019950564785`*^9}, {3.872103085035155*^9, 3.872103089470374*^9}, {
+   3.8721032441336613`*^9, 3.872103358699277*^9}, {3.8721035863410125`*^9, 
+   3.8721036034012213`*^9}, {3.8721036554928713`*^9, 3.872103657055846*^9}, {
+   3.872103689719405*^9, 3.872103692548175*^9}, {3.8721037444909997`*^9, 
+   3.87210376032712*^9}, 3.872103793467173*^9, {3.8721038473327265`*^9, 
+   3.8721038572111235`*^9}, 3.872104476619071*^9, {3.872112591525924*^9, 
+   3.87211262540029*^9}, {3.872112772367344*^9, 3.872112777199628*^9}, 
+   3.872113035574173*^9, {3.872113077027556*^9, 3.8721130774495697`*^9}, {
+   3.872168072663508*^9, 3.872168094610961*^9}, {3.8722698668665257`*^9, 
+   3.872269866960184*^9}, {3.8722698992994394`*^9, 3.872270032350387*^9}, {
+   3.8722700667725277`*^9, 3.872270164136774*^9}, {3.872270237540482*^9, 
+   3.872270330562679*^9}, {3.8722703778977766`*^9, 3.872270428331297*^9}, {
+   3.872270458596798*^9, 3.872270477492733*^9}, {3.8722705270373154`*^9, 
+   3.8722705435828447`*^9}, {3.8722705977221556`*^9, 3.872270716458495*^9}, {
+   3.8722707942888365`*^9, 3.872270800478796*^9}, {3.8722710692952557`*^9, 
+   3.8722711517767477`*^9}, {3.87227131313978*^9, 3.8722713287623677`*^9}, {
+   3.872271409705464*^9, 3.872271441538619*^9}, {3.872271860588627*^9, 
+   3.872271882089796*^9}, 3.872272657369094*^9, {3.872272708771078*^9, 
+   3.8722727515317793`*^9}, {3.8722728654277697`*^9, 3.872272908736831*^9}, {
+   3.872275749824783*^9, 3.8722757579515405`*^9}},
+ ExpressionUUID -> "c3687269-d32f-4a39-a2a6-9a69f69e0f63"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"Template", "=", 
+   RowBox[{"{", 
+    RowBox[{
+    "\"\<<h4>Identifique a superf\[IAcute]cie dada pela equa\[CCedilla]\
+\[ATilde]o\>\"", ",", 
+     RowBox[{"Hold", "[", 
+      RowBox[{
+       RowBox[{"x", "+", 
+        FractionBox[
+         RowBox[{"y", "^", "2"}], "a"], "+", 
+        FractionBox[
+         RowBox[{"z", "^", "2"}], "b"]}], "=", "0"}], "]"}], ",", 
+     "\"\<.</h4>\>\""}], "}"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Params", "=", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"a", "\[Rule]", "2"}], ",", 
+        RowBox[{"a", "\[Rule]", "3"}], ",", 
+        RowBox[{"a", "\[Rule]", "4"}], ",", 
+        RowBox[{"a", "\[Rule]", "5"}]}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"b", "\[Rule]", "2"}], ",", 
+        RowBox[{"b", "\[Rule]", "3"}], ",", 
+        RowBox[{"b", "\[Rule]", "4"}], ",", 
+        RowBox[{"b", "\[Rule]", "5"}]}], "}"}]}], "}"}], "//", "Tuples"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Answers", "=", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\"\<cone\>\"", ",", 
+       RowBox[{"-", "20"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<esfera\>\"", ",", 
+       RowBox[{"-", "20"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<elips\[OAcute]ide\>\"", ",", 
+       RowBox[{"-", "20"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<elips\[OAcute]ide parab\[OAcute]lico\>\"", ",", 
+       RowBox[{"-", "100"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<hiperbol\[OAcute]ide\>\"", ",", 
+       RowBox[{"-", "20"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<hiperbol\[OAcute]ide de uma folha\>\"", ",", 
+       RowBox[{"-", "20"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<hiperbol\[OAcute]ide de duas folhas\>\"", ",", 
+       RowBox[{"-", "20"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<hiperbol\[OAcute]ide de tr\[EHat]s folhas\>\"", ",", 
+       RowBox[{"-", "100"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<parabol\[OAcute]ide\>\"", ",", "50"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<parabol\[OAcute]ide c\[OHat]nico\>\"", ",", 
+       RowBox[{"-", "100"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<parabol\[OAcute]ide el\[IAcute]ptico\>\"", ",", "50"}], 
+      "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<parabol\[OAcute]ide hiperb\[OAcute]lico\>\"", ",", 
+       RowBox[{"-", "20"}]}], "}"}]}], "}"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"AppendTo", "[", 
+   RowBox[{"multichoicequestions", ",", 
+    RowBox[{"Map", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"GenerateMultiChoiceQuestion", "[", 
+        RowBox[{"Name", ",", 
+         RowBox[{
+          RowBox[{"Template", "/.", "#"}], "//", "ToMoodleHTMLString"}], ",", 
+         RowBox[{"First", "/@", "Answers"}], ",", 
+         RowBox[{"Last", "/@", "Answers"}], ",", 
+         RowBox[{"shuffleanswers", "\[Rule]", "False"}]}], "]"}], "&"}], ",", 
+      "Params"}], "]"}]}], "]"}], ";"}]}], "Input",
+ CellChangeTimes->{{3.8406441989747477`*^9, 3.8406442038391733`*^9}, {
+   3.840644233859055*^9, 3.8406446558956013`*^9}, {3.8406447124947033`*^9, 
+   3.840644712637332*^9}, 3.840644757714548*^9, 3.8407127358119183`*^9, 
+   3.8407128339957023`*^9, {3.8407129236411343`*^9, 3.840712940809694*^9}, {
+   3.84071304977917*^9, 3.8407130987385654`*^9}, {3.872096616768129*^9, 
+   3.8720966908531804`*^9}, 3.8720975329727697`*^9, {3.872098398220149*^9, 
+   3.872098508514708*^9}, {3.872098538547307*^9, 3.872098564975086*^9}, {
+   3.8720986117760344`*^9, 3.872098625746702*^9}, {3.8720987166908507`*^9, 
+   3.8720989407693777`*^9}, {3.8720989876784744`*^9, 3.872098991773472*^9}, {
+   3.872100144912511*^9, 3.8721001478633604`*^9}, {3.8721002477422743`*^9, 
+   3.8721002547810993`*^9}, {3.872100285369897*^9, 3.872100366535144*^9}, {
+   3.8721004295983887`*^9, 3.8721005096230307`*^9}, {3.872100543526662*^9, 
+   3.872100546980389*^9}, {3.87210064532697*^9, 3.8721006476874743`*^9}, 
+   3.872101209198415*^9, {3.87210133467894*^9, 3.872101352896247*^9}, {
+   3.872101384371992*^9, 3.8721013943794093`*^9}, {3.872101522143635*^9, 
+   3.8721015569187098`*^9}, {3.8721016772938833`*^9, 
+   3.8721017808568125`*^9}, {3.8721019850158806`*^9, 
+   3.8721019950564785`*^9}, {3.872103085035155*^9, 3.872103089470374*^9}, {
+   3.8721032441336613`*^9, 3.872103358699277*^9}, {3.8721035863410125`*^9, 
+   3.8721036034012213`*^9}, {3.8721036554928713`*^9, 3.872103657055846*^9}, {
+   3.872103689719405*^9, 3.872103692548175*^9}, {3.8721037444909997`*^9, 
+   3.87210376032712*^9}, 3.872103793467173*^9, {3.8721038473327265`*^9, 
+   3.8721038572111235`*^9}, 3.872104476619071*^9, {3.872112591525924*^9, 
+   3.87211262540029*^9}, {3.872112772367344*^9, 3.872112777199628*^9}, 
+   3.872113035574173*^9, {3.872113077027556*^9, 3.8721130774495697`*^9}, {
+   3.872168072663508*^9, 3.872168094610961*^9}, {3.8722698668665257`*^9, 
+   3.872269866960184*^9}, {3.8722698992994394`*^9, 3.872270032350387*^9}, {
+   3.8722700667725277`*^9, 3.872270164136774*^9}, {3.872270237540482*^9, 
+   3.872270330562679*^9}, {3.8722703778977766`*^9, 3.872270428331297*^9}, {
+   3.872270458596798*^9, 3.872270477492733*^9}, {3.8722705270373154`*^9, 
+   3.8722705435828447`*^9}, {3.8722705977221556`*^9, 3.872270716458495*^9}, {
+   3.8722707942888365`*^9, 3.872270800478796*^9}, {3.8722710692952557`*^9, 
+   3.8722711517767477`*^9}, {3.87227131313978*^9, 3.8722713287623677`*^9}, {
+   3.872271409705464*^9, 3.872271441538619*^9}, {3.872271860588627*^9, 
+   3.872271882089796*^9}, 3.872272657369094*^9, {3.872272708771078*^9, 
+   3.8722727515317793`*^9}, {3.8722728654277697`*^9, 3.872272908736831*^9}, {
+   3.8722730842391877`*^9, 3.87227312002577*^9}, {3.8722731555875745`*^9, 
+   3.8722731686860805`*^9}, {3.8722732590718746`*^9, 
+   3.8722732877796144`*^9}, {3.872275718327223*^9, 3.872275728178675*^9}},
+ ExpressionUUID -> "c3687269-d32f-4a39-a2a6-9a69f69e0f63"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"Template", "=", 
+   RowBox[{"{", 
+    RowBox[{
+    "\"\<<h4>Identifique a superf\[IAcute]cie dada pela equa\[CCedilla]\
+\[ATilde]o\>\"", ",", 
+     RowBox[{"Hold", "[", 
+      RowBox[{
+       RowBox[{"x", "-", 
+        FractionBox[
+         RowBox[{"y", "^", "2"}], "a"], "-", 
+        FractionBox[
+         RowBox[{"z", "^", "2"}], "b"]}], "=", "0"}], "]"}], ",", 
+     "\"\<.</h4>\>\""}], "}"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Params", "=", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"a", "\[Rule]", "2"}], ",", 
+        RowBox[{"a", "\[Rule]", "3"}], ",", 
+        RowBox[{"a", "\[Rule]", "4"}], ",", 
+        RowBox[{"a", "\[Rule]", "5"}]}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"b", "\[Rule]", "2"}], ",", 
+        RowBox[{"b", "\[Rule]", "3"}], ",", 
+        RowBox[{"b", "\[Rule]", "4"}], ",", 
+        RowBox[{"b", "\[Rule]", "5"}]}], "}"}]}], "}"}], "//", "Tuples"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Answers", "=", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\"\<cone\>\"", ",", 
+       RowBox[{"-", "20"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<esfera\>\"", ",", 
+       RowBox[{"-", "20"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<elips\[OAcute]ide\>\"", ",", 
+       RowBox[{"-", "20"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<elips\[OAcute]ide parab\[OAcute]lico\>\"", ",", 
+       RowBox[{"-", "100"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<hiperbol\[OAcute]ide\>\"", ",", 
+       RowBox[{"-", "20"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<hiperbol\[OAcute]ide de uma folha\>\"", ",", 
+       RowBox[{"-", "20"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<hiperbol\[OAcute]ide de duas folhas\>\"", ",", 
+       RowBox[{"-", "20"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<hiperbol\[OAcute]ide de tr\[EHat]s folhas\>\"", ",", 
+       RowBox[{"-", "100"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<parabol\[OAcute]ide\>\"", ",", "50"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<parabol\[OAcute]ide c\[OHat]nico\>\"", ",", 
+       RowBox[{"-", "100"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<parabol\[OAcute]ide el\[IAcute]ptico\>\"", ",", "50"}], 
+      "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<parabol\[OAcute]ide hiperb\[OAcute]lico\>\"", ",", 
+       RowBox[{"-", "20"}]}], "}"}]}], "}"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"AppendTo", "[", 
+   RowBox[{"multichoicequestions", ",", 
+    RowBox[{"Map", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"GenerateMultiChoiceQuestion", "[", 
+        RowBox[{"Name", ",", 
+         RowBox[{
+          RowBox[{"Template", "/.", "#"}], "//", "ToMoodleHTMLString"}], ",", 
+         RowBox[{"First", "/@", "Answers"}], ",", 
+         RowBox[{"Last", "/@", "Answers"}], ",", 
+         RowBox[{"shuffleanswers", "\[Rule]", "False"}]}], "]"}], "&"}], ",", 
+      "Params"}], "]"}]}], "]"}], ";"}]}], "Input",
+ CellChangeTimes->{{3.8406441989747477`*^9, 3.8406442038391733`*^9}, {
+   3.840644233859055*^9, 3.8406446558956013`*^9}, {3.8406447124947033`*^9, 
+   3.840644712637332*^9}, 3.840644757714548*^9, 3.8407127358119183`*^9, 
+   3.8407128339957023`*^9, {3.8407129236411343`*^9, 3.840712940809694*^9}, {
+   3.84071304977917*^9, 3.8407130987385654`*^9}, {3.872096616768129*^9, 
+   3.8720966908531804`*^9}, 3.8720975329727697`*^9, {3.872098398220149*^9, 
+   3.872098508514708*^9}, {3.872098538547307*^9, 3.872098564975086*^9}, {
+   3.8720986117760344`*^9, 3.872098625746702*^9}, {3.8720987166908507`*^9, 
+   3.8720989407693777`*^9}, {3.8720989876784744`*^9, 3.872098991773472*^9}, {
+   3.872100144912511*^9, 3.8721001478633604`*^9}, {3.8721002477422743`*^9, 
+   3.8721002547810993`*^9}, {3.872100285369897*^9, 3.872100366535144*^9}, {
+   3.8721004295983887`*^9, 3.8721005096230307`*^9}, {3.872100543526662*^9, 
+   3.872100546980389*^9}, {3.87210064532697*^9, 3.8721006476874743`*^9}, 
+   3.872101209198415*^9, {3.87210133467894*^9, 3.872101352896247*^9}, {
+   3.872101384371992*^9, 3.8721013943794093`*^9}, {3.872101522143635*^9, 
+   3.8721015569187098`*^9}, {3.8721016772938833`*^9, 
+   3.8721017808568125`*^9}, {3.8721019850158806`*^9, 
+   3.8721019950564785`*^9}, {3.872103085035155*^9, 3.872103089470374*^9}, {
+   3.8721032441336613`*^9, 3.872103358699277*^9}, {3.8721035863410125`*^9, 
+   3.8721036034012213`*^9}, {3.8721036554928713`*^9, 3.872103657055846*^9}, {
+   3.872103689719405*^9, 3.872103692548175*^9}, {3.8721037444909997`*^9, 
+   3.87210376032712*^9}, 3.872103793467173*^9, {3.8721038473327265`*^9, 
+   3.8721038572111235`*^9}, 3.872104476619071*^9, {3.872112591525924*^9, 
+   3.87211262540029*^9}, {3.872112772367344*^9, 3.872112777199628*^9}, 
+   3.872113035574173*^9, {3.872113077027556*^9, 3.8721130774495697`*^9}, {
+   3.872168072663508*^9, 3.872168094610961*^9}, {3.8722698668665257`*^9, 
+   3.872269866960184*^9}, {3.8722698992994394`*^9, 3.872270032350387*^9}, {
+   3.8722700667725277`*^9, 3.872270164136774*^9}, {3.872270237540482*^9, 
+   3.872270330562679*^9}, {3.8722703778977766`*^9, 3.872270428331297*^9}, {
+   3.872270458596798*^9, 3.872270477492733*^9}, {3.8722705270373154`*^9, 
+   3.8722705435828447`*^9}, {3.8722705977221556`*^9, 3.872270716458495*^9}, {
+   3.8722707942888365`*^9, 3.872270800478796*^9}, {3.8722710692952557`*^9, 
+   3.8722711517767477`*^9}, {3.87227131313978*^9, 3.8722713287623677`*^9}, {
+   3.872271409705464*^9, 3.872271441538619*^9}, {3.872271860588627*^9, 
+   3.872271882089796*^9}, 3.872272657369094*^9, {3.872272708771078*^9, 
+   3.8722727515317793`*^9}, {3.8722728654277697`*^9, 3.872272908736831*^9}, {
+   3.8722730842391877`*^9, 3.87227312002577*^9}, {3.8722731555875745`*^9, 
+   3.8722731686860805`*^9}, {3.8722732590718746`*^9, 
+   3.8722732991178436`*^9}, {3.87227573360212*^9, 3.8722757418989058`*^9}},
+ ExpressionUUID -> "c3687269-d32f-4a39-a2a6-9a69f69e0f63"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"Template", "=", 
+   RowBox[{"{", 
+    RowBox[{
+    "\"\<<h4>Identifique a superf\[IAcute]cie dada pela equa\[CCedilla]\
+\[ATilde]o\>\"", ",", 
+     RowBox[{"Hold", "[", 
+      RowBox[{
+       RowBox[{"x", "+", 
+        FractionBox[
+         RowBox[{"y", "^", "2"}], "a"], "-", 
+        FractionBox[
+         RowBox[{"z", "^", "2"}], "b"]}], "=", "0"}], "]"}], ",", 
+     "\"\<.</h4>\>\""}], "}"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Params", "=", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"a", "\[Rule]", "2"}], ",", 
+        RowBox[{"a", "\[Rule]", "3"}], ",", 
+        RowBox[{"a", "\[Rule]", "4"}], ",", 
+        RowBox[{"a", "\[Rule]", "5"}]}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"b", "\[Rule]", "2"}], ",", 
+        RowBox[{"b", "\[Rule]", "3"}], ",", 
+        RowBox[{"b", "\[Rule]", "4"}], ",", 
+        RowBox[{"b", "\[Rule]", "5"}]}], "}"}]}], "}"}], "//", "Tuples"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Answers", "=", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\"\<cone\>\"", ",", 
+       RowBox[{"-", "20"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<esfera\>\"", ",", 
+       RowBox[{"-", "20"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<elips\[OAcute]ide\>\"", ",", 
+       RowBox[{"-", "20"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<elips\[OAcute]ide parab\[OAcute]lico\>\"", ",", 
+       RowBox[{"-", "100"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<hiperbol\[OAcute]ide\>\"", ",", 
+       RowBox[{"-", "20"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<hiperbol\[OAcute]ide de uma folha\>\"", ",", 
+       RowBox[{"-", "20"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<hiperbol\[OAcute]ide de duas folhas\>\"", ",", 
+       RowBox[{"-", "20"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<hiperbol\[OAcute]ide de tr\[EHat]s folhas\>\"", ",", 
+       RowBox[{"-", "100"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<parabol\[OAcute]ide\>\"", ",", "50"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<parabol\[OAcute]ide c\[OHat]nico\>\"", ",", 
+       RowBox[{"-", "100"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<parabol\[OAcute]ide el\[IAcute]ptico\>\"", ",", 
+       RowBox[{"-", "20"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<parabol\[OAcute]ide hiperb\[OAcute]lico\>\"", ",", "50"}], 
+      "}"}]}], "}"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"AppendTo", "[", 
+   RowBox[{"multichoicequestions", ",", 
+    RowBox[{"Map", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"GenerateMultiChoiceQuestion", "[", 
+        RowBox[{"Name", ",", 
+         RowBox[{
+          RowBox[{"Template", "/.", "#"}], "//", "ToMoodleHTMLString"}], ",", 
+         RowBox[{"First", "/@", "Answers"}], ",", 
+         RowBox[{"Last", "/@", "Answers"}], ",", 
+         RowBox[{"shuffleanswers", "\[Rule]", "False"}]}], "]"}], "&"}], ",", 
+      "Params"}], "]"}]}], "]"}], ";"}]}], "Input",
+ CellChangeTimes->{{3.8406441989747477`*^9, 3.8406442038391733`*^9}, {
+   3.840644233859055*^9, 3.8406446558956013`*^9}, {3.8406447124947033`*^9, 
+   3.840644712637332*^9}, 3.840644757714548*^9, 3.8407127358119183`*^9, 
+   3.8407128339957023`*^9, {3.8407129236411343`*^9, 3.840712940809694*^9}, {
+   3.84071304977917*^9, 3.8407130987385654`*^9}, {3.872096616768129*^9, 
+   3.8720966908531804`*^9}, 3.8720975329727697`*^9, {3.872098398220149*^9, 
+   3.872098508514708*^9}, {3.872098538547307*^9, 3.872098564975086*^9}, {
+   3.8720986117760344`*^9, 3.872098625746702*^9}, {3.8720987166908507`*^9, 
+   3.8720989407693777`*^9}, {3.8720989876784744`*^9, 3.872098991773472*^9}, {
+   3.872100144912511*^9, 3.8721001478633604`*^9}, {3.8721002477422743`*^9, 
+   3.8721002547810993`*^9}, {3.872100285369897*^9, 3.872100366535144*^9}, {
+   3.8721004295983887`*^9, 3.8721005096230307`*^9}, {3.872100543526662*^9, 
+   3.872100546980389*^9}, {3.87210064532697*^9, 3.8721006476874743`*^9}, 
+   3.872101209198415*^9, {3.87210133467894*^9, 3.872101352896247*^9}, {
+   3.872101384371992*^9, 3.8721013943794093`*^9}, {3.872101522143635*^9, 
+   3.8721015569187098`*^9}, {3.8721016772938833`*^9, 
+   3.8721017808568125`*^9}, {3.8721019850158806`*^9, 
+   3.8721019950564785`*^9}, {3.872103085035155*^9, 3.872103089470374*^9}, {
+   3.8721032441336613`*^9, 3.872103358699277*^9}, {3.8721035863410125`*^9, 
+   3.8721036034012213`*^9}, {3.8721036554928713`*^9, 3.872103657055846*^9}, {
+   3.872103689719405*^9, 3.872103692548175*^9}, {3.8721037444909997`*^9, 
+   3.87210376032712*^9}, 3.872103793467173*^9, {3.8721038473327265`*^9, 
+   3.8721038572111235`*^9}, 3.872104476619071*^9, {3.872112591525924*^9, 
+   3.87211262540029*^9}, {3.872112772367344*^9, 3.872112777199628*^9}, 
+   3.872113035574173*^9, {3.872113077027556*^9, 3.8721130774495697`*^9}, {
+   3.872168072663508*^9, 3.872168094610961*^9}, {3.8722698668665257`*^9, 
+   3.872269866960184*^9}, {3.8722698992994394`*^9, 3.872270032350387*^9}, {
+   3.8722700667725277`*^9, 3.872270164136774*^9}, {3.872270237540482*^9, 
+   3.872270330562679*^9}, {3.8722703778977766`*^9, 3.872270428331297*^9}, {
+   3.872270458596798*^9, 3.872270477492733*^9}, {3.8722705270373154`*^9, 
+   3.8722705435828447`*^9}, {3.8722705977221556`*^9, 3.872270716458495*^9}, {
+   3.8722707942888365`*^9, 3.872270800478796*^9}, {3.8722710692952557`*^9, 
+   3.8722711517767477`*^9}, {3.87227131313978*^9, 3.8722713287623677`*^9}, {
+   3.872271409705464*^9, 3.872271441538619*^9}, {3.872271860588627*^9, 
+   3.872271882089796*^9}, 3.872272657369094*^9, {3.872272708771078*^9, 
+   3.8722727515317793`*^9}, {3.8722728654277697`*^9, 3.872272908736831*^9}, {
+   3.8722730842391877`*^9, 3.87227312002577*^9}, {3.8722731555875745`*^9, 
+   3.8722731686860805`*^9}, {3.8722732590718746`*^9, 
+   3.8722733198882136`*^9}, {3.872275763602395*^9, 3.872275772678981*^9}},
+ ExpressionUUID -> "c3687269-d32f-4a39-a2a6-9a69f69e0f63"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"Template", "=", 
+   RowBox[{"{", 
+    RowBox[{
+    "\"\<<h4>Identifique a superf\[IAcute]cie dada pela equa\[CCedilla]\
+\[ATilde]o\>\"", ",", 
+     RowBox[{"Hold", "[", 
+      RowBox[{
+       RowBox[{"x", "-", 
+        FractionBox[
+         RowBox[{"y", "^", "2"}], "a"], "+", 
+        FractionBox[
+         RowBox[{"z", "^", "2"}], "b"]}], "=", "0"}], "]"}], ",", 
+     "\"\<.</h4>\>\""}], "}"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Params", "=", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"a", "\[Rule]", "2"}], ",", 
+        RowBox[{"a", "\[Rule]", "3"}], ",", 
+        RowBox[{"a", "\[Rule]", "4"}], ",", 
+        RowBox[{"a", "\[Rule]", "5"}]}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"b", "\[Rule]", "2"}], ",", 
+        RowBox[{"b", "\[Rule]", "3"}], ",", 
+        RowBox[{"b", "\[Rule]", "4"}], ",", 
+        RowBox[{"b", "\[Rule]", "5"}]}], "}"}]}], "}"}], "//", "Tuples"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Answers", "=", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\"\<cone\>\"", ",", 
+       RowBox[{"-", "20"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<esfera\>\"", ",", 
+       RowBox[{"-", "20"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<elips\[OAcute]ide\>\"", ",", 
+       RowBox[{"-", "20"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<elips\[OAcute]ide parab\[OAcute]lico\>\"", ",", 
+       RowBox[{"-", "100"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<hiperbol\[OAcute]ide\>\"", ",", 
+       RowBox[{"-", "20"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<hiperbol\[OAcute]ide de uma folha\>\"", ",", 
+       RowBox[{"-", "20"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<hiperbol\[OAcute]ide de duas folhas\>\"", ",", 
+       RowBox[{"-", "20"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<hiperbol\[OAcute]ide de tr\[EHat]s folhas\>\"", ",", 
+       RowBox[{"-", "100"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<parabol\[OAcute]ide\>\"", ",", "50"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<parabol\[OAcute]ide c\[OHat]nico\>\"", ",", 
+       RowBox[{"-", "100"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<parabol\[OAcute]ide el\[IAcute]ptico\>\"", ",", 
+       RowBox[{"-", "20"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<parabol\[OAcute]ide hiperb\[OAcute]lico\>\"", ",", "50"}], 
+      "}"}]}], "}"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"AppendTo", "[", 
+   RowBox[{"multichoicequestions", ",", 
+    RowBox[{"Map", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"GenerateMultiChoiceQuestion", "[", 
+        RowBox[{"Name", ",", 
+         RowBox[{
+          RowBox[{"Template", "/.", "#"}], "//", "ToMoodleHTMLString"}], ",", 
+         RowBox[{"First", "/@", "Answers"}], ",", 
+         RowBox[{"Last", "/@", "Answers"}], ",", 
+         RowBox[{"shuffleanswers", "\[Rule]", "False"}]}], "]"}], "&"}], ",", 
+      "Params"}], "]"}]}], "]"}], ";"}]}], "Input",
+ CellChangeTimes->{{3.8406441989747477`*^9, 3.8406442038391733`*^9}, {
+   3.840644233859055*^9, 3.8406446558956013`*^9}, {3.8406447124947033`*^9, 
+   3.840644712637332*^9}, 3.840644757714548*^9, 3.8407127358119183`*^9, 
+   3.8407128339957023`*^9, {3.8407129236411343`*^9, 3.840712940809694*^9}, {
+   3.84071304977917*^9, 3.8407130987385654`*^9}, {3.872096616768129*^9, 
+   3.8720966908531804`*^9}, 3.8720975329727697`*^9, {3.872098398220149*^9, 
+   3.872098508514708*^9}, {3.872098538547307*^9, 3.872098564975086*^9}, {
+   3.8720986117760344`*^9, 3.872098625746702*^9}, {3.8720987166908507`*^9, 
+   3.8720989407693777`*^9}, {3.8720989876784744`*^9, 3.872098991773472*^9}, {
+   3.872100144912511*^9, 3.8721001478633604`*^9}, {3.8721002477422743`*^9, 
+   3.8721002547810993`*^9}, {3.872100285369897*^9, 3.872100366535144*^9}, {
+   3.8721004295983887`*^9, 3.8721005096230307`*^9}, {3.872100543526662*^9, 
+   3.872100546980389*^9}, {3.87210064532697*^9, 3.8721006476874743`*^9}, 
+   3.872101209198415*^9, {3.87210133467894*^9, 3.872101352896247*^9}, {
+   3.872101384371992*^9, 3.8721013943794093`*^9}, {3.872101522143635*^9, 
+   3.8721015569187098`*^9}, {3.8721016772938833`*^9, 
+   3.8721017808568125`*^9}, {3.8721019850158806`*^9, 
+   3.8721019950564785`*^9}, {3.872103085035155*^9, 3.872103089470374*^9}, {
+   3.8721032441336613`*^9, 3.872103358699277*^9}, {3.8721035863410125`*^9, 
+   3.8721036034012213`*^9}, {3.8721036554928713`*^9, 3.872103657055846*^9}, {
+   3.872103689719405*^9, 3.872103692548175*^9}, {3.8721037444909997`*^9, 
+   3.87210376032712*^9}, 3.872103793467173*^9, {3.8721038473327265`*^9, 
+   3.8721038572111235`*^9}, 3.872104476619071*^9, {3.872112591525924*^9, 
+   3.87211262540029*^9}, {3.872112772367344*^9, 3.872112777199628*^9}, 
+   3.872113035574173*^9, {3.872113077027556*^9, 3.8721130774495697`*^9}, {
+   3.872168072663508*^9, 3.872168094610961*^9}, {3.8722698668665257`*^9, 
+   3.872269866960184*^9}, {3.8722698992994394`*^9, 3.872270032350387*^9}, {
+   3.8722700667725277`*^9, 3.872270164136774*^9}, {3.872270237540482*^9, 
+   3.872270330562679*^9}, {3.8722703778977766`*^9, 3.872270428331297*^9}, {
+   3.872270458596798*^9, 3.872270477492733*^9}, {3.8722705270373154`*^9, 
+   3.8722705435828447`*^9}, {3.8722705977221556`*^9, 3.872270716458495*^9}, {
+   3.8722707942888365`*^9, 3.872270800478796*^9}, {3.8722710692952557`*^9, 
+   3.8722711517767477`*^9}, {3.87227131313978*^9, 3.8722713287623677`*^9}, {
+   3.872271409705464*^9, 3.872271441538619*^9}, {3.872271860588627*^9, 
+   3.872271882089796*^9}, 3.872272657369094*^9, {3.872272708771078*^9, 
+   3.8722727515317793`*^9}, {3.8722728654277697`*^9, 3.872272908736831*^9}, {
+   3.8722730842391877`*^9, 3.87227312002577*^9}, {3.8722731555875745`*^9, 
+   3.8722731686860805`*^9}, {3.8722732590718746`*^9, 3.87227332802359*^9}, {
+   3.8722757824476695`*^9, 3.8722757917923546`*^9}},
+ ExpressionUUID -> "c3687269-d32f-4a39-a2a6-9a69f69e0f63"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"finalquestlist", "=", 
+   RowBox[{"AddCategoriesToQuestions", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"Apply", "[", 
+       RowBox[{"Join", ",", "multichoicequestions"}], "]"}], "//", 
+      "RestrictNumberOfVariants"}], ",", "Category"}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"AppendTo", "[", 
+   RowBox[{"QuestCategoriesList", ",", "finalquestlist"}], "]"}], 
+  ";"}]}], "Input",
+ CellChangeTimes->{{3.8722711656861563`*^9, 3.872271182807583*^9}, {
+  3.872272995982744*^9, 3.872273003178173*^9}}]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Parabol\[OAcute]ide hiperb\[OAcute]lico - Q7", "Section",
+ CellChangeTimes->{{3.840644151509432*^9, 3.8406441613286552`*^9}, {
+   3.87209669460089*^9, 3.8720966946476517`*^9}, {3.872101032471466*^9, 
+   3.872101034448104*^9}, 3.872268977547806*^9, {3.872275074248596*^9, 
+   3.8722750759517837`*^9}},
+ ExpressionUUID -> "eba4cdd1-a33e-41c7-96cc-3f48c77a1b88"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"Category", "=", 
+   RowBox[{"CategoryDirectory", "<>", "\"\<Q7\>\""}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Name", "=", "\"\<Superf\[IAcute]cies qu\[AAcute]dricas\>\""}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Quest", "=", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+     "\"\<Seja \\(z=-\\\\frac{x^2}{a^2}+\\\\frac{y^2}{b^2}\\),\>\"", ",", 
+      RowBox[{"Hold", "[", 
+       RowBox[{
+        RowBox[{"a", ">", "1"}], ",", 
+        RowBox[{"b", ">", "1"}]}], "]"}], ",", 
+      "\"\<um parabol\[OAcute]ide hiperb\[OAcute]lico.\>\""}], "}"}], "//", 
+    "ToMoodleHTMLString"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"TrueAnswers", "=", 
+   RowBox[{
+    RowBox[{"{", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+       "\"\<A interse\[CCedilla]\[ATilde]o da superf\[IAcute]cie com o \
+plano\>\"", ",", 
+        RowBox[{"Hold", "[", 
+         RowBox[{"x", "=", "0"}], "]"}], ",", 
+        "\"\<\[EAcute] uma par\[AAcute]bola.\>\""}], "}"}], ",", 
+      "\[IndentingNewLine]", 
+      RowBox[{"{", 
+       RowBox[{
+       "\"\<A interse\[CCedilla]\[ATilde]o da superf\[IAcute]cie com o \
+plano\>\"", ",", 
+        RowBox[{"Hold", "[", 
+         RowBox[{"y", "=", "0"}], "]"}], ",", 
+        "\"\<\[EAcute] uma par\[AAcute]bola.\>\""}], "}"}], ",", 
+      "\[IndentingNewLine]", 
+      RowBox[{"{", 
+       RowBox[{
+       "\"\<A interse\[CCedilla]\[ATilde]o da superf\[IAcute]cie com o \
+plano\>\"", ",", 
+        RowBox[{"Hold", "[", 
+         RowBox[{"z", "=", "0"}], "]"}], ",", 
+        "\"\<\[EAcute] um par das retas concorrentes na origem.\>\""}], "}"}],
+       ",", "\[IndentingNewLine]", 
+      RowBox[{"{", 
+       RowBox[{
+       "\"\<A interse\[CCedilla]\[ATilde]o da superf\[IAcute]cie com o \
+plano\>\"", ",", 
+        RowBox[{"Hold", "[", 
+         RowBox[{"z", "=", "1"}], "]"}], ",", 
+        "\"\<\[EAcute] uma hip\[EAcute]rbole.\>\""}], "}"}], ",", 
+      "\[IndentingNewLine]", 
+      RowBox[{"{", 
+       RowBox[{
+       "\"\<A interse\[CCedilla]\[ATilde]o da superf\[IAcute]cie com o \
+plano\>\"", ",", 
+        RowBox[{"Hold", "[", 
+         RowBox[{"z", "=", 
+          RowBox[{"-", "1"}]}], "]"}], ",", 
+        "\"\<\[EAcute] uma hip\[EAcute]rbole.\>\""}], "}"}], ",", 
+      "\[IndentingNewLine]", 
+      "\"\<A superf\[IAcute]cie \[EAcute] sim\[EAcute]trica em \
+rela\[CCedilla]\[ATilde]o ao plano \\(OXZ\\).\>\"", ",", 
+      "\[IndentingNewLine]", 
+      "\"\<A superf\[IAcute]cie \[EAcute] sim\[EAcute]trica em \
+rela\[CCedilla]\[ATilde]o ao plano \\(OYZ\\).\>\""}], "\[IndentingNewLine]", 
+     "}"}], "//", "ToMoodleHTMLString"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"FalseAnswers", "=", 
+   RowBox[{
+    RowBox[{"{", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+       "\"\<A interse\[CCedilla]\[ATilde]o da superf\[IAcute]cie com o \
+plano\>\"", ",", 
+        RowBox[{"Hold", "[", 
+         RowBox[{"x", "=", "0"}], "]"}], ",", 
+        "\"\<\[EAcute] uma elipse.\>\""}], "}"}], ",", "\[IndentingNewLine]", 
+      RowBox[{"{", 
+       RowBox[{
+       "\"\<A interse\[CCedilla]\[ATilde]o da superf\[IAcute]cie com o \
+plano\>\"", ",", 
+        RowBox[{"Hold", "[", 
+         RowBox[{"x", "=", "0"}], "]"}], ",", 
+        "\"\<\[EAcute] uma hip\[EAcute]rbole.\>\""}], "}"}], ",", 
+      "\[IndentingNewLine]", 
+      RowBox[{"{", 
+       RowBox[{
+       "\"\<A interse\[CCedilla]\[ATilde]o da superf\[IAcute]cie com o \
+plano\>\"", ",", 
+        RowBox[{"Hold", "[", 
+         RowBox[{"y", "=", "0"}], "]"}], ",", 
+        "\"\<\[EAcute] uma elipse.\>\""}], "}"}], ",", "\[IndentingNewLine]", 
+      RowBox[{"{", 
+       RowBox[{
+       "\"\<A interse\[CCedilla]\[ATilde]o da superf\[IAcute]cie com o \
+plano\>\"", ",", 
+        RowBox[{"Hold", "[", 
+         RowBox[{"y", "=", "0"}], "]"}], ",", 
+        "\"\<\[EAcute] uma hip\[EAcute]rbole.\>\""}], "}"}], ",", 
+      "\[IndentingNewLine]", 
+      RowBox[{"{", 
+       RowBox[{
+       "\"\<A interse\[CCedilla]\[ATilde]o da superf\[IAcute]cie com o \
+plano\>\"", ",", 
+        RowBox[{"Hold", "[", 
+         RowBox[{"z", "=", "0"}], "]"}], ",", 
+        "\"\<\[EAcute] um ponto isolado.\>\""}], "}"}], ",", 
+      "\[IndentingNewLine]", 
+      RowBox[{"{", 
+       RowBox[{
+       "\"\<A interse\[CCedilla]\[ATilde]o da superf\[IAcute]cie com o \
+plano\>\"", ",", 
+        RowBox[{"Hold", "[", 
+         RowBox[{"z", "=", "0"}], "]"}], ",", 
+        "\"\<\[EAcute] uma elipse.\>\""}], "}"}], ",", "\[IndentingNewLine]", 
+      RowBox[{"{", 
+       RowBox[{
+       "\"\<A interse\[CCedilla]\[ATilde]o da superf\[IAcute]cie com o \
+plano\>\"", ",", 
+        RowBox[{"Hold", "[", 
+         RowBox[{"z", "=", "0"}], "]"}], ",", 
+        "\"\<\[EAcute] uma par\[AAcute]bola.\>\""}], "}"}], ",", 
+      "\[IndentingNewLine]", 
+      RowBox[{"{", 
+       RowBox[{
+       "\"\<A interse\[CCedilla]\[ATilde]o da superf\[IAcute]cie com o \
+plano\>\"", ",", 
+        RowBox[{"Hold", "[", 
+         RowBox[{"z", "=", "0"}], "]"}], ",", 
+        "\"\<\[EAcute] uma hip\[EAcute]rbole.\>\""}], "}"}], ",", 
+      "\[IndentingNewLine]", 
+      RowBox[{"{", 
+       RowBox[{
+       "\"\<A interse\[CCedilla]\[ATilde]o da superf\[IAcute]cie com o \
+plano\>\"", ",", 
+        RowBox[{"Hold", "[", 
+         RowBox[{"z", "=", "1"}], "]"}], ",", 
+        "\"\<\[EAcute] uma hip\[EAcute]rbole. \>\""}], "}"}], ",", 
+      "\[IndentingNewLine]", 
+      RowBox[{"{", 
+       RowBox[{
+       "\"\<A interse\[CCedilla]\[ATilde]o da superf\[IAcute]cie com o \
+plano\>\"", ",", 
+        RowBox[{"Hold", "[", 
+         RowBox[{"z", "=", 
+          RowBox[{"-", "1"}]}], "]"}], ",", 
+        "\"\<\[EAcute] uma par\[AAcute]bola.\>\""}], "}"}], ",", 
+      "\[IndentingNewLine]", 
+      RowBox[{"{", 
+       RowBox[{
+       "\"\<A interse\[CCedilla]\[ATilde]o da superf\[IAcute]cie com o \
+plano\>\"", ",", 
+        RowBox[{"Hold", "[", 
+         RowBox[{"z", "=", 
+          RowBox[{"-", "1"}]}], "]"}], ",", 
+        "\"\<\[EAcute] uma par\[AAcute]bola.\>\""}], "}"}], ",", 
+      "\[IndentingNewLine]", 
+      RowBox[{"{", 
+       RowBox[{
+       "\"\<A interse\[CCedilla]\[ATilde]o da superf\[IAcute]cie com o \
+plano\>\"", ",", 
+        RowBox[{"Hold", "[", 
+         RowBox[{"z", "=", "1"}], "]"}], ",", 
+        "\"\<\[EAcute] uma elipse.\>\""}], "}"}], ",", "\[IndentingNewLine]", 
+      RowBox[{"{", 
+       RowBox[{
+       "\"\<A interse\[CCedilla]\[ATilde]o da superf\[IAcute]cie com o \
+plano\>\"", ",", 
+        RowBox[{"Hold", "[", 
+         RowBox[{"z", "=", 
+          RowBox[{"-", "1"}]}], "]"}], ",", "\"\<\[EAcute] uma elipse.\>\""}],
+        "}"}], ",", "\[IndentingNewLine]", 
+      "\"\<A superf\[IAcute]cie \[EAcute] sim\[EAcute]trica em \
+rela\[CCedilla]\[ATilde]o ao plano \\(OXY\\).\>\""}], "\[IndentingNewLine]", 
+     "}"}], "//", "ToMoodleHTMLString"}]}], ";"}]}], "Input",
+ CellChangeTimes->{{3.8406441989747477`*^9, 3.8406442038391733`*^9}, {
+   3.840644233859055*^9, 3.8406446558956013`*^9}, {3.8406447124947033`*^9, 
+   3.840644712637332*^9}, 3.840644757714548*^9, 3.8407127358119183`*^9, 
+   3.8407128339957023`*^9, {3.8407129236411343`*^9, 3.840712940809694*^9}, {
+   3.84071304977917*^9, 3.8407130987385654`*^9}, {3.872096616768129*^9, 
+   3.8720966908531804`*^9}, 3.8720975329727697`*^9, {3.872098398220149*^9, 
+   3.872098508514708*^9}, {3.872098538547307*^9, 3.872098564975086*^9}, {
+   3.8720986117760344`*^9, 3.872098625746702*^9}, {3.8720987166908507`*^9, 
+   3.8720989407693777`*^9}, {3.8720989876784744`*^9, 3.872098991773472*^9}, {
+   3.872100144912511*^9, 3.8721001478633604`*^9}, {3.8721002477422743`*^9, 
+   3.8721002547810993`*^9}, {3.872100285369897*^9, 3.872100366535144*^9}, {
+   3.8721004295983887`*^9, 3.8721005096230307`*^9}, {3.872100543526662*^9, 
+   3.872100546980389*^9}, {3.87210064532697*^9, 3.8721006476874743`*^9}, 
+   3.872101209198415*^9, {3.87210133467894*^9, 3.872101352896247*^9}, {
+   3.872101384371992*^9, 3.8721013943794093`*^9}, {3.872101522143635*^9, 
+   3.8721015569187098`*^9}, {3.8721016772938833`*^9, 
+   3.8721017808568125`*^9}, {3.8721019850158806`*^9, 
+   3.8721019950564785`*^9}, {3.872168188148547*^9, 3.8721681920451508`*^9}, {
+   3.872168262145045*^9, 3.8721682883578067`*^9}, {3.872168383138403*^9, 
+   3.8721683834327974`*^9}, {3.8721794220830464`*^9, 3.872179427058487*^9}, 
+   3.8721810311113477`*^9, {3.872272386800954*^9, 3.8722723876137*^9}},
+ ExpressionUUID -> "c3687269-d32f-4a39-a2a6-9a69f69e0f63"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"multichoicequestions", "=", 
+   RowBox[{
+    RowBox[{"GenerateMultiChoiceList", "[", 
+     RowBox[{
+     "Name", ",", "Quest", ",", "TrueAnswers", ",", "FalseAnswers", ",", 
+      RowBox[{"answersnum", "\[Rule]", "5"}], ",", 
+      RowBox[{"minwrongnum", "\[Rule]", "2"}], ",", 
+      RowBox[{"mincorrectnum", "\[Rule]", "2"}]}], "]"}], "//", 
+    "RestrictNumberOfVariants"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"clozequestions", "=", 
+   RowBox[{"ConvertMultiChoiceToCloze", "[", 
+    RowBox[{
+    "multichoicequestions", ",", "FormatAnswer", ",", "FormatEachQuestion"}], 
+    "]"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"finalquestlist", "=", 
+   RowBox[{"AddCategoriesToQuestions", "[", 
+    RowBox[{"clozequestions", ",", "Category"}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"AppendTo", "[", 
+   RowBox[{"QuestCategoriesList", ",", "finalquestlist"}], "]"}], 
+  ";"}]}], "Input",
+ CellChangeTimes->{{3.8720965042293077`*^9, 3.8720965063427086`*^9}, {
+   3.872096556105118*^9, 3.8720965757625847`*^9}, {3.872097474043838*^9, 
+   3.872097488871315*^9}, {3.8720996036802406`*^9, 3.8720996496410933`*^9}, 
+   3.8720996937598495`*^9, 3.8720997441991444`*^9, {3.872099813867448*^9, 
+   3.872099825572267*^9}, {3.87210185683136*^9, 3.872101867786251*^9}, 
+   3.87210204523375*^9, {3.8721674821462436`*^9, 3.8721674822401085`*^9}, {
+   3.8721680161421137`*^9, 3.8721680260646753`*^9}, {3.872168144440837*^9, 
+   3.872168146349673*^9}, {3.8721685207341957`*^9, 3.8721685210777173`*^9}, 
+   3.872168551729204*^9, {3.872168606958124*^9, 3.8721686107912245`*^9}, {
+   3.872168670569221*^9, 3.87216867061597*^9}}]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Parabol\[OAcute]ide el\[IAcute]ptico - Q8", "Section",
+ CellChangeTimes->{{3.840644151509432*^9, 3.8406441613286552`*^9}, {
+   3.87209669460089*^9, 3.8720966946476517`*^9}, {3.87210104052897*^9, 
+   3.8721010423756337`*^9}, 3.872268982611313*^9, {3.872275077030701*^9, 
+   3.8722750814847193`*^9}},
+ ExpressionUUID -> "eba4cdd1-a33e-41c7-96cc-3f48c77a1b88"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"Category", "=", 
+   RowBox[{"CategoryDirectory", "<>", "\"\<Q8\>\""}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Name", "=", "\"\<Superf\[IAcute]cies qu\[AAcute]dricas\>\""}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Quest", "=", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+     "\"\<Seja \\(z=\\\\frac{x^2}{a^2}+\\\\frac{y^2}{b^2}\\),\>\"", ",", 
+      RowBox[{"Hold", "[", 
+       RowBox[{
+        RowBox[{"a", ">", "1"}], ",", 
+        RowBox[{"b", ">", "1"}]}], "]"}], ",", 
+      "\"\<um parabol\[OAcute]ide el\[IAcute]ptico.\>\""}], "}"}], "//", 
+    "ToMoodleHTMLString"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"TrueAnswers", "=", 
+   RowBox[{
+    RowBox[{"{", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+       "\"\<A interse\[CCedilla]\[ATilde]o da superf\[IAcute]cie com o \
+plano\>\"", ",", 
+        RowBox[{"Hold", "[", 
+         RowBox[{"x", "=", "0"}], "]"}], ",", 
+        "\"\<\[EAcute] uma par\[AAcute]bola.\>\""}], "}"}], ",", 
+      "\[IndentingNewLine]", 
+      RowBox[{"{", 
+       RowBox[{
+       "\"\<A interse\[CCedilla]\[ATilde]o da superf\[IAcute]cie com o \
+plano\>\"", ",", 
+        RowBox[{"Hold", "[", 
+         RowBox[{"y", "=", "0"}], "]"}], ",", 
+        "\"\<\[EAcute] uma par\[AAcute]bola.\>\""}], "}"}], ",", 
+      "\[IndentingNewLine]", 
+      RowBox[{"{", 
+       RowBox[{
+       "\"\<A interse\[CCedilla]\[ATilde]o da superf\[IAcute]cie com o \
+plano\>\"", ",", 
+        RowBox[{"Hold", "[", 
+         RowBox[{"z", "=", "0"}], "]"}], ",", 
+        "\"\<\[EAcute] um ponto isolado.\>\""}], "}"}], ",", 
+      "\[IndentingNewLine]", 
+      RowBox[{"{", 
+       RowBox[{
+       "\"\<A interse\[CCedilla]\[ATilde]o da superf\[IAcute]cie com o \
+plano\>\"", ",", 
+        RowBox[{"Hold", "[", 
+         RowBox[{"z", "=", "1"}], "]"}], ",", 
+        "\"\<\[EAcute] uma elipse.\>\""}], "}"}], ",", "\[IndentingNewLine]", 
+      "\"\<A superf\[IAcute]cie \[EAcute] sim\[EAcute]trica em \
+rela\[CCedilla]\[ATilde]o ao plano \\(OXZ\\).\>\"", ",", 
+      "\[IndentingNewLine]", 
+      "\"\<A superf\[IAcute]cie \[EAcute] sim\[EAcute]trica em \
+rela\[CCedilla]\[ATilde]o ao plano \\(OYZ\\).\>\""}], "\[IndentingNewLine]", 
+     "}"}], "//", "ToMoodleHTMLString"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"FalseAnswers", "=", 
+   RowBox[{
+    RowBox[{"{", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+       "\"\<A interse\[CCedilla]\[ATilde]o da superf\[IAcute]cie com o \
+plano\>\"", ",", 
+        RowBox[{"Hold", "[", 
+         RowBox[{"x", "=", "0"}], "]"}], ",", 
+        "\"\<\[EAcute] uma elipse.\>\""}], "}"}], ",", "\[IndentingNewLine]", 
+      RowBox[{"{", 
+       RowBox[{
+       "\"\<A interse\[CCedilla]\[ATilde]o da superf\[IAcute]cie com o \
+plano\>\"", ",", 
+        RowBox[{"Hold", "[", 
+         RowBox[{"x", "=", "0"}], "]"}], ",", 
+        "\"\<\[EAcute] uma hip\[EAcute]rbole.\>\""}], "}"}], ",", 
+      "\[IndentingNewLine]", 
+      RowBox[{"{", 
+       RowBox[{
+       "\"\<A interse\[CCedilla]\[ATilde]o da superf\[IAcute]cie com o \
+plano\>\"", ",", 
+        RowBox[{"Hold", "[", 
+         RowBox[{"y", "=", "0"}], "]"}], ",", 
+        "\"\<\[EAcute] uma elipse.\>\""}], "}"}], ",", "\[IndentingNewLine]", 
+      RowBox[{"{", 
+       RowBox[{
+       "\"\<A interse\[CCedilla]\[ATilde]o da superf\[IAcute]cie com o \
+plano\>\"", ",", 
+        RowBox[{"Hold", "[", 
+         RowBox[{"y", "=", "0"}], "]"}], ",", 
+        "\"\<\[EAcute] uma hip\[EAcute]rbole.\>\""}], "}"}], ",", 
+      "\[IndentingNewLine]", 
+      RowBox[{"{", 
+       RowBox[{
+       "\"\<A interse\[CCedilla]\[ATilde]o da superf\[IAcute]cie com o \
+plano\>\"", ",", 
+        RowBox[{"Hold", "[", 
+         RowBox[{"z", "=", "0"}], "]"}], ",", 
+        "\"\<\[EAcute] um par das retas paralelas.\>\""}], "}"}], ",", 
+      "\[IndentingNewLine]", 
+      RowBox[{"{", 
+       RowBox[{
+       "\"\<A interse\[CCedilla]\[ATilde]o da superf\[IAcute]cie com o \
+plano\>\"", ",", 
+        RowBox[{"Hold", "[", 
+         RowBox[{"z", "=", "0"}], "]"}], ",", 
+        "\"\<\[EAcute] uma elipse.\>\""}], "}"}], ",", "\[IndentingNewLine]", 
+      RowBox[{"{", 
+       RowBox[{
+       "\"\<A interse\[CCedilla]\[ATilde]o da superf\[IAcute]cie com o \
+plano\>\"", ",", 
+        RowBox[{"Hold", "[", 
+         RowBox[{"z", "=", "0"}], "]"}], ",", 
+        "\"\<\[EAcute] uma par\[AAcute]bola.\>\""}], "}"}], ",", 
+      "\[IndentingNewLine]", 
+      RowBox[{"{", 
+       RowBox[{
+       "\"\<A interse\[CCedilla]\[ATilde]o da superf\[IAcute]cie com o \
+plano\>\"", ",", 
+        RowBox[{"Hold", "[", 
+         RowBox[{"z", "=", "0"}], "]"}], ",", 
+        "\"\<\[EAcute] uma hip\[EAcute]rbole.\>\""}], "}"}], ",", 
+      "\[IndentingNewLine]", 
+      RowBox[{"{", 
+       RowBox[{
+       "\"\<A interse\[CCedilla]\[ATilde]o da superf\[IAcute]cie com o \
+plano\>\"", ",", 
+        RowBox[{"Hold", "[", 
+         RowBox[{"z", "=", "1"}], "]"}], ",", 
+        "\"\<\[EAcute] uma hip\[EAcute]rbole. \>\""}], "}"}], ",", 
+      "\[IndentingNewLine]", 
+      RowBox[{"{", 
+       RowBox[{
+       "\"\<A interse\[CCedilla]\[ATilde]o da superf\[IAcute]cie com o \
+plano\>\"", ",", 
+        RowBox[{"Hold", "[", 
+         RowBox[{"z", "=", "1"}], "]"}], ",", 
+        "\"\<\[EAcute] uma par\[AAcute]bola.\>\""}], "}"}], ",", 
+      "\[IndentingNewLine]", 
+      RowBox[{"{", 
+       RowBox[{
+       "\"\<A interse\[CCedilla]\[ATilde]o da superf\[IAcute]cie com o \
+plano\>\"", ",", 
+        RowBox[{"Hold", "[", 
+         RowBox[{"z", "=", 
+          RowBox[{"-", "1"}]}], "]"}], ",", "\"\<\[EAcute] uma elipse.\>\""}],
+        "}"}], ",", "\[IndentingNewLine]", 
+      RowBox[{"{", 
+       RowBox[{
+       "\"\<A interse\[CCedilla]\[ATilde]o da superf\[IAcute]cie com o \
+plano\>\"", ",", 
+        RowBox[{"Hold", "[", 
+         RowBox[{"z", "=", 
+          RowBox[{"-", "1"}]}], "]"}], ",", 
+        "\"\<\[EAcute] uma par\[AAcute]bola.\>\""}], "}"}], ",", 
+      "\[IndentingNewLine]", 
+      RowBox[{"{", 
+       RowBox[{
+       "\"\<A interse\[CCedilla]\[ATilde]o da superf\[IAcute]cie com o \
+plano\>\"", ",", 
+        RowBox[{"Hold", "[", 
+         RowBox[{"z", "=", 
+          RowBox[{"-", "1"}]}], "]"}], ",", "\"\<\[EAcute] uma elipse.\>\""}],
+        "}"}], ",", "\[IndentingNewLine]", 
+      "\"\<A superf\[IAcute]cie \[EAcute] sim\[EAcute]trica em \
+rela\[CCedilla]\[ATilde]o aos planos \\(OXY\\).\>\""}], "\[IndentingNewLine]",
+      "}"}], "//", "ToMoodleHTMLString"}]}], ";"}]}], "Input",
+ CellChangeTimes->{{3.8406441989747477`*^9, 3.8406442038391733`*^9}, {
+   3.840644233859055*^9, 3.8406446558956013`*^9}, {3.8406447124947033`*^9, 
+   3.840644712637332*^9}, 3.840644757714548*^9, 3.8407127358119183`*^9, 
+   3.8407128339957023`*^9, {3.8407129236411343`*^9, 3.840712940809694*^9}, {
+   3.84071304977917*^9, 3.8407130987385654`*^9}, {3.872096616768129*^9, 
+   3.8720966908531804`*^9}, 3.8720975329727697`*^9, {3.872098398220149*^9, 
+   3.872098508514708*^9}, {3.872098538547307*^9, 3.872098564975086*^9}, {
+   3.8720986117760344`*^9, 3.872098625746702*^9}, {3.8720987166908507`*^9, 
+   3.8720989407693777`*^9}, {3.8720989876784744`*^9, 3.872098991773472*^9}, 
+   3.8721002024462953`*^9, {3.8721006214682236`*^9, 3.872100697454792*^9}, {
+   3.872100749285259*^9, 3.87210075267846*^9}, {3.872100804868142*^9, 
+   3.872100854477607*^9}, {3.872100885051*^9, 3.8721009024767675`*^9}, {
+   3.8721009333870945`*^9, 3.8721009695691366`*^9}, 3.8721012046336823`*^9, {
+   3.8721013601535406`*^9, 3.8721013630288196`*^9}, {3.8721014010527654`*^9, 
+   3.8721014487947474`*^9}, {3.872101577432725*^9, 3.872101618649586*^9}, {
+   3.872101899358983*^9, 3.8721019159503727`*^9}, {3.8721692631134577`*^9, 
+   3.8721692640897555`*^9}, {3.872169592064783*^9, 3.872169609576825*^9}, {
+   3.8721696521254826`*^9, 3.8721696603182273`*^9}, 3.872181034939378*^9, {
+   3.8722723970168753`*^9, 3.872272397282798*^9}},
+ ExpressionUUID -> "c3687269-d32f-4a39-a2a6-9a69f69e0f63"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"multichoicequestions", "=", 
+   RowBox[{
+    RowBox[{"GenerateMultiChoiceList", "[", 
+     RowBox[{
+     "Name", ",", "Quest", ",", "TrueAnswers", ",", "FalseAnswers", ",", 
+      RowBox[{"answersnum", "\[Rule]", "5"}], ",", 
+      RowBox[{"minwrongnum", "\[Rule]", "2"}], ",", 
+      RowBox[{"mincorrectnum", "\[Rule]", "2"}]}], "]"}], "//", 
+    "RestrictNumberOfVariants"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"clozequestions", "=", 
+   RowBox[{"ConvertMultiChoiceToCloze", "[", 
+    RowBox[{
+    "multichoicequestions", ",", "FormatAnswer", ",", "FormatEachQuestion"}], 
+    "]"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"finalquestlist", "=", 
+   RowBox[{"AddCategoriesToQuestions", "[", 
+    RowBox[{"clozequestions", ",", "Category"}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"AppendTo", "[", 
+   RowBox[{"QuestCategoriesList", ",", "finalquestlist"}], "]"}], 
+  ";"}]}], "Input",
+ CellChangeTimes->{{3.8720965042293077`*^9, 3.8720965063427086`*^9}, {
+   3.872096556105118*^9, 3.8720965757625847`*^9}, {3.872097474043838*^9, 
+   3.872097488871315*^9}, {3.8720996036802406`*^9, 3.8720996496410933`*^9}, 
+   3.8720996937598495`*^9, 3.8720997441991444`*^9, {3.872099813867448*^9, 
+   3.872099825572267*^9}, 3.8721019273477473`*^9, 3.872102047058592*^9, {
+   3.872167503585255*^9, 3.8721675036634035`*^9}, {3.872168032354575*^9, 
+   3.872168041625832*^9}, {3.8721685257775373`*^9, 3.872168547707445*^9}, 
+   3.872168675110894*^9}]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Exporta\[CCedilla]\[ATilde]o", "Section",
+ CellChangeTimes->{{3.840644151509432*^9, 3.8406441613286552`*^9}, {
+   3.87209669460089*^9, 3.8720966946476517`*^9}, {3.8720995626507244`*^9, 
+   3.872099563416601*^9}, {3.872099764153363*^9, 3.8720997650755157`*^9}, 
+   3.872268986650894*^9, {3.872272047519149*^9, 3.872272048582095*^9}, 
+   3.872273431061204*^9},
+ ExpressionUUID -> "eba4cdd1-a33e-41c7-96cc-3f48c77a1b88"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Export", "[", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"NotebookDirectory", "[", "]"}], "<>", "\"\<export.xml\>\""}], 
+    ",", 
+    RowBox[{
+     RowBox[{"Apply", "[", 
+      RowBox[{"Join", ",", "QuestCategoriesList"}], "]"}], "//", 
+     "GenerateMoodleXML"}]}], "]"}], ";"}]], "Input",
+ CellChangeTimes->{{3.872099831842658*^9, 3.872099866746679*^9}}]
+}, Closed]]
+},
+WindowSize->{1464, 846},
+WindowMargins->{{22, Automatic}, {Automatic, 41}},
+ShowSelection->True,
+FrontEndVersion->"7.0 for Microsoft Windows (64-bit) (November 10, 2008)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[567, 22, 404, 5, 71, "Section"],
+Cell[974, 29, 698, 17, 52, "Input"],
+Cell[1675, 48, 2341, 54, 152, "Input"],
+Cell[4019, 104, 1104, 27, 52, "Input"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[5160, 136, 416, 5, 41, "Section"],
+Cell[5579, 143, 2784, 52, 72, "Input"],
+Cell[8366, 197, 5787, 167, 260, "Input"],
+Cell[14156, 366, 2862, 67, 132, "Input"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[17055, 438, 432, 6, 41, "Section"],
+Cell[17490, 446, 663, 16, 72, "Input"],
+Cell[18156, 464, 7348, 123, 812, "Input"],
+Cell[25507, 589, 1665, 35, 92, "Input"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[27209, 629, 423, 6, 41, "Section"],
+Cell[27635, 637, 400, 9, 52, "Input"],
+Cell[28038, 648, 165, 4, 31, "Input"],
+Cell[28206, 654, 2114, 61, 95, "Input"],
+Cell[30323, 717, 1942, 55, 111, "Input"],
+Cell[32268, 774, 1743, 51, 111, "Input"],
+Cell[34014, 827, 1738, 51, 111, "Input"],
+Cell[35755, 880, 1557, 44, 92, "Input"],
+Cell[37315, 926, 359, 10, 52, "Input"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[37711, 941, 472, 8, 41, "Section"],
+Cell[38186, 951, 465, 10, 52, "Input"],
+Cell[38654, 963, 165, 4, 31, "Input"],
+Cell[38822, 969, 2263, 64, 95, "Input"],
+Cell[41088, 1035, 2004, 56, 111, "Input"],
+Cell[43095, 1093, 1806, 52, 111, "Input"],
+Cell[44904, 1147, 1986, 58, 95, "Input"],
+Cell[46893, 1207, 359, 10, 52, "Input"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[47289, 1222, 546, 9, 41, "Section"],
+Cell[47838, 1233, 562, 12, 52, "Input"],
+Cell[48403, 1247, 165, 4, 31, "Input"],
+Cell[48571, 1253, 2396, 60, 135, "Input"],
+Cell[50970, 1315, 2494, 61, 135, "Input"],
+Cell[53467, 1378, 359, 10, 52, "Input"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[53863, 1393, 526, 8, 41, "Section"],
+Cell[54392, 1403, 3414, 69, 432, "Input"],
+Cell[57809, 1474, 2942, 74, 232, "Input"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[60788, 1553, 491, 8, 41, "Section"],
+Cell[61282, 1563, 2645, 43, 72, "Input"],
+Cell[63930, 1608, 6060, 129, 148, "Input"],
+Cell[69993, 1739, 6060, 129, 148, "Input"],
+Cell[76056, 1870, 6050, 129, 148, "Input"],
+Cell[82109, 2001, 5588, 115, 148, "Input"],
+Cell[87700, 2118, 6106, 130, 148, "Input"],
+Cell[93809, 2250, 6158, 131, 148, "Input"],
+Cell[99970, 2383, 6159, 131, 148, "Input"],
+Cell[106132, 2516, 6177, 132, 148, "Input"],
+Cell[112312, 2650, 6028, 125, 128, "Input"],
+Cell[118343, 2777, 6029, 125, 128, "Input"],
+Cell[124375, 2904, 6028, 125, 128, "Input"],
+Cell[130406, 3031, 6029, 125, 128, "Input"],
+Cell[136438, 3158, 567, 15, 52, "Input"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[137042, 3178, 365, 5, 41, "Section"],
+Cell[137410, 3185, 8506, 203, 572, "Input"],
+Cell[145919, 3390, 1665, 35, 92, "Input"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[147621, 3430, 363, 5, 41, "Section"],
+Cell[147987, 3437, 8019, 191, 552, "Input"],
+Cell[156009, 3630, 1490, 33, 92, "Input"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[157536, 3668, 423, 6, 41, "Section"],
+Cell[157962, 3676, 388, 11, 31, "Input"]
+}, Closed]]
+}
+]
+*)
+
+(* End of internal cache information *)
