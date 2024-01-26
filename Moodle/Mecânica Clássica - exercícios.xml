@@ -1,0 +1,420 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+<!-- question: 0  -->
+  <question type="category">
+    <category>
+      <text>$course$/top/Padrão para MC_Q22023</text>
+    </category>
+    <info format="moodle_auto_format">
+      <text>A categoria padrão para as questões compartilhadas no contexto 'MC_Q22023'.</text>
+    </info>
+    <idnumber></idnumber>
+  </question>
+
+<!-- question: 16668963  -->
+  <question type="essay">
+    <name>
+      <text>01. Coordendas esféricas</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p dir="ltr" style="text-align: left;">Considere as coordenadas esféricas: \(x=r\sin\theta\cos\phi, y=r\sin\theta\sin\phi, z=r\cos\theta\), \(\left(r\geq0,0\leq\theta\leq\pi,0\leq\phi &lt; 2\pi\right)\).</p><p dir="ltr" style="text-align: left;"></p><ol><li>Construa a base local associada com um ponto \(\vec{r}=x\vec{i}+y\vec{j}+z\vec{k}\):<br>\(\vec{e_r}\equiv\dfrac{\vec{r}}{r}\), \(\vec{e_{\theta}}\equiv\dfrac{1}{r}\dfrac{\partial\vec{r}}{\partial\theta}\), \(\vec{e_{\phi}}\equiv\dfrac{1}{r\sin\theta}\dfrac{\partial\vec{r}}{\partial\phi}\) , onde \(r\equiv|\vec{r}|\).</li><li>Demostre que a base&nbsp;\(\left(\vec{e_r},\vec{e_{\theta}},\vec{e_{\phi}}\right)\) é ortonormal.</li><li>Determine a expressão para o vetor \(\vec{k}\) nesta base.</li><li>Represente a velocidade angular \(\vec{\Omega}=\dot{\theta}\vec{e_{\phi}}+\dot{\phi}\vec{k}\) na base&nbsp;\(\left(\vec{e_r},\vec{e_{\theta}},\vec{e_{\phi}}\right)\).</li><li>Calcule as derivadas temporais para os vetores da base:<br>\(\dot{\vec{e_r}}=\vec{\Omega}\times\vec{e_r}\),<br>\(\dot{\vec{e_{\theta}}}=\vec{\Omega}\times\vec{e_{\theta}}\),<br>\(\dot{\vec{e_{\phi}}}=\vec{\Omega}\times\vec{e_{\phi}}\).<br></li><li>Calcule a velocidade e aceleração da particula \(\vec{r}=r\vec{e_r}\) na base&nbsp;\(\left(\vec{e_r},\vec{e_{\theta}},\vec{e_{\phi}}\right)\) considerando as coordenadas \(\left(r,\theta,\phi\right)\) como funções do tempo.</li></ol><p></p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.0000000</penalty>
+    <hidden>0</hidden>
+    <idnumber></idnumber>
+    <responseformat>noinline</responseformat>
+    <responserequired>1</responserequired>
+    <responsefieldlines>15</responsefieldlines>
+    <attachments>1</attachments>
+    <attachmentsrequired>1</attachmentsrequired>
+    <filetypeslist></filetypeslist>
+    <graderinfo format="html">
+      <text></text>
+    </graderinfo>
+    <responsetemplate format="html">
+      <text></text>
+    </responsetemplate>
+  </question>
+
+<!-- question: 16678824  -->
+  <question type="essay">
+    <name>
+      <text>02. Generalização da equação de Euler-Lagrange</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p dir="ltr" style="text-align: left;">Derive as equações de Euler-Lagrange, supondo que a Lagrangiana depende da segunda derivada temporal da coordenada generalizada,</p><p dir="ltr" style="text-align: left;"><span style="font-size: 0.9375rem;">\[S[q]=\displaystyle\intop_{t_1}^{t_2}L(q,\dot{q},\ddot{q},t)dt.\]</span></p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.0000000</penalty>
+    <hidden>0</hidden>
+    <idnumber></idnumber>
+    <responseformat>noinline</responseformat>
+    <responserequired>1</responserequired>
+    <responsefieldlines>15</responsefieldlines>
+    <attachments>1</attachments>
+    <attachmentsrequired>1</attachmentsrequired>
+    <filetypeslist></filetypeslist>
+    <graderinfo format="html">
+      <text></text>
+    </graderinfo>
+    <responsetemplate format="html">
+      <text></text>
+    </responsetemplate>
+  </question>
+
+<!-- question: 16678980  -->
+  <question type="essay">
+    <name>
+      <text>03. Lagrangiana de uma particula na potência externa geral</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p dir="ltr" style="text-align: left;">Considere uma partícula na potência generalizada,</p><p dir="ltr" style="text-align: left;">\(L(\vec{r},\dot{\vec{r}},t)=\dfrac{m~\dot{\vec{r}}^2}{2}-q~\varphi(\vec{r},t)-q~\dot{\vec{r}}\cdot\vec{A}(\vec{r},t).\)</p><p dir="ltr" style="text-align: left;"></p><ol><li>Derive as equações de Euler-Lagrange.</li><li>Considere as potências transformadas: <br>\(\varphi\mapsto\varphi+\dfrac{\partial\Psi}{\partial t}\),&nbsp;\(\vec{A}\mapsto\vec{A}+\dfrac{\partial\Psi}{\partial \vec{r}}\), onde \(\Psi(t,\vec{r})\) é uma função arbitrária.<br>Qual é relação entre as Lagrangianas?<br>Como as equações de Euler-Lagrange dependem da função&nbsp;\(\Psi(t,\vec{r})\)?</li></ol><p></p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.0000000</penalty>
+    <hidden>0</hidden>
+    <idnumber></idnumber>
+    <responseformat>noinline</responseformat>
+    <responserequired>1</responserequired>
+    <responsefieldlines>15</responsefieldlines>
+    <attachments>1</attachments>
+    <attachmentsrequired>1</attachmentsrequired>
+    <filetypeslist></filetypeslist>
+    <graderinfo format="html">
+      <text></text>
+    </graderinfo>
+    <responsetemplate format="html">
+      <text></text>
+    </responsetemplate>
+  </question>
+
+<!-- question: 16724572  -->
+  <question type="essay">
+    <name>
+      <text>04. Lagrangiana do pêndulo</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p dir="ltr" style="text-align: left;"><ol><li>Escreva Lagrangiana e equações de movimento de um pêndulo simples.</li><li>Escreva Lagrangiana e equações de movimento de um pêndulo duplo.</li></ol></p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.0000000</penalty>
+    <hidden>0</hidden>
+    <idnumber></idnumber>
+    <responseformat>noinline</responseformat>
+    <responserequired>1</responserequired>
+    <responsefieldlines>15</responsefieldlines>
+    <attachments>1</attachments>
+    <attachmentsrequired>1</attachmentsrequired>
+    <filetypeslist></filetypeslist>
+    <graderinfo format="html">
+      <text></text>
+    </graderinfo>
+    <responsetemplate format="html">
+      <text></text>
+    </responsetemplate>
+  </question>
+
+<!-- question: 16724764  -->
+  <question type="essay">
+    <name>
+      <text>05. Similitude mecânica</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p dir="ltr" style="text-align: left;"></p><ol><li>Dois pontos de massas diferentes e de mesma energia potencial se deslocam sobre trajetórias idênticas. Achar a relação dos tempos.</li><li>Achar a relação dos tempos para um movimento que se realiza sobre&nbsp;trajetórias idênticas quando multiplicamos a energia potencial por um fator constante, mas supomos que as partículas têm a mesma massa.</li></ol><p></p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.0000000</penalty>
+    <hidden>0</hidden>
+    <idnumber></idnumber>
+    <responseformat>noinline</responseformat>
+    <responserequired>1</responserequired>
+    <responsefieldlines>15</responsefieldlines>
+    <attachments>1</attachments>
+    <attachmentsrequired>1</attachmentsrequired>
+    <filetypeslist></filetypeslist>
+    <graderinfo format="html">
+      <text></text>
+    </graderinfo>
+    <responsetemplate format="html">
+      <text></text>
+    </responsetemplate>
+  </question>
+
+<!-- question: 16725683  -->
+  <question type="essay">
+    <name>
+      <text>06. Mecânica de um balanço</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p dir="ltr" style="text-align: left;">Considerando o movimento de um pêndulo duplo, tal que o segundo ângulo é uma função do primeiro ângulo e tempo, utilizando o método de multiplicadores de Lagrange, deduza a equação de movimento que descreve dinâmica de um balanço.</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.0000000</penalty>
+    <hidden>0</hidden>
+    <idnumber></idnumber>
+    <responseformat>noinline</responseformat>
+    <responserequired>1</responserequired>
+    <responsefieldlines>15</responsefieldlines>
+    <attachments>1</attachments>
+    <attachmentsrequired>1</attachmentsrequired>
+    <filetypeslist></filetypeslist>
+    <graderinfo format="html">
+      <text></text>
+    </graderinfo>
+    <responsetemplate format="html">
+      <text></text>
+    </responsetemplate>
+  </question>
+
+<!-- question: 16729155  -->
+  <question type="essay">
+    <name>
+      <text>07. Movimento no campo central</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p dir="ltr" style="text-align: left;">Considere movimento no campo central da potência \(U(r)=\dfrac{\alpha}{r^{~p}}\). Demostre que:</p><p dir="ltr" style="text-align: left;"></p><ol><li>Movimento orbital é possível somente quando \(p&lt; 2\).</li><li>Calcule frequências próprias de pequenas oscilações radiais em função da frequência orbital <br>\(\dot{\phi}=\dfrac{M}{\mu r_{m}^2}\),<br>onde \(M\) é o momento angular, \(\mu\) é a massa, e \(r_{m}\) é a posição da órbita de energia mínima.</li><li>Determine valores de \(p\) para quais existem órbitas fechadas.</li></ol><p></p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.0000000</penalty>
+    <hidden>0</hidden>
+    <idnumber></idnumber>
+    <responseformat>noinline</responseformat>
+    <responserequired>1</responserequired>
+    <responsefieldlines>15</responsefieldlines>
+    <attachments>1</attachments>
+    <attachmentsrequired>1</attachmentsrequired>
+    <filetypeslist></filetypeslist>
+    <graderinfo format="html">
+      <text></text>
+    </graderinfo>
+    <responsetemplate format="html">
+      <text></text>
+    </responsetemplate>
+  </question>
+
+<!-- question: 16734732  -->
+  <question type="essay">
+    <name>
+      <text>08. Seção de choque</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p dir="ltr" style="text-align: left;">Calcule a seção de choque para particulas em campo central definido pela potência \(V(r)=\dfrac{\alpha}{r^2}\).</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.0000000</penalty>
+    <hidden>0</hidden>
+    <idnumber></idnumber>
+    <responseformat>noinline</responseformat>
+    <responserequired>1</responserequired>
+    <responsefieldlines>15</responsefieldlines>
+    <attachments>1</attachments>
+    <attachmentsrequired>1</attachmentsrequired>
+    <filetypeslist></filetypeslist>
+    <graderinfo format="html">
+      <text></text>
+    </graderinfo>
+    <responsetemplate format="html">
+      <text></text>
+    </responsetemplate>
+  </question>
+
+<!-- question: 16736538  -->
+  <question type="essay">
+    <name>
+      <text>09. Corpo sólido</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p dir="ltr" style="text-align: left;">Considere a queda livre de uma bola metálica de raio \(R\) com&nbsp;injeção da bola de ar de raio \(r\) na distância \(a\) do centro (\(a+r&lt; R\)). Escreva a Lagrangiana e equações de movimento.</p><p dir="ltr" style="text-align: left;">Dica: utilizar os ângulos de Euler em relação do centro da bola com eixo vertical que passa por centros da bola metálica e a bola de ar.</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.0000000</penalty>
+    <hidden>0</hidden>
+    <idnumber></idnumber>
+    <responseformat>noinline</responseformat>
+    <responserequired>1</responserequired>
+    <responsefieldlines>15</responsefieldlines>
+    <attachments>1</attachments>
+    <attachmentsrequired>1</attachmentsrequired>
+    <filetypeslist></filetypeslist>
+    <graderinfo format="html">
+      <text></text>
+    </graderinfo>
+    <responsetemplate format="html">
+      <text></text>
+    </responsetemplate>
+  </question>
+
+<!-- question: 16736663  -->
+  <question type="essay">
+    <name>
+      <text>10. Hamiltoniana da particula relativistica</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p dir="ltr" style="text-align: left;"></p><p dir="ltr">Considere uma partícula relativistica,</p><p dir="ltr">\(S=\int{\left(-mc\sqrt{c^2-\dot{\vec{r}}^2}-q~\varphi(\vec{r},t)-q~\dot{\vec{r}}\cdot\vec{A}(\vec{r},t)\right)dt}.\)</p><p dir="ltr">Faça transformação de Legendre e obtenha a Hamiltoniana em função de coordenadas \(\vec{r}\) e momentos&nbsp;\(\vec{p}\).</p><br><p></p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.0000000</penalty>
+    <hidden>0</hidden>
+    <idnumber></idnumber>
+    <responseformat>noinline</responseformat>
+    <responserequired>1</responserequired>
+    <responsefieldlines>15</responsefieldlines>
+    <attachments>1</attachments>
+    <attachmentsrequired>1</attachmentsrequired>
+    <filetypeslist></filetypeslist>
+    <graderinfo format="html">
+      <text></text>
+    </graderinfo>
+    <responsetemplate format="html">
+      <text></text>
+    </responsetemplate>
+  </question>
+
+<!-- question: 16773285  -->
+  <question type="essay">
+    <name>
+      <text>11. Álgebra de colchetes de Poisson</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p dir="ltr" style="text-align: left;">Utilizando as propriedades de colchetes de Poisson e álgebra</p><p dir="ltr" style="text-align: left;">\(\{q_i,q_j\}=0,\qquad \{p_i,p_j\}=0, \qquad \{p_i,q_j\}=\delta_{ij},\)</p><p dir="ltr" style="text-align: left;">demostre em coordenadas cartesianas que os compoentes do momento momento angular, \(\vec{M}=\vec{r}\times\vec{p}\), satisfazem</p><p dir="ltr" style="text-align: left;"></p><ol><li>\[\{M_i,M_j\}=-\displaystyle\sum_k\varepsilon_{ijk}M_k\];</li><li>\[\{M_i,x_j\}=-\displaystyle\sum_k\varepsilon_{ijk}x_k\];</li><li>\[\{M_i,p_j\}=-\displaystyle\sum_k\varepsilon_{ijk}p_k\].</li></ol><p></p><p dir="ltr" style="text-align: left;"><br></p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.0000000</penalty>
+    <hidden>0</hidden>
+    <idnumber></idnumber>
+    <responseformat>noinline</responseformat>
+    <responserequired>1</responserequired>
+    <responsefieldlines>15</responsefieldlines>
+    <attachments>1</attachments>
+    <attachmentsrequired>1</attachmentsrequired>
+    <filetypeslist></filetypeslist>
+    <graderinfo format="html">
+      <text></text>
+    </graderinfo>
+    <responsetemplate format="html">
+      <text></text>
+    </responsetemplate>
+  </question>
+
+<!-- question: 16773716  -->
+  <question type="essay">
+    <name>
+      <text>12. Colchete de Poisson para momento angular</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p dir="ltr" style="text-align: left;">Provar que no espaço isotrópico para qualquer função vetorial \(\vec{f}(\vec{r},\vec{p})\) e a projeção do momento angular sobre eixo \(z\), \(M_z=\vec{k}\cdot\vec{M}\), colchete de Poisson dá</p><p dir="ltr" style="text-align: left;">\[\{\vec{f},M_z\}=\vec{k}\times\vec{f},\]</p><p dir="ltr" style="text-align: left;">onde \(\vec{k}\) é o vetor unitário ao longo de eixo \(z\).</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.0000000</penalty>
+    <hidden>0</hidden>
+    <idnumber></idnumber>
+    <responseformat>noinline</responseformat>
+    <responserequired>1</responserequired>
+    <responsefieldlines>15</responsefieldlines>
+    <attachments>1</attachments>
+    <attachmentsrequired>1</attachmentsrequired>
+    <filetypeslist></filetypeslist>
+    <graderinfo format="html">
+      <text></text>
+    </graderinfo>
+    <responsetemplate format="html">
+      <text></text>
+    </responsetemplate>
+  </question>
+
+<!-- question: 16778291  -->
+  <question type="essay">
+    <name>
+      <text>13. Teoria de Hamilton-Jacobi</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p dir="ltr" style="text-align: left;">Considerando oscilador harmônico,</p><p dir="ltr" style="text-align: left;">\(H(q,p)=\frac{1}{2m}\left(p^2+m^2\omega^2 q^2\right)\),</p><p dir="ltr" style="text-align: left;"></p><ol><li>Demostre que a equação de Hamilton-Hacobi possui a solução da função principal<br>\(S=\dfrac{m\omega}{2}\left(q^2+\alpha^2\right)\dfrac{\cos(\omega t)}{\sin(\omega t)}-\dfrac{m\omega q\alpha}{\sin(\omega t)}\), onde \(\alpha\) é uma constante.<br></li><li>Dê a dependência explicita do tempo para a coordenada e o momento do oscilador, utilizando a função principal como geratriz.</li></ol><p></p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.0000000</penalty>
+    <hidden>0</hidden>
+    <idnumber></idnumber>
+    <responseformat>noinline</responseformat>
+    <responserequired>1</responserequired>
+    <responsefieldlines>15</responsefieldlines>
+    <attachments>1</attachments>
+    <attachmentsrequired>1</attachmentsrequired>
+    <filetypeslist></filetypeslist>
+    <graderinfo format="html">
+      <text></text>
+    </graderinfo>
+    <responsetemplate format="html">
+      <text></text>
+    </responsetemplate>
+  </question>
+
+<!-- question: 16779312  -->
+  <question type="essay">
+    <name>
+      <text>14. Variáveis de ação para o problema de Kepler</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p dir="ltr" style="text-align: left;">Para o problema de Kepler</p><p dir="ltr" style="text-align: left;">\(H=\dfrac{p_r^2}{2m}+\dfrac{p_{\phi}^2}{2m r^2}+\dfrac{\alpha}{r}:\)</p><p dir="ltr" style="text-align: left;"></p><ol><li>Determine as variáveis de ação.</li><li>Expresse a energia (Hamiltoniano) em função destas variáveis.</li><li>Expresse a excentricidade em função&nbsp;destas variáveis.</li></ol><p></p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.0000000</penalty>
+    <hidden>0</hidden>
+    <idnumber></idnumber>
+    <responseformat>noinline</responseformat>
+    <responserequired>1</responserequired>
+    <responsefieldlines>15</responsefieldlines>
+    <attachments>1</attachments>
+    <attachmentsrequired>1</attachmentsrequired>
+    <filetypeslist></filetypeslist>
+    <graderinfo format="html">
+      <text></text>
+    </graderinfo>
+    <responsetemplate format="html">
+      <text></text>
+    </responsetemplate>
+  </question>
+
+</quiz>
