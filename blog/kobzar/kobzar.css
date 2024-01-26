@@ -1,0 +1,15 @@
+@font-face {
+  font-family: 'KobzarKS';
+    src: url("KobzarKS.eot");
+    src: local('KobzarKS'),
+       url("KobzarKS.ttf") format('truetype'),
+       url("KobzarKS.svg#KobzarKS") format('svg'),
+       url("KobzarKS.woff") format("woff"),
+       url("KobzarKS.otf") format('opentype');
+}
+
+.kobzar {
+   font-family: "KobzarKS";
+   font-style: italic;
+   font-size:150%;
+}
