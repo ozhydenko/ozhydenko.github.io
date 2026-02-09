@@ -1,3 +1,5 @@
+(function () {
+
 const btn = [...document.querySelectorAll('button')].find(b => b.textContent.trim() === 'Editovat')
 
 if(btn && btn.classList.contains("p-button-warning")){
@@ -38,3 +40,5 @@ if(btn && btn.classList.contains("p-button-warning")){
  }
  btn.click()
 }
+
+})()
