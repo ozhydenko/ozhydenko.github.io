@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width" />
+<title>Cálculo numérico: Solução de equações pelo método do ponto fixo.</title>
+<link rel="stylesheet" type="text/css" href="lstyle.css" />
+<link href="https://www.ufabc.edu.br/ensino/docentes/olexandr-zhydenko" rel="author" />
+<script type="text/javascript" src="execjavascript.js"></script>
+<script type="text/javascript" src="LaTeXMathML.js"></script>
+</head>
+
+<body>
+
+<header>
+</header>
+
+<nav>
+<a class="prev" href="aula07.html">Página anterior</a>
+<a class="top" href="index.html">Índice</a>
+<a class="next" href="aula09.html">Próxima página</a>
+</nav>
+
+<article>
+
+<section>
+<h2>Aula 8: Solução de equações pelo método do ponto fixo.</h2>
+
+
+<h3>Métodos iterativos</h3>
+
+<p>Os <a href="aula07.html">métodos de quebra</a>, nos quais a aproximação da solução é progressivamente melhorada, são exemplos típicos de <strong>métodos iterativos</strong>.
+Esses métodos baseiam-se na repetição de um mesmo procedimento, que produz uma sequência de aproximações cada vez melhor, a partir de uma aproximação inicial.</p>
+
+<blockquote>
+<strong>Definição.</strong> Um método iterativo é um procedimento numérico no qual se constrói uma sequência de aproximações x<sub>1</sub>, x<sub>2</sub>, x<sub>3</sub>,… para a solução de um problema, a partir de uma aproximação inicial x<sub>0</sub>, por meio da aplicação repetida de uma mesma regra de cálculo. Dizemos que o processo iterativo <strong>converge</strong> se a sequência {x<sub>k</sub>} possui limite e esse limite coincide com a solução do problema x.
+<blockquote class="formula">
+$\lim_{k\to\infty}x_k=x.$
+</blockquote>
+</blockquote>
+
+<p>Cada repetição do procedimento recebe o nome de <strong>iteração</strong>. Em cada iteração, a aproximação obtida na etapa anterior é utilizada para calcular uma nova aproximação, esperando-se que o erro diminua a cada passo. O processo iterativo deve ser interrompido quando a aproximação alcança a precisão desejada.</p>
+
+<p>Na prática, o processo iterativo é interrompido após um número finito de iterações, quando um critério de parada é satisfeito, como, por exemplo, quando a diferença de duas aproximações (chamada o <strong>valor residual</strong> associado ao problema), torna-se menor do que uma tolerância ε previamente fixada,</p>
+<blockquote class="formula">
+∣ x<sub>k</sub> − x<sub>k−1</sub> ∣ &lt; ε.
+</blockquote>
+
+<h3>Método do ponto fixo</h3>
+
+<p>Em muitos métodos iterativos, a sequência {x<sub>k</sub>} é definida a partir de uma <strong>função de iteração</strong> φ&nbsp;:&nbsp;D&nbsp;⊂&nbsp;ℝ&nbsp;→&nbsp;D, de modo que cada termo da sequência é obtido pela relação</p>
+<blockquote class="formula">
+x<sub>k</sub> = φ(x<sub>k−1</sub>) para k = 0, 1, 2, ….
+</blockquote>
+<p>Nesse contexto, o valor inicial x<sub>0</sub>
+deve pertencer ao domínio D da função φ.
+</p>
+
+<p>Se a sequência gerada por essa regra possui limite x e se a função φ é contínua, então o limite satisfaz a equação</p>
+<blockquote class="formula">
+x = φ(x).
+</blockquote>
+<p>Assim, a solução procurada pode ser caracterizada como um <strong>ponto fixo</strong> da interseção do gráfico da função de iteração y&nbsp;=&nbsp;φ(x) e a reta y&nbsp;=&nbsp;x.</p>
+
+<svg width="100%" height="440">
+   <text x="90%" y="20" text-anchor="end">y=φ(x)</text>
+   <text x="77%" y="20" text-anchor="end">y=x</text>
+   <line x1="5%" y1="350" x2="95%" y2="350" stroke="black"/>
+   <line x1="10%" y1="350" x2="80%" y2="10" stroke="blue"/>
+   <line x1="10%" y1="5" x2="10%" y2="435" stroke="black"/>
+
+   <text x="15%" y="365" text-anchor="middle" font-size="100%">x<tspan dx="0" dy="4" font-size="75%">0</tspan></text>
+   <line x1="15%" y1="350" x2="15%" y2="170" stroke="black" stroke-dasharray="9,3" />
+   <line x1="10%" y1="170" x2="47%" y2="170" stroke="black" stroke-dasharray="9,3" />
+   <text x="9%" y="174" text-anchor="end" font-size="100%">φ(x<tspan dx="0" dy="4" font-size="75%">0</tspan><tspan dx="0" dy="-4">)</tspan></text>
+   <line x1="47%" y1="350" x2="47%" y2="63" stroke="black" stroke-dasharray="9,3" />
+   <text x="47%" y="365" text-anchor="middle" font-size="100%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x<tspan dx="1" dy="4" font-size="75%">1</tspan><tspan dx="0" dy="-4">=φ(x</tspan><tspan dx="0" dy="4" font-size="75%">0</tspan><tspan dx="0" dy="-4">)</tspan></text>
+   <line x1="10%" y1="63" x2="69%" y2="63" stroke="black" stroke-dasharray="9,3" />
+   <text x="9%" y="67" text-anchor="end" font-size="100%">φ(x<tspan dx="0" dy="4" font-size="75%">1</tspan><tspan dx="0" dy="-4">)</tspan></text>
+   <line x1="69%" y1="350" x2="69%" y2="50" stroke="black" stroke-dasharray="9,3" />
+   <text x="69%" y="365" text-anchor="middle" font-size="100%">x<tspan dx="1" dy="4" font-size="75%">2</tspan></text>
+   <line x1="72%" y1="350" x2="72%" y2="48" stroke="black" stroke-dasharray="9,3" />
+   <text x="72%" y="365" text-anchor="middle" font-size="100%">x</text>
+
+  <svg x="5%" y="10" viewBox="0 0 600 200" width="95%" height="400px" preserveAspectRatio="none">
+    <path d="M 0 120 C 180 -10, 320 40, 520 10"
+          fill="none" stroke="red"/>
+  </svg>
+</svg>
+
+<p>A figura mostra que, neste caso, a sequência gerada pelo processo iterativo converge para o ponto fixo, sendo que cada iteração melhora a aproximação da solução exata x. Podemos ver que a trajetória das iterações permanece entre os gráficos y&nbsp;=&nbsp;φ(x) e y&nbsp;=&nbsp;x.</p>
+
+<p>Quando a função de iteração é decrescente, a convergência também pode ocorrer. Nesse caso, as aproximações alternam os lados do ponto fixo, mas a distância até ele diminui a cada iteração.</p>
+
+<svg width="100%" height="440">
+   <text x="80%" y="30" text-anchor="start">y=x</text>
+   <text x="18%" y="20" text-anchor="start">y=φ(x)</text>
+   <line x1="5%" y1="350" x2="95%" y2="350" stroke="black"/>
+   <line x1="10%" y1="350" x2="80%" y2="10" stroke="blue"/>
+   <line x1="10%" y1="5" x2="10%" y2="435" stroke="black"/>
+
+   <line x1="34%" y1="350" x2="34%" y2="86" stroke="black" stroke-dasharray="9,3" />
+   <line x1="10%" y1="86" x2="64%" y2="86" stroke="black" stroke-dasharray="9,3" />
+   <text x="34%" y="365" text-anchor="middle" font-size="100%">x<tspan dx="0" dy="4" font-size="75%">0</tspan></text>
+   <text x="9%" y="90" text-anchor="end" font-size="100%">φ(x<tspan dx="0" dy="4" font-size="75%">0</tspan><tspan dx="0" dy="-4">)</tspan></text>
+
+   <line x1="64%" y1="350" x2="64%" y2="86" stroke="black" stroke-dasharray="9,3" />
+   <line x1="10%" y1="180" x2="64%" y2="180" stroke="black" stroke-dasharray="9,3" />
+   <text x="64%" y="365" text-anchor="middle" font-size="100%">x<tspan dx="0" dy="4" font-size="75%">1</tspan></text>
+   <text x="9%" y="184" text-anchor="end" font-size="100%">φ(x<tspan dx="0" dy="4" font-size="75%">1</tspan><tspan dx="0" dy="-4">)</tspan></text>
+
+   <line x1="45%" y1="350" x2="45%" y2="114" stroke="black" stroke-dasharray="9,3" />
+   <line x1="10%" y1="114" x2="58.8%" y2="114" stroke="black" stroke-dasharray="9,3" />
+   <text x="45%" y="365" text-anchor="middle" font-size="100%">x<tspan dx="0" dy="4" font-size="75%">2</tspan></text>
+   <text x="9%" y="118" text-anchor="end" font-size="100%">φ(x<tspan dx="0" dy="4" font-size="75%">2</tspan><tspan dx="0" dy="-4">)</tspan></text>
+
+   <line x1="58.75%" y1="350" x2="58.75%" y2="115" stroke="black" stroke-dasharray="9,3" />
+   <text x="58.75%" y="365" text-anchor="middle" font-size="100%">x<tspan dx="0" dy="4" font-size="75%">3</tspan></text>
+   <line x1="53%" y1="350" x2="53%" y2="142" stroke="black" stroke-dasharray="9,3" />
+   <text x="53%" y="365" text-anchor="middle" font-size="100%">x</text>
+
+   <svg x="5%" y="10" viewBox="0 0 600 200" width="95%" height="400px" preserveAspectRatio="none">
+     <path d="M 40 15 C 170 35, 350 58, 560 160"
+           fill="none" stroke="red"/>
+   </svg>
+</svg>
+
+<p>Porém, o método de ponto fixo não garante a convergência: a sequencia x<sub>1</sub>, x<sub>2</sub>, x<sub>3</sub>,… obtida pela função φ(x) não necessariamente aproxima o valor de x.</p>
+<svg width="100%" height="440">
+   <text x="81%" y="20" text-anchor="start">y=x</text>
+   <text x="75%" y="20" text-anchor="end">y=φ(x)</text>
+   <line x1="5%" y1="350" x2="95%" y2="350" stroke="black"/>
+   <line x1="10%" y1="350" x2="80%" y2="10" stroke="blue"/>
+   <line x1="10%" y1="5" x2="10%" y2="435" stroke="black"/>
+
+   <line x1="73.5%" y1="350" x2="73.5%" y2="42" stroke="black" stroke-dasharray="9,3" />
+   <text x="73.5%" y="365" text-anchor="middle" font-size="100%">&nbsp;x</text>
+   <line x1="71%" y1="350" x2="71%" y2="64" stroke="black" stroke-dasharray="9,3" />
+   <text x="71%" y="365" text-anchor="middle" font-size="100%">x<tspan dx="1" dy="4" font-size="75%">0</tspan></text>
+   <line x1="10%" y1="64" x2="71%" y2="64" stroke="black" stroke-dasharray="9,3" />
+   <text x="9%" y="67" text-anchor="end" font-size="100%">φ(x<tspan dx="0" dy="4" font-size="75%">0</tspan><tspan dx="0" dy="-4">)</tspan></text>
+   <line x1="69%" y1="350" x2="69%" y2="63" stroke="black" stroke-dasharray="9,3" />
+   <text x="69%" y="365" text-anchor="middle" font-size="100%">x<tspan dx="1" dy="4" font-size="75%">1</tspan>&nbsp;&nbsp;</text>
+   <line x1="10%" y1="88" x2="69%" y2="88" stroke="black" stroke-dasharray="9,3" />
+   <text x="9%" y="91" text-anchor="end" font-size="100%">φ(x<tspan dx="0" dy="4" font-size="75%">1</tspan><tspan dx="0" dy="-4">)</tspan></text>
+   <line x1="64%" y1="350" x2="64%" y2="88" stroke="black" stroke-dasharray="9,3" />
+   <text x="64%" y="365" text-anchor="middle" font-size="100%">x<tspan dx="0" dy="4" font-size="75%">2</tspan></text>
+   <line x1="10%" y1="132" x2="64%" y2="132" stroke="black" stroke-dasharray="9,3" />
+   <text x="9%" y="135" text-anchor="end" font-size="100%">φ(x<tspan dx="0" dy="4" font-size="75%">2</tspan><tspan dx="0" dy="-4">)</tspan></text>
+   <line x1="55%" y1="350" x2="55%" y2="132" stroke="black" stroke-dasharray="9,3" />
+   <text x="55%" y="365" text-anchor="middle" font-size="100%">x<tspan dx="0" dy="4" font-size="75%">3</tspan></text>
+
+  <svg x="5%" y="10" viewBox="0 0 600 200" width="95%" height="400px" preserveAspectRatio="none">
+    <path d="M 10 190 C 300 200, 420 -20, 550 -50"
+          fill="none" stroke="red"/>
+  </svg>
+</svg>
+
+<p>Também pode haver divergência com uma função de iteração decrescente. Nesse caso, as aproximações continuam alternando os lados do ponto fixo, mas a distância até ele aumenta a cada iteração.</p>
+
+<svg width="100%" height="440">
+   <text x="81%" y="20" text-anchor="start">y=x</text>
+   <text x="22%" y="20" text-anchor="start">y=φ(x)</text>
+   <line x1="5%" y1="350" x2="95%" y2="350" stroke="black"/>
+   <line x1="10%" y1="350" x2="80%" y2="10" stroke="blue"/>
+   <line x1="10%" y1="5" x2="10%" y2="435" stroke="black"/>
+
+   <line x1="49%" y1="350" x2="49%" y2="150" stroke="black" stroke-dasharray="9,3" />
+   <line x1="10%" y1="150" x2="57%" y2="150" stroke="black" stroke-dasharray="9,3" />
+   <text x="49%" y="365" text-anchor="middle" font-size="100%">x<tspan dx="0" dy="4" font-size="75%">0</tspan></text>
+   <text x="9%" y="154" text-anchor="end" font-size="100%">φ(x<tspan dx="0" dy="4" font-size="75%">0</tspan><tspan dx="0" dy="-4">)</tspan></text>
+
+   <line x1="57%" y1="350" x2="57%" y2="100" stroke="black" stroke-dasharray="9,3" />
+   <line x1="10%" y1="100" x2="38%" y2="100" stroke="black" stroke-dasharray="9,3" />
+   <text x="57%" y="365" text-anchor="middle" font-size="100%">x<tspan dx="0" dy="4" font-size="75%">1</tspan></text>
+   <text x="9%" y="104" text-anchor="end" font-size="100%">φ(x<tspan dx="0" dy="4" font-size="75%">1</tspan><tspan dx="0" dy="-4">)</tspan></text>
+
+   <line x1="38%" y1="350" x2="38%" y2="236" stroke="black" stroke-dasharray="9,3" />
+   <line x1="10%" y1="236" x2="73%" y2="236" stroke="black" stroke-dasharray="9,3" />
+   <text x="38%" y="365" text-anchor="middle" font-size="100%">x<tspan dx="0" dy="4" font-size="75%">2</tspan></text>
+   <text x="9%" y="240" text-anchor="end" font-size="100%">φ(x<tspan dx="0" dy="4" font-size="75%">2</tspan><tspan dx="0" dy="-4">)</tspan></text>
+
+   <line x1="73%" y1="350" x2="73%" y2="34" stroke="black" stroke-dasharray="9,3" />
+   <text x="73%" y="365" text-anchor="middle" font-size="100%">x<tspan dx="0" dy="4" font-size="75%">3</tspan></text>
+   <line x1="53%" y1="350" x2="53%" y2="143" stroke="black" stroke-dasharray="9,3" />
+   <text x="53%" y="382" text-anchor="middle" font-size="100%">x</text>
+
+   <svg x="5%" y="10" viewBox="0 0 600 200" width="95%" height="400px" preserveAspectRatio="none">
+     <path d="M 35 0 C 170 15, 340 40, 465 200"
+           fill="none" stroke="red"/>
+   </svg>
+</svg>
+
+<p>Nestes exemplos, mesmo que x<sub>0</sub> esteja próximo a x, os valores x<sub>1</sub>, x<sub>2</sub>, x<sub>3</sub>,… podem ficar cada vez mais distantes do ponto x: x&nbsp;=&nbsp;φ(x). Uma condição suficiente da convergência pode ser formulada como um teorema seguinte:</p>
+
+<blockquote>
+<strong>Teorema sobre convergência do método do ponto fixo .</strong> Seja φ(x) uma função que possui a derivada contínua em um intervalo I centrado em x, tal que x=φ(x). Se
+<blockquote class="formula">
+∀x ∈ I: |φ'(x)| ≤ M &lt; 1,
+</blockquote>
+então a seqüência definida por
+<blockquote class="formula">
+x<sub>k</sub> = φ(x<sub>k−1</sub>),
+</blockquote>
+para qualquer aproximação inicial ∀x<sub>0</sub> ∈ I converge a x:
+<blockquote class="formula">
+$\displaystyle{\lim_{k\to\infty}x_k=x.}$
+</blockquote>
+</blockquote>
+
+<blockquote><strong>Demonstração.</strong>
+O erro absoluto da aproximação na iteração k é
+<blockquote class="formula">
+$\Delta x_k = \left|x_k − x\right| = \left|\phi(x_k) − \phi(x)\right|.$
+</blockquote>
+Supondo que x<sub>k−1</sub> ∈ I, como φ(x) possui a derivada contínua, por teorema do valor médio existe ξ entre x<sub>k−1</sub> e x, tal que
+<blockquote class="formula">
+$\Delta x_k = \left|\phi(x_k) − \phi(x)\right| =  \left|\phi\prime(\xi)\right|\cdot\left|x_k − x\right| \leq M\cdot\left|x_k − x\right| = M\cdot\Delta x_{k−1},$
+</blockquote>
+pois ξ ∈ I. Repetindo k vezes, obtemos
+<blockquote class="formula">
+$\Delta x_k \leq M^k\cdot\Delta x_0,$
+</blockquote>
+que vai para 0, pois M&lt;1. Assim,
+<blockquote class="formula">
+$\displaystyle{\lim_{k\to\infty}\Delta x_k = \lim_{k\to\infty}\left|x_k − x\right| = 0.}$ ∎
+</blockquote>
+</blockquote>
+
+<p>Na prática, se conseguimos provar que a função de iteração |φ'(x)| &lt; 1 no intervalo suficientemente grande, então o algoritmo converge.</p>
+
+<h3>Estimativa do erro para o método de ponto fixo</h3>
+
+<p>Para estimar o erro da aproximação na iteração k, podemos comparar duas aproximações consecutivas:</p>
+
+<blockquote class="formula">
+$\Delta x_k = |x_k − x| = |x_k − x_{k+1} + x_{k+1} − x| \leq |x_k − x_{k+1}| + |x_{k+1} − x| = |x_k − x_{k+1}| + \Delta x_{k+1} \leq |x_k − x_{k+1}| + M\cdot\Delta x_k.$
+</blockquote>
+
+<p>Assim,</p>
+<blockquote class="formula">
+$\Delta x_k \leq \displaystyle{\frac{1}{1 − M}}\cdot|x_{k + 1} − x_k|.$
+</blockquote>
+
+<p>Finalmente,</p>
+<blockquote class="formula">
+$\Delta x_k \leq  M\cdot\Delta x_{k−1} \leq \displaystyle{\frac{M}{1 − M}}\cdot|x_k − x_{k−1}|.$
+</blockquote>
+
+<p>Essa desigualdade é útil como critério de parada. Se queremos garantir erro absoluto menor que ε, basta continuar as iterações até que</p>
+
+<blockquote class="formula">
+$\displaystyle{\frac{M}{1 − M}}\cdot|x_k − x_{k−1}|&lt;\varepsilon.$
+</blockquote>
+
+<p>Mesmo quando desconhecemos o valor de M, podemos usar o valor residual |x<sub>k</sub> − x<sub>k−1</sub>| como critério aproximado. Nesse caso, não obtemos uma estimativa rigorosa do erro, mas esperamos que o erro seja da mesma ordem de grandeza que o residual.</p>
+
+<form>
+<div class="overwrite"><input class="right-aligned" type="button" name="execute"  value="Executar" onClick="ExecuteCodeEvent(this)"></div>
+<textarea class="wide" name="code"  rows="10">
+var pontofixo=function(phi,x){
+var prec=0.00000001
+var y=phi(x)
+while(Math.abs(y-x)>prec)y=phi(x=y)
+return y
+}
+
+var phi=function(x){return x-Math.sin(x)+1}
+
+text=pontofixo(phi,1.5)
+</textarea>
+<textarea class="wide" name="destination" readonly="readonly" rows="3"></textarea>
+</form>
+
+<h3>Resumo</h3>
+
+<ol>
+  <li>Métodos iterativos constroem uma sequência de aproximações a partir de uma aproximação inicial.</li>
+  <li>No método do ponto fixo, a equação é transformada na forma x=φ(x), e as aproximações são obtidas pela repetição x<sub>k</sub>=φ(x<sub>k−1</sub>).</li>
+  <li>A convergência do método do ponto fixo não é garantida para qualquer função de iteração nem para qualquer aproximação inicial.</li>
+  <li>Uma condição suficiente de convergência é |φ'(x)|&lt;1 no intervalo considerado.</li>
+  <li>Quando a convergência é garantida, podemos estimar o erro usando a diferença entre duas aproximações consecutivas.</li>
+</ol>
+</section>
+
+</article>
+
+<footer>
+<a href="aula09.html">Próxima aula: método de Newton-Raphson.</a>
+</footer>
+
+</body>
+
+</html>

@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width" />
+<title>Cálculo numérico: Cálculo de derivadas e problema com precisão.</title>
+<link rel="stylesheet" type="text/css" href="lstyle.css" />
+<link href="https://www.ufabc.edu.br/ensino/docentes/olexandr-zhydenko" rel="author" />
+<script type="text/javascript" src="execjavascript.js"></script>
+<script type="text/javascript" src="LaTeXMathML.js"></script>
+</head>
+
+<body>
+
+<header>
+</header>
+
+<nav>
+<a class="prev" href="aula05.html">Página anterior</a>
+<a class="top" href="index.html">Índice</a>
+<a class="next" href="aula07.html">Próxima página</a>
+</nav>
+
+<article>
+
+<section>
+<h2>Aula 6: Cálculo de derivadas e problema com precisão.</h2>
+
+<h3>Derivada</h3>
+
+<p>Consideremos uma função numérica f(x). Não podemos calcular a sua derivada utilizando a definição,</p>
+
+<blockquote class="formula">
+$f'(x)=$&nbsp;$\displaystyle{\lim_{h\to0}\frac{f(x+h)−f(x)}{h}}.$
+</blockquote>
+
+<p>Se utilizamos esta fórmula para algum valor pequeno de h como uma aproximação, precisamos uma estimativa do erro, que pode ser obtida pela fórmula de Taylor de ordem 1 (aproximação linear):</p>
+
+<blockquote class="formula">
+$f(x+h)=f(x)+f'(x)h$&nbsp;$+\textrm{&Oscr;}(h^2).$
+</blockquote>
+
+<p>Dividindo ambos lados por h e isolando a derivada, obtemos</p>
+
+<blockquote class="formula">
+$f'(x)=$&nbsp;$\displaystyle{\frac{f(x+h)−f(x)}{h}}$&nbsp;$~+\textrm{&Oscr;}(h).$
+</blockquote>
+
+<p>Isto significa que o erro da aproximação é proporcional de h. Como o coeficiente de proporcionalidade é desconhecido, é difícil de controlar o erro dessa aproximação.</p>
+
+<p>Para aproximação melhor utilizamos a fórmula de Taylor de segunda ordem:</p>
+
+<blockquote class="formula">
+$f(x+h)=f(x)+f'(x)h$&nbsp;$+\displaystyle{\frac{f''(h)}{2}h^2}$&nbsp;$+\textrm{&Oscr;}(h^3).$
+</blockquote>
+
+<p>Para eliminar a segunda derivada, subtraímos a mesma fórmula para h com sinal oposto:</p>
+
+<blockquote class="formula">
+$f(x−h)=f(x)−f'(x)h$&nbsp;$+\displaystyle{\frac{f''(h)}{2}h^2}$&nbsp;$+\textrm{&Oscr;}(h^3).$
+</blockquote>
+
+<p>A subtração dá</p>
+
+<blockquote class="formula">
+$f(x+h)−f(x−h)=2f'(x)h$&nbsp;$+\textrm{&Oscr;}(h^3).$
+</blockquote>
+
+<p>Isolando a derivada, obtemos</p>
+
+<blockquote class="formula">
+$f'(x)=$&nbsp;$\displaystyle{\frac{f(x+h)−f(x−h)}{2h}}$&nbsp;$~+\textrm{&Oscr;}(h^2).$
+</blockquote>
+
+<p>Esta fórmula dá controle melhor do erro, pois diminuindo h duas vezes o erro do resultado tem que ser quatro vezes menor.</p>
+
+<h3>Erro da fórmula de derivada</h3>
+
+<p>Variando h, vamos calcular o valor aproximado para derivada de seno em ponto x=1, que deve ser igual ao valor de cosseno no mesmo ponto.</p>
+
+<form>
+<div class="overwrite"><input class="right-aligned" type="button" name="execute"  value="Executar" onClick="ExecuteCodeEvent(this)"></div>
+<textarea class="wide" name="code"  rows="7">
+var D=function(f,x,h){return (f(x+h)-f(x-h))/(2*h)}
+
+var x=1
+var h=[1e-2,1e-3,1e-4,1e-5,1e-6,1e-7,1e-8,1e-9,1e-10]
+
+for(var i=0;i<h.length;++i) text+="h="+h[i]+", erro="+(D(Math.sin,x,h[i])-Math.cos(x))+"\n"
+</textarea>
+<textarea class="wide" name="destination" readonly="readonly" rows="10"></textarea>
+</form>
+
+<p>Podemos observar que quando diminuímos h, inicialmente o erro fica menor, mas, a partir de algum momento, começa a crescer.</p>
+
+<p>A razão disso é que, além do erro da fórmula aproximada existe mais uma fonte do erro que é a <a href="aula03.html">aritmética de ponto flutuante</a>: quando calculamos incremento da função subtraímos os valores da função nos pontos próximos que tem a diferença pequena. Então o resultado vai ter valor bem menor comparando com valor da função. Os dois valores da função são os números representados por numero fixo dos algarismos da mantissa tendo o erro relativo ɛ<sub>f</sub>. Erro absoluto de cada um dos valores será aproximadamente</p>
+
+<blockquote class="formula">
+$\Delta f=|f|\varepsilon_f,$
+</blockquote>
+
+<p>onde |f| é o valor absoluto da função. O erro absoluto do resultado de subtração é a soma dos erros absolutos do minuendo e do subtraendo. Assim, o erro total do valor da derivada aproximada será</p>
+
+<blockquote class="formula">
+$\Delta f'=\displaystyle{\frac{2|f|\varepsilon_f}{2h}}$&nbsp;$+\textrm{&Oscr;}(h^2)=|f|\varepsilon_fh^{-1}+Ah^2,$
+</blockquote>
+
+<p>onde A é o coeficiente que depende das terceiras derivadas.</p>
+
+<p>O valor mínimo do erro absoluto total da derivada é atingido para</p>
+
+<blockquote class="formula">
+$\displaystyle{h=\left(\frac{|f|\varepsilon_f}{2A}\right)^{1/3}\approx\left(\frac{\varepsilon_f}{2}\right)^{1/3}},$
+</blockquote>
+
+<p>onde nós supormos que as ordens de grandeza para os valores da função e das suas derivadas são aproximadamente iguais. Então o erro relativo mínimo que podemos obter é, aproximadamente,</p>
+
+<blockquote class="formula">
+$\displaystyle{\varepsilon_{f'}=\frac{\Delta f'}{|f'|}\approx\left(\varepsilon_f\right)^{2/3}}.$
+</blockquote>
+
+<p>Isto significa que, se escolher o valor do parâmetro h que corresponde ao erro mínimo, perdemos um terço dos dígitos significativos no valor da derivada comparando com o valor da função.</p>
+
+<p>Em Javascript <a href="aula03.html">foi determinado</a> que na mantissa temos t=53 casas da base binária (β=2), então o erro relativo da representação de função,</p>
+
+<blockquote class="formula">
+$\varepsilon_f=\beta^{1-t}/2=2^{-53}.$
+</blockquote>
+
+<p>Assim, o parâmetro h que corresponde o erro mínimo é</p>
+
+<blockquote class="formula">
+$h\approx2^{-18}\approx0.000005,$
+</blockquote>
+
+<p>que dá o erro relativo da ordem</p>
+
+<blockquote class="formula">
+$\varepsilon_{f'}\approx2^{-36}\approx10^{-11}.$
+</blockquote>
+
+<h3>Fórmula da ordem superior</h3>
+
+<p>Para obter a aproximação de ordem superior utilizamos a fórmula de Taylor de mesma ordem:</p>
+
+<blockquote class="formula">
+$f(x+h)=f(x)+f'(x)h$&nbsp;$+\displaystyle{\frac{f''(h)}{2}h^2}$&nbsp;$+\displaystyle{\frac{f'''(h)}{3!}h^3}$&nbsp;$+\displaystyle{\frac{f''''(h)}{4!}h^4}$&nbsp;$+\textrm{&Oscr;}(h^5),$
+<br />
+$f(x−h)=f(x)−f'(x)h$&nbsp;$+\displaystyle{\frac{f''(h)}{2}h^2}$&nbsp;$−\displaystyle{\frac{f'''(h)}{3!}h^3}$&nbsp;$+\displaystyle{\frac{f''''(h)}{4!}h^4}$&nbsp;$+\textrm{&Oscr;}(h^5).$
+</blockquote>
+
+
+<p>Subtraindo, obtemos</p>
+
+<blockquote class="formula">
+$f(x+h)−f(x−h)=2f'(x)h$&nbsp;$+\displaystyle{\frac{f'''(h)}{3}h^3}$&nbsp;$+\textrm{&Oscr;}(h^5).$
+</blockquote>
+
+<p>Para eliminar a terceira derivada utilizamos 2h em vez de h:</p>
+
+<blockquote class="formula">
+$f(x+2h)−f(x−2h)=4f'(x)h$&nbsp;$+\displaystyle{\frac{8f'''(h)}{3}h^3}$&nbsp;$+\textrm{&Oscr;}(h^5).$
+</blockquote>
+
+<p>Multiplicando a primeira relação por 8 e subtraindo a segunda, isolamos a derivada:</p>
+
+<blockquote class="formula">
+$f'(x)=$&nbsp;$\displaystyle{\frac{8f(x+h)−8f(x−h)−f(x+2h)+f(x−2h)}{12h}}$&nbsp;$~+\textrm{&Oscr;}(h^4).$
+</blockquote>
+
+<p>Neste caso, o valor mínimo do erro é atingido para</p>
+
+<blockquote class="formula">
+$\displaystyle{h\approx\left(\varepsilon_f\right)^{1/5}}\approx2^{-11}\approx0.0005,$
+</blockquote>
+
+<p>que dá o erro relativo da ordem</p>
+
+<blockquote class="formula">
+$\displaystyle{\varepsilon_{f'}\approx\left(\varepsilon_f\right)^{4/5}}\approx2^{-43}\approx10^{-13}.$
+</blockquote>
+
+<form>
+<div class="overwrite"><input class="right-aligned" type="button" name="execute"  value="Executar" onClick="ExecuteCodeEvent(this)"></div>
+<textarea class="wide" name="code"  rows="7">
+var D=function(f,x,h){return (8*(f(x+h)-f(x-h))-f(x+2*h)+f(x-2*h))/(12*h)}
+
+var x=1
+var h=[0.01,0.001,0.0005,0.0001,0.00001,0.000001]
+
+for(var i=0;i<h.length;++i) text+="h="+h[i]+", erro="+(D(Math.sin,x,h[i])-Math.cos(x))+"\n"
+</textarea>
+<textarea class="wide" name="destination" readonly="readonly" rows="7"></textarea>
+</form>
+
+<h3>Resumo</h3>
+
+<ol>
+  <li>Para obter a fórmula aproximada para derivada utilizamos a fórmula de Taylor.</li>
+  <li>Além do erro de aproximação obtemos o erro por causa de cancelamento na aritmética de ponto flutuante. Assim, existe o valor do parâmetro que dá a melhor aproximação.</li>
+  <li>Até no seu mínimo, o erro na derivada é significativamente maior comparando com o erro do valor de função: de fato perdemos uma parte dos algarismos significativos da mantissa.</li>
+  <li>Cálculo numérico da derivada tem que ser evitada quando possível pois leva ao crescimento rápido do erro.</li>
+</ol>
+
+</section>
+
+</article>
+
+<footer>
+<a href="aula07.html">Próxima aula: Solução de equações por métodos de quebra.</a>
+</footer>
+
+</body>
+
+</html> 

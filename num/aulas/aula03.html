@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width" />
+<title>Cálculo numérico: Aritmética de ponto flutuante. Parâmetros do sistema de representação de números.</title>
+<link rel="stylesheet" type="text/css" href="lstyle.css" />
+<link href="https://www.ufabc.edu.br/ensino/docentes/olexandr-zhydenko" rel="author" />
+<script type="text/javascript" src="execjavascript.js"></script>
+<script type="text/javascript" src="LaTeXMathML.js"></script>
+</head>
+
+<body>
+
+<header>
+</header>
+
+<nav>
+<a class="prev" href="aula02.html">Página anterior</a>
+<a class="top" href="index.html">Índice</a>
+<a class="next" href="aula04.html">Próxima página</a>
+</nav>
+
+<article>
+
+<section>
+<h2>Aula 3: Aritmética de ponto flutuante.</h2>
+
+<h3>Formato de representação de números</h3>
+
+<p>Definimos o formato de representação dos números F(β,t,m,M) como um produto do número com valor absoluto menor que 1, chamado <strong>mantissa</strong>, especificado por t dígitos na base β, e uma potência inteira de β,</p>
+<blockquote class="formula">
+$\pm 0.d_1d_2\ldots d_t\times \beta^e,$
+</blockquote>
+<p>Todos os algarismos da mantissa de d<sub>1</sub> a d<sub>t</sub> são os dígitos menores que β, e o <strong>expoente</strong> e é um número inteiro, tal que -m&nbsp;≤&nbsp;e&nbsp;≤&nbsp;M. Além disso, para excluir ambiguidade, vamos requerer que d<sub>1</sub>≠0.</p>
+
+<p>Neste formato podemos representar qualquer número diferente de zero desde que o valor de expoente que corresponde à ordem de grandeza do número está no intervalo -m&nbsp;≤&nbsp;e&nbsp;≤&nbsp;M. As casas excedentes têm que ser arredondadas para casas da mantissa. Por isto tal representação de números é sempre aproximada.</p>
+
+<p>Exemplos para F(10,3,2,3):</p>
+<blockquote class="formula">
+<table><tbody>
+<tr><td>$28.31$</td><td>$\rightarrow\quad+0.283\times10^2,$</td></tr>
+<tr><td>$0.01888$</td><td>$\rightarrow\quad+0.189\times10^{-1},$</td></tr>
+<tr><td>$−1.1$</td><td>$\rightarrow\quad−0.110\times10^{1}.$</td></tr>
+</tbody></table>
+</blockquote>
+
+<p>Exemplos para F(2,4,2,3):</p>
+<blockquote class="formula">
+<table><tbody>
+<tr><td>$−2.25$</td><td>$\rightarrow\quad−0.1001\times10^{10},$</td></tr>
+<tr><td>$0.0625$</td><td>$\rightarrow\quad+0.1000\times10^{-11},$</td></tr>
+<tr><td>$−5.5$</td><td>$\rightarrow\quad−0.1011\times10^{11}.$</td></tr>
+</tbody></table>
+</blockquote>
+
+<p>Podemos observar que a posição real do ponto não é fixo e depende da expoente. Por isto o número é chamado o de <strong>ponto flutuante</strong>.</p>
+
+<h4>Erro de representação</h4>
+
+<p>Este formato de representação dos números precisa uma fixa quantidade de memória para representar qualquer número, enquanto o erro relativo desta representação não depende da ordem de grandeza do número.</p>
+
+<p>Para qualquer número V representado o erro de arredondamento é</p>
+
+<blockquote class="formula">
+$\Delta V=\frac{1}{2}\times\beta^{-t}\times\beta^e.$
+</blockquote>
+
+<p>Como o valor absoluto de V&#773; é limitado por valor mínimo da mantissa, que é 0.1&nbsp;=&nbsp;β<sup>-1</sup>, pois d<sub>1</sub>&nbsp;&gt;&nbsp;0,</p>
+<blockquote class="formula">
+$|\bar{V}|\geq\beta^{-1}\times\beta^e,$
+</blockquote>
+
+<p>concluímos que o erro relativo é</p>
+
+<blockquote class="formula">
+$\displaystyle{\varepsilon_V=\frac{\Delta V}{|\bar{V}|}\leq\frac{\beta^{1-t}}{2}}$
+</blockquote>
+
+<p>e não depende do valor de expoente e.</p>
+
+<h3>Operações aritméticas</h3>
+
+<p>Para somar ou subtrair os números representados por mantissa e expoente precisamos de fato fazer 3 operações.</p>
+
+<h4>Soma</h4>
+
+<p>Consideremos, por exemplo, a soma 9.64&nbsp;+&nbsp;0.484 em F(10,3,2,3):</p>
+
+<p><strong>Operação 1:</strong> Como cada número na representação possui expoente diferente, transformamos os números a uma expoente comum:</p>
+<blockquote class="formula">
+$0.964\times10^1+0.484\times10^0\quad\rightarrow\quad0.964\times10^1+0.0484\times10^1.$
+</blockquote>
+
+<p><strong>Operação 2:</strong> Quando ambas mantissas são multiplicados por mesma potência da base, podemos somar as mantissas:</p>
+<blockquote class="formula">
+$0.964\times10^1+0.0484\times10^1=(0.964+0.0484)\times10^1=1.0124\times10^1.$
+</blockquote>
+
+<p><strong>Operação 3:</strong> Para guardar o resultado na memória precisamos transformá-lo ao formato da representação que pode requerer arredondamento de mantissa e correção do valor de expoente:</p>
+
+<blockquote class="formula">
+$1.0124\times10^1\quad\rightarrow\quad0.101\times10^2.$
+</blockquote>
+
+<h4>Diferença</h4>
+
+<p>Semelhante, a diferença, por exemplo, 1.04&nbsp;−&nbsp;0.971 em F(10,3,2,3):</p>
+
+<p><strong>Operação 1:</strong> Transformamos os números a uma expoente comum:</p>
+<blockquote class="formula">
+$0.104\times10^1−0.971\times10^0\quad\rightarrow\quad0.104\times10^1−0.0971\times10^1.$
+</blockquote>
+
+<p><strong>Operação 2: </strong>Subtraímos as mantissas:</p>
+<blockquote class="formula">
+$(0.104−0.0971)\times10^1=0.0069\times10^1.$
+</blockquote>
+
+<p><strong>Operação 3:</strong> Transformação final que inclui, quando necessário, o arredondamento de mantissa e a correção de expoente:</p>
+<blockquote class="formula">
+$0.0069\times10^1\quad\rightarrow\quad0.690\times10^{-1}.$
+</blockquote>
+
+<h4>Multiplicação</h4>
+
+<p>Quando multiplicamos dois números, por exemplo, 1.82&nbsp;×&nbsp;0.043 em F(10,3,2,3), também fazemos 3 operações:</p>
+
+<p><strong>Operação 1:</strong> Para obter o produto é necessário multiplicar as mantissas.</p>
+
+<p><strong>Operação 2:</strong> Como produto das potências da mesma base dá base elevada a soma, temos que somar os expoentes.</p>
+
+<p><strong>Operação 3:</strong> Transformação final para representar o produto em F(10,3,2,3).</p>
+
+<blockquote class="formula">
+$0.182\times10^1\times0.430\times10^{-1}=(0.182\times0.430)\times10^{1-1}=0.07826\times10^0\quad\rightarrow\quad0.783\times10^{-1}.$
+</blockquote>
+
+<h4>Divisão</h4>
+
+<p>Semelhante para dividir, por exemplo, 1.1&nbsp;/&nbsp;0.03 em F(10,3,2,3), é necessário de fazer 3 operações:</p>
+
+<p><strong>Operação 1:</strong> Dividir as mantissas.</p>
+
+<p><strong>Operação 2:</strong> Subtrair os expoentes.</p>
+
+<p><strong>Operação 3:</strong> Representar o resultado em F(10,3,2,3).</p>
+
+<blockquote class="formula">
+$0.110\times10^1\times0.300\times10^{-1}=(0.110/0.300)\times10^{1-(-1)}=0.366666\ldots\times10^2\quad\rightarrow\quad0.367\times10^2.$
+</blockquote>
+
+<h4>Transbordamento</h4>
+
+<p>O resultado de quaisquer operações aritméticas de ponto flutuante tem que ser representado no mesmo formato para ser guardado na memória (operação 3). Porém, pode acontecer que o expoente do resultado não esteja mais dentro dos limites -m&nbsp;≤&nbsp;e&nbsp;≤&nbsp;M.</p>
+
+<p>No caso e&nbsp;&gt;&nbsp;M o número é grande demais para ser representado no formato escolhido. Portanto, o sistema retorna um erro de <strong>sobrecarga</strong> (<strong>overflow</strong>) que é um número especial que corresponde ao infinito numérico.</p>
+
+<p>No caso e&nbsp;&lt;&nbsp;-m o número é tal próximo ao zero que deve ser desconsiderado nas contas de precisão escolhida. Assim, o sistema retorna zero como o resultado de <strong>subcarga</strong> (<strong>underflow</strong>).</p>
+
+<p>Além dos valores 0, +∞ e −∞, para fechar operações da aritmética de ponto flutuante é normalmente utilizado mais um valor especial <strong>NaN</strong> (não um número) que é o resultado das operações não definidas, como, por exemplo, 0/0.</p>
+
+<h3>Resumo</h3>
+
+<ol>
+  <li>Formato de representação de números na aritmética de ponto flutuante tem a mesma ordem do erro relativo de representação como para números grandes tanto para números pequenos.</li>
+  <li>As operações da aritmética de ponto flutuante são complexas e geram uma fonte adicional de erro por causa do arredondamento final no resultado de cada operação aritmética.</li>
+  <li>Devido às limitações da representação no resultado de arredondamento podemos obter o infinito numérico ou zero.</li>
+</ol>
+
+</section>
+
+<section>
+<h2>Obtenção dos parâmetros do sistema de representação de números</h2>
+
+<p>Para determinar a quantidade das casas binárias na mantissa adicionamos ao número fixo 0.5→0.1×10<sup>0</sup> (a representação interna é na base 2) o valor de d→0.1×10<sup>e</sup>, onde o expoente e diminuímos por 1 cada vez quando multiplicamos d por 0.5. Quando e=-t, o truncamento do resultado da soma dá o número inicial.</p>
+
+<form>
+<div class="overwrite"><input class="right-aligned" type="button" name="execute"  value="Executar" onClick="ExecuteCodeEvent(this)"></div>
+<textarea class="wide" name="code"  rows="3">
+var d=0.5
+for(var t=0;0.5+d!=0.5;++t)d*=0.5
+text="t="+t
+</textarea>
+<textarea class="wide" name="destination" readonly="readonly" rows="2"></textarea>
+</form>
+
+<p>Para obter o limite inferior do expoente comparamos d com 0. Quando, por causa de underflow, obtemos 0, isto significa que o expoente ultrapassou o limite inferior. Por isso, no final do loop obtemos m+1.</p>
+
+<form>
+<div class="overwrite"><input class="right-aligned" type="button" name="execute"  value="Executar" onClick="ExecuteCodeEvent(this)"></div>
+<textarea class="wide" name="code"  rows="4">
+var d=0.5
+for(var m=0;d!=0;++m)d*=0.5
+--m
+text="m="+m
+</textarea>
+<textarea class="wide" name="destination" readonly="readonly" rows="2"></textarea>
+</form>
+
+<p>Da mesma maneira, para determinar o limite superior, multiplicamos d por 2 até atingirmos overflow. Por isso, paramos o loop quando obtemos o infinito numérico.</p>
+
+<form>
+<div class="overwrite"><input class="right-aligned" type="button" name="execute"  value="Executar" onClick="ExecuteCodeEvent(this)"></div>
+<textarea class="wide" name="code"  rows="4">
+var d=0.5
+for(var M=0;d!=Infinity;++M)d*=2
+--M
+text="M="+M
+</textarea>
+<textarea class="wide" name="destination" readonly="readonly" rows="2"></textarea>
+</form>
+
+</section>
+
+</article>
+
+<footer>
+<a href="aula04.html">Próxima aula: Propagação de erros e instabilidade numérica.</a>
+</footer>
+
+</body>
+
+</html> 

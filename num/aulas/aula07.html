@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width" />
+<title>Cálculo numérico: Solução de equações por métodos de quebra.</title>
+<link rel="stylesheet" type="text/css" href="lstyle.css" />
+<link href="https://www.ufabc.edu.br/ensino/docentes/olexandr-zhydenko" rel="author" />
+<script type="text/javascript" src="execjavascript.js"></script>
+<script type="text/javascript" src="LaTeXMathML.js"></script>
+</head>
+
+<body>
+
+<header>
+</header>
+
+<nav>
+<a class="prev" href="aula06.html">Página anterior</a>
+<a class="top" href="index.html">Índice</a>
+<a class="next" href="aula08.html">Próxima página</a>
+</nav>
+
+<article>
+
+<section>
+<h2>Aula 7: Solução de equações por métodos de quebra.</h2>
+
+<p>Uma equação pode ser escrita, de forma genérica, como</p>
+
+<blockquote class="formula">
+$f(x)=0,$
+</blockquote>
+
+<p>onde f(x) é uma função definida numericamente. Supondo que essa função seja contínua, procuraremos a solução da equação. Nosso objetivo é encontrar uma aproximação para x tal que f(x)=0. Em outras palavras, trata-se do valor de x em que o gráfico de f(x) cruza o eixo x.</p>
+
+<p>Suponhamos que conhecemos dois pontos a e b tais que os valores de f(a) e f(b) têm sinais opostos, isto é, ou f(a)&gt;0 e f(b)&lt;0, ou f(a)&lt;0 e f(b)&gt;0. Essas duas possibilidades podem ser descritas por uma única condição: f(a)×f(b)&lt;0. Então, pelo teorema de Bolzano–Cauchy (teorema do valor intermediário), existe pelo menos um ponto x no intervalo [a,b] tal que f(x) = 0. Observamos que a própria existência desse intervalo já fornece uma aproximação para x: como valor aproximado, podemos escolher o ponto médio do intervalo [a,b], sendo o erro absoluto dessa aproximação igual à metade do comprimento do intervalo.</p>
+
+<p>A aproximação inicial da solução pelo intervalo [a,b] pode ser pouco precisa: se o intervalo tiver comprimento grande, o erro absoluto da aproximação também será grande. No entanto, é possível desenvolver métodos para reduzir esse erro, isto é, para localizar a solução em um intervalo menor. Repetindo esse procedimento, diminuímos progressivamente o erro até obter uma aproximação satisfatória, com erro suficientemente pequeno. Um dos métodos mais simples para isso consiste em dividir o intervalo em dois subintervalos e localizar a solução em um deles, que será menor do que o intervalo inicial. Métodos desse tipo são chamados <strong>métodos de quebra</strong>.</p>
+
+<h3>Método de bisseção</h3>
+
+<p>O método mais simples de dividir o intervalo [a,b] é quebrar este intervalo pelo ponto médio (por isso chamado o <strong>método de bisseção</strong>),</p>
+
+<blockquote class="formula">
+$c=\frac{a+b}{2}.$
+</blockquote>
+
+<p>Em seguida, avalia-se o sinal de f(c). Se f(a)×f(c) &lt;0, então a solução encontra-se no intervalo [a,c]; caso contrário, se f(c)×f(b)&lt;0, a raiz pertence ao intervalo [c,b]. Dessa forma, o intervalo original é substituído por um novo intervalo com metade do comprimento, que continua a conter pelo menos uma solução da equação f(x) = 0.</p>
+
+<svg width="100%" height="240">
+   <text x="90%" y="20" text-anchor="end">y=f(x)</text>
+   <line x1="5%" y1="120" x2="95%" y2="120" stroke="black"/>
+   <line x1="10%" y1="5" x2="10%" y2="235" stroke="black"/>
+
+   <line x1="15%" y1="120" x2="15%" y2="158" stroke="black" stroke-dasharray="9,3" />
+   <line x1="50%" y1="120" x2="50%" y2="65" stroke="black" stroke-dasharray="9,3" />
+   <line x1="85%" y1="120" x2="85%" y2="50" stroke="black" stroke-dasharray="9,3" />
+
+   <line x1="10%" y1="158" x2="15%" y2="158" stroke="black" stroke-dasharray="9,3" />
+   <line x1="10%" y1="65" x2="50%" y2="65" stroke="black" stroke-dasharray="9,3" />
+   <line x1="10%" y1="50" x2="85%" y2="50" stroke="black" stroke-dasharray="9,3" />
+
+    <text x="9.5%" y="162" text-anchor="end">f(a)</text>
+    <text x="9.5%" y="70" text-anchor="end">f(c)</text>
+    <text x="9.5%" y="45" text-anchor="end">f(b)</text>
+
+   <text x="23%" y="110" text-anchor="middle">x</text>
+   <text x="15%" y="110" text-anchor="middle">a</text>
+   <text x="50%" y="140" text-anchor="middle">c=(a+b)/2</text>
+   <text x="85%" y="140" text-anchor="middle">b</text>
+
+  <svg x="10%" y="20" viewBox="0 0 600 100" width="90%" height="200px" preserveAspectRatio="none">
+    <path d="M 10 80 C 180 -10, 420 40, 520 10"
+          fill="none" stroke="red"/>
+  </svg>
+
+</svg>
+
+<p>Esse procedimento pode ser repetido, produzindo uma sequência de intervalos cada vez menores que contêm a raiz procurada. Após n quebras, o comprimento do intervalo, onde a solução é localizada será 2<sup>n</sup> vezes menor, assim o erro da aproximação final será</p>
+<blockquote class="formula">
+$\Delta x=\frac{|b−a|}{2^{n+1}}.$
+</blockquote>
+
+<p>Na prática, repetimos o procedimento até que o comprimento do intervalo final seja menor que o dobro do erro absoluto desejado.</p>
+
+<form>
+<div class="overwrite"><input class="right-aligned" type="button" name="execute"  value="Executar" onClick="ExecuteCodeEvent(this)"></div>
+<textarea class="wide" name="code"  rows="25">
+var prec=0.00001
+var bisseção=function(a,b,f){
+
+var fa=f(a)
+if(fa==0)return a
+var fb=f(b)
+if(fb==0)return b
+if(fa*fb>0)return NaN
+
+while(Math.abs(b-a)>prec){
+var c=(a+b)*0.5
+var fc=f(c)
+if(fc==0)return c
+if(fc*fa<0){
+ b=c
+ fb=fc
+}else{
+ a=c
+ fa=fc
+}
+}//end while
+return (a+b)*0.5
+}//end function
+
+text=bisseção(1,1.7,Math.cos)+"\n"+Math.PI/2
+</textarea>
+<textarea class="wide" name="destination" readonly="readonly" rows="7"></textarea>
+</form>
+
+<h3>Método da falsa posição</h3>
+
+<p>O método de bisseção não utiliza os valores de f(a) e f(b), mas apenas os seus sinais. No entanto a solução da equação f(x) = 0 normalmente encontra-se mais próxima do extremo do intervalo no qual o valor absoluto da função é menor. Essa informação não é explorada pelo método de bisseção, o que motiva a construção do método que utiliza também os valores de f(a) e f(b) para obter aproximações mais eficientes.</p>
+
+<p>Em vez de escolher o ponto médio do intervalo [a,b], aproxima-se a raiz pelo ponto de interseção com o eixo x da reta secante que passa pelos pontos (a,f(a)) e (b,f(b)), definida pela equação</p>
+
+<blockquote class="formula">
+$\frac{x−a}{b−a}=\frac{y−f(a)}{f(b)−f(a)}.$
+</blockquote>
+
+<svg width="100%" height="240">
+   <text x="90%" y="20" text-anchor="end">y=f(x)</text>
+   <line x1="5%" y1="150" x2="95%" y2="150" stroke="black"/>
+   <line x1="10%" y1="5" x2="10%" y2="235" stroke="black"/>
+
+   <line x1="15%" y1="150" x2="15%" y2="175" stroke="black" stroke-dasharray="9,3" />
+   <line x1="85%" y1="150" x2="85%" y2="50" stroke="black" stroke-dasharray="9,3" />
+
+   <line x1="10%" y1="175" x2="15%" y2="175" stroke="black" stroke-dasharray="9,3" />
+   <line x1="10%" y1="50" x2="85%" y2="50" stroke="black" stroke-dasharray="9,3" />
+
+    <text x="9.5%" y="180" text-anchor="end">f(a)</text>
+    <text x="9.5%" y="55" text-anchor="end">f(b)</text>
+
+   <text x="15%" y="140" text-anchor="middle">a</text>
+   <text x="85%" y="170" text-anchor="middle">b</text>
+   <text x="19%" y="140" text-anchor="middle">x</text>
+   <text x="29%" y="170" text-anchor="middle">c</text>
+
+   <line x1="15%" y1="175" x2="85%" y2="50" stroke="black" />
+
+
+  <svg x="10%" y="20" viewBox="0 0 600 100" width="90%" height="200px" preserveAspectRatio="none">
+    <path d="M 10 90 C 180 -10, 420 40, 520 10"
+          fill="none" stroke="red"/>
+  </svg>
+
+</svg>
+
+<p>Para encontrar o ponto c de interseção com o eixo x, substituimos x=c e y=0 na equação e isolamos c:</p>
+<blockquote class="formula">
+$c=\frac{a\times f(b)−b\times f(a)}{f(b)−f(a)}.$
+</blockquote>
+
+<p>Essa escolha tende a produzir uma posição de quebra, ainda que <strong>falsa</strong>, mais próxima da solução verdadeira.</p>
+
+<form>
+<div class="overwrite"><input class="right-aligned" type="button" name="execute"  value="Executar" onClick="ExecuteCodeEvent(this)"></div>
+<textarea class="wide" name="code"  rows="25">
+var prec=0.00001
+var falsaposição =function(a,b,f){
+
+var fa=f(a)
+if(fa==0)return a
+var fb=f(b)
+if(fb==0)return b
+if(fa*fb>0)return NaN
+
+while(Math.abs(b-a)>prec){
+var c=(a*fb-b*fa)/(fb-fa)
+var fc=f(c)
+if(fc==0)return c
+if(fc*fa<0){
+ b=c
+ fb=fc
+}else{
+ a=c
+ fa=fc
+}
+}//end while
+return c=(a*fb-b*fa)/(fb-fa)
+}//end function
+
+text=falsaposição(1,1.7,Math.cos)+"\n"+Math.PI/2
+</textarea>
+<textarea class="wide" name="destination" readonly="readonly" rows="7"></textarea>
+</form>
+
+<p>Quando os valores absolutos de f(a) e f(b) são iguais, isto é, quando f(a) = −f(b), o ponto c coincide com o ponto médio do intervalo. Nesse caso, o método da falsa posição torna-se equivalente ao método de bisseção.</p>
+
+<h3>Resumo</h3>
+
+<ol>
+  <li>Os métodos de quebra baseiam-se na existência de um intervalo [a,b] no qual ocorre mudança de sinal da função f(x).</li>
+  <li>O intervalo inicial é substituído por um subintervalo menor que satisfaz a mesma condição e, assim, continua a conter uma solução da equação.</li>
+  <li>De modo geral, os métodos de quebra são robustos e fáceis de implementar, sendo especialmente úteis quando não se dispõe de uma boa aproximação inicial.</li>
+</ol>
+</section>
+
+</article>
+
+<footer>
+<a href="aula08.html">Próxima aula: método de ponto fixo.</a>
+</footer>
+
+</body>
+
+</html>

@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width" />
+<title>Cálculo numérico: Números aproximados. Erro absoluto e relativo.</title>
+<link rel="stylesheet" type="text/css" href="lstyle.css" />
+<link href="https://www.ufabc.edu.br/ensino/docentes/olexandr-zhydenko" rel="author" />
+<script type="text/javascript" src="LaTeXMathML.js"></script>
+</head>
+
+<body>
+
+<header>
+</header>
+
+<nav>
+<a class="top" href="index.html">Índice</a>
+<a class="next" href="aula02.html">Próxima página</a>
+</nav>
+
+<article>
+
+<section>
+<h2>Aula 1: Números aproximados. Erro absoluto e relativo.</h2>
+
+<h3>Números exatos</h3>
+
+<p>Todos os números reais, para os quais as operações aritméticas são bem definidas, podem ser representados graficamente no eixo real. Cada ponto do eixo corresponde precisamente a um número real; chamaremos esses números de números exatos. Um número exato é uma quantidade que pode ser expressa sem qualquer incerteza. Esses números incluem inteiros, frações racionais, decimais finitos e dízimas periódicas, bem como números irracionais, que correspondem a frações decimais infinitas e não periódicas.</p>
+
+<svg width="100%" height="30px">
+    <line x1="10%" y1="5" x2="90%" y2="5" stroke="black" />
+    <circle cx="20%" cy="5" r="3" fill="black" stroke="black" />
+    <text x="20%" y="24" text-anchor="middle">-3</text>
+    <circle cx="31%" cy="5" r="3" fill="black" stroke="black" />
+    <text x="31%" y="24" text-anchor="middle">-√2&#773;</text>
+    <circle cx="40%" cy="5" r="3" fill="black" stroke="black" />
+    <text x="40%" y="24" text-anchor="middle">0</text>
+    <circle cx="47%" cy="5" r="3" fill="black" stroke="black" />
+    <text x="47%" y="24" text-anchor="middle">1</text>
+    <circle cx="55%" cy="5" r="3" fill="black" stroke="black" />
+    <text x="55%" y="24" text-anchor="middle">&#120587;</text>
+    <circle cx="68%" cy="5" r="3" fill="black" stroke="black" />
+    <text x="68%" y="24" text-anchor="middle">ln(150)</text>
+    <circle cx="79%" cy="5" r="3" fill="black" stroke="black" />
+    <text x="79%" y="24" text-anchor="middle">20/3</text>
+    <circle cx="84.75%" cy="5" r="3" fill="black" stroke="black" />
+    <text x="84.75%" y="24" text-anchor="middle">e²</text>
+</svg>
+
+<p>Números −3, −√2&#773;, 0, 1, &#120587;, ln(150), 20/3, e² são exemplos de números exatos.</p>
+
+<h3>Números aproximados</h3>
+
+<p>Em situações em que não é possível localizar um número em um ponto específico, mas podemos apenas afirmar que ele está em alguma faixa (ou intervalo) do eixo real, diremos que esse número é aproximado.</p>
+
+<p>Um número aproximado não corresponde a um ponto do eixo real, mas a um intervalo, que podemos identificar pelo comprimento e a posição. Assim, um número aproximado V vamos identificar pelo centro do intervalo V&#773; e a metade do comprimento do intervalo ΔV,</p>
+<blockquote class="formula">
+$V=\bar{V}\pm\Delta V.$
+</blockquote>
+
+<p>V&#773; vamos chamar de valor médio do número V.</p>
+
+<p>ΔV vamos chamar o erro absoluto. Como ΔV é um comprimento ΔV&gt;0.</p>
+
+<p>Assim, o valor máximo possível para V é V&#773;&nbsp;+&nbsp;ΔV e o valor mínimo possível é V&#773;&nbsp;−&nbsp;ΔV.</p>
+
+<h4>Intervalo implícito</h4>
+
+<p>Na prática, um número aproximado pode ser especificado por um número finito de casas decimais, deixando o restante desconhecido. Por exemplo:</p>
+
+<blockquote class="formula">
+V ≈ 3.21.
+</blockquote>
+
+<p>Isto significa que o valor de V é tal que apenas o resultado do arredondamento para certas casas é conhecido. Assim, o valor médio é especificado pelo resultado do arredondamento (V&#773;=3.21), e o erro absoluto é igual à metade da unidade na última casa especificada (ΔV=0.01/2=0.005),</p>
+<blockquote class="formula">
+V = 3.21 ± 0.005.
+</blockquote>
+
+<p>A razão disso é que já para o número 3.215 o arredondamento resulta 3.22 e qualquer número menor que 3.205, sendo arredondado para duas casas decimais, também vai dar o valor menor que 3.21.</p>
+
+<h4>Erro relativo</h4>
+
+<p>O erro absoluto não é uma medida adequada para caracterizar a qualidade de uma aproximação ou medição, pois não leva em consideração a magnitude do valor em questão. Por exemplo, se temos duas medições, a altura de uma pessoa e a distância entre a Terra e a Lua, com erro absoluto de 1 metro, é claro que a interpretação desses erros é completamente diferente. No caso da altura de uma pessoa, um erro de 1 metro é significativo e indica que a medição é muito imprecisa. Por outro lado, para a distância entre a Terra e a Lua, que é de milhares de quilômetros, um erro de 1 metro é quase desprezível.</p>
+
+<p>A característica mais adequada de qualidade da aproximação é o erro relativo, definido como fração</p>
+
+<blockquote class="formula">
+$\displaystyle{\varepsilon_V=\frac{\Delta V}{|\bar{V}|}}$, que também podemos medir em por cento $\displaystyle{\varepsilon_V=\frac{\Delta V}{|\bar{V}|}\times 100%}.$
+</blockquote>
+
+<p>Quanto maior o erro relativo, pior é a aproximação. Em particular, quando o erro relativo ultrapassa 100%, isso significa que o intervalo de localização do número aproximado inclui o número zero e valores positivos e negativos, de modo que a aproximação praticamente perde qualquer relevância.</p>
+
+<h3>Aritmética dos números aproximados</h3>
+
+<p>Consideremos operações aritméticas com dois números aproximados:</p>
+<blockquote class="formula">
+$A=\bar{A}\pm\Delta A,$
+<br />
+$B=\bar{B}\pm\Delta B.$
+</blockquote>
+
+<p>O resultado de uma operação aritmética com números aproximados também é um número aproximado, que corresponde ao intervalo de todos os resultados possíveis da operação com um número do intervalo A e um número do intervalo B.</p>
+
+<svg width="100%" height="30px">
+    <line x1="10%" y1="5" x2="90%" y2="5" stroke="black" />
+    <line x1="20%" y1="0" x2="20%" y2="10" stroke="black" stroke-width="3" />
+    <text x="20%" y="24" text-anchor="middle">A&#773;&nbsp;−&nbsp;ΔA</text>
+    <line x1="30%" y1="0" x2="30%" y2="10" stroke="black" stroke-width="3" />
+    <text x="30%" y="24" text-anchor="middle">A&#773;&nbsp;+&nbsp;ΔA</text>
+    <line x1="40%" y1="0" x2="40%" y2="10" stroke="black" stroke-width="3" />
+    <text x="40%" y="24" text-anchor="middle">B&#773;&nbsp;−&nbsp;ΔB</text>
+    <line x1="50%" y1="0" x2="50%" y2="10" stroke="black" stroke-width="3" />
+    <text x="50%" y="24" text-anchor="middle">B&#773;&nbsp;+&nbsp;ΔB</text>
+    <line x1="70%" y1="0" x2="70%" y2="10" stroke="black" stroke-width="3" />
+    <text x="70%" y="24" text-anchor="middle">C&#773;&nbsp;−&nbsp;ΔC</text>
+    <line x1="80%" y1="0" x2="80%" y2="10" stroke="black" stroke-width="3" />
+    <text x="80%" y="24" text-anchor="middle">C&#773;&nbsp;+&nbsp;ΔC</text>
+</svg>
+
+<h4>Soma e diferença</h4>
+
+<p>A soma C tem seu valor máximo possível quando A e B assumirem seus valores máximos, A&#773;&nbsp;+&nbsp;ΔA e B&#773;&nbsp;+&nbsp;ΔB. O valor mínimo possível é atingido para valores mínimos de A e B, que são A&#773;&nbsp;−&nbsp;ΔA e B&#773;&nbsp;−&nbsp;ΔB.</p>
+
+<p>Assim,</p>
+<blockquote class="formula">
+$C=A+B=\bar{A}\pm\Delta A+\bar{B}\pm\Delta B=(\bar{A}+\bar{B})\pm(\Delta A+\Delta B),$
+</blockquote>
+<p>que significa que</p>
+<blockquote class="formula">
+$\bar{C}=\bar{A}+\bar{B}, \qquad \Delta C=\Delta A+\Delta B.$
+</blockquote>
+
+<p>Similarmente, quando subtraímos A e B o valor máximo obtemos quando A assume o seu máximo e B tem o valor mínimo possível. Para obter o mínimo da diferença é vice-versa.</p>
+<blockquote class="formula">
+$C=A−B=\bar{A}\pm\Delta A−(\bar{B}\pm\Delta B)=(\bar{A}−\bar{B})\pm(\Delta A+\Delta B),$
+</blockquote>
+<p>implicando que</p>
+<blockquote class="formula">
+$\bar{C}=\bar{A}−\bar{B}, \qquad \Delta C=\Delta A+\Delta B.$
+</blockquote>
+
+<p><strong>Observação importante:</strong> Tanto na soma quanto na diferença, o erro absoluto é igual à <strong>soma</strong> dos erros absolutos de ΔA e ΔB. No resultado, o erro absoluto total cresce.</p>
+
+<p>O erro relativo pode ter crescimento ainda mais drástico quando o valor médio do resultado é menor comparando com A&#773; e B&#773;. Isto acontece quando subtraímos dois números positivos (ou negativos), cujos valores são próximos ou adicionamos dois números com sinais opostos. Neste caso o denominador do erro relativo pode ser relativamente pequeno</p>
+
+<blockquote class="formula">
+$\displaystyle{\varepsilon_C=\frac{\Delta C}{|\bar{C}|}.$
+</blockquote>
+
+<p>Neste caso, mesmo se $\varepsilon_A$ e $\varepsilon_B$ forem pequenos, o erro relativo $\varepsilon_C$ pode ser grande. E, no pior cenário, pode ser maior que 100%.</p>
+
+<h4>Produto</h4>
+
+<p>Já para o produto de dois números aproximados</p>
+
+<blockquote class="formula">
+$C=A\times B=(\bar{A}\pm\Delta A)\times(\bar{B}\pm\Delta B),$
+</blockquote>
+
+<p>considerando o valor mínimo e máximo do resultado, podemos facilmente determinar que o centro do intervalo é diferente do produto de A&#773; e B&#773;.</p>
+
+<p>Para simplificar estimativa do erro do resultado das contas, para valor aproximado de C é normalmente utilizado o intervalo com centro em A&#773;×B&#773;. Tal intervalo é o maior do que intervalo de todos os resultados possíveis de produtos de valores do intervalo A e B, contendo o último. Isto dá fórmulas mais simples para os valores de</p>
+
+<blockquote class="formula">
+$\bar{C}=\bar{A}\times\bar{B}, \qquad \Delta C=\Delta A\times|\bar{B}|+\Delta B\times|\bar{A}|+\Delta A\times\Delta B.$
+</blockquote>
+
+<p>A fórmula para o erro relativo tem forma ainda mais simples:</p>
+
+<blockquote class="formula">
+$\displaystyle{\varepsilon_C=\frac{\Delta C}{|\bar{C}|}=\frac{\Delta A\times|\bar{B}|+\Delta B\times|\bar{A}|+\Delta A\times\Delta B}{|\bar{A}|\times|\bar{B}|}=\frac{\Delta A}{|\bar{A}|}+\frac{\Delta B}{|\bar{B}|}+\frac{\Delta A\times\Delta B}{|\bar{A}|\times|\bar{B}|}},$
+<br /><br />
+$\varepsilon_C=\varepsilon_A+\varepsilon_B+\varepsilon_A\times\varepsilon_B.$
+</blockquote>
+
+<p>Habitualmente, os erros relativos são pequenos. O produto dos valores pequenos é ainda menor e pode ser desprezado, então obtemos</p>
+
+<blockquote class="formula">
+$\varepsilon_C\approx\varepsilon_A+\varepsilon_B$.
+</blockquote>
+
+<h4>Divisão</h4>
+
+<p>A divisão por um número aproximado é definida somente quando o intervalo não contém 0:</p>
+
+<blockquote class="formula">
+$\displaystyle{C=\frac{A}{B}=\frac{\bar{A}\pm\Delta A}{\bar{B}\pm\Delta B}, \qquad \bar{B}\neq0\quad&amp;\quad\varepsilon_B&lt;1}.$
+</blockquote>
+
+<p>De novo, para simplificar as contas, o intervalo do quociente C é escolhido com centro em</p>
+
+<blockquote class="formula">
+$\displaystyle{\bar{C}=\frac{\bar{A}}{\bar{B}}}.$
+</blockquote>
+
+<p>O erro relativo que garante que todos os resultados da divisão estarão contidos no intervalo de C é dado por</p>
+
+<blockquote class="formula">
+$\displaystyle{\varepsilon_C=\frac{\varepsilon_A+\varepsilon_B}{1−\varepsilon_B}\approx\varepsilon_A+\varepsilon_B}.$
+</blockquote>
+
+<h3>Resumo</h3>
+
+<ol>
+  <li>Números aproximados são caracterizados por intervalos no eixo real. Boa aproximação corresponde a um pequeno intervalo (erro absoluto) onde o valor é localizado.</li>
+  <li>Erro relativo é uma característica essencial de números aproximados. Para aproximação ser boa o erro relativo tem que ser pequeno.</li>
+  <li>Quando erro relativo é maior que 100% a aproximação não é praticamente útil.</li>
+  <li>Qualquer erro nos dados iniciais vai propagar nas contas e o resultado será um número aproximado.</li>
+  <li>Erro relativo pode crescer sem limites quando subtraímos dois números próximos. Temos que evitar tal tipo de operações.</li>
+</ol>
+
+</section>
+
+</article>
+
+<footer>
+<a href="aula02.html">Próxima aula: Base decimal e binária. Conversão entre bases.</a>
+</footer>
+
+</body>
+
+</html> 

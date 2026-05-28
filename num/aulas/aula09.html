@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width" />
+<title>Cálculo numérico: Método de Newton-Raphson.</title>
+<link rel="stylesheet" type="text/css" href="lstyle.css" />
+<link href="https://www.ufabc.edu.br/ensino/docentes/olexandr-zhydenko" rel="author" />
+<script type="text/javascript" src="execjavascript.js"></script>
+<script type="text/javascript" src="LaTeXMathML.js"></script>
+</head>
+
+<body>
+
+<header>
+</header>
+
+<nav>
+<a class="prev" href="aula08.html">Página anterior</a>
+<a class="top" href="index.html">Índice</a>
+<a class="next" href="aula10.html">Próxima página</a>
+</nav>
+
+<article>
+
+<section>
+<h2>Aula 9: Método de Newton-Raphson.</h2>
+
+<h3>Ideia do método</h3>
+
+<p>O método de Newton-Raphson é um método iterativo para resolver uma equação da forma</p>
+
+<blockquote class="formula">
+$f\left(x\right)=0.$
+</blockquote>
+
+<p>Para relacionar esse método com o método do ponto fixo, podemos reescrever a equação em uma forma equivalente:</p>
+
+<blockquote class="formula">
+$x=\phi\left(x\right)=x+A\left(x\right)f\left(x\right).$
+</blockquote>
+
+<p>onde supomos que A(x) é uma função diferente de zero no intervalo considerado. Nesse caso, resolver f(x)=0 é equivalente a procurar um ponto fixo de φ(x). Como vimos no método do ponto fixo, a convergência tende a ser mais rápida quando o valor absoluto da derivada da função de iteração é pequeno.</p>
+<blockquote class="formula">
+$\phi\prime\left(x\right)=1+A\prime\left(x\right)f\left(x\right)+A\left(x\right)f\prime\left(x\right)\simeq 0.$
+</blockquote>
+
+<p>Na proximidade da solução, temos f(x)≈0. Assim, para tornar a derivada de φ(x) próxima de zero nessa região, escolhemos</p>
+<blockquote class="formula">
+$A\left(x\right)=−\displaystyle{\frac{1}{f\prime\left(x\right)}}.$
+</blockquote>
+
+<p>Com essa escolha, obtemos a função de iteração</p>
+<blockquote class="formula">
+$\phi\left(x\right)=x − \displaystyle{\frac{f\left(x\right)}{f\prime\left(x\right)}}.$
+</blockquote>
+<p>Portanto, a sequência de aproximações é definida por</p>
+<blockquote class="formula">
+$x_{k+1}=\phi\left(x_k\right)=x_k − \displaystyle{\frac{f\left(x_k\right)}{f\prime\left(x_k\right)}}.$
+</blockquote>
+
+<p>Para que a fórmula possa ser aplicada, precisamos que f′(x<sub>k</sub>) seja diferente de zero.</p>
+
+<h3>Interpretação geométrica</h3>
+
+<p>Geometricamente, cada iteração substitui a função f(x) por sua reta tangente no ponto x<sub>k</sub>. A próxima aproximação x<sub>k+1</sub> é o ponto onde essa reta tangente cruza o eixo x.</p>
+
+<svg width="100%" height="440">
+   <text x="86%" y="20" text-anchor="end">y=f(x)</text>
+   <text x="79%" y="160" text-anchor="start">y=tan(α)x+b</text>
+   <line x1="5%" y1="350" x2="95%" y2="350" stroke="black"/>
+   <line x1="50%" y1="350" x2="90%" y2="70" stroke="blue"/>
+   <line x1="10%" y1="5" x2="10%" y2="435" stroke="black"/>
+
+   <line x1="70%" y1="350" x2="70%" y2="210" stroke="black" stroke-dasharray="9,3" />
+   <text x="70%" y="365" text-anchor="middle" font-size="100%">x<tspan dx="1" dy="4" font-size="75%">k</tspan></text>
+   <text x="50%" y="365" text-anchor="middle" font-size="100%">x<tspan dx="1" dy="4" font-size="75%">k+1</tspan></text>
+   <text x="61%" y="375" text-anchor="middle" font-size="100%">x<tspan dx="1" dy="4" font-size="75%">k</tspan> <tspan dx="1" dy="-4" font-size="75%">−</tspan> x<tspan dx="1" dy="4" font-size="75%">k+1</tspan></text>
+   <text x="71%" y="300" text-anchor="start">f(x<tspan dx="1" dy="4" font-size="75%">k</tspan><tspan dx="1" dy="-4" font-size="100%">)</tspan></text>
+   <text x="54%" y="340" text-anchor="start" font-size="100%">α</text>
+   <line x1="54%" y1="350" x2="53.9%" y2="342" stroke="black"/>
+   <line x1="53.9%" y1="342" x2="53.7%" y2="332" stroke="black"/>
+   <line x1="53.7%" y1="332" x2="53.45%" y2="327" stroke="black"/>
+
+  <svg x="5%" y="10" viewBox="0 0 600 200" width="95%" height="400px" preserveAspectRatio="none">
+    <path d="M -2000 400 C -1000 50, 200 400, 520 10"
+          fill="none" stroke="red"/>
+  </svg>
+</svg>
+
+<h3>Convergência</h3>
+
+<p>O método de Newton-Raphson pode convergir muito rapidamente quando a aproximação inicial está suficientemente próxima da raiz e quando f′(x) não se aproxima de zero nessa região.</p>
+
+<blockquote>
+<strong>Teorema sobre convergência local do método de Newton-Raphson.</strong> Seja x uma raiz da equação f(x)=0. Suponhamos que f(t), f′(t) e f′′(t) são contínuas em um intervalo I centrado em x, e que f′(t)≠0 para todo t∈I. Então existe um intervalo menor J⊂I, também centrado em x, tal que, para qualquer aproximação inicial x<sub>0</sub>∈J, a sequência
+<blockquote class="formula">
+$x_{k+1}=x_k − \displaystyle{\frac{f\left(x_k\right)}{f\prime\left(x_k\right)}}$
+</blockquote>
+converge para a raiz x.
+</blockquote>
+
+<blockquote><strong>Demonstração.</strong>
+Consideremos a função de iteração do método de Newton-Raphson,
+<blockquote class="formula">
+$\phi\left(t\right)=t −\displaystyle{\frac{f\left(t\right)}{f\prime\left(t\right)}}.$
+</blockquote>
+A derivada da função de iteração é
+<blockquote class="formula">
+$\phi\prime\left(t\right)=\displaystyle{\frac{f\left(t\right)f\prime\prime\left(t\right)}{\left(f\prime\left(t\right)\right)^2}}.$
+</blockquote>
+Como f(x)=0, obtemos φ′(x)=0. Como f(t), f′(t) e f′′(t) são contínuas e f′(t)≠0 em I, a função φ′(t) também é contínua em I. Logo, podemos escolher um intervalo menor J⊂I, centrado em x, tal que
+<blockquote class="formula">
+$|\phi\prime\left(t\right)|\leq M&lt;1,\qquad t\in J.$
+</blockquote>
+Também podemos escolher J pequeno o suficiente para que φ(t)∈J quando t∈J. Assim, pelo teorema de convergência do método do ponto fixo, a iteração x<sub>k+1</sub>=φ(x<sub>k</sub>) converge para o ponto fixo x. Portanto, o método de Newton-Raphson converge para a raiz da equação.
+</blockquote>
+
+<p>Por outro lado, o método não converge para qualquer aproximação inicial. Se a aproximação inicial estiver longe da raiz, se a derivada for muito pequena ou se a função tiver comportamento irregular, a sequência pode divergir ou convergir para uma raiz diferente da esperada.</p>
+
+
+<h3>Algoritmo</h3>
+
+<p>O algoritmo começa com uma aproximação inicial x<sub>0</sub>. Em seguida, calculamos sucessivamente x<sub>1</sub>, x<sub>2</sub>, x<sub>3</sub>, … usando a fórmula de Newton-Raphson. O processo é interrompido quando a diferença entre duas aproximações consecutivas fica menor que a precisão desejada:</p>
+
+<blockquote class="formula">
+$|x_{k+1}−x_k|&lt;\varepsilon.$
+</blockquote>
+
+<form>
+<div class="overwrite"><input class="right-aligned" type="button" name="execute" value="Executar" onClick="ExecuteCodeEvent(this)"></div>
+<textarea class="wide" name="code" rows="12">
+var Newton=function(f,df,x){
+var prec=0.00000001
+var phi=function(x){return x-f(x)/df(x)}
+var y=phi(x)
+while(Math.abs(y-x)>prec) y=phi(x=y)
+return y
+}
+
+var f=function(x){return Math.cos(x)-x}
+var df=function(x){return -Math.sin(x)-1}
+
+text=Newton(f,df,1)
+</textarea>
+<textarea class="wide" name="destination" readonly="readonly" rows="3"></textarea>
+</form>
+
+<h4>Cálculo de raiz quadrada</h4>
+
+<p>O cálculo de raiz quadrada é um exemplo clássico do método de Newton-Raphson. Para calcular √a&#773;, com a&gt;0, procuramos o número x que satisfaz</p>
+
+<blockquote class="formula">
+$x^2=a.$
+</blockquote>
+
+<p>Essa equação pode ser escrita na forma f(x)=0, escolhendo</p>
+
+<blockquote class="formula">
+$f\left(x\right)=x^2−a.$
+</blockquote>
+
+<p>Como f′(x)=2x, a fórmula de Newton-Raphson dá</p>
+
+<blockquote class="formula">
+$\phi\left(x\right)=x−\displaystyle{\frac{x^2−a}{2x}}=\displaystyle{\frac{x+a/x}{2}}.$
+</blockquote>
+
+<p>Assim, cada nova aproximação é obtida aplicando x=φ(x), isto é, tomando a média entre x e a/x. Se x é maior que √a&#773;, então a/x é menor que √a&#773;; se x é menor que √a&#773;, então a/x é maior que √a&#773;. A média desses dois valores tende a aproximar rapidamente a raiz.</p>
+
+<p>Além da função de iteração, precisamos de uma aproximação inicial. Como √a&#773; tem ordem de grandeza aproximadamente igual à metade da ordem de grandeza de a, quando temos acesso direto à representação interna do número podemos obter uma boa aproximação inicial simplesmente dividindo o expoente por 2. Em JavaScript, porém, não temos acesso direto à mantissa e ao expoente do número. Em vez disso, utilizamos loops simples: se a é maior que 1 (expoente positivo), multiplicamos 1 por 2 até passar de a; caso contrário, quando o expoente de a é negativo, dividimos 1 por 2 até chegar a uma escala adequada. Assim obtemos uma aproximação inicial com expoente apropriado para começar as iterações de Newton-Raphson.</p>
+
+<form>
+<div class="overwrite"><input class="right-aligned" type="button" name="execute" value="Executar" onClick="ExecuteCodeEvent(this)"></div>
+<textarea class="wide" name="code" rows="16">
+var prec=0.00000001
+var Sqrt=function(a){
+if(a<0)return NaN
+if(a==0||a==1)return a
+var x=1
+while(x*x<a)x*=2
+while(x*x>a)x/=2
+var y=(x+a/x)/2
+while(Math.abs(y-x)>prec){
+x=y
+y=(x+a/x)/2
+}
+return y
+}
+
+text=Sqrt(2)+"\n"+Math.sqrt(2)
+</textarea>
+<textarea class="wide" name="destination" readonly="readonly" rows="3"></textarea>
+</form>
+
+<p>Podemos observar que o método de Newton-Raphson converge muito rapidamente: quando temos uma boa aproximação inicial, cada iteração aumenta bastante a quantidade de algarismos corretos. Para a raiz quadrada, depois que a aproximação inicial já tem a ordem de grandeza correta, poucas iterações são suficientes para atingir a precisão disponível na aritmética de ponto flutuante. Como essa precisão é fixa, existe um limite para a quantidade de casas binárias que podem ser determinadas. Depois desse limite, novas iterações não melhoram o resultado, pois o número já está arredondado para a representação disponível. Por isso, em uma implementação prática, podemos escolher antecipadamente um número suficiente de iterações e evitar o teste de parada em cada repetição. Assim, a parte iterativa do cálculo da raiz quadrada pode ser feita sem um loop.</p>
+
+<form>
+<div class="overwrite"><input class="right-aligned" type="button" name="execute" value="Executar" onClick="ExecuteCodeEvent(this)"></div>
+<textarea class="wide" name="code" rows="16">
+var Sqrt=function(a){
+if(a<0)return NaN
+if(a==0||a==1)return a
+var x=1
+while(x*x<a)x*=2
+while(x*x>a)x/=2
+x=(x+a/x)/2
+x=(x+a/x)/2
+x=(x+a/x)/2
+x=(x+a/x)/2
+x=(x+a/x)/2
+return x
+}
+
+text=Sqrt(2)+"\n"+Math.sqrt(2)
+</textarea>
+<textarea class="wide" name="destination" readonly="readonly" rows="3"></textarea>
+</form>
+
+<p>Esse tipo de método é usado em processadores numéricos para calcular raízes quadradas. Na prática, o processo é ainda mais otimizado para reduzir o número de divisões necessárias, pois a divisão é uma das operações aritméticas mais custosas. Mesmo assim, o cálculo da raiz quadrada costuma ser apenas algumas vezes mais lento do que uma divisão, graças à combinação de uma boa aproximação inicial com poucas iterações de Newton-Raphson.</p>
+
+<h4>Aproximações de ordem superior</h4>
+
+<p>O método pode ser generalizado considerando aproximações de ordem superior. Em outras palavras, em vez da reta tangente, podemos utilizar uma aproximação polinomial de grau maior. Essa aproximação pode ser obtida usando a fórmula de Taylor para a função inversa. Introduzimos g=f<sup>−1</sup>:</p>
+
+<blockquote class="formula">
+$y=f\left(x\right),\qquad x=g\left(y\right).$
+</blockquote>
+
+<p>Como supomos que f′(x)≠0 no intervalo considerado, a função inversa g existe localmente. Se essa função fosse conhecida, então a raiz da equação f(x)=0 poderia ser calculada como o valor de x para y=0, isto é,</p>
+
+<blockquote class="formula">
+$x=g\left(0\right).$
+</blockquote>
+
+<p>Suponhamos que x<sub>k</sub> é uma aproximação da raiz e definamos</p>
+
+<blockquote class="formula">
+$y_k=f\left(x_k\right).$
+</blockquote>
+
+<p>Como x<sub>k</sub>=g(y<sub>k</sub>), podemos aproximar g(y) pela fórmula de Taylor em torno de y<sub>k</sub>:</p>
+
+<blockquote class="formula">
+$g\left(y\right)=g\left(y_k\right)+g\prime\left(y_k\right)\left(y−y_k\right)$ $+~\displaystyle{\frac{g\prime\prime\left(y_k\right)}{2!}}\left(y−y_k\right)^2$ $+\cdots+\displaystyle{\frac{g^{\left(n\right)}\left(y_k\right)}{n!}}\left(y−y_k\right)^n+R_n.$
+</blockquote>
+
+<p>Tomando y=0, obtemos uma aproximação de ordem n para a raiz:</p>
+
+<blockquote class="formula">
+$x=g\left(0\right)\approx x_k+g\prime\left(y_k\right)\left(−y_k\right)$ $+~\displaystyle{\frac{g\prime\prime\left(y_k\right)}{2!}}\left(−y_k\right)^2$ $+\cdots+\displaystyle{\frac{g^{\left(n\right)}\left(y_k\right)}{n!}}\left(−y_k\right)^n.$
+</blockquote>
+
+<p>Em particular, para a aproximação de primeira ordem, mantemos apenas o termo linear:</p>
+
+<blockquote class="formula">
+$x\approx x_k−g\prime\left(y_k\right)y_k.$
+</blockquote>
+
+<p>Aplicando essa aproximação para n=1 em y<sub>k</sub>=f(x<sub>k</sub>), e expressando a derivada da função inversa como</p>
+<blockquote class="formula">
+$g\prime\left(y\right)=\displaystyle{\frac{1}{f\prime\left(x\right)}},$
+</blockquote>
+<p>obtemos</p>
+<blockquote class="formula">
+$x_{k+1}=x_k−\displaystyle{\frac{f\left(x_k\right)}{f\prime\left(x_k\right)}}.$
+</blockquote>
+
+<p>Portanto, o método de Newton-Raphson é a aproximação de primeira ordem da função inversa g(y) no ponto y<sub>k</sub>=f(x<sub>k</sub>).</p>
+
+<p>Para desenvolver as fórmulas de ordem superior, temos que expressar as derivadas superiores de g em termos das derivadas de f. Para obter essas fórmulas, utilizamos a igualdade</p>
+<blockquote class="formula">
+$g\left(f\left(x\right)\right)=x.$
+</blockquote>
+
+<p>Calculando as derivadas de ambos os lados, obtemos</p>
+<blockquote class="formula">
+$g\prime\left(f\left(x\right)\right)f\prime\left(x\right)=1,\quad\Longrightarrow\quad g\prime\left(y\right)=\displaystyle{\frac{1}{f\prime\left(x\right)}},$
+<br/>
+$g\prime\prime\left(f\left(x\right)\right)f\prime\left(x\right)^2+g\prime\left(f\left(x\right)\right)f\prime\prime\left(x\right)=0,$
+$\quad\Longrightarrow\quad g\prime\prime\left(y\right)=−\displaystyle{\frac{g\prime\left(y\right)f\prime\prime\left(x\right)}{f\prime\left(x\right)^2}}=−\displaystyle{\frac{f\prime\prime\left(x\right)}{f\prime\left(x\right)^3}},$
+<br/>⋯.
+</blockquote>
+
+<p>Em particular, para segunda ordem (n=2), temos</p>
+
+<blockquote class="formula">
+$x=g\left(0\right)\approx x_k−g\prime\left(y_k\right)y_k+\displaystyle{\frac{g\prime\prime\left(y_k\right)}{2}}y_k^2.$
+</blockquote>
+
+<p>Substituindo y<sub>k</sub>=f(x<sub>k</sub>), g′(y<sub>k</sub>)=1/f′(x<sub>k</sub>) e g′′(y<sub>k</sub>)=−f′′(x<sub>k</sub>)/(f′(x<sub>k</sub>))<sup>3</sup>, obtemos a aproximação de segunda ordem:</p>
+
+<blockquote class="formula">
+$x_{k+1}=x_k−\displaystyle{\frac{f\left(x_k\right)}{f\prime\left(x_k\right)}}−\displaystyle{\frac{f\prime\prime\left(x_k\right)f\left(x_k\right)^2}{2f\prime\left(x_k\right)^3}}.$
+</blockquote>
+
+<p>Essa fórmula usa também a segunda derivada de f. Ela corresponde a uma aproximação quadrática da função inversa e pode ser vista como uma correção de segunda ordem ao passo de Newton-Raphson.</p>
+
+
+<h3>Resumo</h3>
+
+<ol>
+  <li>O método de Newton-Raphson resolve f(x)=0 usando aproximações sucessivas obtidas pela reta tangente ao gráfico de f.</li>
+  <li>Precisamos calcular a derivada f′(x<sub>k</sub>) cada iteração.</li>
+  <li>Quando a aproximação inicial é boa, o método converge muito rapidamente.</li>
+  <li>A convergência não é garantida: uma aproximação inicial inadequada pode levar à divergência ou a uma raiz diferente.</li>
+  <li>O método é usado para cálculo de raiz quadrada.</li>
+</ol>
+</section>
+
+</article>
+
+<footer>
+<a href="aula10.html">Próxima aula: Comparação de métodos iterativos. Método de secantes.</a>
+</footer>
+
+</body>
+
+</html>

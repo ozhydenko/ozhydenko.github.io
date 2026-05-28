@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width" />
+<title>Cálculo numérico: Base decimal e binária. Conversão entre bases.</title>
+<link rel="stylesheet" type="text/css" href="lstyle.css" />
+<link href="https://www.ufabc.edu.br/ensino/docentes/olexandr-zhydenko" rel="author" />
+<script type="text/javascript" src="LaTeXMathML.js"></script>
+</head>
+
+<body>
+
+<header>
+</header>
+
+<nav>
+<a class="prev" href="aula01.html">Página anterior</a>
+<a class="top" href="index.html">Índice</a>
+<a class="next" href="aula03.html">Próxima página</a>
+</nav>
+
+<article>
+
+<section>
+<h2>Aula 2: Base decimal e binária. Conversão entre bases.</h2>
+
+<h3>Representação de números inteiros</h3>
+
+<p>A convenção usual para representar os números é a interpretação dos dígitos como fatores das potências de 10: o algarismo da última casa, sendo número de unidades, é multiplicado por 1 que é $10^0$, o algarismo da penúltima casa é multiplicador de $10^1$, e assim por diante. Cada casa decimal corresponde à potência de 10 que tem que ser multiplicada pelo algarismo nesta casa e a soma destes produtos dá o número escrito. Esta representação é chamada por isso a representação na base decimal. Por exemplo:</p>
+<blockquote class="formula">
+$231=2\times10^2+3\times10^1+1\times10^0.$
+</blockquote>
+
+<p>Para representação na base decimal usam-se dez dígitos de 0 até 9.</p>
+
+<p>De mesma maneira podemos utilizar a base que é um inteiro β qualquer (β&gt;1):</p>
+
+<blockquote class="formula">
+$231_{\beta}=2\times\beta^2+3\times\beta^1+1\times\beta^0.$
+</blockquote>
+
+<p>Para representação na base β precisamos β dígitos distintos: de 0 até β-1.</p>
+
+<p>A base β=2 é chamada base binária. Somente dígito 0 e dígito 1 é usado para representar qualquer número:</p>
+<blockquote class="formula">
+$1101_2=1\times2^3+1\times2^2+0\times2^1+1\times2^0=8+4+0+1=13.$
+</blockquote>
+
+<h3>Conversão da base decimal para a base binária</h3>
+
+<p>Enquanto para converter um número da base qualquer para a base decimal podemos utilizar a definição, como nós acostumamos fazer contas na base decimal, a conversão para outra base usa a observação seguinte: o dígito da última casa na base β é sempre o resto da divisão do número por β. Isto é simplesmente a consequência do fato que todos os outros dígitos são multiplicados por potências positivas de β, não contribuindo no resto da divisão.</p>
+
+<p>Assim, dividimos o número por β e o resto é o dígito da última casa. O resultado da divisão dá o número que na base β é construído com todos os dígitos a menos o último. Isto é porque o resultado da divisão por β diminui todas as potências de β por 1. Repetindo a divisão obtemos os dígitos de todas as casas na base β, começando do último e acabando com o primeiro.</p>
+
+<p>Por exemplo, para representar 19 na base binária, dividimos repetidamente por 2:</p>
+
+<blockquote class="formula">
+<svg width="130" height="130">
+    <text x="10" y="20" text-anchor="left">19</text>
+
+    <line x1="35" y1="5" x2="35" y2="45" stroke="black" />
+    <text x="45" y="20" text-anchor="left">2</text>
+    <line x1="35" y1="25" x2="55" y2="25" stroke="black" />
+    <text x="10" y="40" text-anchor="left">18</text>
+    <line x1="10" y1="50" x2="30" y2="50" stroke="black" />
+    <text x="20" y="70" text-anchor="left">1</text>
+    <text x="45" y="40" text-anchor="left">9</text>
+
+    <line x1="65" y1="25" x2="65" y2="65" stroke="black" />
+    <text x="70" y="40" text-anchor="left">2</text>
+    <line x1="65" y1="45" x2="85" y2="45" stroke="black" />
+    <text x="45" y="60" text-anchor="left">8</text>
+    <line x1="40" y1="70" x2="60" y2="70" stroke="black" />
+    <text x="45" y="90" text-anchor="left">1</text>
+    <text x="70" y="60" text-anchor="left">4</text>
+
+    <line x1="90" y1="45" x2="90" y2="85" stroke="black" />
+    <text x="95" y="60" text-anchor="left">2</text>
+    <line x1="90" y1="65" x2="110" y2="65" stroke="black" />
+    <text x="70" y="80" text-anchor="left">4</text>
+    <line x1="65" y1="90" x2="85" y2="90" stroke="black" />
+    <text x="70" y="110" text-anchor="left">0</text>
+    <text x="95" y="80" text-anchor="left">2</text>
+
+    <line x1="115" y1="65" x2="115" y2="105" stroke="black" />
+    <text x="120" y="80" text-anchor="left">2</text>
+    <line x1="115" y1="85" x2="135" y2="85" stroke="black" />
+    <text x="95" y="100" text-anchor="left">2</text>
+    <line x1="90" y1="110" x2="110" y2="110" stroke="black" />
+    <text x="95" y="130" text-anchor="left">0</text>
+    <text x="120" y="100" text-anchor="left">1</text>
+</svg>
+</blockquote>
+
+<p>Concluímos que</p>
+<blockquote class="formula">
+$19=10011_2.$
+</blockquote>
+
+<h3>Fração decimal</h3>
+
+<p>A mesma convenção é usada para representar os números fracionais. Na fração decimal, depois do ponto que separa separa a parte inteira da parte decimal, encontram se as casas que correspondem às potências negativas de dez:</p>
+
+<blockquote class="formula">
+$30.21=3\times10^1+0\times10^0+2\times10^{-1}+1\times10^{-2}.$
+</blockquote>
+
+<p>A parte fracionária pode ser finita ou infinita.</p>
+
+<p>A parte fracional na base β é representada pela combinação das potências negativas de β:</p>
+
+<blockquote class="formula">
+$30.21_{\beta}=3\times\beta^1+0\times\beta^0+2\times\beta^{-1}+1\times\beta^{-2}.$
+</blockquote>
+
+<p>Utilizando a base 2, obtemos uma fração binária</p>
+<blockquote class="formula">
+$10.101_2=1\times2^1+0\times2^0+1\times2^{-1}+0\times2^{-2}+1\times2^{-3}=2+0.5+0.125=2.625.$
+</blockquote>
+
+<p>Como qualquer potência negativa de 2 é representada por fração decimal finita, podemos observar que qualquer fração finita na base binária será finita na base decimal.</p>
+
+<h3>Conversão de uma fração para a base binária</h3>
+
+<p>Para converter uma fração para a base β observamos que, se multiplicarmos a parte fracional por β, a parte inteira do resultado é o primeiro algarismo depois do ponto na base β. A parte fracionária do resultado vai ter o resto das casas na base β. Podemos repetir a multiplicação para determinar tantas casas fracionárias quantas forem necessárias.</p>
+
+<p>Para obter a representação na forma de uma fração binária multiplicamos repetidamente a parte fracional por 2. Por exemplo:</p>
+<blockquote class="formula">
+$0.65\times2=1.3$
+<br />
+$0.3\times2=0.6$
+<br />
+$0.6\times2=1.2$
+<br />
+$0.2\times2=0.4$
+<br />
+$0.4\times2=0.8$
+<br />
+$0.8\times2=1.6$
+<br />
+$0.6\times2=1.2$
+<br />
+$\ldots$
+</blockquote>
+
+<p>Então</p>
+<blockquote class="formula">
+$2.65=10.1010011\ldots_2$
+</blockquote>
+
+<p>Neste exemplo a fração decimal finita é a infinita na base binária.</p>
+
+<h3>Resumo</h3>
+
+<ol>
+  <li>Existem apenas 10 tipos de pessoas: aqueles que sabem representar qualquer número na base binária, e aqueles que não sabem.</li>
+  <li>A representação na base binária utiliza somente dois dígitos distintos: 0 e 1.</li>
+  <li>A fração finita na base decimal pode ser infinita na base binária, embora que o contrário é impossível: qualquer fração binária finita pode ser representada pela fração decimal finita.</li>
+</ol>
+
+</section>
+
+</article>
+
+<footer>
+<a href="aula03.html">Próxima aula: Aritmética de ponto flutuante. Parâmetros do sistema de representação de números.</a>
+</footer>
+
+</body>
+
+</html> 

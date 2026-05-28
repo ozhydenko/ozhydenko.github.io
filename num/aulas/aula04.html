@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width" />
+<title>Cálculo numérico: Propagação de erros e instabilidade numérica.</title>
+<link rel="stylesheet" type="text/css" href="lstyle.css" />
+<link href="https://www.ufabc.edu.br/ensino/docentes/olexandr-zhydenko" rel="author" />
+<script type="text/javascript" src="execjavascript.js"></script>
+<script type="text/javascript" src="LaTeXMathML.js"></script>
+</head>
+
+<body>
+
+<header>
+</header>
+
+<nav>
+<a class="prev" href="aula03.html">Página anterior</a>
+<a class="top" href="index.html">Índice</a>
+<a class="next" href="aula05.html">Próxima página</a>
+</nav>
+
+<article>
+
+<section>
+<h2>Aula 4: Propagação de erros e instabilidade numérica.</h2>
+
+<h3>Propagação de erros</h3>
+
+<p>Além do erro inicial nos dados e erro de aproximação na aritmética de ponto flutuante cada operação gera ainda o erro de arredondamento. Todos estes erros se acumulam. Por isso, normalmente o erro do resultado torna-se maior. Até operações muito simples podem dar o resultado não esperado, por exemplo, quando as frações decimais finitas correspondem às frações infinitas na base binária.</p>
+
+<form>
+<div class="overwrite"><input class="right-aligned" type="button" name="execute"  value="Executar" onClick="ExecuteCodeEvent(this)"></div>
+<textarea class="wide" name="code"  rows="2">
+text=0.1+0.2
+</textarea>
+<textarea class="wide" name="destination" readonly="readonly" rows="2"></textarea>
+</form>
+
+<p>Em particular, a subtração dos números próximos é uma operação que pode levar ao crescimento rápido do erro relativo.</p>
+
+<form>
+<div class="overwrite"><input class="right-aligned" type="button" name="execute"  value="Executar" onClick="ExecuteCodeEvent(this)"></div>
+<textarea class="wide" name="code"  rows="2">
+text=0.2+0.1-0.3
+</textarea>
+<textarea class="wide" name="destination" readonly="readonly" rows="2"></textarea>
+</form>
+
+<p>Podemos observar que operações matematicamente equivalentes podem gerar erros diferentes. Por isso, vale a pena utilizar operações que não levam ao crescimento rápido do erro. É claro que temos que evitar a subtração dos números próximos sempre quando for possível.</p>
+
+<p>Às vezes, podemos achar uma fórmula alternativa para uma expressão,</p>
+
+<blockquote class="formula">
+$\displaystyle{\sqrt{10001}−100=(\sqrt{10001}−100)\times\frac{\sqrt{10001}+100}{\sqrt{10001}+100}=\frac{(\sqrt{10001}){}^2−100^2}{\sqrt{10001}+100}=\frac{1}{\sqrt{10001}+100}}.$
+</blockquote>
+
+<p>A última expressão, sendo matematicamente equivalente à expressão inicial, não tem problema com crescimento do erro por causa de subtração. Por isso, ela tem que ser usada nas contas numéricas em vez da inicial.</p>
+
+<h4>Raízes de uma equação quadrática</h4>
+
+<p>O problema de subtração de números próximos aparece se resolvemos uma equação quadrática com coeficientes aproximados de a, b, e c:</p>
+
+<blockquote class="formula">
+$ax^2+bx+c=0.$
+</blockquote>
+
+<p>A fórmula de Bhaskara,</p>
+
+<blockquote class="formula">
+$\displaystyle{x_1=\frac{−b+\sqrt{b^2−4ac}}{2a}}, \qquad \displaystyle{x_2=\frac{−b−\sqrt{b^2−4ac}}{2a}},$
+</blockquote>
+
+<p>para b&lt;0 aplica-se para calcular x<sub>1</sub>, enquanto para x<sub>2</sub> pode levar ao crescimento do erro relativo, enquanto ∣ac∣≪b<sup>2</sup>.</p>
+
+<p>Para b&gt;0 o numerador de x<sub>2</sub> contém uma soma de dois números negativos, enquanto para x<sub>1</sub> podemos obter o crescimento do erro devido à subtração.</p>
+
+<p>Por esta razão, a fórmula de Bhaskara podemos utilizar somente para calcular uma das raízes, enquanto a outra calculamos pela relação:</p>
+<blockquote class="formula">
+$\displaystyle{x_1x_2=\frac{c}{a}}.$
+</blockquote>
+
+<form>
+<div class="overwrite"><input class="right-aligned" type="button" name="execute"  value="Executar" onClick="ExecuteCodeEvent(this)"></div>
+<textarea class="wide" name="code"  rows="15">
+var raízes=function(a,b,c){
+ if(a==0)return [-c/b]
+ var det=b*b-4*a*c
+ if(det<0)return []
+ if(b<0){
+  var x1=(-b+Math.sqrt(det))/(2*a)
+  return [x1,c/(a*x1)]
+ }else{
+  var x2=(-b-Math.sqrt(det))/(2*a)
+  return [c/(a*x2),x2]
+ }
+}
+
+text=raízes(1,10,1)
+</textarea>
+<textarea class="wide" name="destination" readonly="readonly" rows="2"></textarea>
+</form>
+
+<h3>Instabilidade numérica</h3>
+
+<p>O erro inicial nos dados (por exemplo, erro de representação dos números) pode levar ao crescimento do erro de resultado das contas. Quando a acumulação de erros nas contas é rápida, o algoritmo é chamado <strong>numericamente instável</strong>. O resultado final pode ter um erro muito grande, em particular, maior que 100%. Tal crescimento catastrófico de erro significa que os algoritmos numericamente instáveis são praticamente inaplicáveis.</p>
+
+<p>Quando os erros dos dados iniciais e contas intermediárias tem um efeito desprezível no resultado final, tal algoritmo é chamado <strong>numericamente estável</strong>. Somente os algoritmos estáveis são usados para obter os resultados úteis.</p>
+
+<p>Consideremos as integrais</p>
+
+<blockquote class="formula">
+$\displaystyle{I_n=\int_0^1\frac{x^n}{x+5}dx}.$
+</blockquote>
+
+<p>Todas as integrais deste tipo são positivas. Para n=0, obtemos</p>
+
+<blockquote class="formula">
+$\displaystyle{I_0=\int_0^1\frac{dx}{x+5}=\ln{(x+5)}│_0^1=\ln{~\frac{6}{5}}}.$
+</blockquote>
+
+<p>Podemos achar também uma relação de recorrência,</p>
+
+<blockquote class="formula">
+$\displaystyle{I_n=\int_0^1\frac{x^n+5x^{n-1}−5x^{n-1}}{x+5}dx=\int_0^1\left(\frac{x^{n-1}(x+5)}{x+5}−5\frac{x^{n-1}}{x+5}\right)dx=\int_0^1x^{n-1}dx−5\int_0^1\frac{x^{n-1}}{x+5}dx=\frac{1}{n}−5I_{n-1}}.$
+</blockquote>
+
+<p>Comparamos valores das integrais com os calculados pela relação de recorrência.</p>
+
+<form>
+<div class="overwrite"><input class="right-aligned" type="button" name="execute"  value="Executar" onClick="ExecuteCodeEvent(this)"></div>
+<textarea class="wide" name="code"  rows="15">
+var I=[0.18232155679395462, 0.08839221603022687, 0.05803891984886565, 0.04313873408900506, 0.034306329554974715, 0.028468352225126423, 0.024324905541034558, 0.02123261515197007, 0.018836924240149665, 0.016926489910362778, 0.01536755044818611, 0.014071338668160356, 0.012976639992531548, 0.01203987696041918, 0.011229186626475526, 0.010520733534289032, 0.009896332328554839, 0.009341867768990517, 0.008846216710602971, 0.008400495394353568, 0.007997523028232164, 0.0076314324778868, 0.0072973830651114555, 0.0069913455440079415, 0.006709938946626957, 0.006450305266865215, 0.006210012127212388, 0.0059869764009750975, 0.005779403709410225, 0.005585740073638531, 0.0054046329651406795]
+
+var recorrência=function(n,I){return 1/n-5*I}
+
+var In=I[0]
+for(var n=1;n<I.length;++n){
+ In=recorrência(n,In)
+ text+="I"+n+"="+In+", ΔI"+n+"="+(In-I[n])+".\n"
+}
+
+</textarea>
+<textarea class="wide" name="destination" readonly="readonly" rows="25"></textarea>
+</form>
+
+<p>Podemos observar que o erro absoluto cresce rápido e já para n=23 é maior que o valor aproximado, que significa que o erro absoluto é maior que 100%. Isto é claro pois obtemos o valor negativo como uma aproximação para integral positiva de I<sub>23</sub>.</p>
+
+<p>Se o erro da aproximação inicial para I<sub>0</sub> for maior que o erro de representação, vamos obter o resultado absurdo para menor índice de n. Por exemplo, se usar aproximação inicial 0.182 (3 casas decimais), vamos obter o valor negativo já para aproximação de I<sub>4</sub>.</p>
+
+<p>Podemos concluir que esta recorrência, sendo aplicada para calcular as integrais a partir de aproximação para I<sub>0</sub> é numericamente instável. Ao mesmo tempo, a aplicação da fórmula invertida dá um algoritmo numericamente estável.</p>
+<blockquote class="formula">
+$\displaystyle{I_{n-1}=\frac{1}{5}\left(\frac{1}{n}−I_{n}}\right).$
+</blockquote>
+
+<p>Podemos aproximar I<sub>20</sub>≈0 e achar o valor aproximado para I<sub>0</sub>.</p>
+
+<form>
+<div class="overwrite"><input class="right-aligned" type="button" name="execute"  value="Executar" onClick="ExecuteCodeEvent(this)"></div>
+<textarea class="wide" name="code"  rows="8">
+var invertida=function(n,I){return (1/n-I)/5}
+
+var n=20
+var In=0
+while(n>0) In=invertida(n--,In)
+text="I0="+In
+text+="\n"+"ln(6/5)="+Math.log(6/5)
+
+</textarea>
+<textarea class="wide" name="destination" readonly="readonly" rows="3"></textarea>
+</form>
+
+<h3>Resumo</h3>
+
+<ol>
+  <li>Erro nos dados iniciais e erro de representação dos números na aritmética de ponto flutuante podem levar ao crescimento rápido de erro relativo do resultado.</li>
+  <li>Operações que resultam no crescimento do erro, como, por exemplo, subtração de números próximos temos que evitar sempre quando for possível.</li>
+  <li>Acumulação rápida dos erros num algoritmo significa que tal algoritmo não é praticamente útil. Este fenômeno é chamado de instabilidade numérica.</li>
+</ol>
+
+</section>
+
+</article>
+
+<footer>
+<a href="aula05.html">Próxima aula: Fórmula de Taylor e ordem de erro.</a>
+</footer>
+
+</body>
+
+</html> 
