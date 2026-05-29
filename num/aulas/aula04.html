@@ -54,7 +54,7 @@ text=0.2+0.1-0.3
 <p>Às vezes, podemos achar uma fórmula alternativa para uma expressão,</p>
 
 <blockquote class="formula">
-$\displaystyle{\sqrt{10001}−100=(\sqrt{10001}−100)\times\frac{\sqrt{10001}+100}{\sqrt{10001}+100}=\frac{(\sqrt{10001}){}^2−100^2}{\sqrt{10001}+100}=\frac{1}{\sqrt{10001}+100}}.$
+$\displaystyle{\sqrt{10001}−100=(\sqrt{10001}−100)\times\frac{\sqrt{10001}+100}{\sqrt{10001}+100}}$ $=\displaystyle{\frac{(\sqrt{10001}){}^2−100^2}{\sqrt{10001}+100}=\frac{1}{\sqrt{10001}+100}}.$
 </blockquote>
 
 <p>A última expressão, sendo matematicamente equivalente à expressão inicial, não tem problema com crescimento do erro por causa de subtração. Por isso, ela tem que ser usada nas contas numéricas em vez da inicial.</p>
@@ -124,7 +124,7 @@ $\displaystyle{I_0=\int_0^1\frac{dx}{x+5}=\ln{(x+5)}│_0^1=\ln{~\frac{6}{5}}}.$
 <p>Podemos achar também uma relação de recorrência,</p>
 
 <blockquote class="formula">
-$\displaystyle{I_n=\int_0^1\frac{x^n+5x^{n-1}−5x^{n-1}}{x+5}dx=\int_0^1\left(\frac{x^{n-1}(x+5)}{x+5}−5\frac{x^{n-1}}{x+5}\right)dx=\int_0^1x^{n-1}dx−5\int_0^1\frac{x^{n-1}}{x+5}dx=\frac{1}{n}−5I_{n-1}}.$
+$I_n=\displaystyle{\int_0^1\frac{x^n+5x^{n-1}−5x^{n-1}}{x+5}dx}$ $=\displaystyle{\int_0^1\left(\frac{x^{n-1}(x+5)}{x+5}−5\frac{x^{n-1}}{x+5}\right)dx}$ $=\displaystyle{\int_0^1x^{n-1}dx−5\int_0^1\frac{x^{n-1}}{x+5}dx}=\frac{1}{n}−5I_{n-1}.$
 </blockquote>
 
 <p>Comparamos valores das integrais com os calculados pela relação de recorrência.</p>
@@ -190,4 +190,4 @@ text+="\n"+"ln(6/5)="+Math.log(6/5)
 
 </body>
 
-</html> 
+</html>

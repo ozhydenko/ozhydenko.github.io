@@ -41,12 +41,12 @@ $f\left(x\right)=0.$
 $x=\phi\left(x\right)=x+A\left(x\right)f\left(x\right).$
 </blockquote>
 
-<p>onde supomos que A(x) é uma função diferente de zero no intervalo considerado. Nesse caso, resolver f(x)=0 é equivalente a procurar um ponto fixo de φ(x). Como vimos no método do ponto fixo, a convergência tende a ser mais rápida quando o valor absoluto da derivada da função de iteração é pequeno.</p>
+<p>onde supomos que A(x) não se anula no intervalo considerado. Nesse caso, resolver f(x)=0 é equivalente a procurar um ponto fixo de φ(x). Como vimos no método do ponto fixo, a convergência tende a ser mais rápida quando o valor absoluto da derivada da função de iteração é pequeno.</p>
 <blockquote class="formula">
 $\phi\prime\left(x\right)=1+A\prime\left(x\right)f\left(x\right)+A\left(x\right)f\prime\left(x\right)\simeq 0.$
 </blockquote>
 
-<p>Na proximidade da solução, temos f(x)≈0. Assim, para tornar a derivada de φ(x) próxima de zero nessa região, escolhemos</p>
+<p>Próximo da solução, temos f(x)≈0. Assim, para tornar a derivada de φ(x) próxima de zero nessa região, escolhemos</p>
 <blockquote class="formula">
 $A\left(x\right)=−\displaystyle{\frac{1}{f\prime\left(x\right)}}.$
 </blockquote>
@@ -60,7 +60,7 @@ $\phi\left(x\right)=x − \displaystyle{\frac{f\left(x\right)}{f\prime\left(x\ri
 $x_{k+1}=\phi\left(x_k\right)=x_k − \displaystyle{\frac{f\left(x_k\right)}{f\prime\left(x_k\right)}}.$
 </blockquote>
 
-<p>Para que a fórmula possa ser aplicada, precisamos que f′(x<sub>k</sub>) seja diferente de zero.</p>
+<p>Para que a fórmula possa ser aplicada, precisamos que f′(x<sub>k</sub>) não seja zero.</p>
 
 <h3>Interpretação geométrica</h3>
 
@@ -91,10 +91,10 @@ $x_{k+1}=\phi\left(x_k\right)=x_k − \displaystyle{\frac{f\left(x_k\right)}{f\p
 
 <h3>Convergência</h3>
 
-<p>O método de Newton-Raphson pode convergir muito rapidamente quando a aproximação inicial está suficientemente próxima da raiz e quando f′(x) não se aproxima de zero nessa região.</p>
+<p>O método de Newton-Raphson pode convergir muito rapidamente quando a aproximação inicial está suficientemente próxima da raiz e quando f′(x) não fica próximo de zero nessa região.</p>
 
 <blockquote>
-<strong>Teorema sobre convergência local do método de Newton-Raphson.</strong> Seja x uma raiz da equação f(x)=0. Suponhamos que f(t), f′(t) e f′′(t) são contínuas em um intervalo I centrado em x, e que f′(t)≠0 para todo t∈I. Então existe um intervalo menor J⊂I, também centrado em x, tal que, para qualquer aproximação inicial x<sub>0</sub>∈J, a sequência
+<strong>Teorema sobre convergência local do método de Newton-Raphson.</strong> Seja x uma raiz da equação f(x)=0. Suponhamos que f(t), f′(t) e f′′(t) sejam contínuas em um intervalo I centrado em x, e que f′(t)≠0 para todo t∈I. Então existe um intervalo menor J⊂I, também centrado em x, tal que, para qualquer aproximação inicial x<sub>0</sub>∈J, a sequência
 <blockquote class="formula">
 $x_{k+1}=x_k − \displaystyle{\frac{f\left(x_k\right)}{f\prime\left(x_k\right)}}$
 </blockquote>
@@ -114,7 +114,9 @@ Como f(x)=0, obtemos φ′(x)=0. Como f(t), f′(t) e f′′(t) são contínuas
 <blockquote class="formula">
 $|\phi\prime\left(t\right)|\leq M&lt;1,\qquad t\in J.$
 </blockquote>
-Também podemos escolher J pequeno o suficiente para que φ(t)∈J quando t∈J. Assim, pelo teorema de convergência do método do ponto fixo, a iteração x<sub>k+1</sub>=φ(x<sub>k</sub>) converge para o ponto fixo x. Portanto, o método de Newton-Raphson converge para a raiz da equação.
+Também podemos escolher J pequeno o suficiente para que φ(t)∈J quando t∈J. Assim, pelo teorema de convergência do método do ponto fixo, o método iterativo x<sub>k+1</sub>=φ(x<sub>k</sub>) converge para o ponto fixo x.
+<br/>
+Portanto, o método de Newton-Raphson converge para a raiz da equação. ∎
 </blockquote>
 
 <p>Por outro lado, o método não converge para qualquer aproximação inicial. Se a aproximação inicial estiver longe da raiz, se a derivada for muito pequena ou se a função tiver comportamento irregular, a sequência pode divergir ou convergir para uma raiz diferente da esperada.</p>
@@ -147,7 +149,7 @@ text=Newton(f,df,1)
 <textarea class="wide" name="destination" readonly="readonly" rows="3"></textarea>
 </form>
 
-<h4>Cálculo de raiz quadrada</h4>
+<h3>Cálculo de raiz quadrada</h3>
 
 <p>O cálculo de raiz quadrada é um exemplo clássico do método de Newton-Raphson. Para calcular √a&#773;, com a&gt;0, procuramos o número x que satisfaz</p>
 
@@ -167,7 +169,7 @@ $f\left(x\right)=x^2−a.$
 $\phi\left(x\right)=x−\displaystyle{\frac{x^2−a}{2x}}=\displaystyle{\frac{x+a/x}{2}}.$
 </blockquote>
 
-<p>Assim, cada nova aproximação é obtida aplicando x=φ(x), isto é, tomando a média entre x e a/x. Se x é maior que √a&#773;, então a/x é menor que √a&#773;; se x é menor que √a&#773;, então a/x é maior que √a&#773;. A média desses dois valores tende a aproximar rapidamente a raiz.</p>
+<p>Assim, cada nova aproximação é obtida aplicando a função de iteração φ, isto é, tomando a média entre x e a/x. Se x é maior que √a&#773;, então a/x é menor que √a&#773;; se x é menor que √a&#773;, então a/x é maior que √a&#773;. A média desses dois valores tende a aproximar rapidamente a raiz.</p>
 
 <p>Além da função de iteração, precisamos de uma aproximação inicial. Como √a&#773; tem ordem de grandeza aproximadamente igual à metade da ordem de grandeza de a, quando temos acesso direto à representação interna do número podemos obter uma boa aproximação inicial simplesmente dividindo o expoente por 2. Em JavaScript, porém, não temos acesso direto à mantissa e ao expoente do número. Em vez disso, utilizamos loops simples: se a é maior que 1 (expoente positivo), multiplicamos 1 por 2 até passar de a; caso contrário, quando o expoente de a é negativo, dividimos 1 por 2 até chegar a uma escala adequada. Assim obtemos uma aproximação inicial com expoente apropriado para começar as iterações de Newton-Raphson.</p>
 
@@ -194,7 +196,7 @@ text=Sqrt(2)+"\n"+Math.sqrt(2)
 <textarea class="wide" name="destination" readonly="readonly" rows="3"></textarea>
 </form>
 
-<p>Podemos observar que o método de Newton-Raphson converge muito rapidamente: quando temos uma boa aproximação inicial, cada iteração aumenta bastante a quantidade de algarismos corretos. Para a raiz quadrada, depois que a aproximação inicial já tem a ordem de grandeza correta, poucas iterações são suficientes para atingir a precisão disponível na aritmética de ponto flutuante. Como essa precisão é fixa, existe um limite para a quantidade de casas binárias que podem ser determinadas. Depois desse limite, novas iterações não melhoram o resultado, pois o número já está arredondado para a representação disponível. Por isso, em uma implementação prática, podemos escolher antecipadamente um número suficiente de iterações e evitar o teste de parada em cada repetição. Assim, a parte iterativa do cálculo da raiz quadrada pode ser feita sem um loop.</p>
+<p>Podemos observar que o método de Newton-Raphson converge muito rapidamente: quando temos uma boa aproximação inicial, cada iteração aumenta bastante a quantidade de algarismos corretos. Para a raiz quadrada, depois que a aproximação inicial já tem a ordem de grandeza correta, poucas iterações são suficientes para atingir a precisão disponível na aritmética de ponto flutuante. Como essa precisão é fixa, existe um limite para a quantidade de casas binárias que podem ser determinadas. Depois desse limite, novas iterações não melhoram o resultado, pois o número já está arredondado para a representação disponível. Por isso, em uma implementação prática, podemos escolher antecipadamente um número suficiente de iterações e evitar o teste de parada em cada repetição. Assim, a parte iterativa do cálculo da raiz quadrada pode ser feita sem um loop de parada.</p>
 
 <form>
 <div class="overwrite"><input class="right-aligned" type="button" name="execute" value="Executar" onClick="ExecuteCodeEvent(this)"></div>
@@ -220,7 +222,7 @@ text=Sqrt(2)+"\n"+Math.sqrt(2)
 
 <p>Esse tipo de método é usado em processadores numéricos para calcular raízes quadradas. Na prática, o processo é ainda mais otimizado para reduzir o número de divisões necessárias, pois a divisão é uma das operações aritméticas mais custosas. Mesmo assim, o cálculo da raiz quadrada costuma ser apenas algumas vezes mais lento do que uma divisão, graças à combinação de uma boa aproximação inicial com poucas iterações de Newton-Raphson.</p>
 
-<h4>Aproximações de ordem superior</h4>
+<h3>Aproximações de ordem superior</h3>
 
 <p>O método pode ser generalizado considerando aproximações de ordem superior. Em outras palavras, em vez da reta tangente, podemos utilizar uma aproximação polinomial de grau maior. Essa aproximação pode ser obtida usando a fórmula de Taylor para a função inversa. Introduzimos g=f<sup>−1</sup>:</p>
 
@@ -233,6 +235,8 @@ $y=f\left(x\right),\qquad x=g\left(y\right).$
 <blockquote class="formula">
 $x=g\left(0\right).$
 </blockquote>
+
+<p>Assim, o problema pode ser visto como o de voltar do valor atual y<sub>k</sub>=f(x<sub>k</sub>) até o valor y=0, onde se encontra a raiz. A fórmula de Taylor para g(y) fornece uma maneira sistemática de fazer essa aproximação.</p>
 
 <p>Suponhamos que x<sub>k</sub> é uma aproximação da raiz e definamos</p>
 
@@ -302,10 +306,10 @@ $x_{k+1}=x_k−\displaystyle{\frac{f\left(x_k\right)}{f\prime\left(x_k\right)}}�
 
 <ol>
   <li>O método de Newton-Raphson resolve f(x)=0 usando aproximações sucessivas obtidas pela reta tangente ao gráfico de f.</li>
-  <li>Precisamos calcular a derivada f′(x<sub>k</sub>) cada iteração.</li>
+  <li>Precisamos calcular a derivada f′(x<sub>k</sub>) em cada iteração.</li>
   <li>Quando a aproximação inicial é boa, o método converge muito rapidamente.</li>
   <li>A convergência não é garantida: uma aproximação inicial inadequada pode levar à divergência ou a uma raiz diferente.</li>
-  <li>O método é usado para cálculo de raiz quadrada.</li>
+  <li>O método é usado para o cálculo eficiente de raízes quadradas.</li>
 </ol>
 </section>
 

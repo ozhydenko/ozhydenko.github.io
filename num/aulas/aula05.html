@@ -39,7 +39,7 @@
 <p>Por isso, vamos normalmente assumir que tais funções retornam os valores aproximados para funções contínuas com derivadas contínuas e ainda que ordem de grandeza das derivadas não varia muito. Estas funções são bem aproximadas pela série de Taylor, que permite achar uma aproximação pelo valor de um polinômio de grau n, cujos coeficientes dependem das derivadas em algum ponto fixo x<sub>0</sub>.</p>
 
 <blockquote class="formula">
-$f(x)=f(x_0)+f'(x_0)(x-x_0)$&nbsp;$\displaystyle{+~\frac{f''(x_0)}{2!}\left(x-x_0\right)^2+\frac{f'''(x_0)}{3!}\left(x-x_0\right)^3+\ldots+\frac{f^{(n)}(x_0)}{n!}\left(x-x_0\right)^n+R_n}.$
+$f(x)=f(x_0)+f'(x_0)(x-x_0)$ $\displaystyle{+~\frac{f''(x_0)}{2!}\left(x-x_0\right)^2}$ $\displaystyle{+~\frac{f'''(x_0)}{3!}\left(x-x_0\right)^3}$ $\displaystyle{+~\ldots+\frac{f^{(n)}(x_0)}{n!}\left(x-x_0\right)^n+R_n}.$
 </blockquote>
 
 <p>O resto R<sub>n</sub> depende da derivada de ordem n+1 em algum ponto ξ do intervalo de x<sub>0</sub> e x.</p>
@@ -57,7 +57,7 @@ $\displaystyle{\frac{\left│f^{(n+1)}(\xi)\right│}{(n+1)!}\leq M,$
 <p>podemos especificar o intervalo do valor aproximado da função como</p>
 
 <blockquote class="formula">
-$f(x)=f(x_0)+f'(x_0)(x-x_0)$&nbsp;$\displaystyle{+~\frac{f''(x_0)}{2!}\left(x-x_0\right)^2+\frac{f'''(x_0)}{3!}\left(x-x_0\right)^3+\ldots+\frac{f^{(n)}(x_0)}{n!}\left(x-x_0\right)^n}$&nbsp;$\pm~M|x-x_0|^{n+1}.$
+$f(x)=f(x_0)+f'(x_0)(x-x_0)$&nbsp;$\displaystyle{+~\frac{f''(x_0)}{2!}\left(x-x_0\right)^2}$ $\displaystyle{+~\frac{f'''(x_0)}{3!}\left(x-x_0\right)^3}$ $\displaystyle{+~\ldots+\frac{f^{(n)}(x_0)}{n!}\left(x-x_0\right)^n}\pmM|x-x_0|^{n+1}.$
 </blockquote>
 
 <h3>Exemplos de utilização</h3>
@@ -91,11 +91,11 @@ $\displaystyle{e^{−x}=\frac{1}{e^x}}.$
 <p>Similarmente,</p>
 
 <blockquote class="formula">
-$\displaystyle{\textrm{sen}x=x−\frac{x^3}{3!}+\frac{x^5}{5!}+\ldots+\frac{\left(−1\right)^nx^{2n+1}}{(2n+1)!}\pm\frac{|x|^{2n+2}}{(2n+2)!}}.$
+$\textrm{sen}x=x−\displaystyle{\frac{x^3}{3!}+\frac{x^5}{5!}}$ $\displaystyle{+~\ldots+\frac{\left(−1\right)^nx^{2n+1}}{(2n+1)!}\pm\frac{|x|^{2n+2}}{(2n+2)!}}.$
 </blockquote>
 
 <blockquote class="formula">
-$\displaystyle{\textrm{cos}x=1−\frac{x^2}{2!}+\frac{x^4}{4!}+\ldots+\frac{\left(−1\right)^nx^{2n}}{(2n)!}\pm\frac{|x|^{2n+1}}{(2n+1)!}}.$
+$\textrm{cos}x=1−\displaystyle{\frac{x^2}{2!}+\frac{x^4}{4!}}$ $\displaystyle{+~\ldots+\frac{\left(−1\right)^nx^{2n}}{(2n)!}\pm\frac{|x|^{2n+1}}{(2n+1)!}}.$
 </blockquote>
 
 <p>Para o logaritmo temos que utilizar x<sub>0</sub>=1,</p>
@@ -146,4 +146,4 @@ $\textrm{&Oscr;}(h^n)+\textrm{&Oscr;}(h^m)=\textrm{&Oscr;}(h^{\textrm{min}(n,m)}
 
 </body>
 
-</html> 
+</html>

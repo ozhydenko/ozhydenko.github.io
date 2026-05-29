@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width" />
+<title>Cálculo numérico: Comparação de métodos iterativos. Método de secantes.</title>
+<link rel="stylesheet" type="text/css" href="lstyle.css" />
+<link href="https://www.ufabc.edu.br/ensino/docentes/olexandr-zhydenko" rel="author" />
+<script type="text/javascript" src="execjavascript.js"></script>
+<script type="text/javascript" src="LaTeXMathML.js"></script>
+</head>
+
+<body>
+
+<header>
+</header>
+
+<nav>
+<a class="prev" href="aula09.html">Página anterior</a>
+<a class="top" href="index.html">Índice</a>
+<a class="next" href="aula11.html">Próxima página</a>
+</nav>
+
+<article>
+
+<section>
+<h2>Aula 10: Comparação de métodos iterativos. Método de secantes.</h2>
+
+<h3>Ordem de convergência</h3>
+
+<p>Para comparar métodos iterativos, não basta saber se a sequência de aproximações converge. Também é importante saber com que velocidade ela converge.</p>
+
+<p>Suponhamos que uma sequência x<sub>k</sub> converge para a solução exata x. O erro absoluto da k-ésima aproximação é</p>
+
+<blockquote class="formula">
+$\Delta x_k=|x_k−x|.$
+</blockquote>
+
+<p>Dizemos que o método tem <strong>ordem de convergência p</strong> se existe uma constante C&gt;0 tal que</p>
+
+<blockquote class="formula">
+$\lim_{k\to\infty}\displaystyle{\frac{\Delta x_{k+1}}{\Delta x_k^p}}=C.$
+</blockquote>
+
+<p>A constante C é chamada constante assintótica do erro. Quando p=1, a convergência é chamada linear; nesse caso, para que o erro diminua, é necessário que C&lt;1. Quando p=2, a convergência é chamada quadrática. Quanto maior a ordem de convergência, mais rapidamente o erro tende a zero, desde que as aproximações já estejam suficientemente próximas da solução.</p>
+
+<h4>Ordem de convergência do método de bisseção</h4>
+
+<p>No método de bisseção, a cada iteração o intervalo que contém a raiz é dividido ao meio. Assim, a cada iteração o limitante do erro é multiplicado por 1/2. Isso caracteriza uma convergência linear (p=1):</p>
+
+<blockquote class="formula">
+$\Delta x_{k+1} = \displaystyle{\frac{1}{2}}\Delta x_k.$
+</blockquote>
+
+<p>O método de bisseção é robusto, pois preserva um intervalo que contém a raiz, mas sua convergência é relativamente lenta.</p>
+
+<h4>Ordem de convergência do método de Newton-Raphson</h4>
+
+<p>Para o método de Newton-Raphson, suponhamos que x é uma raiz simples da equação f(x)=0, isto é, f′(x)≠0. O método é definido por</p>
+
+<blockquote class="formula">
+$x_{k+1}=x_k−\displaystyle{\frac{f\left(x_k\right)}{f\prime\left(x_k\right)}},$
+</blockquote>
+
+<p>Para estudar o erro, utilizamos a fórmula de Taylor em torno da raiz x:</p>
+
+<blockquote class="formula">
+$f\left(x_k\right)=f\prime\left(x\right)\left(x_k−x\right)+\displaystyle{\frac{f\prime\prime\left(x\right)}{2}}\left(x_k−x\right)^2$ $+~O\left(x_k−x\right)^3,$
+<br/>
+$f\prime\left(x_k\right)=f\prime\left(x\right)+f\prime\prime\left(x\right)\left(x_k−x\right)$ $+~O\left(x_k−x\right)^2.$
+</blockquote>
+
+<p>Substituindo essas expressões na fórmula de Newton-Raphson e simplificando, obtemos a relação assintótica</p>
+
+<blockquote class="formula">
+$x_{k+1}−x=\displaystyle{\frac{f\prime\prime\left(x\right)}{2f\prime\left(x\right)}}\left(x_k−x\right)^2+O\left(x_k−x\right)^3.$
+</blockquote>
+
+<p>Passando para o erro absoluto Δx<sub>k</sub>=|x<sub>k</sub>−x|, obtemos</p>
+
+<blockquote class="formula">
+$\Delta x_{k+1} = \displaystyle{\frac{\left|f\prime\prime\left(x\right)\right|}{2\left|f\prime\left(x\right)\right|}}\Delta x_k^2 + O\left(\Delta x_k\right)^3.$
+</blockquote>
+
+<p>Portanto, quando a aproximação inicial está suficientemente próxima da raiz e f′(x)≠0, o erro absoluto da próxima iteração é proporcional ao quadrado do erro absoluto anterior. Assim, o método de Newton-Raphson tem convergência de ordem 2:</p>
+
+<blockquote class="formula">
+$\lim_{k\to\infty}\displaystyle{\frac{\Delta x_{k+1}}{\Delta x_k^2}}=\displaystyle{\frac{\left|f\prime\prime\left(x\right)\right|}{2\left|f\prime\left(x\right)\right|}}.$
+</blockquote>
+
+<p>Na aula anterior vimos que é possível construir métodos usando aproximações de ordem superior. De modo semelhante, é possível mostrar que esses métodos superiores têm convergência de ordem superior, quando as hipóteses necessárias de regularidade e proximidade da raiz são satisfeitas.</p>
+
+<h3>Método de secantes</h3>
+
+<p>Uma desvantagem do método de Newton-Raphson é a necessidade de calcular a derivada f′(x). O <a href="aula06.html">cálculo numérico da derivada</a> é delicado: para calcular a derivada, ainda precisamos calcular o valor da função em pelo menos dois pontos adicionais. Se essa função for dada por um algoritmo complicado, a determinação de cada valor pode aumentar significativamente o tempo de computação. Além disso, o erro relativo da derivada costuma ser bem maior do que o erro relativo dos próprios valores da função. De fato, o que obtemos não é exatamente a derivada, mas a inclinação de uma reta secante.</p>
+
+<p>Essa observação leva à ideia do <strong>método de secantes</strong>. Em vez de calcular numericamente a derivada em x<sub>k</sub>, construímos uma reta secante usando duas aproximações anteriores, x<sub>k−1</sub> e x<sub>k</sub>. A derivada em Newton-Raphson é então substituída pela inclinação dessa secante:</p>
+
+<blockquote class="formula">
+$f\prime\left(x_k\right)\mapsto\displaystyle{\frac{f\left(x_k\right)−f\left(x_{k−1}\right)}{x_k−x_{k−1}}}.$
+</blockquote>
+
+<svg width="100%" height="440">
+   <text x="86%" y="20" text-anchor="end">y=f(x)</text>
+   <line x1="5%" y1="350" x2="95%" y2="350" stroke="black"/>
+   <line x1="50%" y1="350" x2="90%" y2="50" stroke="blue"/>
+   <line x1="10%" y1="5" x2="10%" y2="435" stroke="black"/>
+
+   <line x1="79%" y1="350" x2="79%" y2="131" stroke="black" stroke-dasharray="9,3" />
+   <text x="79%" y="365" text-anchor="middle" font-size="100%">x<tspan dx="1" dy="4" font-size="75%">k−1</tspan></text>
+   <line x1="62%" y1="350" x2="62%" y2="260" stroke="black" stroke-dasharray="9,3" />
+   <text x="62%" y="365" text-anchor="middle" font-size="100%">x<tspan dx="1" dy="4" font-size="75%">k</tspan></text>
+   <text x="50%" y="365" text-anchor="middle" font-size="100%">x<tspan dx="1" dy="4" font-size="75%">k+1</tspan></text>
+
+   <line x1="10%" y1="131" x2="79%" y2="131" stroke="black" stroke-dasharray="9,3" />
+   <text x="9%" y="135" text-anchor="end" font-size="100%">f(x<tspan dx="0" dy="4" font-size="75%">k−1</tspan><tspan dx="0" dy="-4">)</tspan></text>
+   <line x1="10%" y1="260" x2="62%" y2="260" stroke="black" stroke-dasharray="9,3" />
+   <text x="9%" y="264" text-anchor="end" font-size="100%">f(x<tspan dx="0" dy="4" font-size="75%">k</tspan><tspan dx="0" dy="-4">)</tspan></text>
+
+  <svg x="5%" y="10" viewBox="0 0 600 200" width="95%" height="400px" preserveAspectRatio="none">
+    <path d="M -2000 400 C -1000 50, 200 400, 520 10"
+          fill="none" stroke="red"/>
+  </svg>
+</svg>
+
+<p>Substituindo essa aproximação na fórmula de Newton-Raphson, obtemos</p>
+
+<blockquote class="formula">
+$x_{k+1}=x_k−f\left(x_k\right)\displaystyle{\frac{x_k−x_{k−1}}{f\left(x_k\right)−f\left(x_{k−1}\right)}}$ $=\displaystyle{\frac{x_{k−1}f\left(x_k\right)−x_kf\left(x_{k−1}\right)}{f\left(x_k\right)−f\left(x_{k−1}\right)}}.$
+</blockquote>
+
+<p>Essa fórmula usa os dois valores já conhecidos f(x<sub>k−1</sub>) e f(x<sub>k</sub>). Depois que a nova aproximação é calculada, precisamos avaliar f apenas no novo ponto. Assim, em cada nova iteração, calculamos o valor da função f somente uma vez.</p>
+
+<form>
+<div class="overwrite"><input class="right-aligned" type="button" name="execute" value="Executar" onClick="ExecuteCodeEvent(this)"></div>
+<textarea class="wide" name="code" rows="17">
+var prec=0.00000001
+var Secantes=function(f,x0,x1){
+var f0=f(x0)
+while(Math.abs(x1-x0)>prec){
+var f1=f(x1)
+var x=(x0*f1-x1*f0)/(f1-f0)
+x0=x1
+f0=f1
+x1=x
+}
+return x1
+}
+
+var f=function(x){return Math.cos(x)-x}
+
+text=Secantes(f,0,1)
+</textarea>
+<textarea class="wide" name="destination" readonly="readonly" rows="3"></textarea>
+</form>
+
+<p>A fórmula do método de secantes é a mesma fórmula usada para calcular o ponto de quebra no <a href="aula07.html">método da falsa posição</a>. A diferença está na escolha dos pontos usados na iteração seguinte. No método da falsa posição, preservamos um intervalo com mudança de sinal. No método de secantes, usamos simplesmente as duas últimas aproximações. Por isso, o método de secantes pode convergir mais rapidamente, mas não preserva automaticamente um intervalo que contém a raiz.</p>
+
+<h3>Ordem de convergência do método de secantes</h3>
+
+<p>Se x é uma raiz simples e as aproximações estão suficientemente próximas de x, podemos obter a relação assintótica do erro a partir da própria fórmula do método de secantes.</p>
+
+<p>Como f(x)=0, pela fórmula de Taylor em torno da raiz x temos</p>
+
+<blockquote class="formula">
+$f\left(x_k\right)=f\prime\left(x\right)\left(x_k−x\right)+\displaystyle{\frac{f\prime\prime\left(x\right)}{2}}\left(x_k−x\right)^2$ $+~O\left(x_k−x\right)^3,$
+<br/>
+$f\left(x_{k−1}\right)=f\prime\left(x\right)\left(x_{k−1}−x\right)$ $+~\displaystyle{\frac{f\prime\prime\left(x\right)}{2}}\left(x_{k−1}−x\right)^2$ $+~O\left(x_{k−1}−x\right)^3.$
+</blockquote>
+
+<p>Subtraindo x da fórmula de secantes e substituindo as expansões de Taylor, obtemos</p>
+
+<blockquote class="formula">
+$x_{k+1}−x$ $=~\displaystyle{\frac{\left(x_{k−1}−x\right)f\left(x_k\right)−\left(x_k−x\right)f\left(x_{k−1}\right)}{f\left(x_k\right)−f\left(x_{k−1}\right)}}$ $\approx\displaystyle{\frac{\displaystyle{\frac{f\prime\prime\left(x\right)}{2}}\left(x_{k−1}−x\right)\left(x_k−x\right)\left(x_k−x_{k−1}\right)}{f\prime\left(x\right)\left(x_k−x_{k−1}\right)}}.$
+</blockquote>
+
+<p>Assim, chegamos à relação</p>
+
+<blockquote class="formula">
+$x_{k+1}−x\approx\displaystyle{\frac{f\prime\prime\left(x\right)}{2f\prime\left(x\right)}}\left(x_k−x\right)\left(x_{k−1}−x\right).$
+</blockquote>
+
+<p>Portanto, como Δx<sub>k</sub>=|x<sub>k</sub>−x|, o erro absoluto do método de secantes satisfaz uma relação assintótica da forma</p>
+
+<blockquote class="formula">
+$\Delta x_{k+1}\propto \Delta x_k\Delta x_{k−1}.$
+</blockquote>
+
+<p>Para calcular a ordem de convergência, suponhamos que</p>
+
+<blockquote class="formula">
+$\Delta x_{k+1}\propto \Delta x_k^p$ e também $\Delta x_k\propto \Delta x_{k−1}^p.$
+</blockquote>
+
+<p>Substituindo isso na relação anterior, obtemos</p>
+
+<blockquote class="formula">
+$\Delta x_{k+1}\propto \Delta x_k^{1+1/p}.$
+</blockquote>
+
+<p>Como a ordem de convergência é p, os expoentes devem coincidir:</p>
+
+<blockquote class="formula">
+$p=1+\displaystyle{\frac{1}{p}}.$
+</blockquote>
+
+<p>Assim, p satisfaz</p>
+
+<blockquote class="formula">
+$p^2−p−1=0,$
+</blockquote>
+
+<p>e, como p&gt;0, obtemos</p>
+
+<blockquote class="formula">
+$p=\displaystyle{\frac{1+\sqrt{5}}{2}}\approx 1.618.$
+</blockquote>
+
+<p>Esse número é conhecido como <strong>seção de ouro</strong>, ou razão áurea.</p>
+
+<p>Portanto, o método de secantes tem convergência superlinear: sua ordem é maior que 1, mas menor que a ordem 2 do método de Newton-Raphson. Como a fórmula do novo ponto coincide com a fórmula da falsa posição, essa é também a ordem associada à aproximação por secantes usada nesse método, quando a iteração segue o mesmo comportamento assintótico.</p>
+
+<h3>Resumo</h3>
+
+<ol>
+  <li>A ordem de convergência mede a rapidez com que o erro de um método iterativo tende a zero.</li>
+  <li>O método de bisseção tem convergência de ordem 1.</li>
+  <li>O método de Newton-Raphson tem convergência de ordem 2, quando a raiz é simples e a aproximação inicial é suficientemente boa.</li>
+  <li>O método de secantes substitui a derivada de Newton-Raphson pela inclinação de uma secante e tem ordem de convergência maior que 1 e menor que 2.</li>
+</ol>
+</section>
+
+</article>
+
+<footer>
+<a href="aula11.html">Próxima aula: Solução de sistemas lineares: método exato.</a>
+</footer>
+
+</body>
+
+</html>

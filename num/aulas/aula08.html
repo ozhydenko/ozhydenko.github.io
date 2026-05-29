@@ -27,7 +27,6 @@
 <section>
 <h2>Aula 8: Solução de equações pelo método do ponto fixo.</h2>
 
-
 <h3>Métodos iterativos</h3>
 
 <p>Os <a href="aula07.html">métodos de quebra</a>, nos quais a aproximação da solução é progressivamente melhorada, são exemplos típicos de <strong>métodos iterativos</strong>.
@@ -216,7 +215,7 @@ $\Delta x_k = \left|x_k − x\right| = \left|\phi(x_k) − \phi(x)\right|.$
 </blockquote>
 Supondo que x<sub>k−1</sub> ∈ I, como φ(x) possui a derivada contínua, por teorema do valor médio existe ξ entre x<sub>k−1</sub> e x, tal que
 <blockquote class="formula">
-$\Delta x_k = \left|\phi(x_k) − \phi(x)\right| =  \left|\phi\prime(\xi)\right|\cdot\left|x_k − x\right| \leq M\cdot\left|x_k − x\right| = M\cdot\Delta x_{k−1},$
+$\Delta x_k = \left|\phi(x_k) − \phi(x)\right|$ $=~\left|\phi\prime(\xi)\right|\cdot\left|x_k − x\right| \leq M\cdot\left|x_k − x\right|$ $=~M\cdot\Delta x_{k−1},$
 </blockquote>
 pois ξ ∈ I. Repetindo k vezes, obtemos
 <blockquote class="formula">
@@ -235,7 +234,7 @@ $\displaystyle{\lim_{k\to\infty}\Delta x_k = \lim_{k\to\infty}\left|x_k − x\ri
 <p>Para estimar o erro da aproximação na iteração k, podemos comparar duas aproximações consecutivas:</p>
 
 <blockquote class="formula">
-$\Delta x_k = |x_k − x| = |x_k − x_{k+1} + x_{k+1} − x| \leq |x_k − x_{k+1}| + |x_{k+1} − x| = |x_k − x_{k+1}| + \Delta x_{k+1} \leq |x_k − x_{k+1}| + M\cdot\Delta x_k.$
+$\Delta x_k = |x_k − x| = |x_k − x_{k+1} + x_{k+1} − x|$ $\leq~|x_k − x_{k+1}| + |x_{k+1} − x|$ $=~|x_k − x_{k+1}|$ $+~\Delta x_{k+1} \leq |x_k − x_{k+1}| + M\cdot\Delta x_k.$
 </blockquote>
 
 <p>Assim,</p>
