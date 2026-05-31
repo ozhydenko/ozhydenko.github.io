@@ -183,7 +183,7 @@ var d=0.5
 for(var t=0;0.5+d!=0.5;++t)d*=0.5
 text="t="+t
 </textarea>
-<textarea class="wide" name="destination" readonly="readonly" rows="2"></textarea>
+<textarea class="wide" name="destination" readonly rows="2"></textarea>
 </form>
 
 <p>Para obter o limite inferior do expoente comparamos d com 0. Quando, por causa de underflow, obtemos 0, isto significa que o expoente ultrapassou o limite inferior. Por isso, no final do loop obtemos m+1.</p>
@@ -196,7 +196,7 @@ for(var m=0;d!=0;++m)d*=0.5
 --m
 text="m="+m
 </textarea>
-<textarea class="wide" name="destination" readonly="readonly" rows="2"></textarea>
+<textarea class="wide" name="destination" readonly rows="2"></textarea>
 </form>
 
 <p>Da mesma maneira, para determinar o limite superior, multiplicamos d por 2 até atingirmos overflow. Por isso, paramos o loop quando obtemos o infinito numérico.</p>
@@ -209,7 +209,7 @@ for(var M=0;d!=Infinity;++M)d*=2
 --M
 text="M="+M
 </textarea>
-<textarea class="wide" name="destination" readonly="readonly" rows="2"></textarea>
+<textarea class="wide" name="destination" readonly rows="2"></textarea>
 </form>
 
 </section>

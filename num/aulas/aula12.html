@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width" />
+<title>Cálculo numérico: Métodos iterativos para sistemas lineares.</title>
+<link rel="stylesheet" type="text/css" href="lstyle.css" />
+<link href="https://www.ufabc.edu.br/ensino/docentes/olexandr-zhydenko" rel="author" />
+<script type="text/javascript" src="execjavascript.js"></script>
+<script type="text/javascript" src="LaTeXMathML.js"></script>
+</head>
+
+<body>
+
+<header>
+</header>
+
+<nav>
+<a class="prev" href="aula11.html">Página anterior</a>
+<a class="top" href="index.html">Índice</a>
+<a class="next" href="aula13.html">Próxima página</a>
+</nav>
+
+<article>
+
+<section>
+<h2>Aula 12: Solução de sistemas lineares: métodos iterativos.</h2>
+
+<h3>Complexidade e métodos iterativos</h3>
+
+<p>A <strong>complexidade</strong> de um algoritmo mede como a quantidade de operações cresce quando o tamanho do problema aumenta. Para um sistema linear com n incógnitas, o <a href="aula11.html">método exato de Gauss-Jordan</a> exige uma quantidade de operações proporcional a n<sup>3</sup>. Escrevemos isso como</p>
+
+<blockquote class="formula">
+$O\left(n^3\right).$
+</blockquote>
+
+<p>Isso significa que, se dobrarmos o número de incógnitas, o custo pode crescer aproximadamente oito vezes. Para sistemas muito grandes, esse custo pode ser alto.</p>
+
+<p>Um método iterativo não tenta resolver o sistema de uma vez. Ele começa com uma aproximação inicial e melhora essa aproximação passo a passo. Cada iteração pode ter custo muito menor: para uma matriz cheia, normalmente o custo de uma iteração é da ordem de O(n<sup>2</sup>); para uma matriz esparsa, isto é, com muitos zeros, o custo pode ser proporcional apenas ao número de elementos não nulos.</p>
+
+<p>Assim, se poucas iterações forem suficientes para atingir a precisão desejada, um método iterativo pode ter complexidade menor do que um método exato. Essa vantagem é especialmente importante em sistemas grandes e esparsos, que aparecem com frequência em simulações físicas, discretização de equações diferenciais e problemas de otimização.</p>
+
+<h3>Resolução do sistema linear</h3>
+
+<h4>Função de iteração</h4>
+
+<p>Consideremos um sistema linear quadrado</p>
+
+<blockquote class="formula">
+$AX=B,$
+</blockquote>
+
+<p>onde A é uma matriz n×n, X é a matriz coluna das incógnitas e B é a matriz coluna do lado direito. Os métodos iterativos começam com uma aproximação inicial X<sup>(0)</sup> e produzem novas aproximações</p>
+
+<blockquote class="formula">
+$X^{\left(k+1\right)}=\Phi\left(X^{\left(k\right)}\right),$
+</blockquote>
+
+<p>onde Φ é a <a href="aula08.html">função de iteração</a> para a coluna de incógnitas. Se a sequência converge, seu limite deve satisfazer o sistema original. A vantagem dos métodos iterativos é que cada passo pode ser simples e barato, especialmente quando a matriz A é grande e contém muitos zeros.</p>
+
+<h4>Critério de parada</h4>
+
+<p>Para uma única variável, um critério de parada comum é comparar duas aproximações consecutivas. Se x<sub>k</sub> e x<sub>k+1</sub> estão muito próximos, paramos o processo:</p>
+
+<blockquote class="formula">
+$|x_{k+1}−x_k|&lt;\varepsilon.$
+</blockquote>
+
+<p>Para um sistema linear, a aproximação não é um número, mas uma matriz coluna X. Portanto, a diferença entre duas aproximações também é uma matriz coluna:</p>
+
+<blockquote class="formula">
+$X^{\left(k+1\right)}−X^{\left(k\right)}.$
+</blockquote>
+
+<p>Podemos interpretar essa coluna como um vetor em um espaço com <strong>norma</strong>. Uma norma transforma um vetor em um número não negativo e permite definir uma distância:</p>
+
+<blockquote class="formula">
+$d\left(X,Y\right)=\|X−Y\|.$
+</blockquote>
+
+<p>Para ser uma norma, uma função deve satisfazer os seguintes axiomas:</p>
+
+<ol>
+  <li><strong>Positividade:</strong> $\|X\|\geq 0$, e $\|X\|=0$ somente quando X=0.</li>
+  <li><strong>Homogeneidade:</strong> $\|\alpha X\|=|\alpha|\,\|X\|$ para qualquer número α.</li>
+  <li><strong>Desigualdade triangular:</strong> $\|X+Y\|\leq \|X\|+\|Y\|$.</li>
+</ol>
+
+<p>Assim, o critério de parada para métodos iterativos aplicados a sistemas lineares pode ser escrito como</p>
+
+<blockquote class="formula">
+$\|X^{\left(k+1\right)}−X^{\left(k\right)}\|&lt;\varepsilon.$
+</blockquote>
+
+<p>Existem várias escolhas possíveis de norma. A norma cartesiana, também chamada norma euclidiana, é</p>
+
+<blockquote class="formula">
+$\|X\|_2=\sqrt{x_1^2+x_2^2+\cdots+x_n^2}.$
+</blockquote>
+
+<p>Mais geralmente, as p-normas são definidas por</p>
+
+<blockquote class="formula">
+$\|X\|_p=\left(|x_1|^p+|x_2|^p+\cdots+|x_n|^p\right)^{1/p},$ $\qquad p\geq 1.$
+</blockquote>
+
+<p>Dois casos importantes são a norma da soma e a norma do máximo:</p>
+
+<blockquote class="formula">
+$\|X\|_1=|x_1|+|x_2|+\cdots+|x_n|,$
+<br/>
+$\|X\|_\infty=\max_i |x_i|.$
+</blockquote>
+
+<p>Também podemos usar normas ponderadas, quando algumas componentes devem ter mais peso do que outras. Se w<sub>i</sub>&gt;0, uma p-norma ponderada pode ser escrita como</p>
+
+<blockquote class="formula">
+$\|X\|_{p,w}=\left(w_1|x_1|^p+w_2|x_2|^p+\cdots+w_n|x_n|^p\right)^{1/p},$ $\quad p\geq 1.$
+</blockquote>
+
+<p>A escolha da norma depende do problema. Em aplicações numéricas, a norma do máximo é muito usada porque é simples de calcular e controla o maior erro entre todas as componentes.</p>
+
+<h4>Separação da matriz</h4>
+
+<p>Vamos decompor a matriz A em três partes:</p>
+
+<blockquote class="formula">
+$A=D+L+U,$
+</blockquote>
+
+<p>onde D contém apenas os elementos da diagonal principal, L contém os elementos abaixo da diagonal, e U contém os elementos acima da diagonal:</p>
+
+<blockquote class="formula">
+$D=\left(\begin{array}{cccc}
+a_{11}&0&\cdots&0\\
+0&a_{22}&\cdots&0\\
+\vdots&\vdots&\ddots&\vdots\\
+0&0&\cdots&a_{nn}
+\end{array}\right),$
+$\qquad
+L=\left(\begin{array}{ccccc}
+0&0&0&\cdots&0\\
+a_{21}&0&0&\cdots&0\\
+a_{31}&a_{32}&0&\cdots&0\\
+\vdots&\vdots&\vdots&\ddots&\vdots\\
+a_{n1}&a_{n2}&a_{n3}&\cdots&0
+\end{array}\right),$
+$\qquad
+U=\left(\begin{array}{ccccc}
+0&a_{12}&a_{13}&\cdots&a_{1n}\\
+0&0&a_{23}&\cdots&a_{2n}\\
+0&0&0&\cdots&a_{3n}\\
+\vdots&\vdots&\vdots&\ddots&\vdots\\
+0&0&0&\cdots&0
+\end{array}\right).$
+</blockquote>
+
+<p>Assim, o sistema AX=B pode ser escrito como</p>
+
+<blockquote class="formula">
+$(D+L+U)X=B.$
+</blockquote>
+
+<h3>Método de Jacobi</h3>
+
+<p>No método de Jacobi, isolamos a parte diagonal:</p>
+
+<blockquote class="formula">
+$DX=B−(L+U)X.$
+</blockquote>
+
+<p>A partir de uma aproximação X<sup>(k)</sup>, calculamos a próxima aproximação por</p>
+
+<blockquote class="formula">
+$DX^{\left(k+1\right)}=B−(L+U)X^{\left(k\right)}.$
+</blockquote>
+
+<p>Como D é diagonal, esse sistema é muito simples de resolver. Para cada componente, obtemos</p>
+
+<blockquote class="formula">
+$x_i^{\left(k+1\right)}=\displaystyle{\frac{1}{a_{ii}}}\left(b_i−\sum_{j\neq i}a_{ij}x_j^{\left(k\right)}\right),$ $\quad i=1,2,\ldots,n.$
+</blockquote>
+
+<p>Observe que todos os valores do passo k+1 são calculados usando apenas os valores antigos do passo k.</p>
+
+<form>
+<div class="overwrite"><input class="right-aligned" type="button" name="execute" value="Executar" onClick="ExecuteCodeEvent(this)"></div>
+<textarea class="wide" name="code" rows="36">
+var Jacobi=function(A,B,X){
+ var prec=0.00000001
+
+ var phi=function(X){
+  var Y=[]
+  for(var i=0;i<X.length;++i){
+   Y[i]=B[i]
+   for(var j=0;j<i;++j)Y[i]-=A[i][j]*X[j]
+   for(var j=i;++j<X.length;)Y[i]-=A[i][j]*X[j]
+   Y[i]/=A[i][i]
+  }
+  return Y
+ }
+
+ var d=function(X,Y){
+  var sum=0
+  for(var i=0;i<X.length;++i)sum+=Math.abs(X[i]-Y[i])
+  return sum
+ }
+
+ var Y=phi(X)
+ while(d(X,Y)>prec)Y=phi(X=Y)
+ return Y
+}
+
+var A=
+[[10,2,1]
+,[1,5,1]
+,[1,1,3]
+]
+
+var B=[7,-5,-3]
+var X0=[1,2,3]
+
+text=Jacobi(A,B,X0).join("\n")
+</textarea>
+<textarea class="wide" name="destination" readonly rows="4"></textarea>
+</form>
+
+<blockquote>
+<strong>Teorema de convergência do método de Jacobi.</strong> Suponhamos que A é estritamente diagonalmente dominante por linhas, isto é,
+<blockquote class="formula">
+$\displaystyle{\frac{1}{|a_{ii}|}\sum_{j\neq i}|a_{ij}|}<1,\qquad i=1,2,\ldots,n.$
+</blockquote>
+Então o método de Jacobi converge para a solução do sistema AX=B para qualquer aproximação inicial X<sup>(0)</sup>.
+</blockquote>
+
+<blockquote><strong>Demonstração.</strong>
+Seja X a solução exata do sistema e seja E<sup>(k)</sup>=X<sup>(k)</sup>−X o erro da k-ésima aproximação. Subtraindo a fórmula exata da fórmula iterativa, obtemos
+<blockquote class="formula">
+$e_i^{\left(k+1\right)}=−\displaystyle{\frac{1}{a_{ii}}\sum_{j\neq i}a_{ij}e_j^{\left(k\right)}}.$
+</blockquote>
+Tomando valores absolutos,
+<blockquote class="formula">
+$|e_i^{\left(k+1\right)}|\leq \displaystyle{\frac{1}{|a_{ii}|}\sum_{j\neq i}|a_{ij}|}\max_j |e_j^{\left(k\right)}|.$
+</blockquote>
+Como A é estritamente diagonalmente dominante, existe q&lt;1 tal que
+<blockquote class="formula">
+$\displaystyle{\frac{1}{|a_{ii}|}\sum_{j\neq i}|a_{ij}|}\leq q&lt;1,\qquad i=1,2,\ldots,n.$
+</blockquote>
+Logo,
+<blockquote class="formula">
+$\max_i |e_i^{\left(k+1\right)}|\leq q\max_i |e_i^{\left(k\right)}|.$
+</blockquote>
+Portanto, o erro diminui pelo menos por um fator q a cada iteração. Assim, E<sup>(k)</sup> tende a zero, e X<sup>(k)</sup> converge para X. ∎
+</blockquote>
+
+<h3>Método de Gauss-Seidel</h3>
+
+<p>No método de Gauss-Seidel, aproveitamos imediatamente os valores novos assim que eles são calculados. Escrevemos</p>
+
+<blockquote class="formula">
+$(D+L)X=B−UX.$
+</blockquote>
+
+<p>Então a iteração é dada por</p>
+
+<blockquote class="formula">
+$(D+L)X^{\left(k+1\right)}=B−UX^{\left(k\right)}.$
+</blockquote>
+
+<p>Como D+L é triangular inferior, os componentes de X<sup>(k+1)</sup> são calculados em ordem, de cima para baixo. Na forma componente, temos</p>
+
+<blockquote class="formula">
+$x_i^{\left(k+1\right)}=\displaystyle{\frac{1}{a_{ii}}}\left(b_i−\sum_{j=1}^{i−1}a_{ij}x_j^{\left(k+1\right)}−\sum_{j=i+1}^{n}a_{ij}x_j^{\left(k\right)}\right).$
+</blockquote>
+
+<p>A diferença em relação ao método de Jacobi é que, quando calculamos x<sub>i</sub><sup>(k+1)</sup>, os valores novos x<sub>1</sub><sup>(k+1)</sup>, ..., x<sub>i−1</sub><sup>(k+1)</sup> já são usados. Por isso, Gauss-Seidel costuma convergir mais rapidamente do que Jacobi, quando ambos convergem.</p>
+
+<form>
+<div class="overwrite"><input class="right-aligned" type="button" name="execute" value="Executar" onClick="ExecuteCodeEvent(this)"></div>
+<textarea class="wide" name="code" rows="36">
+var GaussSeidel=function(A,B,X){
+ var prec=0.00000001
+
+ var phi=function(X){
+  var Y=[]
+  for(var i=0;i<X.length;++i){
+   Y[i]=B[i]
+   for(var j=0;j<i;++j)Y[i]-=A[i][j]*Y[j]
+   for(var j=i;++j<X.length;)Y[i]-=A[i][j]*X[j]
+   Y[i]/=A[i][i]
+  }
+  return Y
+ }
+
+ var d=function(X,Y){
+  var sum=0
+  for(var i=0;i<X.length;++i)sum+=Math.abs(X[i]-Y[i])
+  return sum
+ }
+
+ var Y=phi(X)
+ while(d(X,Y)>prec)Y=phi(X=Y)
+ return Y
+}
+
+var A=
+[[10,2,1]
+,[1,5,1]
+,[10,3,10]
+]
+
+var B=[7,-5,-3]
+var X0=[1,2,3]
+
+text=GaussSeidel(A,B,X0).join("\n")
+</textarea>
+<textarea class="wide" name="destination" readonly rows="4"></textarea>
+</form>
+
+<h4>Critérios de convergência</h4>
+
+<p>Para formular o critério de convergência, calculamos os números β<sub>i</sub> linha por linha:</p>
+
+<blockquote class="formula">
+$\beta_i=\displaystyle{\frac{1}{|a_{ii}|}\left(\sum_{j=1}^{i−1}|a_{ij}|\beta_j+\sum_{j=i+1}^{n}|a_{ij}|\right)},\quad i=1,2,\ldots,n.$
+</blockquote>
+
+<p>Como β<sub>i</sub> usa os valores β<sub>1</sub>, ..., β<sub>i−1</sub> já calculados, esse critério reflete a própria lógica do método de Gauss-Seidel, que aproveita imediatamente os valores novos.</p>
+
+<blockquote>
+<strong>Critério de Sassenfeld.</strong> Se
+<blockquote class="formula">
+$\max_i \beta_i&lt;1,$
+</blockquote>
+então o método de Gauss-Seidel converge para qualquer aproximação inicial.
+</blockquote>
+
+<p>Outro critério importante vale para o método de Gauss-Seidel:</p>
+
+<blockquote>
+Se A é <strong>simétrica e positivamente definida</strong>, então o método de Gauss-Seidel converge para qualquer aproximação inicial.
+</blockquote>
+
+<p>Esse critério é muito útil porque matrizes simétricas positivamente definidas aparecem com frequência em problemas de mínimos quadrados, energia, elasticidade, difusão e discretização de equações diferenciais.</p>
+
+<p>Nos casos em que a convergência do método de Jacobi é garantida pelo critério da diagonal dominante, o método de Gauss-Seidel também converge. Assim, dentro desse critério, Gauss-Seidel converge sempre que Jacobi converge.</p>
+
+<p>Em muitos problemas, Gauss-Seidel converge mais rapidamente do que Jacobi, pois usa imediatamente os valores novos. No entanto, isso não significa que Jacobi possa ser sempre descartado: Jacobi é mais simples de paralelizar, enquanto Gauss-Seidel depende da ordem em que as componentes são calculadas.</p>
+
+<h3>Resumo</h3>
+
+<ol>
+  <li>O método de Jacobi calcula todos os valores novos usando apenas os valores da iteração anterior.</li>
+  <li>O método de Gauss-Seidel usa imediatamente os valores novos já calculados na mesma iteração.</li>
+  <li>O método de Gauss-Seidel converge sempre que o de Jacobi converge.</li>
+</ol>
+</section>
+
+</article>
+
+<footer>
+<a href="aula13.html">Próxima aula: Método dos quadrados mínimos. Solução de sistemas lineares sobredeterminados.</a>
+</footer>
+
+</body>
+
+</html>

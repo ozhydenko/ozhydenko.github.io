@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width" />
+<title>Cálculo numérico: Solução de sistemas lineares.</title>
+<link rel="stylesheet" type="text/css" href="lstyle.css" />
+<link href="https://www.ufabc.edu.br/ensino/docentes/olexandr-zhydenko" rel="author" />
+<script type="text/javascript" src="execjavascript.js"></script>
+<script type="text/javascript" src="LaTeXMathML.js"></script>
+</head>
+
+<body>
+
+<header>
+</header>
+
+<nav>
+<a class="prev" href="aula10.html">Página anterior</a>
+<a class="top" href="index.html">Índice</a>
+<a class="next" href="aula12.html">Próxima página</a>
+</nav>
+
+<article>
+
+<section>
+<h2>Aula 11: Solução de sistemas lineares: método exato.</h2>
+
+<h3>Sistemas lineares</h3>
+
+<p>Um sistema linear é um conjunto de equações lineares com várias incógnitas. No caso geral, podemos ter m equações e n incógnitas:</p>
+
+<blockquote class="formula">
+$\begin{array}{ccccccccc}
+a_{11}x_1&+&a_{12}x_2&+&\cdots&+&a_{1n}x_n&=&b_1,\\
+a_{21}x_1&+&a_{22}x_2&+&\cdots&+&a_{2n}x_n&=&b_2,\\
+\vdots&&\vdots&&\ddots&&\vdots&&\vdots\\
+a_{m1}x_1&+&a_{m2}x_2&+&\cdots&+&a_{mn}x_n&=&b_m.
+\end{array}$
+</blockquote>
+
+<p>Os números a<sub>ij</sub> são os coeficientes do sistema, os números b<sub>i</sub> formam o lado direito, e x<sub>1</sub>, x<sub>2</sub>, ..., x<sub>n</sub> são as incógnitas.</p>
+
+<p>Uma <strong>solução</strong> do sistema é uma lista de valores para as incógnitas que satisfazem simultaneamente todas as equações. Um sistema linear pode ter uma única solução, nenhuma solução ou infinitas soluções. Quando existe pelo menos uma solução, dizemos que o sistema é compatível. Quando não existe solução, dizemos que o sistema é incompatível.</p>
+
+<p>Para resolver um sistema linear, podemos substituí-lo por outro sistema que tenha exatamente o mesmo conjunto de soluções. Dois sistemas com essa propriedade são chamados <strong>sistemas equivalentes</strong>.</p>
+
+<p>As <strong>operações elementares</strong> sobre sistemas lineares transformam o sistema em um sistema equivalente. Temos três operações elementares:</p>
+
+<ol>
+  <li>trocar duas equações de lugar;</li>
+  <li>multiplicar uma equação por um número diferente de zero;</li>
+  <li>somar a uma equação um múltiplo de outra equação.</li>
+</ol>
+
+
+<h4>Representação matricial</h4>
+
+<p>Para estudar o sistema, colocamos os coeficientes em uma tabela retangular. Essa tabela é chamada <strong>matriz principal</strong> do sistema:</p>
+
+<blockquote class="formula">
+$A=\left(\begin{array}{cccc}
+a_{11}&a_{12}&\cdots&a_{1n}\\
+a_{21}&a_{22}&\cdots&a_{2n}\\
+\vdots&\vdots&\ddots&\vdots\\
+a_{m1}&a_{m2}&\cdots&a_{mn}
+\end{array}\right).$
+</blockquote>
+
+<p>Se juntarmos a matriz principal com a coluna dos termos independentes, obtemos a <strong>matriz ampliada</strong>, também chamada matriz aumentada:</p>
+
+<blockquote class="formula">
+$M=\left(A\,|\,B\right)=
+\left(\begin{array}{cccccc}
+a_{11}&a_{12}&\cdots&a_{1n}&|&b_1\\
+a_{21}&a_{22}&\cdots&a_{2n}&|&b_2\\
+\vdots&\vdots&\ddots&\vdots&|&\vdots\\
+a_{m1}&a_{m2}&\cdots&a_{mn}&|&b_m
+\end{array}\right).$
+</blockquote>
+
+<p>A matriz ampliada é conveniente porque cada linha representa uma equação completa do sistema, incluindo o lado direito.</p>
+
+<p>Assim, as mesmas <strong>operações elementares</strong> podem ser aplicadas às linhas da matriz:</p>
+
+<ol>
+  <li>trocar duas linhas de lugar;</li>
+  <li>multiplicar uma linha (cada elemento da linha) por um número diferente de zero;</li>
+  <li>somar a uma linha um múltiplo de outra linha.</li>
+</ol>
+
+<p>Como resultado, obtemos matrizes ampliadas equivalentes que correspondem aos sistemas equivalentes.</p>
+
+<h3>Método de Gauss</h3>
+
+<p>Uma matriz está na <strong>forma escalonada</strong> quando as linhas nulas, se existirem, aparecem no final, e o primeiro coeficiente não nulo de cada linha não nula aparece à direita do primeiro coeficiente não nulo da linha anterior. Esses primeiros coeficientes não nulos são chamados pivôs.</p>
+
+<p>Por exemplo, uma matriz escalonada pode ter a forma:</p>
+
+<blockquote class="formula">
+$\left(\begin{array}{cccccccc}
+0&a_{12}&a_{13}&a_{14}&a_{15}&a_{16}&|&b_1\\
+0&0&0&a_{24}&a_{25}&a_{26}&|&b_2\\
+0&0&0&0&a_{35}&a_{36}&|&b_3\\
+0&0&0&0&0&a_{46}&|&b_4\\
+0&0&0&0&0&0&|&0
+\end{array}\right).$
+</blockquote>
+
+<p>No exemplo acima, os elementos <strong>a<sub>12</sub></strong>, <strong>a<sub>24</sub></strong>, <strong>a<sub>35</sub></strong> e <strong>a<sub>46</sub></strong> são os pivôs.</p>
+
+<p>Se na forma escalonada aparecer uma linha em que apenas o último elemento é não nulo, essa linha corresponde a uma equação da forma</p>
+
+<blockquote class="formula">
+$0x_1+0x_2+\cdots+0x_n=b,\qquad b\neq 0,$
+</blockquote>
+
+<p>que não pode ser satisfeita. Nesse caso, o sistema não tem solução.</p>
+
+<p>Se isso não acontecer, as variáveis que correspondem aos pivôs podem ser expressas em função das demais variáveis, chamadas <strong>variáveis livres</strong> ou independentes. A solução geral do sistema linear pode ser dada na forma paramétrica: as variáveis livres são os parâmetros, e as demais variáveis, chamadas <strong>dependentes</strong>, são dadas em função desses parâmetros.</p>
+<p>Quando o número de pivôs é igual ao número de incógnitas, não há variáveis livres e a solução do sistema linear é única. Quando há menos pivôs do que incógnitas, há variáveis livres e, portanto, infinitas soluções.</p>
+<p>A forma explícita da solução geral pode ser obtida isolando a variável dependente da última linha não nula, substituindo essa expressão em todas as linhas acima e repetindo esse procedimento de baixo para cima na matriz escalonada.</p>
+
+<p>A ideia do método de Gauss é transformar a matriz ampliada inicial em uma matriz escalonada por meio de uma sequência de operações elementares.</p>
+
+<h4>Eliminação direta de Gauss</h4>
+
+<p>Para transformar a matriz na forma escalonada, eliminamos todos os elementos não nulos abaixo dos pivôs, considerando as linhas de cima para baixo.</p>
+<ol>
+  <li>Localizamos a primeira coluna não nula.</li>
+  <li>Caso a primeira linha da matriz possua coeficiente nulo nessa coluna, <strong>trocamos as linhas</strong> para obter um coeficiente diferente de zero. Esse coeficiente será o pivô.</li>
+  <li>Para simplificar o algoritmo, <strong>normalizamos a linha</strong> dividindo todos os coeficientes pelo valor do pivô. Assim, o valor do pivô na linha passa a ser igual a um.</li>
+  <li><strong>Subtraímos um múltiplo</strong> dessa linha de todas as linhas abaixo para anular os valores abaixo do pivô.</li>
+  <li>Passamos para a próxima linha e para a próxima coluna não nula abaixo da linha anterior, repetindo o procedimento até chegarmos à última linha (nesse caso todas as linhas possuem pivô) ou à última coluna (nesse caso as linhas abaixo são nulas).</li>
+</ol>
+<p>No fim desse procedimento, obtemos uma matriz escalonada. Como todas as operações acima são operações elementares, a matriz escalonada obtida é equivalente à matriz inicial.</p>
+
+<form>
+<div class="overwrite"><input class="right-aligned" type="button" name="execute" value="Executar" onClick="ExecuteCodeEvent(this)"></div>
+<textarea class="wide" name="code" rows="25">
+var M=
+[[1,2,1,5]
+,[1,1,2,4]
+,[1,3,1,5]
+]
+
+for(var pivo=0,m=0;m<M.length&&pivo<M[m].length;++pivo){
+
+ if(M[m][pivo]==0) for(var mp=m;++mp<M.length;) if(M[mp][pivo]!=0){
+  var L=M[m]
+  M[m]=M[mp]
+  M[mp]=L
+  break
+ }
+
+ if(M[m][pivo]!=0){
+  for(var n=M[m].length;n-->pivo;) M[m][n]/=M[m][pivo]
+  for(var mp=m;++mp<M.length;) for(var n=M[m].length;n-->pivo;) M[mp][n]-=M[m][n]*M[mp][pivo]
+  ++m
+ }
+
+}
+
+text=M.join("\n")
+</textarea>
+<textarea class="wide" name="destination" readonly rows="4"></textarea>
+</form>
+
+<h4>Substituição regressiva e Gauss-Jordan</h4>
+
+<p>Depois que a matriz está na forma escalonada, cada linha não nula permite escrever uma variável dependente em função das variáveis que aparecem à direita dela. Por isso, para obter as expressões finais, temos que começar pela última linha não nula e substituir o resultado nas linhas acima. Em seguida, repetimos o mesmo procedimento de baixo para cima. Esse processo é chamado <strong>substituição regressiva</strong>.</p>
+
+<p>Como essas substituições sempre eliminam das linhas superiores as variáveis dependentes que já foram calculadas nas linhas inferiores, é conveniente fazer essa eliminação diretamente na matriz. Assim, procuramos transformar a matriz escalonada em outra matriz que não tenha coeficientes não nulos acima dos pivôs.</p>
+
+<p>Isso é feito continuando as operações elementares depois da eliminação direta. Para cada pivô, além de anular os elementos abaixo dele, anulamos também os elementos acima dele. Esse procedimento é chamado <strong>método de Gauss-Jordan</strong>. A matriz obtida é chamada <strong>matriz escalonada reduzida</strong>, e nela as expressões das variáveis dependentes aparecem diretamente.</p>
+
+<form>
+<div class="overwrite"><input class="right-aligned" type="button" name="execute" value="Executar" onClick="ExecuteCodeEvent(this)"></div>
+<textarea class="wide" name="library" readonly rows="25">
+var GaussJordan=function(Matriz){
+ var M=[]
+ for(var i=0;i<Matriz.length;++i) M[i]=Matriz[i].slice()
+
+ for(var pivo=0,m=0;m<M.length&&pivo<M[m].length;++pivo){
+
+  if(M[m][pivo]==0) for(var mp=m;++mp<M.length;) if(M[mp][pivo]!=0){
+   var L=M[m]
+   M[m]=M[mp]
+   M[mp]=L
+   break
+  }
+
+  if(M[m][pivo]!=0){
+   for(var n=M[m].length;n-->pivo;) M[m][n]/=M[m][pivo]
+   for(var mp=m;++mp<M.length;) for(var n=M[m].length;n-->pivo;) M[mp][n]-=M[m][n]*M[mp][pivo]
+   for(var mp=m;mp-->0;)for(var n=M[m].length;n-->pivo;)M[mp][n]-=M[m][n]*M[mp][pivo]
+   ++m
+  }
+ }
+
+ return M
+}
+</textarea>
+<textarea class="wide" name="code" rows="8">
+var M=
+[[1,2,1,5]
+,[1,1,2,4]
+,[1,3,1,5]
+]
+
+text=GaussJordan(M).join("\n")
+</textarea>
+<textarea class="wide" name="destination" readonly rows="4"></textarea>
+</form>
+
+<h4>Pivotamento</h4>
+
+<p>Consideremos o sistema</p>
+
+<blockquote class="formula">
+$\begin{array}{rcrcr}
+0.003x_1&+&59.14x_2&=&59.17,\\
+5.291x_1&−&6.130x_2&=&46.78.
+\end{array}$
+</blockquote>
+
+<p>É fácil verificar que o sistema tem uma única solução:</p>
+<blockquote class="formula">
+$x_1= 10,\qquad x_2= 1.$
+</blockquote>
+
+<p>Porém, ao resolver o sistema pelo método de Gauss-Jordan sem pivotamento, observamos perda de precisão na resposta.</p>
+
+<form>
+<div class="overwrite"><input class="right-aligned" type="button" name="execute" value="Executar" onClick="ExecuteCodeEvent(this)"></div>
+<textarea class="invisible" name="library" readonly rows="25">
+var GaussJordan=function(Matriz){
+ var M=[]
+ for(var i=0;i<Matriz.length;++i) M[i]=Matriz[i].slice()
+
+ for(var pivo=0,m=0;m<M.length&&pivo<M[m].length;++pivo){
+
+  if(M[m][pivo]==0) for(var mp=m;++mp<M.length;) if(M[mp][pivo]!=0){
+   var L=M[m]
+   M[m]=M[mp]
+   M[mp]=L
+   break
+  }
+
+  if(M[m][pivo]!=0){
+   for(var n=M[m].length;n-->pivo;) M[m][n]/=M[m][pivo]
+   for(var mp=m;++mp<M.length;) for(var n=M[m].length;n-->pivo;) M[mp][n]-=M[m][n]*M[mp][pivo]
+   for(var mp=m;mp-->0;)for(var n=M[m].length;n-->pivo;)M[mp][n]-=M[m][n]*M[mp][pivo]
+   ++m
+  }
+ }
+
+ return M
+}
+</textarea>
+<textarea class="wide" name="code" rows="7">
+var M=
+[[0.003,59.14,59.17]
+,[5.291,-6.13,46.78]
+]
+
+text=GaussJordan(M).join("\n")
+</textarea>
+<textarea class="wide" name="destination" readonly rows="4"></textarea>
+</form>
+
+<p>A razão é que, quando o pivô é muito pequeno, a normalização da linha produz coeficientes muito grandes em comparação com os valores finais. Então, o processo de eliminação leva à subtração de números próximos, aumentando os erros de arredondamento.</p>
+
+<p>Podemos observar que, se trocarmos a ordem das equações, o pivô da primeira coluna deixa de ser pequeno e a solução final fica mais precisa. Isso sugere uma forma de evitar esse tipo de crescimento do erro: em vez de escolher como pivô qualquer coeficiente não nulo, procuramos, na coluna atual, o maior coeficiente em valor absoluto entre as linhas ainda não usadas. Depois trocamos a linha atual com a linha em que esse coeficiente se encontra. Esse método é chamado <strong>pivotamento parcial</strong>.</p>
+
+<form>
+<div class="overwrite"><input class="right-aligned" type="button" name="execute" value="Executar" onClick="ExecuteCodeEvent(this)"></div>
+<textarea class="wide" name="library" readonly rows="25">
+var Pivot=function(Matriz){
+ var M=[]
+ for(var i=0;i<Matriz.length;++i) M[i]=Matriz[i].slice()
+
+ for(var pivo=0,m=0;m<M.length&&pivo<M[m].length;++pivo){
+
+  for(var mp=m;++mp<M.length;)if(Math.abs(M[mp][pivo])>Math.abs(M[m][pivo])){
+   var L=M[m]
+   M[m]=M[mp]
+   M[mp]=L
+  }
+
+  if(M[m][pivo]!=0){
+   for(var n=M[m].length;n-->pivo;) M[m][n]/=M[m][pivo]
+   for(var mp=m;++mp<M.length;) for(var n=M[m].length;n-->pivo;) M[mp][n]-=M[m][n]*M[mp][pivo]
+   for(var mp=m;mp-->0;)for(var n=M[m].length;n-->pivo;)M[mp][n]-=M[m][n]*M[mp][pivo]
+   ++m
+  }
+ }
+
+ return M
+}
+</textarea>
+<textarea class="wide" name="code" rows="7">
+var M=
+[[0.003,59.14,59.17]
+,[5.291,-6.13,46.78]
+]
+
+text=Pivot(M).join("\n")
+</textarea>
+<textarea class="wide" name="destination" readonly rows="4"></textarea>
+</form>
+
+<p>O pivotamento parcial não resolve o problema de crescimento do erro para qualquer sistema. Por exemplo, se multiplicarmos a primeira equação por um número suficientemente grande, como 10000, o método pode deixar de escolher o coeficiente mais adequado como pivô.</p>
+
+<form>
+<div class="overwrite"><input class="right-aligned" type="button" name="execute" value="Executar" onClick="ExecuteCodeEvent(this)"></div>
+<textarea class="invisible" name="library" readonly rows="25">
+var GaussJordan=function(Matriz){
+ var M=[]
+ for(var i=0;i<Matriz.length;++i) M[i]=Matriz[i].slice()
+
+ for(var pivo=0,m=0;m<M.length&&pivo<M[m].length;++pivo){
+
+  if(M[m][pivo]==0) for(var mp=m;++mp<M.length;) if(M[mp][pivo]!=0){
+   var L=M[m]
+   M[m]=M[mp]
+   M[mp]=L
+   break
+  }
+
+  if(M[m][pivo]!=0){
+   for(var n=M[m].length;n-->pivo;) M[m][n]/=M[m][pivo]
+   for(var mp=m;++mp<M.length;) for(var n=M[m].length;n-->pivo;) M[mp][n]-=M[m][n]*M[mp][pivo]
+   for(var mp=m;mp-->0;)for(var n=M[m].length;n-->pivo;)M[mp][n]-=M[m][n]*M[mp][pivo]
+   ++m
+  }
+ }
+
+ return M
+}
+
+var Pivot=function(Matriz){
+ var M=[]
+ for(var i=0;i<Matriz.length;++i) M[i]=Matriz[i].slice()
+
+ for(var pivo=0,m=0;m<M.length&&pivo<M[m].length;++pivo){
+
+  for(var mp=m;++mp<M.length;)if(Math.abs(M[mp][pivo])>Math.abs(M[m][pivo])){
+   var L=M[m]
+   M[m]=M[mp]
+   M[mp]=L
+  }
+
+  if(M[m][pivo]!=0){
+   for(var n=M[m].length;n-->pivo;) M[m][n]/=M[m][pivo]
+   for(var mp=m;++mp<M.length;) for(var n=M[m].length;n-->pivo;) M[mp][n]-=M[m][n]*M[mp][pivo]
+   for(var mp=m;mp-->0;)for(var n=M[m].length;n-->pivo;)M[mp][n]-=M[m][n]*M[mp][pivo]
+   ++m
+  }
+ }
+
+ return M
+}
+</textarea>
+<textarea class="wide" name="code" rows="7">
+var M=
+[[30,591400,591700]
+,[5.291,-6.13,46.78]
+]
+
+text=GaussJordan(M).join("\n")+"\n\n"+Pivot(M).join("\n")
+</textarea>
+<textarea class="wide" name="destination" readonly rows="7"></textarea>
+</form>
+
+<p>O método mais geral, chamado <strong>pivotamento total</strong>, procura o maior coeficiente em valor absoluto em toda a parte restante da matriz, podendo trocar tanto linhas quanto colunas. A troca de colunas muda a ordem das incógnitas, por isso é necessário registrar essas trocas para reconstruir a solução na ordem original. Assim, embora seja mais estável, esse método é mais lento e sua implementação é mais trabalhosa. Na prática, o pivotamento parcial é mais usado. A escolha de um pivô inadequado pode ser evitada pela normalização das equações, de modo que todas as equações do sistema tenham coeficientes da mesma ordem de grandeza.</p>
+
+<h3>Inversão de matriz</h3>
+
+<h4>Operações com matrizes</h4>
+
+<p>Antes de definir a inversa de uma matriz, lembramos as operações básicas com matrizes. Se A e B são matrizes do mesmo tamanho, a soma C=A+B é definida elemento a elemento:</p>
+
+<blockquote class="formula">
+$c_{ij}=a_{ij}+b_{ij}.$
+</blockquote>
+
+<p>A multiplicação é definida quando o número de colunas da primeira matriz é igual ao número de linhas da segunda. Se A tem tamanho m×n e B tem tamanho n×p, então C=AB tem tamanho m×p, e seus elementos são</p>
+
+<blockquote class="formula">
+$c_{ij}=\displaystyle{\sum_{k=1}^{n}a_{ik}b_{kj}}.$
+</blockquote>
+
+<p>A matriz unitária, ou matriz identidade, é a matriz quadrada I que tem 1 na diagonal principal e 0 fora dela:</p>
+
+<blockquote class="formula">
+$I=\left(\begin{array}{cccc}
+1&0&\cdots&0\\
+0&1&\cdots&0\\
+\vdots&\vdots&\ddots&\vdots\\
+0&0&\cdots&1
+\end{array}\right).$
+</blockquote>
+
+<p>Para qualquer matriz A, temos</p>
+
+<blockquote class="formula">
+$AI=IA=A,$
+</blockquote>
+<p>onde a matriz identidade do lado esquerdo tem tamanho compatível com o número de linhas de A, e a matriz identidade do lado direito tem tamanho compatível com o número de colunas de A.</p>
+
+<p>Dizemos que uma matriz quadrada A é <strong>invertível</strong> se existe uma matriz A<sup>−1</sup> tal que</p>
+
+<blockquote class="formula">
+$AA^{-1}=A^{-1}A=I.$
+</blockquote>
+
+<p>A matriz A<sup>−1</sup> é chamada <strong>matriz inversa</strong> de A. Quando ela existe, podemos resolver o sistema AX=B multiplicando os dois lados por A<sup>−1</sup>:</p>
+
+<blockquote class="formula">
+$X=A^{-1}B.$
+</blockquote>
+
+<h4>Matrizes elementares</h4>
+
+<p>As operações elementares de linhas também podem ser descritas por multiplicações de matrizes. Para cada operação elementar existe uma <strong>matriz elementar</strong> E tal que aplicar essa operação às linhas de A é o mesmo que multiplicar A pela esquerda:</p>
+
+<blockquote class="formula">
+$A\longmapsto EA.$
+</blockquote>
+
+<p>A matriz elementar E é obtida aplicando a mesma operação elementar à matriz identidade. Por exemplo, se trocamos duas linhas da matriz identidade, obtemos a matriz elementar que troca essas mesmas duas linhas de qualquer matriz quando multiplicamos pela esquerda.</p>
+
+<p>No método de Gauss-Jordan, aplicamos uma sequência de operações elementares para transformar A na matriz identidade:</p>
+
+<blockquote class="formula">
+$E_sE_{s−1}\cdots E_2E_1A=I.$
+</blockquote>
+
+<p>Se isso é possível, então a matriz A é invertível. Da igualdade acima, obtemos</p>
+
+<blockquote class="formula">
+$E_sE_{s−1}\cdots E_2E_1=A^{-1}.$
+</blockquote>
+
+<p>Portanto, a inversa de A é o produto das matrizes elementares que realizam as operações do método de Gauss-Jordan.</p>
+
+<p>Para calcular esse produto sem escrever todas as matrizes elementares separadamente, montamos a matriz ampliada formada por A e pela matriz identidade:</p>
+
+<blockquote class="formula">
+$\left(\begin{array}{ccccccccc}
+a_{11}&a_{12}&\cdots&a_{1n}&|&1&0&\cdots&0\\
+a_{21}&a_{22}&\cdots&a_{2n}&|&0&1&\cdots&0\\
+\vdots&\vdots&\ddots&\vdots&|&\vdots&\vdots&\ddots&\vdots\\
+a_{n1}&a_{n2}&\cdots&a_{nn}&|&0&0&\cdots&1
+\end{array}\right).$
+</blockquote>
+
+<p>Em seguida, aplicamos as mesmas operações elementares a toda a matriz ampliada. Se a parte esquerda for transformada na matriz identidade, a parte direita será transformada na matriz inversa:</p>
+
+<blockquote class="formula">
+$\left(A\,|\,I\right)\longrightarrow\left(I\,|\,A^{-1}\right).$
+</blockquote>
+
+<p>Assim, o cálculo da inversa de uma matriz pode ser visto como a aplicação do método de Gauss-Jordan a vários sistemas lineares ao mesmo tempo, um para cada coluna da matriz identidade.</p>
+
+<form>
+<div class="overwrite"><input class="right-aligned" type="button" name="execute" value="Executar" onClick="ExecuteCodeEvent(this)"></div>
+<textarea class="invisible" name="library" readonly rows="25">
+var GaussJordan=function(Matriz){
+ var M=[]
+ for(var i=0;i<Matriz.length;++i) M[i]=Matriz[i].slice()
+
+ for(var pivo=0,m=0;m<M.length&&pivo<M[m].length;++pivo){
+
+  if(M[m][pivo]==0) for(var mp=m;++mp<M.length;) if(M[mp][pivo]!=0){
+   var L=M[m]
+   M[m]=M[mp]
+   M[mp]=L
+   break
+  }
+
+  if(M[m][pivo]!=0){
+   for(var n=M[m].length;n-->pivo;) M[m][n]/=M[m][pivo]
+   for(var mp=m;++mp<M.length;) for(var n=M[m].length;n-->pivo;) M[mp][n]-=M[m][n]*M[mp][pivo]
+   for(var mp=m;mp-->0;)for(var n=M[m].length;n-->pivo;)M[mp][n]-=M[m][n]*M[mp][pivo]
+   ++m
+  }
+ }
+
+ return M
+}
+
+var Pivot=function(Matriz){
+ var M=[]
+ for(var i=0;i<Matriz.length;++i) M[i]=Matriz[i].slice()
+
+ for(var pivo=0,m=0;m<M.length&&pivo<M[m].length;++pivo){
+
+  for(var mp=m;++mp<M.length;)if(Math.abs(M[mp][pivo])>Math.abs(M[m][pivo])){
+   var L=M[m]
+   M[m]=M[mp]
+   M[mp]=L
+  }
+
+  if(M[m][pivo]!=0){
+   for(var n=M[m].length;n-->pivo;) M[m][n]/=M[m][pivo]
+   for(var mp=m;++mp<M.length;) for(var n=M[m].length;n-->pivo;) M[mp][n]-=M[m][n]*M[mp][pivo]
+   for(var mp=m;mp-->0;)for(var n=M[m].length;n-->pivo;)M[mp][n]-=M[m][n]*M[mp][pivo]
+   ++m
+  }
+ }
+
+ return M
+}
+</textarea>
+<textarea class="wide" name="code" rows="8">
+var M=
+[[1,2,1,1,0,0]
+,[1,1,2,0,1,0]
+,[1,3,1,0,0,1]
+]
+
+text=Pivot(M).join("\n")
+</textarea>
+<textarea class="wide" name="destination" readonly rows="4"></textarea>
+</form>
+
+<h3>Decomposição LU</h3>
+
+<p>O método de Gauss transforma a matriz principal A em uma matriz triangular superior. Essa matriz triangular superior costuma ser denotada por U. Durante a eliminação, usamos multiplicadores para anular os coeficientes abaixo dos pivôs. A ideia da <strong>decomposição LU</strong> é guardar esses multiplicadores em uma matriz triangular inferior L.</p>
+
+<p>Assim, em vez de ver a eliminação apenas como uma transformação de A em U, escrevemos a matriz A como o produto</p>
+
+<blockquote class="formula">
+$A=LU,$
+</blockquote>
+
+<p>onde L é triangular inferior e U é triangular superior:</p>
+
+<blockquote class="formula">
+$L=\left(\begin{array}{cccc}
+1&0&\cdots&0\\
+l_{21}&1&\cdots&0\\
+\vdots&\vdots&\ddots&\vdots\\
+l_{n1}&l_{n2}&\cdots&1
+\end{array}\right),$ $\qquad
+U=\left(\begin{array}{cccc}
+u_{11}&u_{12}&\cdots&u_{1n}\\
+0&u_{22}&\cdots&u_{2n}\\
+\vdots&\vdots&\ddots&\vdots\\
+0&0&\cdots&u_{nn}
+\end{array}\right).$
+</blockquote>
+
+<p>Os elementos abaixo da diagonal de L são justamente os multiplicadores usados na eliminação de Gauss. Por exemplo, para eliminar o elemento a<sub>21</sub> usando o pivô a<sub>11</sub>, usamos</p>
+
+<blockquote class="formula">
+$l_{21}=m_{21}=\displaystyle{\frac{a_{21}}{a_{11}}}.$
+</blockquote>
+
+<p>Depois da decomposição, resolver o sistema AX=B fica mais simples. Como A=LU, temos</p>
+
+<blockquote class="formula">
+$LUX=B.$
+</blockquote>
+
+<p>Introduzimos uma matriz coluna auxiliar Y=UX. Então o sistema é resolvido em duas etapas triangulares:</p>
+
+<blockquote class="formula">
+$LY=B,\qquad UX=Y.$
+</blockquote>
+
+<p>O primeiro sistema é resolvido por substituição progressiva, de cima para baixo, pois L é triangular inferior. O segundo sistema é resolvido por substituição regressiva, de baixo para cima, pois U é triangular superior.</p>
+
+<p>A decomposição LU é especialmente útil quando precisamos resolver vários sistemas com a mesma matriz A e lados direitos diferentes:</p>
+
+<blockquote class="formula">
+$AX_1=B_1,\qquad AX_2=B_2,\qquad \ldots$
+</blockquote>
+
+<p>Nesse caso, calculamos a decomposição A=LU apenas uma vez. Depois, para cada nova matriz coluna B, resolvemos somente os dois sistemas triangulares LY=B e UX=Y.</p>
+
+<p>Essa ideia é importante em processadores gráficos. Muitas aplicações de computação gráfica e simulação física precisam resolver muitos sistemas lineares com estruturas semelhantes ou aplicar as mesmas operações a muitos dados ao mesmo tempo. Como GPUs são eficientes em operações matriciais paralelas, a decomposição LU permite separar o custo maior, que é fatorar a matriz A, das etapas triangulares posteriores, que podem ser repetidas para muitos lados direitos B. Em problemas grandes, bibliotecas numéricas para GPU usam variações desse princípio para aproveitar o paralelismo disponível.</p>
+
+<p>Quando é necessário trocar linhas durante a eliminação, a decomposição é escrita com uma matriz de permutação P:</p>
+
+<blockquote class="formula">
+$PA=LU.$
+</blockquote>
+
+<p>Essa forma corresponde ao método de Gauss com pivotamento parcial.</p>
+
+<h4>Decomposição de Cholesky</h4>
+
+<p>A decomposição de Cholesky é um caso particular da decomposição LU. Ela se aplica a matrizes simétricas e positivamente definidas.</p>
+
+<p>Uma matriz A é simétrica quando A<sup>T</sup>=A, isto é, quando a<sub>ij</sub>=a<sub>ji</sub>. Além disso, A é positivamente definida quando, para todo vetor coluna X não nulo, temos</p>
+
+<blockquote class="formula">
+$X^TAX=\displaystyle{\sum_{i,j}x_ia_{ij}x_j}>0.$
+</blockquote>
+
+<p>Quando A é simétrica e positivamente definida, existe uma matriz triangular inferior L, com elementos positivos na diagonal, tal que</p>
+
+<blockquote class="formula">
+$A=LL^T.$
+</blockquote>
+
+<p>Explicitamente, essa decomposição tem a forma</p>
+
+<blockquote class="formula">
+$\left(\begin{array}{cccc}
+a_{11}&a_{12}&\cdots&a_{1n}\\
+a_{21}&a_{22}&\cdots&a_{2n}\\
+\vdots&\vdots&\ddots&\vdots\\
+a_{n1}&a_{n2}&\cdots&a_{nn}
+\end{array}\right)
+$ $=
+\left(\begin{array}{cccc}
+l_{11}&0&\cdots&0\\
+l_{21}&l_{22}&\cdots&0\\
+\vdots&\vdots&\ddots&\vdots\\
+l_{n1}&l_{n2}&\cdots&l_{nn}
+\end{array}\right)
+\left(\begin{array}{cccc}
+l_{11}&l_{21}&\cdots&l_{n1}\\
+0&l_{22}&\cdots&l_{n2}\\
+\vdots&\vdots&\ddots&\vdots\\
+0&0&\cdots&l_{nn}
+\end{array}\right).$
+</blockquote>
+
+<p>Assim, todos os elementos de L acima da diagonal principal são nulos. Por isso, L é triangular inferior, enquanto L<sup>T</sup> é triangular superior.</p>
+
+<p>Essa fórmula é uma decomposição LU especial. De fato, nesse caso, a matriz triangular superior U é o transposto de L:</p>
+
+<blockquote class="formula">
+$U=L^T.$
+</blockquote>
+
+<p>A vantagem é que precisamos calcular apenas uma matriz triangular, e não duas. Além disso, a simetria reduz a quantidade de operações necessárias.</p>
+
+<p>Os elementos de L podem ser calculados linha por linha. Para os elementos diagonais, usamos</p>
+
+<blockquote class="formula">
+$l_{ii}=\sqrt{a_{ii}−\displaystyle{\sum_{k=1}^{i−1}l_{ik}^2}}.$
+</blockquote>
+
+<p>Para os elementos abaixo da diagonal, usamos</p>
+
+<blockquote class="formula">
+$l_{ij}=\displaystyle{\frac{1}{l_{jj}}\left(a_{ij}−\sum_{k=1}^{j−1}l_{ik}l_{jk}\right)},\qquad j&lt;i.$
+</blockquote>
+
+<p>Essas fórmulas também fornecem um teste para saber se a matriz simétrica é positivamente definida. Se, em algum passo, o número dentro da raiz quadrada for menor ou igual a zero, a matriz não é positivamente definida. Se todos os valores diagonais forem positivos e a decomposição for concluída, então a matriz é positivamente definida.</p>
+
+<form>
+<div class="overwrite"><input class="right-aligned" type="button" name="execute" value="Executar" onClick="ExecuteCodeEvent(this)"></div>
+<textarea class="wide" name="code" rows="30">
+var Cholesky=function(A){
+ var L=[]
+ for(var i=0;i<A.length;++i){
+  L[i]=[]
+
+  for(var j=0;j<i;++j){
+   var s=A[i][j]
+   for(var k=0;k<j;++k)s-=L[i][k]*L[j][k]
+   L[i][j]=s/L[j][j]
+  }
+
+  var d=A[i][i]
+  for(var k=0;k<j;++k)d-=L[i][k]*L[i][k]
+  if(d<=0)return []
+  L[i][i]=Math.sqrt(d)
+
+  for(var j=i;++j<A[i].length;)L[i][j]=0
+ }
+ return L
+}
+
+var A=
+[[4,2,2]
+,[2,5,1]
+,[2,1,2]
+]
+
+text=Cholesky(A).join("\n")
+</textarea>
+<textarea class="wide" name="destination" readonly rows="4"></textarea>
+</form>
+
+<p>Depois de obter A=LL<sup>T</sup>, o sistema AX=B pode ser resolvido em duas etapas triangulares:</p>
+
+<blockquote class="formula">
+$LY=B,\qquad L^TX=Y.$
+</blockquote>
+
+<p>Assim como na decomposição LU, primeiro resolvemos um sistema triangular inferior por substituição progressiva e depois um sistema triangular superior por substituição regressiva.</p>
+
+<h3>Resumo</h3>
+
+<ol>
+  <li>O método de Gauss-Jordan transforma a matriz ampliada em uma matriz escalonada usando operações elementares de linhas.</li>
+  <li>O pivotamento parcial evita operações de subtração de números próximos e melhora a estabilidade numérica do método.</li>
+  <li>A inversa de uma matriz pode ser obtida aplicando Gauss-Jordan à matriz ampliada formada por A e pela matriz identidade.</li>
+  <li>A decomposição LU escreve A=LU e permite resolver sistemas com a mesma matriz A de forma eficiente.</li>
+  <li>A decomposição de Cholesky é um caso particular de LU para matrizes simétricas e positivamente definidas.</li>
+</ol>
+</section>
+
+</article>
+
+<footer>
+<a href="aula12.html">Próxima aula: Solução de sistemas lineares: métodos iterativos.</a>
+</footer>
+
+</body>
+
+</html>

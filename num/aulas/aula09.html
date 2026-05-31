@@ -146,7 +146,7 @@ var df=function(x){return -Math.sin(x)-1}
 
 text=Newton(f,df,1)
 </textarea>
-<textarea class="wide" name="destination" readonly="readonly" rows="3"></textarea>
+<textarea class="wide" name="destination" readonly rows="3"></textarea>
 </form>
 
 <h3>Cálculo de raiz quadrada</h3>
@@ -193,7 +193,7 @@ return y
 
 text=Sqrt(2)+"\n"+Math.sqrt(2)
 </textarea>
-<textarea class="wide" name="destination" readonly="readonly" rows="3"></textarea>
+<textarea class="wide" name="destination" readonly rows="3"></textarea>
 </form>
 
 <p>Podemos observar que o método de Newton-Raphson converge muito rapidamente: quando temos uma boa aproximação inicial, cada iteração aumenta bastante a quantidade de algarismos corretos. Para a raiz quadrada, depois que a aproximação inicial já tem a ordem de grandeza correta, poucas iterações são suficientes para atingir a precisão disponível na aritmética de ponto flutuante. Como essa precisão é fixa, existe um limite para a quantidade de casas binárias que podem ser determinadas. Depois desse limite, novas iterações não melhoram o resultado, pois o número já está arredondado para a representação disponível. Por isso, em uma implementação prática, podemos escolher antecipadamente um número suficiente de iterações e evitar o teste de parada em cada repetição. Assim, a parte iterativa do cálculo da raiz quadrada pode ser feita sem um loop de parada.</p>
@@ -217,7 +217,7 @@ return x
 
 text=Sqrt(2)+"\n"+Math.sqrt(2)
 </textarea>
-<textarea class="wide" name="destination" readonly="readonly" rows="3"></textarea>
+<textarea class="wide" name="destination" readonly rows="3"></textarea>
 </form>
 
 <p>Esse tipo de método é usado em processadores numéricos para calcular raízes quadradas. Na prática, o processo é ainda mais otimizado para reduzir o número de divisões necessárias, pois a divisão é uma das operações aritméticas mais custosas. Mesmo assim, o cálculo da raiz quadrada costuma ser apenas algumas vezes mais lento do que uma divisão, graças à combinação de uma boa aproximação inicial com poucas iterações de Newton-Raphson.</p>
