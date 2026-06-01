@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width" />
-<title>Cálculo numérico: Aritmética de ponto flutuante. Parâmetros do sistema de representação de números.</title>
+<title>Cálculo numérico: Aritmética de ponto flutuante.</title>
 <link rel="stylesheet" type="text/css" href="lstyle.css" />
 <link href="https://www.ufabc.edu.br/ensino/docentes/olexandr-zhydenko" rel="author" />
 <script type="text/javascript" src="execjavascript.js"></script>
@@ -17,9 +17,9 @@
 </header>
 
 <nav>
-<a class="prev" href="aula02.html">Página anterior</a>
+<a class="prev" href="aula02.html">Aula anterior</a>
 <a class="top" href="index.html">Índice</a>
-<a class="next" href="aula04.html">Próxima página</a>
+<a class="next" href="aula04.html">Próxima aula</a>
 </nav>
 
 <article>
@@ -35,7 +35,7 @@ $\pm 0.d_1d_2\ldots d_t\times \beta^e,$
 </blockquote>
 <p>Todos os algarismos da mantissa de d<sub>1</sub> a d<sub>t</sub> são os dígitos menores que β, e o <strong>expoente</strong> e é um número inteiro, tal que -m&nbsp;≤&nbsp;e&nbsp;≤&nbsp;M. Além disso, para excluir ambiguidade, vamos requerer que d<sub>1</sub>≠0.</p>
 
-<p>Neste formato podemos representar qualquer número diferente de zero desde que o valor de expoente que corresponde à ordem de grandeza do número está no intervalo -m&nbsp;≤&nbsp;e&nbsp;≤&nbsp;M. As casas excedentes têm que ser arredondadas para casas da mantissa. Por isto tal representação de números é sempre aproximada.</p>
+<p>Neste formato podemos representar qualquer número diferente de zero desde que o valor de expoente que corresponde à ordem de grandeza do número está no intervalo -m&nbsp;≤&nbsp;e&nbsp;≤&nbsp;M. As casas excedentes devem ser arredondadas para casas da mantissa. Por isso, tal representação de números é sempre aproximada.</p>
 
 <p>Exemplos para F(10,3,2,3):</p>
 <blockquote class="formula">
@@ -55,7 +55,7 @@ $\pm 0.d_1d_2\ldots d_t\times \beta^e,$
 </tbody></table>
 </blockquote>
 
-<p>Podemos observar que a posição real do ponto não é fixo e depende da expoente. Por isto o número é chamado o de <strong>ponto flutuante</strong>.</p>
+<p>Podemos observar que a posição real do ponto não é fixa e depende do expoente. Por isso, o número é chamado de <strong>ponto flutuante</strong>.</p>
 
 <h4>Erro de representação</h4>
 
@@ -139,7 +139,7 @@ $0.182\times10^1\times0.430\times10^{-1}$ $=(0.182\times0.430)\times10^{1-1}=0.0
 
 <h4>Divisão</h4>
 
-<p>Semelhante para dividir, por exemplo, 1.1&nbsp;/&nbsp;0.03 em F(10,3,2,3), é necessário de fazer 3 operações:</p>
+<p>De modo semelhante, para dividir, por exemplo, 1.1&nbsp;/&nbsp;0.03 em F(10,3,2,3), é necessário fazer 3 operações:</p>
 
 <p><strong>Operação 1:</strong> Dividir as mantissas.</p>
 
@@ -153,11 +153,11 @@ $0.110\times10^1\times0.300\times10^{-1}$ $=(0.110/0.300)\times10^{1-(-1)}$ $=0.
 
 <h4>Transbordamento</h4>
 
-<p>O resultado de quaisquer operações aritméticas de ponto flutuante tem que ser representado no mesmo formato para ser guardado na memória (operação 3). Porém, pode acontecer que o expoente do resultado não esteja mais dentro dos limites -m&nbsp;≤&nbsp;e&nbsp;≤&nbsp;M.</p>
+<p>O resultado de quaisquer operações aritméticas de ponto flutuante deve ser representado no mesmo formato para ser guardado na memória (operação 3). Porém, pode acontecer que o expoente do resultado não esteja mais dentro dos limites -m&nbsp;≤&nbsp;e&nbsp;≤&nbsp;M.</p>
 
 <p>No caso e&nbsp;&gt;&nbsp;M o número é grande demais para ser representado no formato escolhido. Portanto, o sistema retorna um erro de <strong>sobrecarga</strong> (<strong>overflow</strong>) que é um número especial que corresponde ao infinito numérico.</p>
 
-<p>No caso e&nbsp;&lt;&nbsp;-m o número é tal próximo ao zero que deve ser desconsiderado nas contas de precisão escolhida. Assim, o sistema retorna zero como o resultado de <strong>subcarga</strong> (<strong>underflow</strong>).</p>
+<p>No caso e&nbsp;&lt;&nbsp;-m o número é tal próximo ao zero que deve ser desconsiderado nos cálculos de precisão escolhida. Assim, o sistema retorna zero como o resultado de <strong>subcarga</strong> (<strong>underflow</strong>).</p>
 
 <p>Além dos valores 0, +∞ e −∞, para fechar operações da aritmética de ponto flutuante é normalmente utilizado mais um valor especial <strong>NaN</strong> (não um número) que é o resultado das operações não definidas, como, por exemplo, 0/0.</p>
 

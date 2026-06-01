@@ -17,9 +17,9 @@
 </header>
 
 <nav>
-<a class="prev" href="aula05.html">Página anterior</a>
+<a class="prev" href="aula05.html">Aula anterior</a>
 <a class="top" href="index.html">Índice</a>
-<a class="next" href="aula07.html">Próxima página</a>
+<a class="next" href="aula07.html">Próxima aula</a>
 </nav>
 
 <article>
@@ -47,7 +47,7 @@ $f(x+h)=f(x)+f'(x)h$&nbsp;$+\textrm{&Oscr;}(h^2).$
 $f'(x)=$&nbsp;$\displaystyle{\frac{f(x+h)−f(x)}{h}}$&nbsp;$~+\textrm{&Oscr;}(h).$
 </blockquote>
 
-<p>Isto significa que o erro da aproximação é proporcional de h. Como o coeficiente de proporcionalidade é desconhecido, é difícil de controlar o erro dessa aproximação.</p>
+<p>Isso significa que o erro da aproximação é proporcional a h. Como o coeficiente de proporcionalidade é desconhecido, é difícil de controlar o erro dessa aproximação.</p>
 
 <p>Para aproximação melhor utilizamos a fórmula de Taylor de segunda ordem:</p>
 
@@ -73,7 +73,7 @@ $f(x+h)−f(x−h)=2f'(x)h$&nbsp;$+\textrm{&Oscr;}(h^3).$
 $f'(x)=$&nbsp;$\displaystyle{\frac{f(x+h)−f(x−h)}{2h}}$&nbsp;$~+\textrm{&Oscr;}(h^2).$
 </blockquote>
 
-<p>Esta fórmula dá controle melhor do erro, pois diminuindo h duas vezes o erro do resultado tem que ser quatro vezes menor.</p>
+<p>Esta fórmula dá controle melhor do erro, pois diminuindo h duas vezes o erro do resultado deve ser quatro vezes menor.</p>
 
 <h3>Erro da fórmula de derivada</h3>
 
@@ -94,7 +94,7 @@ for(var i=0;i<h.length;++i) text+="h="+h[i]+", erro="+(D(Math.sin,x,h[i])-Math.c
 
 <p>Podemos observar que quando diminuímos h, inicialmente o erro fica menor, mas, a partir de algum momento, começa a crescer.</p>
 
-<p>A razão disso é que, além do erro da fórmula aproximada existe mais uma fonte do erro que é a <a href="aula03.html">aritmética de ponto flutuante</a>: quando calculamos incremento da função subtraímos os valores da função nos pontos próximos que tem a diferença pequena. Então o resultado vai ter valor bem menor comparando com valor da função. Os dois valores da função são os números representados por numero fixo dos algarismos da mantissa tendo o erro relativo ɛ<sub>f</sub>. Erro absoluto de cada um dos valores será aproximadamente</p>
+<p>A razão disso é que, além do erro da fórmula aproximada existe mais uma fonte do erro que é a <a href="aula03.html">aritmética de ponto flutuante</a>: quando calculamos incremento da função subtraímos os valores da função nos pontos próximos que têm a diferença pequena. Então o resultado terá valor bem menor em comparação com valor da função. Os dois valores da função são números representados por um número fixo de algarismos da mantissa, tendo o erro relativo ɛ<sub>f</sub>. Erro absoluto de cada um dos valores será aproximadamente</p>
 
 <blockquote class="formula">
 $\Delta f=|f|\varepsilon_f,$
@@ -120,7 +120,7 @@ $\displaystyle{h=\left(\frac{|f|\varepsilon_f}{2A}\right)^{1/3}\approx\left(\fra
 $\displaystyle{\varepsilon_{f'}=\frac{\Delta f'}{|f'|}\approx\left(\varepsilon_f\right)^{2/3}}.$
 </blockquote>
 
-<p>Isto significa que, se escolher o valor do parâmetro h que corresponde ao erro mínimo, perdemos um terço dos dígitos significativos no valor da derivada comparando com o valor da função.</p>
+<p>Isso significa que, se escolher o valor do parâmetro h que corresponde ao erro mínimo, perdemos um terço dos dígitos significativos no valor da derivada em comparação com o valor da função.</p>
 
 <p>Em Javascript <a href="aula03.html">foi determinado</a> que na mantissa temos t=53 casas da base binária (β=2), então o erro relativo da representação de função,</p>
 
@@ -199,8 +199,8 @@ for(var i=0;i<h.length;++i) text+="h="+h[i]+", erro="+(D(Math.sin,x,h[i])-Math.c
 <ol>
   <li>Para obter a fórmula aproximada para derivada utilizamos a fórmula de Taylor.</li>
   <li>Além do erro de aproximação obtemos o erro por causa de cancelamento na aritmética de ponto flutuante. Assim, existe o valor do parâmetro que dá a melhor aproximação.</li>
-  <li>Até no seu mínimo, o erro na derivada é significativamente maior comparando com o erro do valor de função: de fato perdemos uma parte dos algarismos significativos da mantissa.</li>
-  <li>Cálculo numérico da derivada tem que ser evitada quando possível pois leva ao crescimento rápido do erro.</li>
+  <li>Até no seu mínimo, o erro na derivada é significativamente maior em comparação com o erro do valor de função: de fato perdemos uma parte dos algarismos significativos da mantissa.</li>
+  <li>Cálculo numérico da derivada deve ser evitado quando possível pois leva ao crescimento rápido do erro.</li>
 </ol>
 
 </section>

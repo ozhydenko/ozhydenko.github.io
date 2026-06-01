@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width" />
-<title>Cálculo numérico:  Fórmula de Taylor e ordem de erro.</title>
+<title>Cálculo numérico: Fórmula de Taylor e ordem de erro.</title>
 <link rel="stylesheet" type="text/css" href="lstyle.css" />
 <link href="https://www.ufabc.edu.br/ensino/docentes/olexandr-zhydenko" rel="author" />
 <script type="text/javascript" src="execjavascript.js"></script>
@@ -17,26 +17,26 @@
 </header>
 
 <nav>
-<a class="prev" href="aula04.html">Página anterior</a>
+<a class="prev" href="aula04.html">Aula anterior</a>
 <a class="top" href="index.html">Índice</a>
-<a class="next" href="aula06.html">Próxima página</a>
+<a class="next" href="aula06.html">Próxima aula</a>
 </nav>
 
 <article>
 
 <section>
 
-<h2>Aula 5:  Fórmula de Taylor e ordem de erro.</h2>
+<h2>Aula 5: Fórmula de Taylor e ordem de erro.</h2>
 
 <h3>Funções numéricas e fórmula de Taylor</h3>
 
-<p>Uma função que devolve o resultado que depende somente dos argumentos é chamada pura. A função pura vamos chamar <strong>numérica</strong> quando os argumentos e resultado são os números na aritmética de ponto flutuante. Qualquer função que retorna um valor aproximado de uma função matemática, por exemplo, uma função elementar (combinação das funções trigonométricas, a exponencial, e o logaritmo), é uma função numérica.</p>
+<p>Uma função que devolve o resultado que depende somente dos argumentos é chamada pura. Chamaremos uma função pura de <strong>numérica</strong> quando os argumentos e resultado são os números na aritmética de ponto flutuante. Qualquer função que retorna um valor aproximado de uma função matemática, por exemplo, uma função elementar (combinação das funções trigonométricas, a exponencial, e o logaritmo), é uma função numérica.</p>
 
 <p>É importante lembrar que, devido ao fato que quantidade de números diferentes na aritmética de ponto flutuante é finita, qualquer função numérica podemos representar por uma tabela finita (apesar que pode ser muito grande) de valores para todas as combinações possíveis dos argumentos. Por isso, não é possível definir tais características, como limite, continuidade e diferenciabilidade.</p>
 
 <p>Ao mesmo tempo, na prática, não estudamos numericamente as funções que têm propriedades extremos: crescimento e decrescimento rápido, comportamento variado nos intervalos diferentes ou valores muito diferentes nos pontos próximos.</p>
 
-<p>Por isso, vamos normalmente assumir que tais funções retornam os valores aproximados para funções contínuas com derivadas contínuas e ainda que ordem de grandeza das derivadas não varia muito. Estas funções são bem aproximadas pela série de Taylor, que permite achar uma aproximação pelo valor de um polinômio de grau n, cujos coeficientes dependem das derivadas em algum ponto fixo x<sub>0</sub>.</p>
+<p>Por isso, vamos normalmente assumir que tais funções retornam os valores aproximados para funções contínuas com derivadas contínuas e ainda que ordem de grandeza das derivadas não varia muito. Estas funções são bem aproximadas pela série de Taylor, que permite obter uma aproximação pelo valor de um polinômio de grau n, cujos coeficientes dependem das derivadas em algum ponto fixo x<sub>0</sub>.</p>
 
 <blockquote class="formula">
 $f(x)=f(x_0)+f'(x_0)(x-x_0)$ $\displaystyle{+~\frac{f''(x_0)}{2!}\left(x-x_0\right)^2}$ $\displaystyle{+~\frac{f'''(x_0)}{3!}\left(x-x_0\right)^3}$ $\displaystyle{+~\ldots+\frac{f^{(n)}(x_0)}{n!}\left(x-x_0\right)^n+R_n}.$
@@ -76,19 +76,19 @@ $\displaystyle{M=\frac{e^x}{(n+1)!}}.$
 
 <p>Então, podemos calcular a soma até o valor de n que corresponde ao erro relativo tanto pequeno quanto quisermos.</p>
 
-<p>Similarmente, para x&lt;0, ξ≤0 e</p>
+<p>De modo semelhante, para x&lt;0, ξ≤0 e</p>
 
 <blockquote class="formula">
 $\displaystyle{M=\frac{1}{(n+1)!}}.$
 </blockquote>
 
-<p>Isso significa que podemos atingir o erro absoluto arbitrariamente pequeno. Contudo, como neste caso o valor da exponencial também é pequeno, aplicamos a fórmula de Taylor somente para x&gt;0, quando é possível atingir o erro relativo desejado por menor quantidade das contas. Para calcular a exponencial de um número relativo, utiliza-se a relação</p>
+<p>Isso significa que podemos atingir o erro absoluto arbitrariamente pequeno. Contudo, como neste caso o valor da exponencial também é pequeno, aplicamos a fórmula de Taylor somente para x&gt;0, quando é possível atingir o erro relativo desejado com menor quantidade de cálculos. Para calcular a exponencial de um número relativo, utiliza-se a relação</p>
 
 <blockquote class="formula">
 $\displaystyle{e^{−x}=\frac{1}{e^x}}.$
 </blockquote>
 
-<p>Similarmente,</p>
+<p>De modo semelhante,</p>
 
 <blockquote class="formula">
 $\textrm{sen}x=x−\displaystyle{\frac{x^3}{3!}+\frac{x^5}{5!}}$ $\displaystyle{+~\ldots+\frac{\left(−1\right)^nx^{2n+1}}{(2n+1)!}\pm\frac{|x|^{2n+2}}{(2n+2)!}}.$
@@ -120,7 +120,7 @@ $\displaystyle{\textrm{ln}x=−\textrm{ln}\frac{1}{x}}.$
 $M h^n=\textrm{&Oscr;}(h^n).$
 </blockquote>
 
-<p>O símbolo &Oscr; significa que o fator na frente da potência de h é desconhecido. Todavia, a potência de h permite a estimativa da ordem de grandeza do erro. Por isso nós sempre desconsideramos as contribuições de ordem superior, que são desprezávemente pequenos quando h≪1,</p>
+<p>O símbolo &Oscr; significa que o fator na frente da potência de h é desconhecido. Todavia, a potência de h permite a estimativa da ordem de grandeza do erro. Por isso nós sempre desconsideramos as contribuições de ordem superior, que são desprezáveis quando h≪1,</p>
 
 <blockquote class="formula">
 $\textrm{&Oscr;}(h^n)+\textrm{&Oscr;}(h^m)=\textrm{&Oscr;}(h^{\textrm{min}(n,m)}).$

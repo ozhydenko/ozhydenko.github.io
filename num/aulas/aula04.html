@@ -17,9 +17,9 @@
 </header>
 
 <nav>
-<a class="prev" href="aula03.html">Página anterior</a>
+<a class="prev" href="aula03.html">Aula anterior</a>
 <a class="top" href="index.html">Índice</a>
-<a class="next" href="aula05.html">Próxima página</a>
+<a class="next" href="aula05.html">Próxima aula</a>
 </nav>
 
 <article>
@@ -51,13 +51,13 @@ text=0.2+0.1-0.3
 
 <p>Podemos observar que operações matematicamente equivalentes podem gerar erros diferentes. Por isso, vale a pena utilizar operações que não levam ao crescimento rápido do erro. É claro que temos que evitar a subtração dos números próximos sempre quando for possível.</p>
 
-<p>Às vezes, podemos achar uma fórmula alternativa para uma expressão,</p>
+<p>Às vezes, podemos obter uma fórmula alternativa para uma expressão,</p>
 
 <blockquote class="formula">
 $\displaystyle{\sqrt{10001}−100=(\sqrt{10001}−100)\times\frac{\sqrt{10001}+100}{\sqrt{10001}+100}}$ $=\displaystyle{\frac{(\sqrt{10001}){}^2−100^2}{\sqrt{10001}+100}=\frac{1}{\sqrt{10001}+100}}.$
 </blockquote>
 
-<p>A última expressão, sendo matematicamente equivalente à expressão inicial, não tem problema com crescimento do erro por causa de subtração. Por isso, ela tem que ser usada nas contas numéricas em vez da inicial.</p>
+<p>A última expressão, sendo matematicamente equivalente à expressão inicial, não tem problema com crescimento do erro por causa de subtração. Por isso, ela deve ser usada nos cálculos numéricos em vez da inicial.</p>
 
 <h4>Raízes de uma equação quadrática</h4>
 
@@ -105,9 +105,9 @@ text=raízes(1,10,1)
 
 <h3>Instabilidade numérica</h3>
 
-<p>O erro inicial nos dados (por exemplo, erro de representação dos números) pode levar ao crescimento do erro de resultado das contas. Quando a acumulação de erros nas contas é rápida, o algoritmo é chamado <strong>numericamente instável</strong>. O resultado final pode ter um erro muito grande, em particular, maior que 100%. Tal crescimento catastrófico de erro significa que os algoritmos numericamente instáveis são praticamente inaplicáveis.</p>
+<p>O erro inicial nos dados (por exemplo, erro de representação dos números) pode levar ao crescimento do erro do resultado dos cálculos. Quando a acumulação de erros nos cálculos é rápida, o algoritmo é chamado <strong>numericamente instável</strong>. O resultado final pode ter um erro muito grande, em particular, maior que 100%. Tal crescimento catastrófico de erro significa que os algoritmos numericamente instáveis são praticamente inaplicáveis.</p>
 
-<p>Quando os erros dos dados iniciais e contas intermediárias tem um efeito desprezível no resultado final, tal algoritmo é chamado <strong>numericamente estável</strong>. Somente os algoritmos estáveis são usados para obter os resultados úteis.</p>
+<p>Quando os erros dos dados iniciais e cálculos intermediários têm um efeito desprezível no resultado final, tal algoritmo é chamado <strong>numericamente estável</strong>. Somente os algoritmos estáveis são usados para obter os resultados úteis.</p>
 
 <p>Consideremos as integrais</p>
 
@@ -121,7 +121,7 @@ $\displaystyle{I_n=\int_0^1\frac{x^n}{x+5}dx}.$
 $\displaystyle{I_0=\int_0^1\frac{dx}{x+5}=\ln{(x+5)}│_0^1=\ln{~\frac{6}{5}}}.$
 </blockquote>
 
-<p>Podemos achar também uma relação de recorrência,</p>
+<p>Podemos obter também uma relação de recorrência,</p>
 
 <blockquote class="formula">
 $I_n=\displaystyle{\int_0^1\frac{x^n+5x^{n-1}−5x^{n-1}}{x+5}dx}$ $=\displaystyle{\int_0^1\left(\frac{x^{n-1}(x+5)}{x+5}−5\frac{x^{n-1}}{x+5}\right)dx}$ $=\displaystyle{\int_0^1x^{n-1}dx−5\int_0^1\frac{x^{n-1}}{x+5}dx}=\frac{1}{n}−5I_{n-1}.$
@@ -148,14 +148,14 @@ for(var n=1;n<I.length;++n){
 
 <p>Podemos observar que o erro absoluto cresce rápido e já para n=23 é maior que o valor aproximado, que significa que o erro absoluto é maior que 100%. Isto é claro pois obtemos o valor negativo como uma aproximação para integral positiva de I<sub>23</sub>.</p>
 
-<p>Se o erro da aproximação inicial para I<sub>0</sub> for maior que o erro de representação, vamos obter o resultado absurdo para menor índice de n. Por exemplo, se usar aproximação inicial 0.182 (3 casas decimais), vamos obter o valor negativo já para aproximação de I<sub>4</sub>.</p>
+<p>Se o erro da aproximação inicial para I<sub>0</sub> for maior que o erro de representação, obteremos um resultado absurdo para menor índice de n. Por exemplo, se usar aproximação inicial 0.182 (3 casas decimais), obteremos o valor negativo já para aproximação de I<sub>4</sub>.</p>
 
 <p>Podemos concluir que esta recorrência, sendo aplicada para calcular as integrais a partir de aproximação para I<sub>0</sub> é numericamente instável. Ao mesmo tempo, a aplicação da fórmula invertida dá um algoritmo numericamente estável.</p>
 <blockquote class="formula">
 $\displaystyle{I_{n-1}=\frac{1}{5}\left(\frac{1}{n}−I_{n}}\right).$
 </blockquote>
 
-<p>Podemos aproximar I<sub>20</sub>≈0 e achar o valor aproximado para I<sub>0</sub>.</p>
+<p>Podemos aproximar I<sub>20</sub>≈0 e obter o valor aproximado para I<sub>0</sub>.</p>
 
 <form>
 <div class="overwrite"><input class="right-aligned" type="button" name="execute"  value="Executar" onClick="ExecuteCodeEvent(this)"></div>
@@ -177,7 +177,7 @@ text+="\n"+"ln(6/5)="+Math.log(6/5)
 <ol>
   <li>Erro nos dados iniciais e erro de representação dos números na aritmética de ponto flutuante podem levar ao crescimento rápido de erro relativo do resultado.</li>
   <li>Operações que resultam no crescimento do erro, como, por exemplo, subtração de números próximos temos que evitar sempre quando for possível.</li>
-  <li>Acumulação rápida dos erros num algoritmo significa que tal algoritmo não é praticamente útil. Este fenômeno é chamado de instabilidade numérica.</li>
+  <li>Acumulação rápida dos erros num algoritmo significa que tal algoritmo não é útil na prática. Este fenômeno é chamado de instabilidade numérica.</li>
 </ol>
 
 </section>

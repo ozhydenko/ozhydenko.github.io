@@ -17,9 +17,9 @@
 </header>
 
 <nav>
-<a class="prev" href="aula11.html">Página anterior</a>
+<a class="prev" href="aula11.html">Aula anterior</a>
 <a class="top" href="index.html">Índice</a>
-<a class="next" href="aula13.html">Próxima página</a>
+<a class="next" href="aula13.html">Próxima aula</a>
 </nav>
 
 <article>
@@ -164,7 +164,7 @@ $(D+L+U)X=B.$
 
 <h3>Método de Jacobi</h3>
 
-<p>No método de Jacobi, isolamos a parte diagonal:</p>
+<p>O método de Jacobi, também chamado método de Jacobi-Richardson, isola a parte diagonal:</p>
 
 <blockquote class="formula">
 $DX=B−(L+U)X.$
@@ -348,19 +348,98 @@ Se A é <strong>simétrica e positivamente definida</strong>, então o método d
 
 <p>Em muitos problemas, Gauss-Seidel converge mais rapidamente do que Jacobi, pois usa imediatamente os valores novos. No entanto, isso não significa que Jacobi possa ser sempre descartado: Jacobi é mais simples de paralelizar, enquanto Gauss-Seidel depende da ordem em que as componentes são calculadas.</p>
 
+<h3>Sistemas não lineares</h3>
+
+<p>Os métodos iterativos também aparecem na resolução de sistemas não lineares. Nesse caso, queremos encontrar uma coluna X que satisfaça</p>
+
+<blockquote class="formula">
+$F\left(X\right)=0,$
+</blockquote>
+
+<p>onde F é uma função vetorial, isto é,</p>
+
+<blockquote class="formula">
+$F\left(X\right)=\left(\begin{array}{c}
+f_1\left(x_1,x_2,\ldots,x_n\right)\\
+f_2\left(x_1,x_2,\ldots,x_n\right)\\
+\vdots\\
+f_n\left(x_1,x_2,\ldots,x_n\right)
+\end{array}\right).$
+</blockquote>
+
+<p>O análogo do método de Newton-Raphson é obtido pela aproximação linear da função vetorial. Essa aproximação vem da fórmula de Taylor aplicada a cada função componente de F. Para cada i, temos</p>
+
+<blockquote class="formula">
+$f_i\left(X^{\left(k+1\right)}\right)\approx f_i\left(X^{\left(k\right)}\right)+\sum_{j=1}^{n}\displaystyle{\frac{\partial f_i}{\partial x_j}}\left(X^{\left(k\right)}\right)\left(x_j^{\left(k+1\right)}−x_j^{\left(k\right)}\right).$
+</blockquote>
+
+<p>Quando escrevemos essas aproximações para todas as componentes ao mesmo tempo, os coeficientes das diferenças formam a matriz jacobiana:</p>
+
+<blockquote class="formula">
+$J_F\left(X\right)=\left(\begin{array}{cccc}
+\displaystyle{\frac{\partial f_1}{\partial x_1}}&\displaystyle{\frac{\partial f_1}{\partial x_2}}&\cdots&\displaystyle{\frac{\partial f_1}{\partial x_n}}\\
+\displaystyle{\frac{\partial f_2}{\partial x_1}}&\displaystyle{\frac{\partial f_2}{\partial x_2}}&\cdots&\displaystyle{\frac{\partial f_2}{\partial x_n}}\\
+\vdots&\vdots&\ddots&\vdots\\
+\displaystyle{\frac{\partial f_n}{\partial x_1}}&\displaystyle{\frac{\partial f_n}{\partial x_2}}&\cdots&\displaystyle{\frac{\partial f_n}{\partial x_n}}
+\end{array}\right).$
+</blockquote>
+
+<p>Assim, na vizinhança de uma aproximação X<sup>(k)</sup>, escrevemos</p>
+
+<blockquote class="formula">
+$F\left(X^{\left(k+1\right)}\right)\approx F\left(X^{\left(k\right)}\right)+J_F\left(X^{\left(k\right)}\right)\left(X^{\left(k+1\right)}−X^{\left(k\right)}\right).$
+</blockquote>
+
+<p>Queremos que a próxima aproximação esteja mais perto de satisfazer F(X)=0. Por isso, impomos que a aproximação linear seja igual a zero:</p>
+
+<blockquote class="formula">
+$F\left(X^{\left(k\right)}\right)+J_F\left(X^{\left(k\right)}\right)\left(X^{\left(k+1\right)}−X^{\left(k\right)}\right)=0.$
+</blockquote>
+
+<p>Formalmente, se a matriz jacobiana é inversível, podemos escrever</p>
+
+<blockquote class="formula">
+$X^{\left(k+1\right)}=X^{\left(k\right)}−\left(J_F\left(X^{\left(k\right)}\right)\right)^{−1}F\left(X^{\left(k\right)}\right).$
+</blockquote>
+
+<p>Essa fórmula é o análogo direto da fórmula de Newton-Raphson para uma variável. Porém, para sistemas grandes, calcular explicitamente a matriz inversa é um procedimento longo, caro e numericamente desnecessário. Além disso, a inversa completa geralmente fornece mais informação do que precisamos, pois queremos apenas a próxima coluna X<sup>(k+1)</sup>.</p>
+
+<p>Por isso, no caso de sistemas não lineares, uma iteração de Newton-Raphson não consiste apenas em substituir valores em uma fórmula explícita. Na prática, em cada passo calculamos F no ponto atual, montamos ou aproximamos a matriz jacobiana e resolvemos o sistema linear cuja incógnita é X<sup>(k+1)</sup>:</p>
+
+<blockquote class="formula">
+$J_F\left(X^{\left(k\right)}\right)X^{\left(k+1\right)}=J_F\left(X^{\left(k\right)}\right)X^{\left(k\right)}−F\left(X^{\left(k\right)}\right).$
+</blockquote>
+
+<p>A solução desse sistema é usada como a próxima aproximação.</p>
+
+<p>A parte mais cara do processo costuma ser a solução do sistema linear em cada iteração. Para sistemas pequenos, podemos usar eliminação de Gauss, Gauss-Jordan ou decomposição LU. Para sistemas grandes e esparsos, é comum usar métodos iterativos para resolver esse sistema. Em aplicações computacionais, também é frequente aproximar a jacobiana numericamente ou reutilizá-la por algumas iterações, reduzindo o custo quando a montagem exata da matriz é muito trabalhosa.</p>
+
+<p>Os critérios de parada seguem a mesma ideia das seções anteriores. Podemos parar quando duas aproximações consecutivas ficam muito próximas, isto é, quando</p>
+
+<blockquote class="formula">
+$\|X^{\left(k+1\right)}−X^{\left(k\right)}\|&lt;\varepsilon,$
+</blockquote>
+
+<p>ou quando o próprio resíduo do sistema é pequeno:</p>
+
+<blockquote class="formula">
+$\|F\left(X^{\left(k\right)}\right)\|&lt;\varepsilon.$
+</blockquote>
+
 <h3>Resumo</h3>
 
 <ol>
-  <li>O método de Jacobi calcula todos os valores novos usando apenas os valores da iteração anterior.</li>
+  <li>O método de Jacobi, também chamado Jacobi-Richardson, calcula todos os valores novos usando apenas os valores da iteração anterior.</li>
   <li>O método de Gauss-Seidel usa imediatamente os valores novos já calculados na mesma iteração.</li>
-  <li>O método de Gauss-Seidel converge sempre que o de Jacobi converge.</li>
+  <li>Nos critérios apresentados, quando a convergência de Jacobi é garantida, a convergência de Gauss-Seidel também é garantida.</li>
+  <li>Para sistemas não lineares, cada iteração é reduzida à resolução de um sistema linear.</li>
 </ol>
 </section>
 
 </article>
 
 <footer>
-<a href="aula13.html">Próxima aula: Método dos quadrados mínimos. Solução de sistemas lineares sobredeterminados.</a>
+<a href="aula13.html">Próxima aula: Método dos quadrados mínimos.</a>
 </footer>
 
 </body>

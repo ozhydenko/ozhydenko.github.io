@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width" />
+<title>Cálculo numérico: Método dos quadrados mínimos.</title>
+<link rel="stylesheet" type="text/css" href="lstyle.css" />
+<link href="https://www.ufabc.edu.br/ensino/docentes/olexandr-zhydenko" rel="author" />
+<script type="text/javascript" src="execjavascript.js"></script>
+<script type="text/javascript" src="LaTeXMathML.js"></script>
+</head>
+
+<body>
+
+<header>
+</header>
+
+<nav>
+<a class="prev" href="aula12.html">Aula anterior</a>
+<a class="top" href="index.html">Índice</a>
+<a class="next" href="aula14.html">Próxima aula</a>
+</nav>
+
+<article>
+
+<section>
+<h2>Aula 13: Método dos quadrados mínimos.</h2>
+
+<h3>Ajuste por quadrados mínimos</h3>
+
+<p>Em muitas aplicações, os dados não satisfazem exatamente o modelo matemático escolhido. Isso acontece por erros de medição, arredondamentos, simplificações do modelo ou ruído experimental. Por exemplo, se medimos vários pontos que parecem seguir uma mesma tendência, dificilmente todos eles estarão exatamente sobre a curva escolhida.</p>
+
+<p>Suponhamos que se deseje aproximar os pontos medidos por uma combinação linear de funções dadas:</p>
+
+<blockquote class="formula">
+$f(x)=c_1g_1(x)+c_2g_2(x)+c_3g_3(x)+\ldots+c_ng_n(x).$
+</blockquote>
+
+<p>As funções g<sub>1</sub>(x), g<sub>2</sub>(x), g<sub>3</sub>(x), ..., g<sub>n</sub>(x) são conhecidas. Apenas os coeficientes c<sub>1</sub>, c<sub>2</sub>, c<sub>3</sub>, ..., c<sub>n</sub> são desconhecidos. Para cada ponto medido (x<sub>i</sub>,y<sub>i</sub>), obtemos a relação:</p>
+
+<blockquote class="formula">
+$f(x_i)= y_i \pm \Delta y_i,$
+</blockquote>
+
+<p>onde Δy<sub>i</sub> representa o erro no valor observado. Esse erro é desconhecido.</p>
+
+<p>O objetivo, então, é escolher os coeficientes que produzem a melhor aproximação dos dados. Em outras palavras, o gráfico da função f(x) deve ficar o mais próximo possível dos pontos dados (x<sub>i</sub>,y<sub>i</sub>). Vamos supor que haja mais pontos do que coeficientes, isto é, m&gt;n.</p>
+
+<svg width="100%" height="300">
+   <line x1="8%" y1="260" x2="94%" y2="260" stroke="black"/>
+   <line x1="10%" y1="20" x2="10%" y2="280" stroke="black"/>
+   <text x="93%" y="282" text-anchor="end">x</text>
+   <text x="8%" y="30" text-anchor="end">y</text>
+
+   <line x1="20%" y1="198" x2="20%" y2="187" stroke="black" stroke-dasharray="6,3"/>
+   <line x1="30%" y1="158" x2="30%" y2="170" stroke="black" stroke-dasharray="6,3"/>
+   <line x1="42%" y1="110" x2="42%" y2="148" stroke="black" stroke-dasharray="6,3"/>
+   <line x1="54%" y1="174" x2="54%" y2="128" stroke="black" stroke-dasharray="6,3"/>
+   <line x1="66%" y1="98" x2="66%" y2="110" stroke="black" stroke-dasharray="6,3"/>
+   <line x1="78%" y1="132" x2="78%" y2="85" stroke="black" stroke-dasharray="6,3"/>
+
+   <circle cx="20%" cy="198" r="4" fill="black" stroke="black"/>
+   <circle cx="30%" cy="158" r="4" fill="black" stroke="black"/>
+   <circle cx="42%" cy="110" r="4" fill="black" stroke="black"/>
+   <circle cx="54%" cy="174" r="4" fill="black" stroke="black"/>
+   <circle cx="66%" cy="98" r="4" fill="black" stroke="black"/>
+   <circle cx="78%" cy="132" r="4" fill="black" stroke="black"/>
+
+   <text x="85%" y="100" text-anchor="start">y=f(x)</text>
+   <svg x="10%" y="35" viewBox="0 0 600 190" width="80%" height="220px" preserveAspectRatio="none">
+     <path d="M 0 145 C 160 118, 250 92, 350 76 C 450 60, 520 42, 620 10"
+           fill="none" stroke="red" stroke-width="2"/>
+   </svg>
+</svg>
+
+<p>Como os deslocamentos podem ser positivos ou negativos, não basta minimizar a soma simples dos erros, pois eles podem se cancelar. Por isso, consideramos a soma dos quadrados dos deslocamentos:</p>
+
+<blockquote class="formula">
+$\sigma= \displaystyle{\sum_{i=1}^m\Delta y_i^2} = \displaystyle{\sum_{i=1}^m\left(f\left(x_i\right)−y_i\right)^2}.$
+</blockquote>
+
+<p>O método procura os coeficientes que tornam σ o menor possível. Por isso, ele é chamado <strong>método dos quadrados mínimos</strong>.</p>
+
+
+<h3>Equações normais</h3>
+
+<p>Substituindo a expressão de f(x), obtemos σ como função dos n coeficientes desconhecidos:</p>
+
+<blockquote class="formula">
+$\sigma\left(c_1,c_2,\ldots,c_n\right)$ $=~\displaystyle{\sum_{i=1}^m\left(c_1g_1(x_i)+c_2g_2(x_i)\right.}$ $\displaystyle{\left.+~\ldots~+~c_ng_n(x_i)−y_i\right)^2}.$
+</blockquote>
+
+<p>Para encontrar o extremo dessa função, calculamos as derivadas parciais em relação aos coeficientes e as igualamos a zero:</p>
+
+<blockquote class="formula">
+$\displaystyle{\frac{\partial \sigma}{\partial c_j}}$ $=~2\displaystyle{\sum_{i=1}^m\left(c_1g_1(x_i)+c_2g_2(x_i)\right.}$ $\displaystyle{\left.+~\ldots~+~c_ng_n(x_i)−y_i\right)g_j(x_i)}$ $=~0,$ $\quad j=1,2,\ldots,n.$
+</blockquote>
+
+<p>Assim, para j=1,2,...,n, obtemos o sistema:</p>
+
+<blockquote class="formula">
+$\displaystyle{\sum_{k=1}^n c_k\sum_{i=1}^m g_k\left(x_i\right)g_j\left(x_i\right)}
+=
+\displaystyle{\sum_{i=1}^m y_i g_j\left(x_i\right)}.$
+</blockquote>
+
+<p>Como σ é uma soma de quadrados, esse extremo corresponde ao mínimo da soma dos quadrados dos resíduos. Para escrever o sistema resultante de forma compacta, introduzimos as matrizes:</p>
+
+<blockquote class="formula">
+$G=\left(\begin{array}{cccc}
+g_1(x_1)&g_2(x_1)&\ldots&g_n(x_1)\\
+g_1(x_2)&g_2(x_2)&\ldots&g_n(x_2)\\
+\vdots&\vdots&\ddots&\vdots\\
+g_1(x_m)&g_2(x_m)&\ldots&g_n(x_m)
+\end{array}\right),\qquad
+C=\left(\begin{array}{c}
+c_1\\
+c_2\\
+\vdots\\
+c_n
+\end{array}\right),\qquad
+Y=\left(\begin{array}{c}
+y_1\\
+y_2\\
+\vdots\\
+y_m
+\end{array}\right).$
+</blockquote>
+
+<p>A condição de mínimo obtida pelas derivadas parciais pode então ser escrita como:</p>
+
+<blockquote class="formula">
+$G^TGC=G^TY.$
+</blockquote>
+
+<p>Esse sistema é chamado <strong>sistema de equações normais</strong>. Quando as colunas de G são linearmente independentes, a matriz G<sup>T</sup>G é inversível, e a solução de quadrados mínimos é única. A fórmula final para a coluna dos coeficientes é:</p>
+
+<blockquote class="formula">
+$C=\left(G^TG\right)^{−1}G^TY.$
+</blockquote>
+
+<p>Assim como nas aulas anteriores, essa fórmula com a matriz inversa é principalmente uma expressão formal. Na prática, normalmente resolvemos o sistema linear G<sup>T</sup>GC=G<sup>T</sup>Y. A matriz principal desse sistema é simétrica e definida positiva quando as colunas de G são linearmente independentes. Por isso, é possível aplicar a <a href="aula11.html">decomposição de Cholesky</a>. Uma vantagem desse método é que ele também verifica se as funções foram escolhidas de modo adequado: se a decomposição falhar, as colunas de G não são linearmente independentes e o problema não está bem formulado.</p>
+
+<p>No exemplo abaixo, ajustamos uma reta aos pontos (0,1), (1,2) e (2,2), usando as funções g<sub>1</sub>(x)=1 e g<sub>2</sub>(x)=x.</p>
+
+<form>
+<div class="overwrite"><input class="right-aligned" type="button" name="execute" value="Executar" onClick="ExecuteCodeEvent(this)"></div>
+<textarea class="invisible" name="library" readonly rows="25">
+var Cholesky=function(A){
+ var L=[]
+ for(var i=0;i<A.length;++i){
+  L[i]=[]
+
+  for(var j=0;j<i;++j){
+   var s=A[i][j]
+   for(var k=0;k<j;++k)s-=L[i][k]*L[j][k]
+   L[i][j]=s/L[j][j]
+  }
+
+  var d=A[i][i]
+  for(var k=0;k<j;++k)d-=L[i][k]*L[i][k]
+  if(d<=0)return []
+  L[i][i]=Math.sqrt(d)
+
+  for(var j=i;++j<A[i].length;)L[i][j]=0
+ }
+ return L
+}
+
+var SubsProgr=function(L,B){
+ var X=[]
+ for(var i=0;i<L.length;++i){
+  var s=B[i]
+  for(var j=0;j<i;++j)s-=L[i][j]*X[j]
+  X[i]=s/L[i][i]
+ }
+ return X
+}
+
+var SubsRegrTrans=function(L,B){
+ var X=[]
+ for(var i=L.length;i-->0;){
+  var s=B[i]
+  for(var j=i;++j<L.length;)s-=L[j][i]*X[j]
+  X[i]=s/L[i][i]
+ }
+ return X
+}
+
+var SolveMin=function(G,Y){
+ var A=[],B=[]
+ for(var i=0;i<G[0].length;++i){
+  A[i]=[]
+  for(var j=0;j<=i;++j){
+   A[i][j]=0
+   for(var k=0;k<G.length;++k)A[i][j]+=G[k][i]*G[k][j]
+  }
+
+  B[i]=0
+  for(var k=0;k<G.length;++k)B[i]+=G[k][i]*Y[k]
+ }
+ var L=Cholesky(A)
+ return SubsRegrTrans(L,SubsProgr(L,B))
+}
+</textarea>
+<textarea class="wide" name="show" readonly rows="36">
+var SubsProgr=function(L,B){
+ var X=[]
+ for(var i=0;i<L.length;++i){
+  var s=B[i]
+  for(var j=0;j<i;++j)s-=L[i][j]*X[j]
+  X[i]=s/L[i][i]
+ }
+ return X
+}
+
+var SubsRegrTrans=function(L,B){
+ var X=[]
+ for(var i=L.length;i-->0;){
+  var s=B[i]
+  for(var j=i;++j<L.length;)s-=L[j][i]*X[j]
+  X[i]=s/L[i][i]
+ }
+ return X
+}
+
+var SolveMin=function(G,Y){
+ var A=[],B=[]
+ for(var i=0;i<G[0].length;++i){
+  A[i]=[]
+  for(var j=0;j<=i;++j){
+   A[i][j]=0
+   for(var k=0;k<G.length;++k)A[i][j]+=G[k][i]*G[k][j]
+  }
+
+  B[i]=0
+  for(var k=0;k<G.length;++k)B[i]+=G[k][i]*Y[k]
+ }
+ var L=Cholesky(A)
+ return SubsRegrTrans(L,SubsProgr(L,B))
+}
+</textarea>
+<textarea class="wide" name="code" rows="5">
+var G=[[1,0],[1,1],[1,2]]
+var Y=[1,2,2]
+var C=SolveMin(G,Y)
+text=C.join("\n")
+</textarea>
+<textarea class="wide" name="destination" readonly rows="4"></textarea>
+</form>
+
+<p>O método pode ser usado para ajustar dados ruidosos. Se a forma da dependência verdadeira é conhecida, podemos determinar os coeficientes desconhecidos usando mais dados do que coeficientes, mesmo quando os dados têm erro. Para demonstrar a ideia, podemos gerar erros adicionando números aleatórios aos valores da função:</p>
+
+<form>
+<div class="overwrite"><input class="right-aligned" type="button" name="execute" value="Executar" onClick="ExecuteCodeEvent(this)"></div>
+<textarea class="invisible" name="library" readonly rows="25">
+var Cholesky=function(A){
+ var L=[]
+ for(var i=0;i<A.length;++i){
+  L[i]=[]
+
+  for(var j=0;j<i;++j){
+   var s=A[i][j]
+   for(var k=0;k<j;++k)s-=L[i][k]*L[j][k]
+   L[i][j]=s/L[j][j]
+  }
+
+  var d=A[i][i]
+  for(var k=0;k<j;++k)d-=L[i][k]*L[i][k]
+  if(d<=0)return []
+  L[i][i]=Math.sqrt(d)
+
+  for(var j=i;++j<A[i].length;)L[i][j]=0
+ }
+ return L
+}
+
+var SubsProgr=function(L,B){
+ var X=[]
+ for(var i=0;i<L.length;++i){
+  var s=B[i]
+  for(var j=0;j<i;++j)s-=L[i][j]*X[j]
+  X[i]=s/L[i][i]
+ }
+ return X
+}
+
+var SubsRegrTrans=function(L,B){
+ var X=[]
+ for(var i=L.length;i-->0;){
+  var s=B[i]
+  for(var j=i;++j<L.length;)s-=L[j][i]*X[j]
+  X[i]=s/L[i][i]
+ }
+ return X
+}
+
+var SolveMin=function(G,Y){
+ var A=[],B=[]
+ for(var i=0;i<G[0].length;++i){
+  A[i]=[]
+  for(var j=0;j<=i;++j){
+   A[i][j]=0
+   for(var k=0;k<G.length;++k)A[i][j]+=G[k][i]*G[k][j]
+  }
+
+  B[i]=0
+  for(var k=0;k<G.length;++k)B[i]+=G[k][i]*Y[k]
+ }
+ var L=Cholesky(A)
+ return SubsRegrTrans(L,SubsProgr(L,B))
+}
+</textarea>
+<textarea class="wide" name="code" rows="18">
+var Ajuste=function(X,Y,funcs){
+ var G=[]
+ for(var i=0;i<X.length;++i){
+  G[i]=[]
+  for(var j=0;j<funcs.length;++j)G[i][j]=funcs[j](X[i])
+ }
+ return SolveMin(G,Y)
+}
+
+var f=function(x){return 2*Math.sin(x)-1*Math.cos(x)+(Math.random()-0.5)}
+
+var X=[],Y=[]
+for(var i=0;i<500;++i){
+ X[i]=0.01*i
+ Y[i]=f(X[i])
+}
+text=Ajuste(X,Y,[Math.sin,Math.cos,Math.exp]).join("\n")
+</textarea>
+<textarea class="wide" name="destination" readonly rows="4"></textarea>
+</form>
+
+
+<h3>Sistemas sobredeterminados</h3>
+
+<p>Um sistema linear é chamado <strong>sobredeterminado</strong> quando tem mais equações do que incógnitas. Na forma matricial, isso significa que A tem mais linhas do que colunas (m&gt;n).</p>
+
+<p>Nesse caso, o sistema AX=B normalmente não possui solução exata. Em vez de exigir igualdade perfeita, podemos procurar X de modo que o lado esquerdo AX fique o mais próximo possível do lado direito B. Em outras palavras, procuramos o mínimo de:</p>
+
+<blockquote class="formula">
+$\sigma=\|AX−B\|^2.$
+</blockquote>
+
+<p>A condição de mínimo leva ao sistema:</p>
+
+<blockquote class="formula">
+$A^TAX−A^TB=0.$
+</blockquote>
+
+<p>Portanto, o mesmo método usado para ajustar modelos a dados também pode ser usado para resolver sistemas lineares sobredeterminados.</p>
+
+<p>Consideremos um sistema com quatro equações e três incógnitas, em que a última equação é quase a soma das três primeiras.</p>
+
+<blockquote class="formula">
+$\left\{\begin{array}{rrrrrcl}
+x_1&+&x_2&+&x_3&=&3,\\
+x_1&−&x_2&+&x_3&=&1,\\
+x_1&+&x_2&−&x_3&=&1,\\
+3.01x_1&+&0.99x_2&+&1.02x_3&=&5.
+\end{array}\right.$
+</blockquote>
+
+<p>Com um método exato, concluímos que o sistema é inconsistente. A solução de quadrados mínimos fornece uma solução aproximada.</p>
+
+<form>
+<div class="overwrite"><input class="right-aligned" type="button" name="execute" value="Executar" onClick="ExecuteCodeEvent(this)"></div>
+<textarea class="invisible" name="library" readonly rows="25">
+var Pivot=function(Matriz){
+ var M=[]
+ for(var i=0;i<Matriz.length;++i) M[i]=Matriz[i].slice()
+
+ for(var pivo=0,m=0;m<M.length&&pivo<M[m].length;++pivo){
+
+  for(var mp=m;++mp<M.length;)if(Math.abs(M[mp][pivo])>Math.abs(M[m][pivo])){
+   var L=M[m]
+   M[m]=M[mp]
+   M[mp]=L
+  }
+
+  if(M[m][pivo]!=0){
+   for(var n=M[m].length;n-->pivo;) M[m][n]/=M[m][pivo]
+   for(var mp=m;++mp<M.length;) for(var n=M[m].length;n-->pivo;) M[mp][n]-=M[m][n]*M[mp][pivo]
+   for(var mp=m;mp-->0;)for(var n=M[m].length;n-->pivo;)M[mp][n]-=M[m][n]*M[mp][pivo]
+   ++m
+  }
+ }
+
+ return M
+}
+
+var Cholesky=function(A){
+ var L=[]
+ for(var i=0;i<A.length;++i){
+  L[i]=[]
+
+  for(var j=0;j<i;++j){
+   var s=A[i][j]
+   for(var k=0;k<j;++k)s-=L[i][k]*L[j][k]
+   L[i][j]=s/L[j][j]
+  }
+
+  var d=A[i][i]
+  for(var k=0;k<j;++k)d-=L[i][k]*L[i][k]
+  if(d<=0)return []
+  L[i][i]=Math.sqrt(d)
+
+  for(var j=i;++j<A[i].length;)L[i][j]=0
+ }
+ return L
+}
+
+var SubsProgr=function(L,B){
+ var X=[]
+ for(var i=0;i<L.length;++i){
+  var s=B[i]
+  for(var j=0;j<i;++j)s-=L[i][j]*X[j]
+  X[i]=s/L[i][i]
+ }
+ return X
+}
+
+var SubsRegrTrans=function(L,B){
+ var X=[]
+ for(var i=L.length;i-->0;){
+  var s=B[i]
+  for(var j=i;++j<L.length;)s-=L[j][i]*X[j]
+  X[i]=s/L[i][i]
+ }
+ return X
+}
+
+var SolveMin=function(G,Y){
+ var A=[],B=[]
+ for(var i=0;i<G[0].length;++i){
+  A[i]=[]
+  for(var j=0;j<=i;++j){
+   A[i][j]=0
+   for(var k=0;k<G.length;++k)A[i][j]+=G[k][i]*G[k][j]
+  }
+
+  B[i]=0
+  for(var k=0;k<G.length;++k)B[i]+=G[k][i]*Y[k]
+ }
+ var L=Cholesky(A)
+ return SubsRegrTrans(L,SubsProgr(L,B))
+}
+</textarea>
+<textarea class="wide" name="code" rows="17">
+var M=
+[[1,1,1,3]
+,[1,-1,1,1]
+,[1,1,-1,1]
+,[3.01,0.99,1.02,5]
+]
+
+text+=Pivot(M).join("\n")
+
+var A=[],B=[]
+for(var i=0;i<M.length;++i){
+ A[i]=M[i].slice(0,-1)
+ B[i]=M[i][M[i].length-1]
+}
+
+text+="\n\n"+SolveMin(A,B).join("\n")
+</textarea>
+<textarea class="wide" name="destination" readonly rows="8"></textarea>
+</form>
+
+
+<h3>Resumo</h3>
+
+<ol>
+  <li>O método dos quadrados mínimos escolhe a aproximação que minimiza a soma dos quadrados dos resíduos.</li>
+  <li>O método pode ser usado para reduzir o erro em dados ruidosos quando a forma da dependência verdadeira é conhecida.</li>
+  <li>Sistemas sobredeterminados podem ser tratados pelo método dos quadrados mínimos. A solução encontrada não zera necessariamente todos os resíduos, mas torna a soma de seus quadrados a menor possível.</li>
+</ol>
+</section>
+
+</article>
+
+<footer>
+<a href="aula14.html">Próxima aula: Método dos quadrados mínimos: caso contínuo.</a>
+</footer>
+
+</body>
+
+</html>
