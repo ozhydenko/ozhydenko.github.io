@@ -34,13 +34,13 @@
 <p>Suponhamos que se deseje aproximar os pontos medidos por uma combinação linear de funções dadas:</p>
 
 <blockquote class="formula">
-$f(x)=c_1g_1(x)+c_2g_2(x)+c_3g_3(x)+\ldots+c_ng_n(x).$
+$f\left(x\right)=c_1g_1\left(x\right)+c_2g_2\left(x\right)+c_3g_3\left(x\right)+\ldots+c_ng_n\left(x\right).$
 </blockquote>
 
 <p>As funções g<sub>1</sub>(x), g<sub>2</sub>(x), g<sub>3</sub>(x), ..., g<sub>n</sub>(x) são conhecidas. Apenas os coeficientes c<sub>1</sub>, c<sub>2</sub>, c<sub>3</sub>, ..., c<sub>n</sub> são desconhecidos. Para cada ponto medido (x<sub>i</sub>,y<sub>i</sub>), obtemos a relação:</p>
 
 <blockquote class="formula">
-$f(x_i)= y_i \pm \Delta y_i,$
+$f\left(x_i\right)= y_i \pm \Delta y_i,$
 </blockquote>
 
 <p>onde Δy<sub>i</sub> representa o erro no valor observado. Esse erro é desconhecido.</p>
@@ -88,13 +88,13 @@ $\sigma= \displaystyle{\sum_{i=1}^m\Delta y_i^2} = \displaystyle{\sum_{i=1}^m\le
 <p>Substituindo a expressão de f(x), obtemos σ como função dos n coeficientes desconhecidos:</p>
 
 <blockquote class="formula">
-$\sigma\left(c_1,c_2,\ldots,c_n\right)$ $=~\displaystyle{\sum_{i=1}^m\left(c_1g_1(x_i)+c_2g_2(x_i)\right.}$ $\displaystyle{\left.+~\ldots~+~c_ng_n(x_i)−y_i\right)^2}.$
+$\sigma\left(c_1,c_2,\ldots,c_n\right)$ $=~\displaystyle{\sum_{i=1}^m\left(c_1g_1\left(x_i\right)+c_2g_2\left(x_i\right)\right.}$ $\displaystyle{\left.+~\ldots~+~c_ng_n\left(x_i\right)−y_i\right)^2}.$
 </blockquote>
 
 <p>Para encontrar o extremo dessa função, calculamos as derivadas parciais em relação aos coeficientes e as igualamos a zero:</p>
 
 <blockquote class="formula">
-$\displaystyle{\frac{\partial \sigma}{\partial c_j}}$ $=~2\displaystyle{\sum_{i=1}^m\left(c_1g_1(x_i)+c_2g_2(x_i)\right.}$ $\displaystyle{\left.+~\ldots~+~c_ng_n(x_i)−y_i\right)g_j(x_i)}$ $=~0,$ $\quad j=1,2,\ldots,n.$
+$\displaystyle{\frac{\partial \sigma}{\partial c_j}}$ $=~2\displaystyle{\sum_{i=1}^m\left(c_1g_1\left(x_i\right)+c_2g_2\left(x_i\right)\right.}$ $\displaystyle{\left.+~\ldots~+~c_ng_n\left(x_i\right)−y_i\right)g_j\left(x_i\right)}$ $=~0,$ $\quad j=1,2,\ldots,n.$
 </blockquote>
 
 <p>Assim, para j=1,2,...,n, obtemos o sistema:</p>
@@ -113,7 +113,7 @@ g_1(x_1)&g_2(x_1)&\ldots&g_n(x_1)\\
 g_1(x_2)&g_2(x_2)&\ldots&g_n(x_2)\\
 \vdots&\vdots&\ddots&\vdots\\
 g_1(x_m)&g_2(x_m)&\ldots&g_n(x_m)
-\end{array}\right),\qquad
+\end{array}\right),$ $\quad
 C=\left(\begin{array}{c}
 c_1\\
 c_2\\

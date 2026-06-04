@@ -40,7 +40,7 @@ $\Delta x_k=|x_k−x|.$
 <p>Dizemos que o método tem <strong>ordem de convergência p</strong> se existe uma constante C&gt;0 tal que</p>
 
 <blockquote class="formula">
-$\lim_{k\to\infty}\displaystyle{\frac{\Delta x_{k+1}}{\Delta x_k^p}}=C.$
+$\lim_{k\to\infty}\displaystyle{\frac{\Delta x_{k+1}}{\left(\Delta x_k\right)^p}}=C.$
 </blockquote>
 
 <p>A constante C é chamada constante assintótica do erro. Quando p=1, a convergência é chamada linear; nesse caso, para que o erro diminua, é necessário que C&lt;1. Quando p=2, a convergência é chamada quadrática. Quanto maior a ordem de convergência, mais rapidamente o erro tende a zero, desde que as aproximações já estejam suficientemente próximas da solução.</p>
@@ -66,27 +66,27 @@ $x_{k+1}=x_k−\displaystyle{\frac{f\left(x_k\right)}{f\prime\left(x_k\right)}},
 <p>Para estudar o erro, utilizamos a fórmula de Taylor em torno da raiz x:</p>
 
 <blockquote class="formula">
-$f\left(x_k\right)=f\prime\left(x\right)\left(x_k−x\right)+\displaystyle{\frac{f\prime\prime\left(x\right)}{2}}\left(x_k−x\right)^2$ $+~O\left(x_k−x\right)^3,$
+$f\left(x_k\right)=f\prime\left(x\right)\left(x_k−x\right)+\displaystyle{\frac{f\prime\prime\left(x\right)}{2}}\left(x_k−x\right)^2$ $+~\textrm{&Oscr;}\left(x_k−x\right)^3,$
 <br/>
-$f\prime\left(x_k\right)=f\prime\left(x\right)+f\prime\prime\left(x\right)\left(x_k−x\right)$ $+~O\left(x_k−x\right)^2.$
+$f\prime\left(x_k\right)=f\prime\left(x\right)+f\prime\prime\left(x\right)\left(x_k−x\right)$ $+~\textrm{&Oscr;}\left(x_k−x\right)^2.$
 </blockquote>
 
 <p>Substituindo essas expressões na fórmula de Newton-Raphson e simplificando, obtemos a relação assintótica</p>
 
 <blockquote class="formula">
-$x_{k+1}−x=\displaystyle{\frac{f\prime\prime\left(x\right)}{2f\prime\left(x\right)}}\left(x_k−x\right)^2+O\left(x_k−x\right)^3.$
+$x_{k+1}−x=\displaystyle{\frac{f\prime\prime\left(x\right)}{2f\prime\left(x\right)}}\left(x_k−x\right)^2+\textrm{&Oscr;}\left(x_k−x\right)^3.$
 </blockquote>
 
 <p>Passando para o erro absoluto Δx<sub>k</sub>=|x<sub>k</sub>−x|, obtemos</p>
 
 <blockquote class="formula">
-$\Delta x_{k+1} = \displaystyle{\frac{\left|f\prime\prime\left(x\right)\right|}{2\left|f\prime\left(x\right)\right|}}\Delta x_k^2 + O\left(\Delta x_k\right)^3.$
+$\Delta x_{k+1}=\displaystyle{\frac{\left|f\prime\prime\left(x\right)\right|}{2\left|f\prime\left(x\right)\right|}}\left(\Delta x_k\right)^2+\textrm{&Oscr;}\left(\Delta x_k\right)^3.$
 </blockquote>
 
 <p>Portanto, quando a aproximação inicial está suficientemente próxima da raiz e f′(x)≠0, o erro absoluto da próxima iteração é proporcional ao quadrado do erro absoluto anterior. Assim, o método de Newton-Raphson tem convergência de ordem 2:</p>
 
 <blockquote class="formula">
-$\lim_{k\to\infty}\displaystyle{\frac{\Delta x_{k+1}}{\Delta x_k^2}}=\displaystyle{\frac{\left|f\prime\prime\left(x\right)\right|}{2\left|f\prime\left(x\right)\right|}}.$
+$\lim_{k\to\infty}\displaystyle{\frac{\Delta x_{k+1}}{\left(\Delta x_k\right)^2}}=\displaystyle{\frac{\left|f\prime\prime\left(x\right)\right|}{2\left|f\prime\left(x\right)\right|}}.$
 </blockquote>
 
 <p>Na aula anterior vimos que é possível construir métodos usando aproximações de ordem superior. De modo semelhante, é possível mostrar que esses métodos superiores têm convergência de ordem superior, quando as hipóteses necessárias de regularidade e proximidade da raiz são satisfeitas.</p>
@@ -164,9 +164,9 @@ text=Secantes(f,0,1)
 <p>Como f(x)=0, pela fórmula de Taylor em torno da raiz x temos</p>
 
 <blockquote class="formula">
-$f\left(x_k\right)=f\prime\left(x\right)\left(x_k−x\right)+\displaystyle{\frac{f\prime\prime\left(x\right)}{2}}\left(x_k−x\right)^2$ $+~O\left(x_k−x\right)^3,$
+$f\left(x_k\right)=f\prime\left(x\right)\left(x_k−x\right)+\displaystyle{\frac{f\prime\prime\left(x\right)}{2}}\left(x_k−x\right)^2$ $+~\textrm{&Oscr;}\left(x_k−x\right)^3,$
 <br/>
-$f\left(x_{k−1}\right)=f\prime\left(x\right)\left(x_{k−1}−x\right)$ $+~\displaystyle{\frac{f\prime\prime\left(x\right)}{2}}\left(x_{k−1}−x\right)^2$ $+~O\left(x_{k−1}−x\right)^3.$
+$f\left(x_{k−1}\right)=f\prime\left(x\right)\left(x_{k−1}−x\right)$ $+~\displaystyle{\frac{f\prime\prime\left(x\right)}{2}}\left(x_{k−1}−x\right)^2$ $+~\textrm{&Oscr;}\left(x_{k−1}−x\right)^3.$
 </blockquote>
 
 <p>Subtraindo x da fórmula de secantes e substituindo as expansões de Taylor, obtemos</p>
@@ -190,13 +190,13 @@ $\Delta x_{k+1}\propto \Delta x_k\Delta x_{k−1}.$
 <p>Para calcular a ordem de convergência, suponhamos que</p>
 
 <blockquote class="formula">
-$\Delta x_{k+1}\propto \Delta x_k^p$ e também $\Delta x_k\propto \Delta x_{k−1}^p.$
+$\Delta x_{k+1}\propto \left(\Delta x_k\right)^p$ e também $\Delta x_k\propto \left(\Delta x_{k−1}\right)^p.$
 </blockquote>
 
 <p>Substituindo isso na relação anterior, obtemos</p>
 
 <blockquote class="formula">
-$\Delta x_{k+1}\propto \Delta x_k^{1+1/p}.$
+$\Delta x_{k+1}\propto \left(\Delta x_k\right)^{1+1/p}.$
 </blockquote>
 
 <p>Como a ordem de convergência é p, os expoentes devem coincidir:</p>

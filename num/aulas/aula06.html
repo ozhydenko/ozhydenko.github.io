@@ -32,19 +32,19 @@
 <p>Consideremos uma função numérica f(x). Não podemos calcular a sua derivada utilizando a definição,</p>
 
 <blockquote class="formula">
-$f'(x)=$&nbsp;$\displaystyle{\lim_{h\to0}\frac{f(x+h)−f(x)}{h}}.$
+$f\prime\left(x\right)=\displaystyle{\lim_{h\to0}\frac{f(x+h)−f(x)}{h}}.$
 </blockquote>
 
 <p>Se utilizamos esta fórmula para algum valor pequeno de h como uma aproximação, precisamos uma estimativa do erro, que pode ser obtida pela fórmula de Taylor de ordem 1 (aproximação linear):</p>
 
 <blockquote class="formula">
-$f(x+h)=f(x)+f'(x)h$&nbsp;$+\textrm{&Oscr;}(h^2).$
+$f\left(x+h\right)=f\left(x\right)+f\prime\left(x\right)h+\textrm{&Oscr;}\left(h^2\right).$
 </blockquote>
 
 <p>Dividindo ambos lados por h e isolando a derivada, obtemos</p>
 
 <blockquote class="formula">
-$f'(x)=$&nbsp;$\displaystyle{\frac{f(x+h)−f(x)}{h}}$&nbsp;$~+\textrm{&Oscr;}(h).$
+$f\prime\left(x\right)=\displaystyle{\frac{f(x+h)−f(x)}{h}}+\textrm{&Oscr;}\left(h\right).$
 </blockquote>
 
 <p>Isso significa que o erro da aproximação é proporcional a h. Como o coeficiente de proporcionalidade é desconhecido, é difícil de controlar o erro dessa aproximação.</p>
@@ -52,25 +52,25 @@ $f'(x)=$&nbsp;$\displaystyle{\frac{f(x+h)−f(x)}{h}}$&nbsp;$~+\textrm{&Oscr;}(h
 <p>Para aproximação melhor utilizamos a fórmula de Taylor de segunda ordem:</p>
 
 <blockquote class="formula">
-$f(x+h)=f(x)+f'(x)h$&nbsp;$+\displaystyle{\frac{f''(h)}{2}h^2}$&nbsp;$+\textrm{&Oscr;}(h^3).$
+$f\left(x+h\right)=f\left(x\right)+f\prime\left(x\right)h+\displaystyle{\frac{f\prime\prime(x)}{2}h^2}$ $+~\textrm{&Oscr;}\left(h^3\right).$
 </blockquote>
 
 <p>Para eliminar a segunda derivada, subtraímos a mesma fórmula para h com sinal oposto:</p>
 
 <blockquote class="formula">
-$f(x−h)=f(x)−f'(x)h$&nbsp;$+\displaystyle{\frac{f''(h)}{2}h^2}$&nbsp;$+\textrm{&Oscr;}(h^3).$
+$f\left(x−h\right)=f\left(x\right)−f\prime\left(x\right)h+\displaystyle{\frac{f\prime\prime(x)}{2}h^2}$ $+~\textrm{&Oscr;}\left(h^3\right).$
 </blockquote>
 
 <p>A subtração dá</p>
 
 <blockquote class="formula">
-$f(x+h)−f(x−h)=2f'(x)h$&nbsp;$+\textrm{&Oscr;}(h^3).$
+$f\left(x+h\right)−f\left(x−h\right)=2f\prime\left(x\right)h+\textrm{&Oscr;}\left(h^3\right).$
 </blockquote>
 
 <p>Isolando a derivada, obtemos</p>
 
 <blockquote class="formula">
-$f'(x)=$&nbsp;$\displaystyle{\frac{f(x+h)−f(x−h)}{2h}}$&nbsp;$~+\textrm{&Oscr;}(h^2).$
+$f\prime\left(x\right)=\displaystyle{\frac{f(x+h)−f(x−h)}{2h}}+\textrm{&Oscr;}\left(h^2\right).$
 </blockquote>
 
 <p>Esta fórmula dá controle melhor do erro, pois diminuindo h duas vezes o erro do resultado deve ser quatro vezes menor.</p>
@@ -103,7 +103,7 @@ $\Delta f=|f|\varepsilon_f,$
 <p>onde |f| é o valor absoluto da função. O erro absoluto do resultado de subtração é a soma dos erros absolutos do minuendo e do subtraendo. Assim, o erro total do valor da derivada aproximada será</p>
 
 <blockquote class="formula">
-$\Delta f'=\displaystyle{\frac{2|f|\varepsilon_f}{2h}}$&nbsp;$+\textrm{&Oscr;}(h^2)=|f|\varepsilon_fh^{-1}+Ah^2,$
+$\Delta f'=\displaystyle{\frac{2|f|\varepsilon_f}{2h}}+\textrm{&Oscr;}\left(h^2\right)=|f|\varepsilon_fh^{-1}+Ah^2,$
 </blockquote>
 
 <p>onde A é o coeficiente que depende das terceiras derivadas.</p>
@@ -145,28 +145,28 @@ $\varepsilon_{f'}\approx2^{-36}\approx10^{-11}.$
 <p>Para obter a aproximação de ordem superior utilizamos a fórmula de Taylor de mesma ordem:</p>
 
 <blockquote class="formula">
-$f(x+h)=f(x)+f'(x)h$&nbsp;$+\displaystyle{\frac{f''(h)}{2}h^2}$&nbsp;$+\displaystyle{\frac{f'''(h)}{3!}h^3}$&nbsp;$+\displaystyle{\frac{f''''(h)}{4!}h^4}$&nbsp;$+\textrm{&Oscr;}(h^5),$
+$f\left(x+h\right)=f\left(x\right)+f\prime\left(x\right)h$ $+~\displaystyle{\frac{f\prime\prime(x)}{2}h^2}$ $+~\displaystyle{\frac{f\prime\prime\prime(x)}{3!}h^3}$ $+~\displaystyle{\frac{f\prime\prime\prime\prime(x)}{4!}h^4}$ $+~\textrm{&Oscr;}\left(h^5\right),$
 <br />
-$f(x−h)=f(x)−f'(x)h$&nbsp;$+\displaystyle{\frac{f''(h)}{2}h^2}$&nbsp;$−\displaystyle{\frac{f'''(h)}{3!}h^3}$&nbsp;$+\displaystyle{\frac{f''''(h)}{4!}h^4}$&nbsp;$+\textrm{&Oscr;}(h^5).$
+$f\left(x−h\right)=f\left(x\right)−f\prime\left(x\right)h$ $+~\displaystyle{\frac{f\prime\prime(x)}{2}h^2}$ $−~\displaystyle{\frac{f\prime\prime\prime(x)}{3!}h^3}$ $+~\displaystyle{\frac{f\prime\prime\prime\prime(x)}{4!}h^4}$ $+~\textrm{&Oscr;}\left(h^5\right),$
 </blockquote>
 
 
 <p>Subtraindo, obtemos</p>
 
 <blockquote class="formula">
-$f(x+h)−f(x−h)=2f'(x)h$&nbsp;$+\displaystyle{\frac{f'''(h)}{3}h^3}$&nbsp;$+\textrm{&Oscr;}(h^5).$
+$f\left(x+h\right)−f\left(x−h\right)=2f\prime\left(x\right)h$ $+~\displaystyle{\frac{f\prime\prime\prime(x)}{3}h^3}+\textrm{&Oscr;}\left(h^5\right).$
 </blockquote>
 
 <p>Para eliminar a terceira derivada utilizamos 2h em vez de h:</p>
 
 <blockquote class="formula">
-$f(x+2h)−f(x−2h)=4f'(x)h$&nbsp;$+\displaystyle{\frac{8f'''(h)}{3}h^3}$&nbsp;$+\textrm{&Oscr;}(h^5).$
+$f\left(x+2h\right)−f\left(x−2h\right)=4f\prime\left(x\right)h$ $+~\displaystyle{\frac{8f\prime\prime\prime(x)}{3}h^3}+\textrm{&Oscr;}\left(h^5\right).$
 </blockquote>
 
 <p>Multiplicando a primeira relação por 8 e subtraindo a segunda, isolamos a derivada:</p>
 
 <blockquote class="formula">
-$f'(x)=$&nbsp;$\displaystyle{\frac{8f(x+h)−8f(x−h)−f(x+2h)+f(x−2h)}{12h}}$&nbsp;$~+\textrm{&Oscr;}(h^4).$
+$f\prime\left(x\right)=$&nbsp;$\displaystyle{\frac{8f(x+h)−8f(x−h)−f(x+2h)+f(x−2h)}{12h}}$ $+~\textrm{&Oscr;}\left(h^4\right).$
 </blockquote>
 
 <p>Neste caso, o valor mínimo do erro é atingido para</p>
@@ -178,7 +178,7 @@ $\displaystyle{h\approx\left(\varepsilon_f\right)^{1/5}}\approx2^{-11}\approx0.0
 <p>que dá o erro relativo da ordem</p>
 
 <blockquote class="formula">
-$\displaystyle{\varepsilon_{f'}\approx\left(\varepsilon_f\right)^{4/5}}\approx2^{-43}\approx10^{-13}.$
+$\displaystyle{\varepsilon_{f\prime}\approx\left(\varepsilon_f\right)^{4/5}}\approx2^{-43}\approx10^{-13}.$
 </blockquote>
 
 <form>
@@ -213,4 +213,4 @@ for(var i=0;i<h.length;++i) text+="h="+h[i]+", erro="+(D(Math.sin,x,h[i])-Math.c
 
 </body>
 
-</html> 
+</html>
