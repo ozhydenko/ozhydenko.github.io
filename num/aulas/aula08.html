@@ -43,14 +43,14 @@ $\lim_{k\to\infty}x_k=x.$
 
 <p>Na prática, o processo iterativo é interrompido após um número finito de iterações, quando um critério de parada é satisfeito, como, por exemplo, quando a diferença de duas aproximações (chamada o <strong>valor residual</strong> associado ao problema), torna-se menor do que uma tolerância ε previamente fixada,</p>
 <blockquote class="formula">
-∣ x<sub>k</sub> − x<sub>k−1</sub> ∣ &lt; ε.
+∣ x<sub>k+1</sub> − x<sub>k</sub> ∣ &lt; ε.
 </blockquote>
 
 <h3>Método do ponto fixo</h3>
 
 <p>Em muitos métodos iterativos, a sequência {x<sub>k</sub>} é definida a partir de uma <strong>função de iteração</strong> φ&nbsp;:&nbsp;D&nbsp;⊂&nbsp;ℝ&nbsp;→&nbsp;D, de modo que cada termo da sequência é obtido pela relação</p>
 <blockquote class="formula">
-x<sub>k</sub> = φ(x<sub>k−1</sub>) para k = 0, 1, 2, ….
+x<sub>k+1</sub> = φ(x<sub>k</sub>) para k = 0, 1, 2, ….
 </blockquote>
 <p>Nesse contexto, o valor inicial x<sub>0</sub>
 deve pertencer ao domínio D da função φ.
@@ -160,33 +160,34 @@ x = φ(x).
 
 <svg width="100%" height="440">
    <text x="81%" y="20" text-anchor="start">y=x</text>
-   <text x="22%" y="20" text-anchor="start">y=φ(x)</text>
+   <text x="25%" y="20" text-anchor="start">y=φ(x)</text>
    <line x1="5%" y1="350" x2="95%" y2="350" stroke="black"/>
    <line x1="10%" y1="350" x2="80%" y2="10" stroke="blue"/>
    <line x1="10%" y1="5" x2="10%" y2="435" stroke="black"/>
 
-   <line x1="49%" y1="350" x2="49%" y2="150" stroke="black" stroke-dasharray="9,3" />
-   <line x1="10%" y1="150" x2="57%" y2="150" stroke="black" stroke-dasharray="9,3" />
+   <line x1="49%" y1="350" x2="49%" y2="115" stroke="black" stroke-dasharray="9,3" />
+   <line x1="10%" y1="115" x2="58.5%" y2="115" stroke="black" stroke-dasharray="9,3" />
    <text x="49%" y="365" text-anchor="middle" font-size="100%">x<tspan dx="0" dy="4" font-size="75%">0</tspan></text>
-   <text x="9%" y="154" text-anchor="end" font-size="100%">φ(x<tspan dx="0" dy="4" font-size="75%">0</tspan><tspan dx="0" dy="-4">)</tspan></text>
+   <text x="9%" y="120" text-anchor="end" font-size="100%">φ(x<tspan dx="0" dy="4" font-size="75%">0</tspan><tspan dx="0" dy="-4">)</tspan></text>
+   
+   <line x1="58.5%" y1="350" x2="58.5%" y2="115" stroke="black" stroke-dasharray="9,3" />
+   <line x1="10%" y1="179" x2="58.5%" y2="179" stroke="black" stroke-dasharray="9,3" />
+   <text x="58.5%" y="365" text-anchor="middle" font-size="100%">x<tspan dx="0" dy="4" font-size="75%">1</tspan></text>
+   <text x="9%" y="182" text-anchor="end" font-size="100%">φ(x<tspan dx="0" dy="4" font-size="75%">1</tspan><tspan dx="0" dy="-4">)</tspan></text>
 
-   <line x1="57%" y1="350" x2="57%" y2="100" stroke="black" stroke-dasharray="9,3" />
-   <line x1="10%" y1="100" x2="38%" y2="100" stroke="black" stroke-dasharray="9,3" />
-   <text x="57%" y="365" text-anchor="middle" font-size="100%">x<tspan dx="0" dy="4" font-size="75%">1</tspan></text>
-   <text x="9%" y="104" text-anchor="end" font-size="100%">φ(x<tspan dx="0" dy="4" font-size="75%">1</tspan><tspan dx="0" dy="-4">)</tspan></text>
+   <line x1="45%" y1="350" x2="45%" y2="92" stroke="black" stroke-dasharray="9,3" />
+   <line x1="10%" y1="92" x2="63%" y2="92" stroke="black" stroke-dasharray="9,3" />
+   <text x="45%" y="365" text-anchor="middle" font-size="100%">x<tspan dx="0" dy="4" font-size="75%">2</tspan></text>
+   <text x="9%" y="94" text-anchor="end" font-size="100%">φ(x<tspan dx="0" dy="4" font-size="75%">2</tspan><tspan dx="0" dy="-4">)</tspan></text>
 
-   <line x1="38%" y1="350" x2="38%" y2="236" stroke="black" stroke-dasharray="9,3" />
-   <line x1="10%" y1="236" x2="73%" y2="236" stroke="black" stroke-dasharray="9,3" />
-   <text x="38%" y="365" text-anchor="middle" font-size="100%">x<tspan dx="0" dy="4" font-size="75%">2</tspan></text>
-   <text x="9%" y="240" text-anchor="end" font-size="100%">φ(x<tspan dx="0" dy="4" font-size="75%">2</tspan><tspan dx="0" dy="-4">)</tspan></text>
+   <line x1="63%" y1="350" x2="63%" y2="92" stroke="black" stroke-dasharray="9,3" />
+   <text x="63%" y="365" text-anchor="middle" font-size="100%">x<tspan dx="0" dy="4" font-size="75%">3</tspan></text>
 
-   <line x1="73%" y1="350" x2="73%" y2="34" stroke="black" stroke-dasharray="9,3" />
-   <text x="73%" y="365" text-anchor="middle" font-size="100%">x<tspan dx="0" dy="4" font-size="75%">3</tspan></text>
-   <line x1="53%" y1="350" x2="53%" y2="143" stroke="black" stroke-dasharray="9,3" />
-   <text x="53%" y="382" text-anchor="middle" font-size="100%">x</text>
+   <line x1="53.2%" y1="350" x2="53.2%" y2="143" stroke="black" stroke-dasharray="9,3" />
+   <text x="53.2%" y="365" text-anchor="middle" font-size="100%">x</text>
 
    <svg x="5%" y="10" viewBox="0 0 600 200" width="95%" height="400px" preserveAspectRatio="none">
-     <path d="M 35 0 C 170 15, 340 40, 465 200"
+     <path d="M 35 0 C 170 5, 340 40, 465 200"
            fill="none" stroke="red"/>
    </svg>
 </svg>
@@ -211,11 +212,11 @@ $\displaystyle{\lim_{k\to\infty}x_k=x.}$
 <blockquote><strong>Demonstração.</strong>
 O erro absoluto da aproximação na iteração k é
 <blockquote class="formula">
-$\Delta x_k = \left|x_k − x\right| = \left|\phi(x_k) − \phi(x)\right|.$
+$\Delta x_k = \left|x_k − x\right| = \left|\phi(x_{k−1}) − \phi(x)\right|.$
 </blockquote>
 Supondo que x<sub>k−1</sub> ∈ I, como φ(x) possui a derivada contínua, por teorema do valor médio existe ξ entre x<sub>k−1</sub> e x, tal que
 <blockquote class="formula">
-$\Delta x_k = \left|\phi(x_k) − \phi(x)\right|$ $=~\left|\phi\prime(\xi)\right|\cdot\left|x_k − x\right| \leq M\cdot\left|x_k − x\right|$ $=~M\cdot\Delta x_{k−1},$
+$\Delta x_k = \left|\phi(x_{k−1}) − \phi(x)\right|$ $=~\left|\phi\prime(\xi)\right|\cdot\left|x_{k−1} − x\right| \leq M\cdot\left|x_{k−1} − x\right|$ $=~M\cdot\Delta x_{k−1},$
 </blockquote>
 pois ξ ∈ I. Repetindo k vezes, obtemos
 <blockquote class="formula">
@@ -234,7 +235,7 @@ $\displaystyle{\lim_{k\to\infty}\Delta x_k = \lim_{k\to\infty}\left|x_k − x\ri
 <p>Para estimar o erro da aproximação na iteração k, podemos comparar duas aproximações consecutivas:</p>
 
 <blockquote class="formula">
-$\Delta x_k = |x_k − x| = |x_k − x_{k+1} + x_{k+1} − x|$ $\leq~|x_k − x_{k+1}| + |x_{k+1} − x|$ $=~|x_k − x_{k+1}|$ $+~\Delta x_{k+1} \leq |x_k − x_{k+1}| + M\cdot\Delta x_k.$
+$\Delta x_k = |x_k − x| = |x_k − x_{k+1} + x_{k+1} − x|$ $\leq~|x_k − x_{k+1}| + |x_{k+1} − x|$ $=~|x_k − x_{k+1}|+\Delta x_{k+1}$ $\leq~|x_k − x_{k+1}| + M\cdot\Delta x_k.$
 </blockquote>
 
 <p>Assim,</p>
@@ -244,16 +245,16 @@ $\Delta x_k \leq \displaystyle{\frac{1}{1 − M}}\cdot|x_{k + 1} − x_k|.$
 
 <p>Finalmente,</p>
 <blockquote class="formula">
-$\Delta x_k \leq  M\cdot\Delta x_{k−1} \leq \displaystyle{\frac{M}{1 − M}}\cdot|x_k − x_{k−1}|.$
+$\Delta x_{k+1} \leq  M\cdot\Delta x_k \leq \displaystyle{\frac{M}{1 − M}}\cdot|x_{k+1} − x_k|.$
 </blockquote>
 
 <p>Essa desigualdade é útil como critério de parada. Se queremos garantir erro absoluto menor que ε, basta continuar as iterações até que</p>
 
 <blockquote class="formula">
-$\displaystyle{\frac{M}{1 − M}}\cdot|x_k − x_{k−1}|&lt;\varepsilon.$
+$\displaystyle{\frac{M}{1 − M}}\cdot|x_{k+1} − x_k|&lt;\varepsilon.$
 </blockquote>
 
-<p>Mesmo quando desconhecemos o valor de M, podemos usar o valor residual |x<sub>k</sub> − x<sub>k−1</sub>| como critério aproximado. Nesse caso, não obtemos uma estimativa rigorosa do erro, mas esperamos que o erro seja da mesma ordem de grandeza que o residual.</p>
+<p>Mesmo quando desconhecemos o valor de M, podemos usar o valor residual |x<sub>k+1</sub> − x<sub>k</sub>| como critério aproximado. Nesse caso, não obtemos uma estimativa rigorosa do erro, mas esperamos que o erro seja da mesma ordem de grandeza que o residual.</p>
 
 <form>
 <div class="overwrite"><input class="right-aligned" type="button" name="execute"  value="Executar" onClick="ExecuteCodeEvent(this)"></div>
@@ -278,7 +279,7 @@ text=pontofixo(phi,1.5)
   <li>Métodos iterativos constroem uma sequência de aproximações a partir de uma aproximação inicial.</li>
   <li>No método do ponto fixo, a equação é transformada na forma x=φ(x), e as aproximações são obtidas pela repetição x<sub>k</sub>=φ(x<sub>k−1</sub>).</li>
   <li>A convergência do método do ponto fixo não é garantida para qualquer função de iteração nem para qualquer aproximação inicial.</li>
-  <li>Uma condição suficiente de convergência é |φ'(x)|&lt;1 no intervalo considerado.</li>
+  <li>Uma condição suficiente de convergência é |φ'(x)|≤M&lt;1 no intervalo considerado.</li>
   <li>Quando a convergência é garantida, podemos estimar o erro usando a diferença entre duas aproximações consecutivas.</li>
 </ol>
 </section>

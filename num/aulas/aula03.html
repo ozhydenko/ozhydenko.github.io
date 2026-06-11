@@ -57,6 +57,8 @@ $\pm 0.d_1d_2\ldots d_t\times \beta^e,$
 
 <p>Podemos observar que a posição real do ponto não é fixa e depende do expoente. Por isso, o número é chamado de <strong>ponto flutuante</strong>.</p>
 
+<p>Para determinar a mantissa e o expoente, deslocamos o ponto até obter o formato normalizado desejado. Quando deslocamos o ponto para a direita, o expoente que compensa esse deslocamento fica negativo; quando deslocamos o ponto para a esquerda, o expoente fica positivo. Por exemplo, 0.0000012 pode ser escrito como 1.2×10<sup>-6</sup>, pois o ponto decimal foi deslocado seis casas para a direita. No formato adotado acima, em que a mantissa tem valor absoluto menor que 1, o mesmo número pode ser escrito como 0.12×10<sup>-5</sup>.</p>
+
 <h4>Erro de representação</h4>
 
 <p>Este formato de representação dos números precisa uma fixa quantidade de memória para representar qualquer número, enquanto o erro relativo desta representação não depende da ordem de grandeza do número.</p>
@@ -79,6 +81,25 @@ $\displaystyle{\varepsilon_V=\frac{\Delta V}{|\bar{V}|}\leq\frac{\beta^{1-t}}{2}
 </blockquote>
 
 <p>e não depende do valor de expoente e.</p>
+
+<h4>Representação padrão em linguagens de programação</h4>
+
+<p>A maioria das linguagens de programação usa números de ponto flutuante baseados no padrão IEEE 754. Nesse padrão, o número é armazenado internamente em base 2, por meio de sinal, expoente e parte significativa. Portanto, a forma digitada pelo usuário não é necessariamente a forma guardada na memória.</p>
+
+<p>Na entrada de um programa, em geral podemos escrever números em várias formas, usando a notação decimal usual ou a notação científica com a letra <code>e</code>. A letra <code>e</code> indica uma potência de 10; assim, <code>1.2e-6</code> significa 1.2×10<sup>-6</sup>.</p>
+
+<blockquote>
+<table><tbody>
+<tr><td><code>0.000012</code></td><td>= 1.2×10<sup>-5</sup></td><td>→ <code>1.2e-5</code></td></tr>
+<tr><td><code>0.0000012</code></td><td>= 1.2×10<sup>-6</sup></td><td>→ <code>1.2e-6</code></td></tr>
+<tr><td><code>0.12e-5</code></td><td>= 0.12×10<sup>-5</sup> = 1.2×10<sup>-6</sup></td><td>→ <code>1.2e-6</code></td></tr>
+<tr><td><code>1200000</code></td><td>= 1.2×10<sup>6</sup></td><td>→ <code>1.2e6</code></td></tr>
+</tbody></table>
+</blockquote>
+
+<p>Depois da leitura, o valor é convertido para a representação interna do sistema. Quando escolhemos apresentar o resultado em notação científica decimal, ele é escrito no formato padrão, com apenas um algarismo diferente de zero antes do ponto decimal. Assim, entradas equivalentes, como <code>0.12e-5</code> e <code>1.2e-6</code>, produzem a mesma saída normalizada: <code>1.2e-6</code>.</p>
+
+<p>Essa notação de saída é decimal e serve para leitura humana. Ela não deve ser confundida com a representação binária interna usada pelo padrão IEEE 754, embora ambas sejam representações de ponto flutuante baseadas na mesma ideia: uma parte significativa multiplicada por uma potência da base.</p>
 
 <h3>Operações aritméticas</h3>
 
@@ -134,7 +155,7 @@ $0.0069\times10^1\quad\rightarrow\quad0.690\times10^{-1}.$
 <p><strong>Operação 3:</strong> Transformação final para representar o produto em F(10,3,2,3).</p>
 
 <blockquote class="formula">
-$0.182\times10^1\times0.430\times10^{-1}$ $=(0.182\times0.430)\times10^{1-1}=0.07826\times10^0\quad\rightarrow\quad0.783\times10^{-1}.$
+$0.182\times10^1\times0.430\times10^{-1}$ $=~(0.182\times0.430)\times10^{1-1}$ $=~0.07826\times10^0\quad\rightarrow\quad0.783\times10^{-1}.$
 </blockquote>
 
 <h4>Divisão</h4>
@@ -148,7 +169,7 @@ $0.182\times10^1\times0.430\times10^{-1}$ $=(0.182\times0.430)\times10^{1-1}=0.0
 <p><strong>Operação 3:</strong> Representar o resultado em F(10,3,2,3).</p>
 
 <blockquote class="formula">
-$0.110\times10^1\times0.300\times10^{-1}$ $=(0.110/0.300)\times10^{1-(-1)}$ $=0.366666\ldots\times10^2\quad\rightarrow\quad0.367\times10^2.$
+$0.110\times10^1\times0.300\times10^{-1}$ $=~(0.110/0.300)\times10^{1-(-1)}$ $=~0.366666\ldots\times10^2\quad\rightarrow\quad0.367\times10^2.$
 </blockquote>
 
 <h4>Transbordamento</h4>
@@ -165,6 +186,7 @@ $0.110\times10^1\times0.300\times10^{-1}$ $=(0.110/0.300)\times10^{1-(-1)}$ $=0.
 
 <ol>
   <li>Formato de representação de números na aritmética de ponto flutuante tem a mesma ordem do erro relativo de representação como para números grandes tanto para números pequenos.</li>
+  <li>Nas linguagens de programação, os números de ponto flutuante geralmente seguem o padrão IEEE 754; a notação com <code>e</code> indica uma potência de 10, por exemplo, <code>1.2e-6</code> significa 1.2×10<sup>-6</sup>.</li>
   <li>As operações da aritmética de ponto flutuante são complexas e geram uma fonte adicional de erro por causa do arredondamento final no resultado de cada operação aritmética.</li>
   <li>Devido às limitações da representação no resultado de arredondamento podemos obter o infinito numérico ou zero.</li>
 </ol>
