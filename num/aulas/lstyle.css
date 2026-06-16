@@ -37,6 +37,10 @@ input[type=button]{
 .invisible{
 	display: none;
 }
+.formula{
+
+        text-align:left;
+}
 .right{
 	float: right;
 }

@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width" />
+<title>Cálculo numérico: Método dos quadrados mínimos: caso contínuo.</title>
+<link rel="stylesheet" type="text/css" href="lstyle.css" />
+<link href="https://www.ufabc.edu.br/ensino/docentes/olexandr-zhydenko" rel="author" />
+<script type="text/javascript" src="execjavascript.js"></script>
+<script type="text/javascript" src="LaTeXMathML.js"></script>
+</head>
+
+<body>
+
+<header>
+</header>
+
+<nav>
+<a class="prev" href="aula13.html">Aula anterior</a>
+<a class="top" href="index.html">Índice</a>
+<a class="next" href="aula15.html">Próxima aula</a>
+</nav>
+
+<article>
+
+<section>
+<h2>Aula 14: Método dos quadrados mínimos: caso contínuo.</h2>
+
+<h3>Formulação do problema contínuo</h3>
+
+<p>Na <a href="aula13.html">aula anterior</a>, aproximamos um conjunto finito de pontos por uma combinação linear de funções dadas. Agora consideramos um problema análogo, mas contínuo. Em vez de termos apenas alguns dados fixos y<sub>i</sub>, supomos que uma função numérica y(x) está definida em todo o intervalo [a,b]. Isso significa que podemos obter o valor y(x) para qualquer ponto x desse intervalo.</p>
+
+<p>O objetivo é aproximar essa função y(x) por uma combinação linear de funções conhecidas:</p>
+
+<blockquote class="formula">
+$f\left(x\right)=c_1g_1\left(x\right)+c_2g_2\left(x\right)+\ldots+c_ng_n\left(x\right).$
+</blockquote>
+
+<p>As funções g<sub>1</sub>(x), g<sub>2</sub>(x), ..., g<sub>n</sub>(x) são dadas. Apenas os coeficientes c<sub>1</sub>, c<sub>2</sub>, ..., c<sub>n</sub> são desconhecidos. Como geralmente não é possível obter f(x)=y(x) para todos os pontos do intervalo, procuramos a função f(x) que fica mais próxima de y(x) no intervalo inteiro.</p>
+
+<svg width="100%" height="300">
+   <line x1="8%" y1="260" x2="94%" y2="260" stroke="black"/>
+   <line x1="10%" y1="20" x2="10%" y2="280" stroke="black"/>
+   <text x="93%" y="282" text-anchor="end">x</text>
+   <text x="8%" y="30" text-anchor="end">y</text>
+
+   <svg x="10%" y="35" viewBox="0 0 650 250" width="80%" height="220px" preserveAspectRatio="none">
+     <path d="M20 216 C185 108, 250 84, 315 130 C380 176, 445 228, 520 110 C555 58, 585 70, 630 100"
+        fill="none" stroke="blue" stroke-width="3"/>
+    <path d="M20 205 C190 150, 255 118, 315 125 C390 134, 455 160, 520 130 C555 113, 585 101, 630 90"
+        fill="none" stroke="red" stroke-width="3"/>
+
+    <path d="M60 193 C185 108, 250 84, 315 130 C380 176, 445 228, 520 110 C555 58, 585 70, 610 92
+           L610 94 C585 101, 555 113, 520 130 C455 160, 390 134, 315 125 C255 118, 190 150, 60 195 Z"
+        fill="orange" opacity="0.16"/>
+   </svg>
+
+   <text x="25%" y="155" text-anchor="end">y=y(x)</text>
+   <text x="25%" y="215" text-anchor="start">y=f(x)</text>
+
+  <line x1="17%" y1="205" x2="17%" y2="260" stroke="black" stroke-dasharray="9,3"/>
+  <line x1="86%" y1="115" x2="86%" y2="260" stroke="black" stroke-dasharray="9,3"/>
+
+  <text x="17%" y="275" text-anchor="middle" font-size="100%">a</text>
+  <text x="86%" y="275" text-anchor="middle" font-size="100%">b</text>
+</svg>
+
+<p>Como no caso discreto, erros positivos e negativos podem se cancelar se somarmos apenas as diferenças. Por isso, minimizamos a soma contínua dos quadrados dos erros, isto é, a integral:</p>
+
+<blockquote class="formula">
+$\sigma\left(c_1,c_2,\ldots,c_n\right)=\displaystyle{\int_a^b\left(f\left(x\right)−y\left(x\right)\right)^2dx}.$
+</blockquote>
+
+<p>Depois de substituir a expressão de f(x), obtemos σ como uma função dos n coeficientes desconhecidos:</p>
+
+<blockquote class="formula">
+$\sigma\left(c_1,c_2,\ldots,c_n\right)=\displaystyle{\int_a^b\left(c_1g_1\left(x\right)+c_2g_2\left(x\right)~+\right.}$ $\displaystyle{\left.\ldots+c_ng_n\left(x\right)−y\left(x\right)\right)^2dx}.$
+</blockquote>
+
+<h3>Equações normais</h3>
+
+<p>Para encontrar o mínimo de σ, calculamos as derivadas parciais em relação aos coeficientes e as igualamos a zero. Para i=1,2,...,n, temos</p>
+
+<blockquote class="formula">
+$\displaystyle{\frac{\partial\sigma}{\partial c_i}}=
+2\displaystyle{\int_a^b\left(c_1g_1\left(x\right)+c_2g_2\left(x\right)~+\right.}$ $\displaystyle{\left.\ldots+c_ng_n\left(x\right)−y\left(x\right)\right)g_i\left(x\right)dx}=0.$
+</blockquote>
+
+<p>Logo, os coeficientes devem satisfazer o sistema linear</p>
+
+<blockquote class="formula">
+$\displaystyle{\sum_{j=1}^{n}c_j\int_a^b g_j\left(x\right)g_i\left(x\right)dx}=\displaystyle{\int_a^b y\left(x\right)g_i\left(x\right)dx},$ $\qquad i=1,2,\ldots,n.$
+</blockquote>
+
+<p>Esse sistema é o análogo contínuo do sistema de equações normais obtido para dados discretos. Na forma matricial, escrevemos</p>
+
+<blockquote class="formula">
+$AC=B,$
+</blockquote>
+
+<p>com</p>
+
+<blockquote class="formula">
+$A=\left(\begin{array}{cccc}
+a_{11} & a_{12} & \ldots & a_{1n}\\
+a_{21} & a_{22} & \ldots & a_{2n}\\
+\vdots & \vdots & \ddots & \vdots\\
+a_{n1} & a_{n2} & \ldots & a_{nn}
+\end{array}\right),$
+$\qquad C=\left(\begin{array}{c}c_1\\c_2\\ \vdots\\c_n\end{array}\right),\qquad
+B=\left(\begin{array}{c}
+b_1\\
+b_2\\
+\vdots\\
+b_n
+\end{array}\right).$
+</blockquote>
+
+<p>Aqui, A é a matriz do sistema, C é a coluna dos coeficientes desconhecidos e B é a coluna do lado direito. Os coeficientes do sistema são</p>
+
+<blockquote class="formula">
+$a_{ij}=\displaystyle{\int_a^b g_j\left(x\right)g_i\left(x\right)dx},\qquad$
+$b_i=\displaystyle{\int_a^b y\left(x\right)g_i\left(x\right)dx}.$
+</blockquote>
+
+<p>A matriz A é chamada <strong>matriz de Gram</strong> das funções g<sub>1</sub>, g<sub>2</sub>, ..., g<sub>n</sub> no intervalo [a,b].</p>
+
+<h3>Produto interno e projeção</h3>
+
+<p>As funções definidas no intervalo [a,b] podem ser somadas e multiplicadas por números. Por isso, elas formam um espaço vetorial: se u(x) e v(x) são funções nesse intervalo, então αu(x)+βv(x) também é uma função no mesmo intervalo, para quaisquer números α e β.</p>
+
+<p>Nesse espaço vetorial, é conveniente introduzir um produto interno para medir ângulos, ortogonalidade e comprimento de funções. Usamos o produto interno</p>
+
+<blockquote class="formula">
+$\left\langle u,v\right\rangle=\displaystyle{\int_a^b u\left(x\right)v\left(x\right)dx}.$
+</blockquote>
+
+<p>Com essa notação, os coeficientes do sistema linear são produtos internos:</p>
+
+<blockquote class="formula">
+$a_{ij}=\left\langle g_i,g_j\right\rangle,\qquad b_i=\left\langle y,g_i\right\rangle.$
+</blockquote>
+
+<p>As funções g<sub>1</sub>, g<sub>2</sub>, ..., g<sub>n</sub> geram o subespaço de todas as aproximações f(x) possíveis:</p>
+
+<blockquote class="formula">
+$V=\textrm{span}\left\{g_1,g_2,\ldots,g_n\right\}.$
+</blockquote>
+
+<p>Se essas funções são linearmente independentes, então elas formam uma <strong>base</strong> de V. Isso significa que cada função de V pode ser escrita de modo único como combinação linear dessas funções. Nesse caso, a matriz A é simétrica e definida positiva, pois, para qualquer coluna não nula C,</p>
+
+<blockquote class="formula">
+$C^TAC~=$ $\left\langle c_1g_1+c_2g_2+\ldots+c_ng_n,\,
+c_1g_1+c_2g_2+\ldots+c_ng_n\right\rangle&gt;0.$
+</blockquote>
+
+<p>Portanto, o sistema AC=B possui uma única solução. Se as funções geradoras são dependentes, a mesma aproximação pode ter mais de uma representação por coeficientes, e a matriz A deixa de ser inversível. Nesse caso, o problema dos quadrados mínimos não possui uma única solução.</p>
+
+<p>A linguagem de produto interno também permite reformular o problema usando a norma:</p>
+
+<blockquote class="formula">
+$\left\|u\right\|\equiv\sqrt{\left\langle u,u\right\rangle}.$
+</blockquote>
+
+<p>Assim, o problema de quadrados mínimos contínuo é equivalente a encontrar o mínimo de</p>
+
+<blockquote class="formula">
+$\sigma=\left\|y−f\right\|^2,\qquad f\in V.$
+</blockquote>
+
+<p>A solução é a <strong>projeção ortogonal</strong> de y sobre o subespaço V. Isso significa que o erro y−f é ortogonal a todas as funções do subespaço V. Em particular, ele é ortogonal a cada função da base:</p>
+
+<blockquote class="formula">
+$\left\langle y−f,g_i\right\rangle=0,\qquad i=1,2,\ldots,n.$
+</blockquote>
+
+<p>Essas condições de ortogonalidade são exatamente as equações normais.</p>
+
+<h3>Base ortonormal</h3>
+
+<p>O sistema fica especialmente simples quando usamos uma base ortonormal e<sub>1</sub>, e<sub>2</sub>, ..., e<sub>n</sub> do subespaço V. Uma base é ortonormal quando</p>
+
+<blockquote class="formula">
+$\left\langle e_i,e_j\right\rangle=\left\{\begin{array}{ll}
+1,& i=j,\\
+0,& i\ne j.
+\end{array}\right.$
+</blockquote>
+
+<p>Nesse caso, a matriz principal do sistema é a matriz identidade. Portanto, a aproximação</p>
+
+<blockquote class="formula">
+$f\left(x\right)=c_1e_1\left(x\right)+c_2e_2\left(x\right)+\ldots+c_ne_n\left(x\right)$
+</blockquote>
+
+<p>tem coeficientes dados diretamente por</p>
+
+<blockquote class="formula">
+$c_i=\left\langle y,e_i\right\rangle
+=\displaystyle{\int_a^b y\left(x\right)e_i\left(x\right)dx},\qquad i=1,2,\ldots,n.$
+</blockquote>
+
+<p>Assim, quando a base é ortonormal, não é necessário resolver um sistema linear geral: basta calcular os produtos internos da função dada com cada função da base.</p>
+
+<p>Podemos obter uma base ortonormal a partir de funções linearmente independentes g<sub>1</sub>, g<sub>2</sub>, ..., g<sub>n</sub> pelo <strong>processo de Gram-Schmidt</strong>. Primeiro normalizamos a primeira função:</p>
+
+<blockquote class="formula">
+$e_1=\displaystyle{\frac{g_1}{\left\|g_1\right\|}}.$
+</blockquote>
+
+<p>Depois, retiramos de cada nova função as componentes nas direções já construídas:</p>
+
+<blockquote class="formula">
+$u_k\left(x\right)=g_k\left(x\right)−\left\langle g_k,e_1\right\rangle e_1\left(x\right)
+−\left\langle g_k,e_2\right\rangle e_2\left(x\right)−
+$ $\ldots~
+−\left\langle g_k,e_{k−1}\right\rangle e_{k−1}\left(x\right),$
+$\qquad e_k\left(x\right)=\displaystyle{\frac{u_k\left(x\right)}{\left\|u_k\right\|}},\qquad k=2,3,\ldots,n.$
+</blockquote>
+
+<p>Esse método preserva o subespaço gerado pelas funções originais, mas troca a base por outra mais conveniente. Nesse sentido, ele é análogo ao método de eliminação de Gauss para resolver sistemas lineares: em ambos os casos, transformamos o problema em uma forma mais simples sem alterar o conjunto de soluções representado.</p>
+
+<p>A base ortonormal obtida depende das funções que geram o subespaço e também depende do intervalo. Isso acontece porque o produto interno usa a integral em [a,b]. Se o intervalo muda, os produtos internos mudam, e a ortogonalidade entre as mesmas funções pode deixar de valer.</p>
+
+<h3>Aproximação por polinômios em [−1,1]</h3>
+
+<p>Um caso importante é a aproximação de uma função por polinômios. No intervalo [−1,1], podemos começar com as funções</p>
+
+<blockquote class="formula">
+$1,\quad x,\quad x^2,\quad x^3,\quad \ldots$
+</blockquote>
+
+<p>Aplicando o processo de Gram-Schmidt com o produto interno</p>
+
+<blockquote class="formula">
+$\left\langle u,v\right\rangle=\displaystyle{\int_{−1}^{1}u\left(x\right)v\left(x\right)dx}.$
+</blockquote>
+
+<p>Os primeiros polinômios ortonormais obtidos são</p>
+
+<blockquote class="formula">
+$e_0\left(x\right)=\displaystyle{\frac{1}{\sqrt{2}}},\qquad$ $
+e_1\left(x\right)=\sqrt{\displaystyle{\frac{3}{2}}}\,x,\qquad$ $
+e_2\left(x\right)=\sqrt{\displaystyle{\frac{5}{8}}}\left(3x^2−1\right),\qquad$
+$e_3\left(x\right)=\sqrt{\displaystyle{\frac{7}{8}}}\left(5x^3−3x\right).$
+</blockquote>
+
+<p>Esses polinômios são versões normalizadas dos <strong>polinômios de Legendre</strong>. Se P<sub>k</sub>(x) é o polinômio de Legendre de grau k, então</p>
+
+<blockquote class="formula">
+$e_k\left(x\right)=\sqrt{\displaystyle{\frac{2k+1}{2}}}\,P_k\left(x\right).$
+</blockquote>
+
+<p>Como essa base é ortonormal em [−1,1], a melhor aproximação polinomial de grau n para uma função y(x) nesse intervalo é</p>
+
+<blockquote class="formula">
+$f_n\left(x\right)=\displaystyle{\sum_{k=0}^{n}c_k e_k\left(x\right)},$
+$\qquad c_k=\left\langle y,e_k\right\rangle
+=\displaystyle{\int_{−1}^{1}y\left(x\right)e_k\left(x\right)dx}.$
+</blockquote>
+
+<h3>Exemplo: aproximação de e<sup>x</sup> por uma reta</h3>
+
+<p>Consideremos a função exponencial y(x)=e<sup>x</sup> no intervalo [−1,1]. Queremos encontrar a melhor aproximação por uma reta no sentido dos quadrados mínimos contínuos.</p>
+
+<p>Primeiro usamos a base de potências</p>
+
+<blockquote class="formula">
+$g_1\left(x\right)=1,\qquad g_2\left(x\right)=x,$
+</blockquote>
+
+<p>e procuramos uma aproximação da forma</p>
+
+<blockquote class="formula">
+$f\left(x\right)=c_1+c_2x.$
+</blockquote>
+
+<p>Nesse caso, o sistema normal AC=B tem coeficientes</p>
+
+<blockquote class="formula">
+$A=\left(\begin{array}{cc}
+\displaystyle{\int_{−1}^{1}1\,dx} & \displaystyle{\int_{−1}^{1}x\,dx}\\
+\displaystyle{\int_{−1}^{1}x\,dx} & \displaystyle{\int_{−1}^{1}x^2\,dx}
+\end{array}\right)
+=\left(\begin{array}{cc}
+2 & 0\\
+0 & \displaystyle{\frac{2}{3}}
+\end{array}\right),\qquad$
+
+$B=\left(\begin{array}{c}
+\displaystyle{\int_{−1}^{1}e^x\,dx}\\
+\displaystyle{\int_{−1}^{1}xe^x\,dx}
+\end{array}\right)
+=\left(\begin{array}{c}
+e−e^{−1}\\
+\displaystyle{2e^{−1}}
+\end{array}\right).$
+</blockquote>
+
+<p>Portanto,</p>
+
+<blockquote class="formula">
+$\left(\begin{array}{cc}
+2 & 0\\
+0 & \displaystyle{\frac{2}{3}}
+\end{array}\right)
+\left(\begin{array}{c}
+c_1\\
+c_2
+\end{array}\right)
+=
+\left(\begin{array}{c}
+e−e^{−1}\\
+\displaystyle{2e^{−1}}
+\end{array}\right),$
+</blockquote>
+
+<p>e obtemos</p>
+
+<blockquote class="formula">
+$c_1=\displaystyle{\frac{e−e^{−1}}{2}},\qquad
+c_2=\displaystyle{3e^{−1}}.$
+</blockquote>
+
+<p>Assim, a melhor aproximação linear é</p>
+
+<blockquote class="formula">
+$f\left(x\right)=\displaystyle{\frac{e−e^{−1}}{2}}+\displaystyle{3e^{−1}}x.$
+</blockquote>
+
+<p>Agora resolvemos o mesmo problema usando a base ortonormal em [−1,1]. Para as retas, precisamos apenas dos dois primeiros vetores da base:</p>
+
+<blockquote class="formula">
+$e_0\left(x\right)=\displaystyle{\frac{1}{\sqrt{2}}},\qquad
+e_1\left(x\right)=\sqrt{\displaystyle{\frac{3}{2}}}\,x.$
+</blockquote>
+
+<p>Aqui, e<sup>x</sup> é a função exponencial, enquanto e<sub>0</sub>(x) e e<sub>1</sub>(x) são funções da base ortonormal. Escrevemos</p>
+
+<blockquote class="formula">
+$f\left(x\right)=d_0e_0\left(x\right)+d_1e_1\left(x\right).$
+</blockquote>
+
+<p>Como a base é ortonormal, os coeficientes são calculados diretamente por produtos internos:</p>
+
+<blockquote class="formula">
+$d_0=\left\langle y,e_0\right\rangle
+=\displaystyle{\int_{−1}^{1}e^x\displaystyle{\frac{1}{\sqrt{2}}}dx}
+=\displaystyle{\frac{e−e^{−1}}{\sqrt{2}}},\qquad$
+$d_1=\left\langle y,e_1\right\rangle
+=\displaystyle{\int_{−1}^{1}e^x\sqrt{\displaystyle{\frac{3}{2}}}\,x\,dx}
+=\sqrt{6}e^{−1}.$
+</blockquote>
+
+<p>Substituindo esses coeficientes na expansão, obtemos</p>
+
+<blockquote class="formula">
+$f\left(x\right)=
+\displaystyle{\frac{e−e^{−1}}{\sqrt{2}}}\displaystyle{\frac{1}{\sqrt{2}}}
++
+\sqrt{6}e^{−1}
+\sqrt{\displaystyle{\frac{3}{2}}}x
+=
+\displaystyle{\frac{e−e^{−1}}{2}}+\displaystyle{3e^{−1}}x.$
+</blockquote>
+
+<p>O resultado é o mesmo. A diferença é que, na base de potências, precisamos resolver o sistema AC=B. Na base ortonormal, a matriz principal é a identidade e cada coeficiente é obtido por um único produto interno.</p>
+
+<p>No exemplo considerado, as integrais que aparecem na base ortonormal são um pouco mais elaboradas do que as integrais da base de potências. Isso não é um problema porque, na prática, tratamos y(x) como uma função numérica e calculamos todas as integrais numericamente por <a href="aula17.html">métodos de integração numérica</a>.</p>
+
+<h3>Mudança de intervalo</h3>
+
+<p>A base ortonormal de polinômios construída acima é dada no intervalo [−1,1]. Isso possibilita resolver de modo simples o problema de aproximação polinomial nesse intervalo, pois os coeficientes são calculados diretamente por produtos internos. Quando precisamos aproximar uma função em outro intervalo, podemos reduzir o problema ao intervalo [−1,1] e usar a mesma base ortonormal.</p>
+
+<p>Para aproximar uma função y(x) em um intervalo qualquer [a,b], podemos transformar esse intervalo em [−1,1] por meio da mudança de variável</p>
+
+<blockquote class="formula">
+$t=\displaystyle{\frac{2x−a−b}{b−a}},\qquad
+x=\displaystyle{\frac{b−a}{2}}t+\displaystyle{\frac{a+b}{2}}.$
+</blockquote>
+
+<p>Se e<sub>k</sub>(t) são ortonormais em [−1,1], então as funções</p>
+
+<blockquote class="formula">
+$\widetilde{e}_k\left(x\right)=\sqrt{\displaystyle{\frac{2}{b−a}}}\,
+e_k\left(\displaystyle{\frac{2x−a−b}{b−a}}\right).$
+</blockquote>
+
+<p>são ortonormais em [a,b]. Portanto, a aproximação polinomial pode ser escrita como</p>
+
+<blockquote class="formula">
+$f_n\left(x\right)=\displaystyle{\sum_{k=0}^{n}d_k \widetilde{e}_k\left(x\right)},$ $\qquad
+d_k=\displaystyle{\int_a^b y\left(x\right)\widetilde{e}_k\left(x\right)dx}.$
+</blockquote>
+
+<p>Equivalentemente, podemos definir Y(t)=y(x(t)), calcular os coeficientes no intervalo [−1,1] usando os polinômios e<sub>k</sub>(t), e depois voltar para a variável x. Essa mudança mostra por que os polinômios ortonormais dependem do intervalo: os polinômios de Legendre são ortonormais em [−1,1], mas, em outro intervalo, é necessário deslocar e reescalar a variável.</p>
+
+<h3>Outras bases relevantes</h3>
+
+<p>A escolha da base depende do tipo de função que queremos aproximar. Os polinômios são naturais quando esperamos uma aproximação suave em um intervalo limitado. Porém, em muitos problemas, outras bases descrevem melhor a estrutura da função.</p>
+
+<p>Para funções periódicas, uma escolha fundamental é a base formada por senos e cossenos. Em um intervalo simétrico, por exemplo [−π,π], podemos usar funções como</p>
+
+<blockquote class="formula">
+$1,\quad \cos x,\quad \sin x,\quad \cos 2x,\quad \sin 2x,\quad \ldots$
+</blockquote>
+
+<p>Essas funções são ortogonais entre si no intervalo de um período. Portanto, os coeficientes da melhor aproximação também são obtidos por produtos internos. Isso leva à <strong>série de Fourier</strong>. Quando passamos de frequências discretas para um conjunto contínuo de frequências, obtemos a ideia da <strong>transformada de Fourier</strong>, que representa uma função por suas componentes periódicas.</p>
+
+<p>As bases de Fourier são muito eficientes para funções com comportamento periódico ou oscilatório global. Entretanto, senos e cossenos se estendem por todo o intervalo. Por isso, eles não localizam bem uma alteração que ocorre apenas em uma pequena região.</p>
+
+<p>Para representar fenômenos localizados, podemos usar funções que são concentradas em uma região do domínio. Funções gaussianas são um exemplo importante de funções localizadas. Em aplicações de análise de sinais, também aparecem funções obtidas por translações e dilatações de uma função básica, chamada <strong>wavelet mãe</strong>:</p>
+
+<blockquote class="formula">
+$\psi_{a,b}\left(x\right)=\displaystyle{\frac{1}{\sqrt{|a|}}}\,
+\psi\left(\displaystyle{\frac{x−b}{a}}\right).$
+</blockquote>
+
+<p>O parâmetro b desloca a função no domínio, enquanto o parâmetro a muda a sua escala. Assim, as wavelets permitem analisar uma função ao mesmo tempo por posição e por escala. Algumas wavelets importantes são construídas a partir de gaussianas ou de funções com envelope gaussiano, como a wavelet de Morlet e a wavelet chapéu mexicano. A gaussiana pura, entretanto, não é normalmente usada como wavelet sem modificação, pois uma wavelet deve satisfazer condições adicionais, como ter média nula.</p>
+
+<p>Desse ponto de vista, a escolha da base determina quais características da função serão descritas de maneira simples: polinômios descrevem tendências suaves, funções periódicas levam à análise de Fourier, e funções localizadas levam à análise por wavelets.</p>
+
+<h3>Resumo</h3>
+
+<ol>
+  <li>No caso contínuo, o método dos quadrados mínimos minimiza a integral do quadrado do erro entre a função dada e a aproximação.</li>
+  <li>Com produto interno, a solução é a projeção ortogonal da função dada sobre o subespaço gerado pelas funções escolhidas.</li>
+  <li>Com uma base ortonormal, os coeficientes são calculados diretamente por integrais, sem resolver o sistema normal.</li>
+  <li>A base ortonormal de polinômios permite resolver aproximações polinomiais.</li>
+  <li>Bases periódicas levam à série e à transformada de Fourier, enquanto bases localizadas, incluindo funções com envelope gaussiano, levam à ideia de wavelets.</li>
+</ol>
+
+</section>
+
+</article>
+
+<footer>
+<a href="aula15.html">Próxima aula: Interpolação polinomial. Erro da interpolação e fenômeno de Runge.</a>
+</footer>
+
+</body>
+
+</html>
