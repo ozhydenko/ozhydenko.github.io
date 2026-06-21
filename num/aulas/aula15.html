@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width" />
+<title>Cálculo numérico: Interpolação polinomial.</title>
+<link rel="stylesheet" type="text/css" href="lstyle.css" />
+<link href="https://www.ufabc.edu.br/ensino/docentes/olexandr-zhydenko" rel="author" />
+<script type="text/javascript" src="execjavascript.js"></script>
+<script type="text/javascript" src="LaTeXMathML.js"></script>
+</head>
+
+<body>
+
+<header>
+</header>
+
+<nav>
+<a class="prev" href="aula14.html">Aula anterior</a>
+<a class="top" href="index.html">Índice</a>
+<a class="next" href="aula16.html">Próxima aula</a>
+</nav>
+
+<article>
+
+<section>
+<h2>Aula 15: Interpolação polinomial. Erro da interpolação e fenômeno de Runge.</h2>
+
+<h3>Formulação do problema</h3>
+
+<p>No <a href="aula13.html">problema dos quadrados mínimos</a>, aproximamos os dados correspondentes a m pontos por uma combinação linear de n funções. Quando há mais pontos do que coeficientes, em geral não é possível fazer a função passar exatamente por todos os pontos, e procuramos minimizar a soma dos quadrados dos resíduos.</p>
+
+<p>A <strong>interpolação</strong> é um caso particular desse problema em que o número de pontos coincide com o número de coeficientes. Para n+1 pontos distintos</p>
+
+<blockquote class="formula">
+$\left(x_0,y_0\right),\left(x_1,y_1\right),\ldots,\left(x_n,y_n\right),$
+</blockquote>
+
+<p>procuramos um polinômio de grau menor ou igual a n,</p>
+
+<blockquote class="formula">
+$p_n\left(x\right)=c_0+c_1x+c_2x^2+\ldots+c_nx^n,$
+</blockquote>
+
+<blockquote>
+<strong>Definição.</strong> Um polinômio p<sub>n</sub>(x), de grau menor ou igual a n, é chamado de <strong>polinômio interpolante</strong> dos pontos dados se satisfizer as condições
+
+<blockquote class="formula">
+$p_n\left(x_i\right)=y_i,\qquad i=0,1,\ldots,n.$
+</blockquote>
+</blockquote>
+
+<p>Nesse caso, todos os resíduos são iguais a zero e, portanto, a soma dos seus quadrados também é zero. O sistema possui n+1 equações e n+1 coeficientes desconhecidos.</p>
+
+<p>A interpolação polinomial é importante porque os polinômios são funções simples para análise e cálculo. Podemos avaliá-los, derivá-los e integrá-los usando apenas operações aritméticas. Além disso, existe um teorema que garante a existência e a unicidade do polinômio interpolante quando os pontos x<sub>i</sub> são distintos.</p>
+
+<blockquote>
+<strong>Teorema.</strong> Dados n+1 pontos com abscissas distintas x<sub>0</sub>,x<sub>1</sub>,...,x<sub>n</sub> e valores arbitrários y<sub>0</sub>,y<sub>1</sub>,...,y<sub>n</sub>, existe um único polinômio p<sub>n</sub>(x), de grau menor ou igual a n, tal que
+
+<blockquote class="formula">
+$p_n\left(x_i\right)=y_i,\qquad i=0,1,\ldots,n.$
+</blockquote>
+</blockquote>
+
+<blockquote>
+<strong>Prova.</strong> Pela definição do polinômio interpolante, os coeficientes c<sub>0</sub>,c<sub>1</sub>,...,c<sub>n</sub> devem satisfazer o sistema
+
+<blockquote class="formula">
+$\left(\begin{array}{ccccc}
+1 & x_0 & x_0^2 & \ldots & x_0^n\\
+1 & x_1 & x_1^2 & \ldots & x_1^n\\
+\vdots & \vdots & \vdots & \ddots & \vdots\\
+1 & x_n & x_n^2 & \ldots & x_n^n
+\end{array}\right)
+\left(\begin{array}{c}
+c_0\\c_1\\ \vdots\\c_n
+\end{array}\right)
+=
+\left(\begin{array}{c}
+y_0\\y_1\\ \vdots\\y_n
+\end{array}\right).$
+</blockquote>
+
+<p>A matriz desse sistema é chamada <strong>matriz de Vandermonde</strong>. Seu determinante é</p>
+
+<blockquote class="formula">
+$\det\left(V\right)=\displaystyle{\prod_{i=0}^{n−1}\prod_{j=i+1}^{n}\left(x_j−x_i\right)}.$
+</blockquote>
+
+<p>Como as abscissas são distintas, todos os fatores x<sub>j</sub>−x<sub>i</sub> são diferentes de zero. Portanto, det V≠0, e o sistema possui uma única solução para c<sub>0</sub>,c<sub>1</sub>,...,c<sub>n</sub>. Essa solução determina um polinômio interpolante. ∎</p>
+</blockquote>
+
+<p>O teorema garante que o polinômio interpolante é único. Podemos construí-lo explicitamente usando a forma de Lagrange.</p>
+
+<h3>Forma de Lagrange</h3>
+
+<p>Primeiro, definimos os polinômios fundamentais de Lagrange na forma explícita:</p>
+
+<blockquote class="formula">
+$L_0\left(x\right)=
+\displaystyle{\frac{\left(x−x_1\right)\left(x−x_2\right)\ldots\left(x−x_n\right)}
+{\left(x_0−x_1\right)\left(x_0−x_2\right)\ldots\left(x_0−x_n\right)}},$
+<br/>
+$L_1\left(x\right)=
+\displaystyle{\frac{\left(x−x_0\right)\left(x−x_2\right)\ldots\left(x−x_n\right)}
+{\left(x_1−x_0\right)\left(x_1−x_2\right)\ldots\left(x_1−x_n\right)}},$
+<br/>
+$\ldots$
+<br/>
+$L_n\left(x\right)=
+\displaystyle{\frac{\left(x−x_0\right)\left(x−x_1\right)\ldots\left(x−x_{n−1}\right)}
+{\left(x_n−x_0\right)\left(x_n−x_1\right)\ldots\left(x_n−x_{n−1}\right)}}.$
+</blockquote>
+
+<p>Em cada L<sub>i</sub>(x), aparecem todos os fatores, exceto aquele que contém x−x<sub>i</sub>. Como os pontos são distintos, os denominadores não são nulos. De forma compacta, podemos escrever</p>
+
+<blockquote class="formula">
+$L_i\left(x\right)=
+\displaystyle{\prod_{j=0,\,j\ne i}^{n}
+\frac{x−x_j}{x_i−x_j}},\qquad i=0,1,\ldots,n.$
+</blockquote>
+
+<p>Os polinômios fundamentais possuem a propriedade</p>
+
+<blockquote class="formula">
+$L_i\left(x_j\right)=\left\{\begin{array}{ll}
+1,&i=j,\\
+0,&i\ne j.
+\end{array}\right.$
+</blockquote>
+
+<p>De fato, se j≠i, o numerador de L<sub>i</sub>(x<sub>j</sub>) contém o fator x<sub>j</sub>−x<sub>j</sub>=0. Portanto, L<sub>i</sub>(x<sub>j</sub>)=0. Se j=i, cada fator do numerador é igual ao fator correspondente do denominador e, assim, L<sub>i</sub>(x<sub>i</sub>)=1.</p>
+
+<p>Usando esses polinômios, construímos a forma de Lagrange:</p>
+
+<blockquote class="formula">
+$p_n\left(x\right)=\displaystyle{\sum_{i=0}^{n}y_iL_i\left(x\right)}.$
+</blockquote>
+
+<p>Essa expressão satisfaz a definição do polinômio interpolante. Cada L<sub>i</sub>(x) tem grau n, portanto p<sub>n</sub>(x) tem grau menor ou igual a n. Além disso, ao avaliar a soma em x<sub>k</sub>, todos os termos são nulos, exceto aquele com i=k:</p>
+
+<blockquote class="formula">
+$p_n\left(x_k\right)=
+\displaystyle{\sum_{i=0}^{n}y_iL_i\left(x_k\right)}
+=y_kL_k\left(x_k\right)=y_k.$
+</blockquote>
+
+<p>Logo, a forma de Lagrange passa por todos os pontos dados e, pelo teorema de existência e unicidade, representa o único polinômio interpolante.</p>
+
+<p>A forma de Lagrange é muito conveniente para construir e analisar o polinômio interpolante, mas sua aplicação direta não é eficiente para cálculos numéricos. Para determinar o valor de p<sub>n</sub>(x), precisamos calcular os valores de todos os polinômios fundamentais, e o custo direto cresce aproximadamente como n<sup>2</sup>. Além disso, quando um novo ponto é adicionado, todos os polinômios L<sub>i</sub>(x) mudam e precisam ser reconstruídos. Os produtos e as subtrações entre pontos próximos também podem aumentar os efeitos dos erros de arredondamento. Existem versões mais eficientes da forma de Lagrange, como a forma baricêntrica, mas, para construir o polinômio progressivamente, a forma de Newton é especialmente conveniente.</p>
+
+<h3>Forma de Newton</h3>
+
+<p>O mesmo polinômio interpolante pode ser escrito na forma de Newton:</p>
+
+<blockquote class="formula">
+$p_n\left(x\right)=d_0+d_1\left(x−x_0\right)+d_2\left(x−x_0\right)\left(x−x_1\right)$
+$+d_3\left(x−x_0\right)\left(x−x_1\right)\left(x−x_2\right)+\ldots$
+$+d_n\left(x−x_0\right)\left(x−x_1\right)
+\ldots\left(x−x_{n−1}\right).$
+</blockquote>
+
+<p>O valor do polinômio escrito na forma de Newton pode ser calculado de maneira mais eficiente. Para isso, reescrevemos a expressão usando os fatores comuns:</p>
+
+<blockquote class="formula">
+$p_n\left(x\right)=d_0+\left(x−x_0\right)(d_1$ $+~\left(x−x_1\right)(d_2$ $+~\left(x−x_2\right)(d_3$ $+~\ldots$ $+~\left(x−x_{n−2}\right)(d_{n-1}$ $+~\left(x−x_{n−1}\right)d_n)))\ldots).$
+</blockquote>
+<p>Dessa forma, depois que os coeficientes d<sub>0</sub>,d<sub>1</sub>,...,d<sub>n</sub> são calculados, o valor do polinômio pode ser obtido usando n subtrações, n multiplicações e n adições, totalizando 3n operações. Assim, a complexidade da avaliação é 𝒪(n).</p>
+
+<p>Dados os valores x<sub>0</sub>,x<sub>1</sub>,...,x<sub>n</sub> e y<sub>0</sub>,y<sub>1</sub>,...,y<sub>n</sub>, podemos calcular todos os coeficientes d<sub>0</sub>,d<sub>1</sub>,...,d<sub>n</sub> por meio das <strong>diferenças divididas</strong>.</p>
+
+<h4>Diferenças divididas</h4>
+
+<p>A diferença dividida de ordem zero é o próprio valor dado:</p>
+
+<blockquote class="formula">
+$y\left[x_i\right]=y_i.$
+</blockquote>
+
+<p>A diferença dividida de primeira ordem depende de dois valores:</p>
+
+<blockquote class="formula">
+$y\left[x_i,x_{i+1}\right]=
+\displaystyle{\frac{y\left[x_{i+1}\right]−y\left[x_i\right]}{x_{i+1}−x_i}}=\displaystyle{\frac{y_{i+1}−y_i}{x_{i+1}−x_i}}.$
+</blockquote>
+
+<p>As diferenças divididas de ordens superiores são definidas recursivamente por</p>
+
+<blockquote class="formula">
+$y\left[x_i,x_{i+1},\ldots,x_{i+k}\right]$ $=~\displaystyle{\frac{y\left[x_{i+1},\ldots,x_{i+k}\right]−y\left[x_i,\ldots,x_{i+k−1}\right]}{x_{i+k}−x_i}}.$
+</blockquote>
+
+<p>Uma diferença dividida de qualquer ordem não depende da ordem em que os pontos distintos são apresentados. Quando os valores provêm de uma função suficientemente diferenciável, a diferença dividida é proporcional a uma derivada da mesma ordem em algum ponto do intervalo que contém os nós. Nesse sentido, ela é um análogo discreto da derivada. Para o problema de interpolação, a principal utilidade das diferenças divididas é permitir o cálculo direto dos coeficientes da forma de Newton. Em vez de resolver novamente um sistema linear para determinar d<sub>0</sub>,d<sub>1</sub>,...,d<sub>n</sub>, calculamos esses coeficientes sucessivamente a partir dos valores x<sub>i</sub> e y<sub>i</sub>.</p>
+
+
+<h4>Relação com os coeficientes de Newton</h4>
+
+<p>Para obter a relação entre os coeficientes e as diferenças divididas, partimos das condições de interpolação y<sub>i</sub>=p<sub>n</sub>(x<sub>i</sub>). No primeiro ponto, todos os termos da forma de Newton, exceto o primeiro, são nulos. Portanto,</p>
+
+<blockquote class="formula">
+$y_0=p_n\left(x_0\right)=d_0,\qquad d_0=y_0=y\left[x_0\right].$
+</blockquote>
+
+<p>No segundo ponto, temos</p>
+
+<blockquote class="formula">
+$y_1=p_n\left(x_1\right)=d_0+d_1\left(x_1−x_0\right).$
+</blockquote>
+
+<p>Substituindo d<sub>0</sub>=y<sub>0</sub> e isolando d<sub>1</sub>, obtemos</p>
+
+<blockquote class="formula">
+$d_1=\displaystyle{\frac{y_1−y_0}{x_1−x_0}}
+=y\left[x_0,x_1\right].$
+</blockquote>
+
+<p>No terceiro ponto:</p>
+
+<blockquote class="formula">
+$y_2=p_n\left(x_2\right)$ $=~d_0+d_1\left(x_2−x_0\right)
++d_2\left(x_2−x_0\right)\left(x_2−x_1\right).$
+</blockquote>
+
+<p>Usando os valores já encontrados para d<sub>0</sub> e d<sub>1</sub>, isolamos d<sub>2</sub>:</p>
+
+<blockquote class="formula">
+$d_2=\displaystyle{\frac{y_2−y_0−y\left[x_0,x_1\right]\left(x_2−x_0\right)}
+{\left(x_2−x_0\right)\left(x_2−x_1\right)}}$
+$=~\displaystyle{\frac{y\left[x_1,x_2\right]−y\left[x_0,x_1\right]}
+{x_2−x_0}}
+=y\left[x_0,x_1,x_2\right].$
+</blockquote>
+
+<p>Em geral, ao substituir x=x<sub>k</sub>, todos os termos posteriores a d<sub>k</sub> são nulos porque contêm o fator x<sub>k</sub>−x<sub>k</sub>. A condição y<sub>k</sub>=p<sub>n</sub>(x<sub>k</sub>) fica:</p>
+
+<blockquote class="formula">
+$y_k=d_0+d_1\left(x_k−x_0\right)+d_2\left(x_k−x_0\right)\left(x_k−x_1\right)$
+$+~\ldots+d_k\left(x_k−x_0\right)\left(x_k−x_1\right)\ldots\left(x_k−x_{k−1}\right).$
+</blockquote>
+
+<p>Isolando d<sub>k</sub>, obtemos:</p>
+
+<blockquote class="formula">
+$d_k~=$ $\displaystyle{\frac{
+y_k−d_0−d_1\left(x_k−x_0\right)−\ldots
+−d_{k−1}\left(x_k−x_0\right)\ldots\left(x_k−x_{k−2}\right)}
+{\left(x_k−x_0\right)\left(x_k−x_1\right)\ldots
+\left(x_k−x_{k−1}\right)}}.$
+</blockquote>
+
+<p>Substituindo nessa expressão os coeficientes de ordens anteriores e aplicando a definição recursiva das diferenças divididas, obtemos, por indução:</p>
+
+<blockquote class="formula">
+$d_0=y\left[x_0\right],\quad
+d_1=y\left[x_0,x_1\right],\quad
+d_2=y\left[x_0,x_1,x_2\right],$ $\quad\ldots\quad
+d_n=y\left[x_0,x_1,\ldots,x_n\right].$
+</blockquote>
+
+<p>Portanto, cada coeficiente da forma de Newton é a diferença dividida calculada com os pontos usados até aquela ordem.</p>
+
+<h4>Algoritmo de cálculo</h4>
+
+<p>Podemos organizar as diferenças divididas em uma tabela triangular. A primeira coluna contém os valores de x<sub>i</sub>, a segunda contém os valores y<sub>i</sub> (que são as diferenças divididas de ordem zero), e as colunas seguintes contêm as diferenças divididas de ordens superiores:</p>
+
+<blockquote class="formula">
+<table class="responsive-table">
+<thead>
+<tr>
+  <th>x</th>
+  <th>ordem 0</th>
+  <th>ordem 1</th>
+  <th>ordem 2</th>
+  <th>...</th>
+  <th>ordem n</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>$x_0$</td>
+  <td>$y[x_0]=y_0=d_0$</td>
+  <td>&nbsp;</td>
+  <td>&nbsp;</td>
+  <td>&nbsp;</td>
+  <td>&nbsp;</td>
+</tr>
+<tr>
+  <td>$x_1$</td>
+  <td>$y[x_1]=y_1$</td>
+  <td>$y[x_0,x_1]=d_1$</td>
+  <td>&nbsp;</td>
+  <td>&nbsp;</td>
+  <td>&nbsp;</td>
+</tr>
+<tr>
+  <td>$x_2$</td>
+  <td>$y[x_2]=y_2$</td>
+  <td>$y[x_1,x_2]$</td>
+  <td>$y[x_0,x_1,x_2]=d_2$</td>
+  <td>&nbsp;</td>
+  <td>&nbsp;</td>
+</tr>
+<tr>
+  <td>$\vdots$</td>
+  <td>$\vdots$</td>
+  <td>$\vdots$</td>
+  <td>$\vdots$</td>
+  <td>$\ddots$</td>
+  <td>&nbsp;</td>
+</tr>
+<!--
+<tr>
+  <td>$x_{n−1}$</td>
+  <td>$y[x_{n−1}]=y_{n−1}$</td>
+  <td>$y[x_{n−2},x_{n−1}]$</td>
+  <td>$y[x_{n−3},x_{n−2},x_{n−1}]$</td>
+  <td>...</td>
+  <td>&nbsp;</td>
+</tr>
+-->
+<tr>
+  <td>$x_n$</td>
+  <td>$y[x_n]=y_n$</td>
+  <td>$y[x_{n−1},x_n]$</td>
+  <td>$y[x_{n−2},x_{n−1},x_n]$</td>
+  <td>...</td>
+  <td>$y[x_0,x_1,\ldots,x_n]=d_n$</td>
+</tr>
+</tbody>
+</table>
+</blockquote>
+
+<p>Em notação algorítmica, definimos inicialmente:</p>
+
+<blockquote class="formula">
+$d_i^{\left(0\right)}=y_i,\qquad i=0,1,\ldots,n.$
+</blockquote>
+
+<p>Em seguida, calculamos cada coluna da tabela pela recorrência:</p>
+
+<blockquote class="formula">
+$d_i^{\left(k\right)}=
+\displaystyle{\frac{d_i^{\left(k−1\right)}−d_{i−1}^{\left(k−1\right)}}
+{x_i−x_{i−k}}},$
+$\qquad k=1,2,\ldots,n,\qquad i=n,n−1,\ldots,k.$
+</blockquote>
+
+<p>Depois de calcular a coluna de ordem k, o coeficiente correspondente é:</p>
+
+<blockquote class="formula">
+$d_k=d_k^{\left(k\right)}.$
+</blockquote>
+
+<p>Assim, o algoritmo começa com os valores y<sub>i</sub>, calcula sucessivamente as diferenças de primeira e segunda ordens e, depois, as diferenças de ordens superiores. Em cada coluna, guarda-se o primeiro elemento não vazio.</p>
+
+<p>Não precisamos manter na memória toda a tabela triangular. Para calcular uma nova coluna, precisamos somente dos valores da coluna anterior. Além disso, apenas o primeiro valor não vazio de cada coluna, d<sub>k</sub><sup>(k)</sup>, coincide com um coeficiente d<sub>k</sub> da forma de Newton. Os demais valores são intermediários e podem ser descartados depois de usados. Portanto, a tabela pode ser calculada em um único vetor, atualizado de baixo para cima a cada ordem.</p>
+
+<h4>Exemplo</h4>
+
+<p>Consideremos y(x)=x<sup>2</sup>:</p>
+
+<blockquote class="formula">
+<table >
+<tbody>
+<tr>
+  <td>x&nbsp;&nbsp;&nbsp;</td>
+  <td>y&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+  <td>ordem 1&nbsp;&nbsp;</td>
+  <td>ordem 2&nbsp;&nbsp;</td>
+  <td>ordem 3</td>
+</tr>
+<tr>
+  <td>0</td>
+  <td>0</td>
+  <td>&nbsp;</td>
+  <td>&nbsp;</td>
+  <td>&nbsp;</td>
+</tr>
+<tr>
+  <td>1</td>
+  <td>1</td>
+  <td>1</td>
+  <td>&nbsp;</td>
+  <td>&nbsp;</td>
+</tr>
+<tr>
+  <td>2</td>
+  <td>4</td>
+  <td>3</td>
+  <td>1</td>
+  <td>&nbsp;</td>
+</tr>
+<tr>
+  <td>3</td>
+  <td>9</td>
+  <td>5</td>
+  <td>1</td>
+  <td>0</td>
+</tr>
+</tbody>
+</table>
+</blockquote>
+<blockquote class="formula">
+$p_2\left(x\right)=p_3\left(x\right)=0+x(1+(x−1)\cdot 1)=x^2.$
+</blockquote>
+
+<form>
+<div class="overwrite"><input class="right-aligned" type="button" name="execute" value="Executar" onClick="ExecuteCodeEvent(this)"></div>
+<textarea class="wide" name="library" readonly rows="14">
+var Interp=function(X,Y){
+ var d=Y.slice()
+ for(var k=0;++k<X.length;)for(var i=X.length;i-->k;)
+   d[i]=(d[i]-d[i-1])/(X[i]-X[i-k])
+
+ var p=function(x){
+  var r=d[d.length-1]
+  for(var k=d.length-1;k-->0;)r=d[k]+r*(x-X[k])
+  return r
+ }
+
+ return p
+}
+</textarea>
+<textarea class="wide" name="code" rows="3">
+var p=Interp([0,1,2,3],[0,1,4,9])
+text=p(5)
+</textarea>
+<textarea class="wide" name="destination" readonly rows="2"></textarea>
+</form>
+
+<h3>Erro da interpolação</h3>
+
+<p>A existência do polinômio interpolante não garante que ele seja uma boa aproximação da função entre os pontos. O erro depende da função, da quantidade de pontos e da posição dos pontos de interpolação.</p>
+
+<blockquote><strong>Teorema.</strong> Seja y(x) uma função que possua derivada contínua de ordem n+1 em um intervalo que contém os pontos distintos x<sub>0</sub>,x<sub>1</sub>,...,x<sub>n</sub> e o ponto x. Se p<sub>n</sub>(x) é o polinômio que interpola y nesses pontos, então existe um ponto ξ no intervalo considerado tal que
+
+<blockquote class="formula">
+$\Delta y\left(x\right)=y\left(x\right)−p_n\left(x\right)$ $=~\left(x−x_0\right)\left(x−x_1\right)\ldots\left(x−x_n\right)\displaystyle{\frac{y^{\left(n+1\right)}\left(\xi\right)}{\left(n+1\right)!}}
+$ $=~\prod_{i=0}^{n}\left(x−x_i\right)\displaystyle{\frac{y^{\left(n+1\right)}\left(\xi\right)}{\left(n+1\right)!}}.$
+</blockquote>
+
+</blockquote>
+
+<blockquote>
+<strong>Prova.</strong>
+<p>Primeiro, observamos que, nos pontos de interpolação, os dois lados se anulam e, portanto, a igualdade é satisfeita. Para um ponto fixo x diferente dos pontos de interpolação, definimos uma função auxiliar:</p>
+
+<blockquote class="formula">
+$F\left(t\right)=\Delta y\left(t\right)G\left(x\right)−\Delta y\left(x\right)G\left(t\right),$
+</blockquote>
+
+<p>onde a função G(t) é definida por</p>
+
+<blockquote class="formula">
+$G\left(t\right)=\left(t−x_0\right)\left(t−x_1\right)\ldots\left(t−x_n\right)$ $=~\displaystyle{\prod_{i=0}^{n}\left(t−x_i\right)}$
+</blockquote>
+
+<p>Por construção, a função F(t) se anula em t=x e também nos n+1 pontos de interpolação: t=x<sub>0</sub>, t=x<sub>1</sub>, …, t=x<sub>n</sub>. Portanto, F(t) possui n+2 zeros distintos. Aplicando o teorema de Rolle n+1 vezes, concluímos que existe um ponto ξ tal que</p>
+
+<blockquote class="formula">
+$F^{\left(n+1\right)}\left(\xi\right)=0.$
+</blockquote>
+
+<p>Como p<sub>n</sub><sup>(n+1)</sup>(ξ)=0 para todo ξ e G<sup>(n+1)</sup>(ξ)=(n+1)!, obtemos</p>
+
+<blockquote class="formula">
+$F^{\left(n+1\right)}\left(\xi\right)~=$ $y^{\left(n+1\right)}\left(\xi\right)G\left(x\right)−\Delta y\left(x\right)\left(n+1\right)!=0.$
+</blockquote>
+
+<p>Assim,</p>
+<blockquote class="formula">
+$\Delta y\left(x\right)=\displaystyle{G\left(x\right)\frac{y^{\left(n+1\right)}\left(\xi\right)}{\left(n+1\right)!}}. ∎$
+</blockquote>
+
+</blockquote>
+
+<p>Em particular, suponhamos que</p>
+
+<blockquote class="formula">
+$\left|y^{\left(n+1\right)}\left(\xi\right)\right|\leq M,$
+</blockquote>
+
+<p>e que os pontos de interpolação sejam equidistantes, isto é,</p>
+
+<blockquote class="formula">
+$x_1−x_0=x_2−x_1=\ldots=x_n−x_{n−1}=h,$
+</blockquote>
+
+<p>observamos que</p>
+
+<blockquote class="formula">
+$\forall x\in\left[x_0,x_1\right]:\quad \left|x−x_0\right|\left|x−x_1\right|\leq\displaystyle{\frac{h^2}{4}},$ $\quad\left|G\left(x\right)\right|\leq\displaystyle{\frac{h^{2}}{4}}\cdot2h\cdot3h\cdot\ldots\cdot nh=\displaystyle{\frac{h^{n+1}}{4}}n!,$
+</blockquote>
+
+<p>e, finalmente,</p>
+
+<blockquote class="formula">
+$\left|\Delta y\left(x\right)\right|\leq\displaystyle{\frac{M}{\left(n+1\right)!}}\left|G\left(x\right)\right|\leq\displaystyle{\frac{M h^{n+1}}{4\left(n+1\right)}}.$
+</blockquote>
+
+<h4>Estimativa do erro por diferenças divididas</h4>
+
+<p>A mesma estimativa do erro pode ser obtida usando um polinômio interpolante de grau superior que também passe pelo ponto (x,y(x)), de modo que p<sub>n+1</sub>(x)=y(x):</p>
+
+<blockquote class="formula">
+$\Delta y\left(x\right)=p_{n+1}\left(x\right)−p_n\left(x\right)$ $=~d_{n+1}\left(x−x_0\right)\left(x−x_1\right)\ldots\left(x−x_n\right)$ $=~y\left[x_0,x_1,\ldots,x_n,x\right]G(x).$
+</blockquote>
+
+<p>Observamos, então, que uma diferença dividida de ordem n+1 satisfaz</p>
+
+<blockquote class="formula">
+$y\left[x_0,x_1,\ldots,x_n,x\right]=
+\displaystyle{\frac{y^{\left(n+1\right)}\left(\xi\right)}{\left(n+1\right)!}}.$
+</blockquote>
+
+<p>Como tanto o ponto ξ quanto o valor y(x) são geralmente desconhecidos, não podemos calcular y<sup>(n+1)</sup>(ξ) nem y[x<sub>0</sub>,x<sub>1</sub>,…,x<sub>n</sub>,x]. Entretanto, essa relação é útil para estimar a ordem de grandeza do coeficiente M/(n+1)! quando não conseguimos calculá-lo diretamente. Supondo que as diferenças divididas de uma mesma ordem sejam proporcionais às derivadas correspondentes em certos pontos e que essas derivadas não variem muito, a ordem de grandeza das diferenças divididas indica a ordem de grandeza do coeficiente presente na estimativa do erro da interpolação por um polinômio de grau inferior. Assim, se observarmos que uma coluna de diferenças divididas possui valores de ordem de grandeza maior do que os da coluna anterior, podemos esperar que o erro aumente ao usarmos polinômios de grau superior.</p>
+
+<h3>Fenômeno de Runge</h3>
+
+<p>Consideremos a interpolação da função</p>
+
+<blockquote class="formula">
+$y\left(x\right)=\displaystyle{\frac{1}{1+25x^2}},\qquad x\in\left[−1,1\right].$
+</blockquote>
+
+<p>Podemos observar que, perto das extremidades, o erro da interpolação cresce quando aumentamos o grau do polinômio.</p>
+
+<p>O código a seguir constrói o polinômio interpolante com n+1 nós equidistantes e calcula o erro no ponto médio entre os dois primeiros nós, próximo à extremidade esquerda do intervalo.</p>
+
+<form>
+<div class="overwrite"><input class="right-aligned" type="button" name="execute" value="Executar" onClick="ExecuteCodeEvent(this)"></div>
+<textarea class="invisible" name="library" readonly rows="14">
+var Interp=function(X,Y){
+ var d=Y.slice()
+ for(var k=0;++k<X.length;)for(var i=X.length;i-->k;)
+   d[i]=(d[i]-d[i-1])/(X[i]-X[i-k])
+
+ var p=function(x){
+  var r=d[d.length-1]
+  for(var k=d.length-1;k-->0;)r=d[k]+r*(x-X[k])
+  return r
+ }
+
+ return p
+}
+</textarea>
+<textarea class="wide" name="code" rows="14">
+var y=function(x){return 1/(1+25*x*x)}
+
+var a=-1
+var b=1
+var n=10
+
+var X=[]
+var Y=[]
+for(var i=0;i<=n;++i) Y[i]=y(X[i]=a+(b-a)*i/n)
+var p=Interp(X,Y)
+
+var x=(X[0]+X[1])/2
+text=y(x)-p(x)
+</textarea>
+<textarea class="wide" name="destination" readonly rows="2"></textarea>
+</form>
+
+<p>Esse exemplo mostra que o aumento do grau do polinômio não garante a melhora da interpolação em todo o intervalo. De fato, o polinômio interpolante pode apresentar grandes oscilações entre os pontos de interpolação. Esse comportamento é chamado de <strong>fenômeno de Runge</strong>.</p>
+
+<svg width="100%" viewBox="0 0 820 360" preserveAspectRatio="xMidYMid meet" role="img">
+  <title>Ilustração do fenômeno de Runge</title>
+  <desc>Comparação entre a função de Runge (azul) e seu polinômio interpolante de grau dez (vermelho), construído em onze pontos equidistantes. O polinômio apresenta grandes oscilações perto das extremidades do intervalo.</desc>
+  <defs>
+    <clipPath id="runge-plot">
+      <rect x="55" y="35" width="710" height="300"/>
+    </clipPath>
+  </defs>
+
+  <line x1="55" y1="300" x2="780" y2="300" stroke="black"/>
+  <line x1="410" y1="305" x2="410" y2="30" stroke="black"/>
+  <text x="785" y="305">x</text>
+  <text x="398" y="28">y</text>
+
+  <line x1="60" y1="296" x2="60" y2="304" stroke="black"/>
+  <line x1="410" y1="296" x2="410" y2="304" stroke="black"/>
+  <line x1="760" y1="296" x2="760" y2="304" stroke="black"/>
+  <text x="60" y="322" text-anchor="middle">−1</text>
+  <text x="410" y="322" text-anchor="middle">0</text>
+  <text x="760" y="322" text-anchor="middle">1</text>
+
+  <line x1="406" y1="170" x2="414" y2="170" stroke="black"/>
+  <line x1="406" y1="40" x2="414" y2="40" stroke="black"/>
+  <text x="400" y="165" text-anchor="end">1</text>
+  <text x="400" y="45" text-anchor="end">2</text>
+
+  <g clip-path="url(#runge-plot)">
+    <path d="M60.0 295.0 L67.0 294.8 L74.0 294.6 L81.0 294.4 L88.0 294.1 L95.0 293.9 L102.0 293.6 L109.0 293.3 L116.0 293.0 L123.0 292.7 L130.0 292.4 L137.0 292.0 L144.0 291.6 L151.0 291.2 L158.0 290.7 L165.0 290.2 L172.0 289.6 L179.0 289.1 L186.0 288.4 L193.0 287.7 L200.0 287.0 L207.0 286.2 L214.0 285.3 L221.0 284.3 L228.0 283.2 L235.0 282.1 L242.0 280.8 L249.0 279.3 L256.0 277.7 L263.0 276.0 L270.0 274.0 L277.0 271.8 L284.0 269.3 L291.0 266.6 L298.0 263.5 L305.0 260.0 L312.0 256.1 L319.0 251.7 L326.0 246.7 L333.0 241.2 L340.0 235.0 L347.0 228.2 L354.0 220.7 L361.0 212.8 L368.0 204.4 L375.0 196.0 L382.0 187.9 L389.0 180.7 L396.0 175.0 L403.0 171.3 L410.0 170.0 L417.0 171.3 L424.0 175.0 L431.0 180.7 L438.0 187.9 L445.0 196.0 L452.0 204.4 L459.0 212.8 L466.0 220.7 L473.0 228.2 L480.0 235.0 L487.0 241.2 L494.0 246.7 L501.0 251.7 L508.0 256.1 L515.0 260.0 L522.0 263.5 L529.0 266.6 L536.0 269.3 L543.0 271.8 L550.0 274.0 L557.0 276.0 L564.0 277.7 L571.0 279.3 L578.0 280.8 L585.0 282.1 L592.0 283.2 L599.0 284.3 L606.0 285.3 L613.0 286.2 L620.0 287.0 L627.0 287.7 L634.0 288.4 L641.0 289.1 L648.0 289.6 L655.0 290.2 L662.0 290.7 L669.0 291.2 L676.0 291.6 L683.0 292.0 L690.0 292.4 L697.0 292.7 L704.0 293.0 L711.0 293.3 L718.0 293.6 L725.0 293.9 L732.0 294.1 L739.0 294.4 L746.0 294.6 L753.0 294.8 L760.0 295.0"
+          fill="none" stroke="blue" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round" shape-rendering="geometricPrecision"/>
+    <path d="M60.0 295.0 L61.8 247.1 L63.5 205.6 L65.3 170.1 L67.0 140.1 L68.8 115.0 L70.5 94.5 L72.3 78.1 L74.0 65.4 L75.8 56.2 L77.5 49.9 L79.3 46.4 L81.0 45.3 L82.7 46.4 L84.5 49.4 L86.2 54.0 L88.0 60.0 L89.7 67.3 L91.5 75.7 L93.3 84.9 L95.0 94.8 L96.8 105.2 L98.5 116.1 L100.3 127.4 L102.0 138.8 L103.8 150.3 L105.5 161.8 L107.3 173.2 L109.0 184.5 L110.8 195.6 L112.5 206.5 L114.3 217.0 L116.0 227.1 L117.8 236.9 L119.5 246.3 L121.3 255.1 L123.0 263.6 L124.8 271.5 L126.5 279.0 L128.3 285.9 L130.0 292.4 L131.8 298.3 L133.5 303.7 L135.3 308.7 L137.0 313.1 L138.8 317.1 L140.5 320.5 L142.3 323.6 L144.0 326.2 L145.8 328.3 L147.5 330.1 L149.3 331.5 L151.0 332.4 L152.8 333.1 L154.5 333.4 L156.3 333.4 L158.0 333.1 L159.8 332.5 L161.5 331.7 L163.2 330.7 L165.0 329.4 L172.0 322.7 L179.0 314.1 L186.0 304.7 L193.0 295.5 L200.0 287.0 L207.0 279.8 L214.0 274.2 L221.0 270.2 L228.0 267.9 L235.0 267.0 L242.0 267.4 L249.0 268.6 L256.0 270.4 L263.0 272.3 L270.0 274.0 L277.0 275.1 L284.0 275.5 L291.0 274.7 L298.0 272.7 L305.0 269.4 L312.0 264.8 L319.0 258.9 L326.0 251.8 L333.0 243.8 L340.0 235.0 L347.0 225.8 L354.0 216.4 L361.0 207.2 L368.0 198.4 L375.0 190.4 L382.0 183.4 L389.0 177.7 L396.0 173.5 L403.0 170.9 L410.0 170.0 L417.0 170.9 L424.0 173.5 L431.0 177.7 L438.0 183.4 L445.0 190.4 L452.0 198.4 L459.0 207.2 L466.0 216.4 L473.0 225.8 L480.0 235.0 L487.0 243.8 L494.0 251.8 L501.0 258.9 L508.0 264.8 L515.0 269.4 L522.0 272.7 L529.0 274.7 L536.0 275.5 L543.0 275.1 L550.0 274.0 L557.0 272.3 L564.0 270.4 L571.0 268.6 L578.0 267.4 L585.0 267.0 L592.0 267.9 L599.0 270.2 L606.0 274.2 L613.0 279.8 L620.0 287.0 L627.0 295.5 L634.0 304.7 L641.0 314.1 L648.0 322.7 L655.0 329.4 L656.8 330.7 L658.5 331.7 L660.3 332.5 L662.0 333.1 L663.8 333.4 L665.5 333.4 L667.3 333.1 L669.0 332.4 L670.8 331.5 L672.5 330.1 L674.3 328.3 L676.0 326.2 L677.8 323.6 L679.5 320.5 L681.3 317.1 L683.0 313.1 L684.8 308.7 L686.5 303.7 L688.3 298.3 L690.0 292.4 L691.8 285.9 L693.5 279.0 L695.3 271.5 L697.0 263.6 L698.8 255.1 L700.5 246.3 L702.3 236.9 L704.0 227.1 L705.8 217.0 L707.5 206.5 L709.3 195.6 L711.0 184.5 L712.8 173.2 L714.5 161.8 L716.3 150.3 L718.0 138.8 L719.8 127.4 L721.5 116.1 L723.3 105.2 L725.0 94.8 L726.8 84.9 L728.5 75.7 L730.3 67.3 L732.0 60.0 L733.7 54.0 L735.5 49.4 L737.3 46.4 L739.0 45.3 L740.8 46.4 L742.5 49.9 L744.3 56.2 L746.0 65.4 L747.8 78.1 L749.5 94.5 L751.3 115.0 L753.0 140.1 L754.8 170.1 L756.5 205.6 L758.3 247.1 L760.0 295.0"
+          fill="none" stroke="red" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round" shape-rendering="geometricPrecision"/>
+  </g>
+
+  <g fill="black">
+    <circle cx="60" cy="295" r="4"/><circle cx="130" cy="292.4" r="4"/>
+    <circle cx="200" cy="287" r="4"/><circle cx="270" cy="274" r="4"/>
+    <circle cx="340" cy="235" r="4"/><circle cx="410" cy="170" r="4"/>
+    <circle cx="480" cy="235" r="4"/><circle cx="550" cy="274" r="4"/>
+    <circle cx="620" cy="287" r="4"/><circle cx="690" cy="292.4" r="4"/>
+    <circle cx="760" cy="295" r="4"/>
+  </g>
+
+<!--
+  <line x1="310" y1="20" x2="350" y2="20" stroke="blue" stroke-width="2"/>
+  <text x="360" y="25">função y(x)</text>
+  <line x1="470" y1="20" x2="510" y2="20" stroke="red" stroke-width="2"/>
+  <text x="520" y="25">polinômio p₁₀(x)</text>
+-->
+</svg>
+
+<!--<p>Os pontos pretos representam os onze nós equidistantes. Embora o polinômio p<sub>10</sub>(x) passe exatamente por todos eles, sua curva apresenta oscilações acentuadas perto de x=−1 e x=1.</p>-->
+
+<p>A fórmula do erro mostra duas causas possíveis: o crescimento das derivadas de ordem elevada e o comportamento do produto dos fatores x−x<sub>i</sub>. Assim, uma forma de reduzir essas oscilações é escolher pontos mais concentrados perto das extremidades, como os pontos de Tchebyshev:</p>
+
+<blockquote class="formula">
+$x_i=\cos\left(\displaystyle{\frac{\left(2i+1\right)\pi}{2\left(n+1\right)}}\right),
+\qquad i=0,1,\ldots,n.$
+</blockquote>
+
+<p>Entretanto, na aritmética de ponto flutuante, não podemos aumentar indefinidamente o número de pontos, pois a proximidade entre eles pode acentuar os efeitos dos erros de arredondamento. Na prática, uma alternativa é limitar o grau do polinômio e dividir o intervalo em subintervalos, construindo uma aproximação em cada um deles. Um critério prático para escolher o grau do polinômio interpolante consiste em observar a ordem de grandeza das diferenças divididas.</p>
+
+<h3>Resumo</h3>
+
+<ol>
+  <li>O teorema de existência e unicidade garante um único polinômio interpolante quando as abscissas são distintas.</li>
+  <li>A forma de Lagrange é adequada para a análise teórica, enquanto a forma de Newton facilita a construção progressiva e a avaliação numérica.</li>
+  <li>As diferenças divididas determinam os coeficientes de Newton e também fornecem uma estimativa prática da ordem de grandeza do erro.</li>
+  <li>O fenômeno de Runge mostra que o aumento do grau do polinômio não garante a melhora da aproximação.</li>
+</ol>
+
+</section>
+
+</article>
+
+<footer>
+<a href="aula16.html">Próxima aula: Interpolação por splines.</a>
+</footer>
+
+</body>
+
+</html>

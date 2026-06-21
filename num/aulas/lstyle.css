@@ -38,8 +38,26 @@ input[type=button]{
 	display: none;
 }
 .formula{
-
         text-align:left;
+}
+.responsive-table{
+        border-collapse: collapse;
+        table-layout: fixed;
+}
+.responsive-table td{
+        padding-right: 0.5em;
+}
+.responsive-table th{
+        font-weight: inherit;
+}
+.responsive-table mstyle,
+.responsive-table math{
+        font-size: inherit;
+}
+@supports (font-size: 1cqw){
+        .responsive-table{
+                font-size: clamp(0.5rem, 2.45cqw, 1.25rem);
+        }
 }
 .right{
 	float: right;

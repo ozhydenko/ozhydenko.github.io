@@ -342,10 +342,16 @@ text=Ajuste(X,Y,[Math.sin,Math.cos,Math.exp]).join("\n")
 <p>Nesse caso, o sistema AX=B normalmente não possui solução exata. Em vez de exigir igualdade perfeita, podemos procurar X de modo que o lado esquerdo AX fique o mais próximo possível do lado direito B. Em outras palavras, procuramos o mínimo de:</p>
 
 <blockquote class="formula">
-$\sigma=\|AX−B\|^2.$
+$\sigma\left(x_1,x_2,\ldots,x_n\right)=\|AX−B\|^2$ $=~\displaystyle{\sum_{i=1}^{m}\left(\sum_{j=1}^{n}a_{ij}x_j−b_i\right)^2}.$
 </blockquote>
 
-<p>A condição de mínimo leva ao sistema:</p>
+<p>No ponto de mínimo, todas as derivadas parciais de σ em relação às incógnitas devem ser iguais a zero,</p>
+
+<blockquote class="formula">
+$\displaystyle{\frac{\partial\sigma}{\partial x_k}}=2\displaystyle{\sum_{i=1}^{m}\left(\sum_{j=1}^{n}a_{ij}x_j−b_i\right)a_{ik}}=0,$ $\qquad k=1,2,\ldots,n.$
+</blockquote>
+
+<p>Essas condições levam ao sistema:</p>
 
 <blockquote class="formula">
 $A^TAX−A^TB=0.$
@@ -470,6 +476,64 @@ text+="\n\n"+SolveMin(A,B).join("\n")
 <textarea class="wide" name="destination" readonly rows="8"></textarea>
 </form>
 
+<h3>Ajuste não linear</h3>
+
+<p>Nos problemas estudados até aqui, a função de ajuste é linear em relação aos coeficientes desconhecidos. Em um <strong>ajuste não linear</strong>, os coeficientes aparecem de maneira não linear no modelo. Para um modelo geral f(x;c<sub>1</sub>,c<sub>2</sub>,...,c<sub>n</sub>), a função que deve ser minimizada é:</p>
+
+<blockquote class="formula">
+$\sigma\left(c_1,c_2,\ldots,c_n\right)=
+\displaystyle{\sum_{i=1}^{m}\left(f\left(x_i;c_1,c_2,\ldots,c_n\right)−y_i\right)^2}.$
+</blockquote>
+
+<p>As condições de extremo são:</p>
+
+<blockquote class="formula">
+$\displaystyle{\frac{\partial\sigma}{\partial c_j}}=
+2\displaystyle{\sum_{i=1}^{m}\left(f\left(x_i;c_1,c_2,\ldots,c_n\right)−y_i\right)}
+$ $\cdot~\displaystyle{\frac{\partial f\left(x_i;c_1,c_2,\ldots,c_n\right)}{\partial c_j}}=0,
+$ $\qquad j=1,2,\ldots,n.$
+</blockquote>
+
+<p>Como as derivadas de f geralmente dependem dos próprios coeficientes, essas condições formam um sistema não linear. Em geral, ele não pode ser resolvido diretamente pelas equações normais lineares.</p>
+
+<p>O método de <strong>Gauss-Newton</strong> utiliza uma aproximação linear para determinar as correções dos coeficientes Δc<sub>1</sub>, Δc<sub>2</sub>, ..., Δc<sub>n</sub>, resolvendo, em cada iteração, um sistema linear:</p>
+
+<blockquote class="formula">
+$\displaystyle{\sum_{j=1}^{n}\left(\sum_{i=1}^{m}J_{ik}J_{ij}\right)\Delta c_j}$ $=~−\displaystyle{\sum_{i=1}^{m}J_{ik}\left(f\left(x_i;c_1,c_2,\ldots,c_n\right)−y_i\right)},$ $\qquad k=1,2,\ldots,n.$
+</blockquote>
+
+<p>Os elementos da matriz jacobiana são:</p>
+
+<blockquote class="formula">
+$J_{ij}=\displaystyle{\frac{\partial f\left(x_i;c_1,c_2,\ldots,c_n\right)}{\partial c_j}}.$
+</blockquote>
+
+<p>Quando a aproximação inicial está longe da solução ou o sistema linear está próximo de ser singular, o método pode convergir lentamente ou não convergir. Uma alternativa mais robusta, frequentemente usada na prática, é o método de <strong>Levenberg-Marquardt</strong>.</p>
+
+<p>Diferentemente do ajuste linear, o ajuste não linear pode ter vários mínimos locais. Portanto, a solução encontrada pode depender da aproximação inicial.</p>
+
+<h4>Redução ao problema linear</h4>
+
+<p>Em geral, o problema não linear é mais complicado. Por isso, uma estratégia eficiente, quando possível, é reduzi-lo a um problema linear. Por exemplo, consideremos:</p>
+
+<blockquote class="formula">
+$f\left(x;c_1,c_2\right)=c_1e^{c_2x}.$
+</blockquote>
+
+<p>Esse modelo é linear em c<sub>1</sub>, mas não é linear em c<sub>2</sub>. Portanto, o ajuste direto aos dados (x<sub>i</sub>,y<sub>i</sub>) é um problema não linear de quadrados mínimos.</p>
+
+<p>Quando os valores do modelo são positivos, podemos aplicar o logaritmo e obter:</p>
+
+<blockquote class="formula">
+$\ln f=\ln c_1+c_2x.$
+</blockquote>
+
+<p>Esse modelo é linear em relação a ln c<sub>1</sub> e c<sub>2</sub>.</p>
+
+<p>Assim, podemos ajustar uma reta aos pontos (x<sub>i</sub>,ln y<sub>i</sub>). O coeficiente c<sub>2</sub> é dado pela inclinação da reta, enquanto c<sub>1</sub> é recuperado pela exponenciação do termo independente.</p>
+
+<p>Essa transformação simplifica o cálculo, mas modifica o problema de minimização. O ajuste linearizado minimiza os erros de ln y<sub>i</sub>, e não os erros de y<sub>i</sub>. Por isso, ele não é equivalente ao ajuste não linear direto. Além disso, a transformação não pode ser aplicada quando algum valor y<sub>i</sub> é nulo ou negativo. Mesmo assim, na prática, os erros de ln y<sub>i</sub> podem ser mais relevantes para esse tipo de problema. Existem também métodos específicos para transformar em linear o ajuste de uma soma de exponenciais com coeficientes desconhecidos.</p>
+
 
 <h3>Resumo</h3>
 
@@ -477,6 +541,7 @@ text+="\n\n"+SolveMin(A,B).join("\n")
   <li>O método dos quadrados mínimos escolhe a aproximação que minimiza a soma dos quadrados dos resíduos.</li>
   <li>O método pode ser usado para reduzir o erro em dados ruidosos quando a forma da dependência verdadeira é conhecida.</li>
   <li>Sistemas sobredeterminados podem ser tratados pelo método dos quadrados mínimos. A solução encontrada não zera necessariamente todos os resíduos, mas torna a soma de seus quadrados a menor possível.</li>
+  <li>No ajuste não linear, as condições de extremo formam um sistema não linear, que normalmente é resolvido por métodos iterativos. Em alguns casos, o modelo não linear pode ser reduzido a um problema linear.</li>
 </ol>
 </section>
 
