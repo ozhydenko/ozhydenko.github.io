@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width" />
+<title>Cálculo numérico: Interpolação por splines.</title>
+<link rel="stylesheet" type="text/css" href="lstyle.css" />
+<link href="https://www.ufabc.edu.br/ensino/docentes/olexandr-zhydenko" rel="author" />
+<script type="text/javascript" src="execjavascript.js"></script>
+<script type="text/javascript" src="LaTeXMathML.js"></script>
+</head>
+
+<body>
+
+<header>
+</header>
+
+<nav>
+<a class="prev" href="aula15.html">Aula anterior</a>
+<a class="top" href="index.html">Índice</a>
+<a class="next" href="aula17.html">Próxima aula</a>
+</nav>
+
+<article>
+
+<section>
+<h2>Aula 16: Interpolação por splines.</h2>
+
+<h3>Definição de spline</h3>
+
+<p>Suponhamos que os valores de uma função sejam conhecidos apenas em alguns pontos:</p>
+
+<blockquote class="formula">
+$\left(x_0,y_0\right),\left(x_1,y_1\right),\ldots,\left(x_n,y_n\right),\qquad x_0&lt;x_1&lt;\ldots&lt;x_n.$
+</blockquote>
+
+<p>Nosso objetivo é construir uma função que passe por esses pontos e represente adequadamente o comportamento da função entre eles. Na <a href="aula15.html">interpolação polinomial</a>, todos os dados são interpolados por um único polinômio. Entretanto, quando o número de pontos aumenta, o grau desse polinômio também aumenta, e podem surgir oscilações intensas, o que é exemplificado pelo fenômeno de Runge.</p>
+
+<p>Uma alternativa consiste em dividir o intervalo em subintervalos e usar, em cada um deles, um polinômio de grau baixo. Os polinômios vizinhos são conectados de modo que a função resultante e algumas de suas derivadas sejam contínuas. A função construída dessa maneira é chamada <strong>spline</strong>.</p>
+
+<p>A divisão em subintervalos não significa que alguns dos pontos dados sejam desconsiderados para permitir o uso de polinômios de grau baixo. Todos os pontos são interpolados. Além disso, seus valores, juntamente com as condições de continuidade nos nós e as condições de contorno, determinam os coeficientes de todos os trechos e, portanto, o comportamento do spline no intervalo inteiro. Essa abordagem combina duas propriedades desejáveis: cada trecho é simples de calcular, enquanto a curva completa pode ser suficientemente suave para representar o comportamento dos dados sem as grandes oscilações de um polinômio global de grau elevado.</p>
+
+<blockquote>
+<strong>Definição.</strong> Uma função s(x) é um <strong>spline de grau p</strong> com nós x<sub>0</sub>&lt;x<sub>1</sub>&lt;...&lt;x<sub>n</sub> se:
+
+<ol>
+  <li>em cada subintervalo [x<sub>i</sub>,x<sub>i+1</sub>], a função coincide com um polinômio s<sub>i</sub>(x) de grau menor ou igual a p;
+  <blockquote class="formula">
+  $s\left(x\right)=s_i\left(x\right),\qquad x\in\left[x_i,x_{i+1}\right],$ $\qquad i=0,1,\ldots,n−1.$
+  </blockquote></li>
+  <li>a função s(x) e suas derivadas até a ordem p−1 são contínuas em [x<sub>0</sub>,x<sub>n</sub>].</li>
+</ol>
+</blockquote>
+
+<p>A última condição equivale a exigir que os polinômios dos dois subintervalos vizinhos possuam o mesmo valor e as mesmas derivadas até essa ordem:</p>
+
+<blockquote class="formula">
+$s_{i−1}\left(x_i\right)=s_i\left(x_i\right),\qquad\qquad~~i=1,2,\ldots,n−1,$
+<br/>
+$s_{i−1}\prime\left(x_i\right)=s_i\prime\left(x_i\right),\qquad\qquad i=1,2,\ldots,n−1,$
+<br/>
+⋮
+<br/>
+$s_{i−1}^{\left(p−1\right)}\left(x_i\right)=s_i^{\left(p−1\right)}\left(x_i\right),~~~i=1,2,\ldots,n−1,$
+
+</blockquote>
+
+<p>Quando, além dessas condições,</p>
+
+<blockquote class="formula">
+$s\left(x_i\right)=y_i,\qquad i=0,1,\ldots,n,$
+</blockquote>
+
+<p>dizemos que s(x) é um <strong>spline interpolante</strong> dos dados.</p>
+
+<p>A definição acima considera nós simples e a continuidade máxima compatível com o grau p. As propriedades fundamentais de um spline são:</p>
+
+<ul>
+  <li>cada trecho é um polinômio de grau baixo;</li>
+  <li>a curva possui suavidade global controlada;</li>
+  <li>a avaliação de s(x) exige apenas a identificação do subintervalo que contém x e o cálculo do polinômio correspondente.</li>
+</ul>
+
+<h4>Graus de liberdade e condições de contorno</h4>
+
+<p>Há n subintervalos, e cada polinômio de grau p possui p+1 coeficientes. Assim, ao todo, precisamos especificar n(p+1) coeficientes para definir o spline.</p>
+
+<p>Em cada um dos n−1 nós interiores, exigimos a continuidade da função e das derivadas de ordens 1,2,...,p−1. Isso fornece p condições por nó interior e, portanto, p(n−1) condições. O número de parâmetros livres de um p-spline é</p>
+
+<blockquote class="formula">
+$n\left(p+1\right)−p\left(n−1\right)=n+p.$
+</blockquote>
+
+<p>As n+1 condições de interpolação s(x<sub>i</sub>)=y<sub>i</sub> reduzem esse número para</p>
+
+<blockquote class="formula">
+$n+p−\left(n+1\right)=p−1.$
+</blockquote>
+
+<p>Assim, depois de impor a interpolação e a suavidade nos nós, ainda precisamos de p−1 condições adicionais para determinar um único spline. Essas condições são normalmente impostas nas extremidades do intervalo e, por isso, são chamadas <strong>condições de contorno</strong>.</p>
+
+<p>Se desejamos impor o mesmo número de condições em cada extremidade, p−1 deve ser par. Portanto, p deve ser ímpar. Para p=2m+1, podemos impor m condições em x<sub>0</sub> e m condições em x<sub>n</sub>. Essa simetria é uma das razões pelas quais os splines de graus ímpares, como 3 e 5, são particularmente importantes.</p>
+
+<h3>Spline linear</h3>
+
+<p>O exemplo mais simples da construção por splines é p=1. Nesse caso, cada trecho é uma reta. Como a definição exige apenas a continuidade da própria função, o spline interpolante é simplesmente a sequência das interpolações lineares entre pontos consecutivos:</p>
+
+<blockquote class="formula">
+$s_i\left(x\right)=y_i+\displaystyle{\frac{y_{i+1}−y_i}{x_{i+1}−x_i}}\left(x−x_i\right),\quad x\in\left[x_i,x_{i+1}\right].$
+</blockquote>
+
+<p>O 1-spline é contínuo, mas sua derivada geralmente apresenta saltos nos nós. Portanto, sua curva pode ter vértices visíveis. Ele é adequado quando basta ligar os pontos sem exigir suavidade da inclinação. Os splines de grau superior seguem a mesma ideia, mas impõem também a continuidade de derivadas nos nós.</p>
+
+<h3>Spline cúbico</h3>
+
+<p>O spline cúbico corresponde a p=3. Em cada subintervalo, escrevemos o polinômio na forma</p>
+
+<blockquote class="formula">
+$s_i\left(x\right)$ $=~a_i\left(x−x_i\right)^3+b_i\left(x−x_i\right)^2+c_i\left(x−x_i\right)+d_i,$
+$\qquad x\in\left[x_i,x_{i+1}\right],\qquad i=0,1,\ldots,n−1.$
+</blockquote>
+
+<p>É conveniente definir o comprimento de cada subintervalo por</p>
+
+<blockquote class="formula">
+$h_i=x_{i+1}−x_i,\qquad i=0,1,\ldots,n−1.$
+</blockquote>
+
+<p>Observamos que as condições de interpolação nos nós esquerdos fornecem imediatamente</p>
+
+<blockquote class="formula">
+$d_i=y_i,\qquad i=0,1,\ldots,n−1.$
+</blockquote>
+
+<p>As duas primeiras derivadas de cada polinômio são</p>
+
+<blockquote class="formula">
+$s_i\prime\left(x\right)=3a_i\left(x−x_i\right)^2+2b_i\left(x−x_i\right)+c_i,$
+<br/>
+$s_i\prime\prime\left(x\right)=6a_i\left(x−x_i\right)+2b_i,$
+</blockquote>
+
+<p>As condições de interpolação e de continuidade nos nós fornecem as seguintes equações para os coeficientes:</p>
+
+<blockquote class="formula">
+$d_{i+1}=a_ih_i^3+b_ih_i^2+c_ih_i+d_i,$
+<br/>
+$c_{i+1}=3a_ih_i^2+2b_ih_i+c_i,$
+<br/>
+$b_{i+1}=3a_ih_i+b_i.$
+</blockquote>
+
+<p>A partir da última equação, podemos expressar todos os valores de a<sub>i</sub>, exceto a<sub>n−1</sub>, pois b<sub>n</sub> ainda não foi definido. Para eliminar essa exceção, introduzimos formalmente b<sub>n</sub> e interpretamos todos os coeficientes b<sub>i</sub> como metade da segunda derivada do spline nos nós:</p>
+
+<blockquote class="formula">
+$b_i=\displaystyle{\frac{s''\left(x_i\right)}{2}},\qquad i=0,1,\ldots,n.$
+</blockquote>
+
+<p>Portanto, todos os coeficientes a<sub>i</sub> podem ser calculados em termos de b<sub>i</sub>:</p>
+
+<blockquote class="formula">
+$a_i=\displaystyle{\frac{b_{i+1}−b_i}{3h_i}}.$
+</blockquote>
+
+<p>Substituindo a expressão de a<sub>i</sub> na primeira equação e isolando c<sub>i</sub>, obtemos</p>
+
+<blockquote class="formula">
+$c_i=\displaystyle{\frac{d_{i+1}−d_i}{h_i}}−\displaystyle{\frac{h_i}{3}}\left(2b_i+b_{i+1}\right).$
+</blockquote>
+
+<p>Finalmente, a continuidade da primeira derivada nos nós interiores conduz às equações que determinam os valores b<sub>0</sub>,b<sub>1</sub>,...,b<sub>n</sub>:</p>
+
+<blockquote class="formula">
+$h_{i−1}b_{i−1}+2\left(h_{i−1}+h_i\right)b_i+h_ib_{i+1}$ $=~3\left(\displaystyle{\frac{d_{i+1}−d_i}{h_i}}−\displaystyle{\frac{d_i−d_{i−1}}{h_{i−1}}}\right),$ $\qquad i=1,2,\ldots,n−1.$
+</blockquote>
+
+<p>Como d<sub>i</sub>=y<sub>i</sub>, os quocientes presentes no lado direito são diferenças divididas de primeira ordem:</p>
+
+<blockquote class="formula">
+$\displaystyle{\frac{d_{i+1}−d_i}{h_i}}=y\left[x_i,x_{i+1}\right],\qquad$ $\displaystyle{\frac{d_i−d_{i−1}}{h_{i−1}}}=y\left[x_{i−1},x_i\right].$
+</blockquote>
+
+<p>Portanto, o lado direito também pode ser escrito por meio de diferenças divididas de primeira ou de segunda ordem:</p>
+
+<blockquote class="formula">
+$r_i=3\left(\displaystyle{\frac{d_{i+1}−d_i}{h_i}}−\displaystyle{\frac{d_i−d_{i−1}}{h_{i−1}}}\right)$ $=~3\left(y\left[x_i,x_{i+1}\right]−y\left[x_{i−1},x_i\right]\right)$ $=~3\left(h_{i−1}+h_i\right)y\left[x_{i−1},x_i,x_{i+1}\right].$
+</blockquote>
+
+<p>Podemos observar que o sistema possui n−1 equações para n+1 incógnitas. Os dois coeficientes livres são fixados pelas condições de contorno.</p>
+
+<h4>Condições do spline natural e sistema tridiagonal</h4>
+
+<p>No <strong>spline cúbico natural</strong>, impomos que a segunda derivada seja nula nas duas extremidades:</p>
+
+<blockquote class="formula">
+$s\prime\prime\left(x_0\right)=0,\qquad s\prime\prime\left(x_n\right)=0.$
+</blockquote>
+
+<p>Em termos dos coeficientes, essas condições são simplesmente</p>
+
+<blockquote class="formula">
+$b_0=0,\qquad b_n=0.$
+</blockquote>
+
+<p>Considerando essas condições, o sistema pode ser escrito como</p>
+
+<blockquote class="formula">
+$\left(\begin{array}{ccccc}
+2\left(h_0+h_1\right) & h_1 & 0 & \ldots & 0\\
+h_1 & 2\left(h_1+h_2\right) & h_2 & \ddots & \vdots\\
+0 & h_2 & 2\left(h_2+h_3\right) & \ddots & 0\\
+\vdots & \ddots & \ddots & \ddots & h_{n−2}\\
+0 & \ldots & 0 & h_{n−2} & 2\left(h_{n−2}+h_{n−1}\right)
+\end{array}\right)
+\left(\begin{array}{c}
+b_1\\b_2\\b_3\\\vdots\\b_{n−1}
+\end{array}\right)
+=
+\left(\begin{array}{c}
+r_1\\r_2\\r_3\\\vdots\\r_{n−1}
+\end{array}\right).$
+</blockquote>
+
+<p>A matriz dos coeficientes desse sistema é simétrica, positiva definida e tridiagonal. Portanto, não é necessário aplicar um método geral de eliminação de Gauss, que teria complexidade 𝒪(n<sup>3</sup>). O <strong>método de Thomas</strong>, que é uma eliminação de Gauss adaptada a matrizes tridiagonais, resolve o sistema em 𝒪(n) operações e pode usar apenas 𝒪(n) posições de memória. Como os elementos h<sub>i</sub> são positivos, a matriz possui dominância diagonal estrita, e o método pode ser aplicado sem pivotamento.</p>
+
+<p>Depois de resolver o sistema para b<sub>1</sub>,b<sub>2</sub>,...,b<sub>n−1</sub>, completamos a lista com b<sub>0</sub>=b<sub>n</sub>=0 e calculamos os demais coeficientes de cada subintervalo:</p>
+
+<blockquote class="formula">
+$d_i=y_i,$
+<br/>
+$c_i=\displaystyle{\frac{d_{i+1}−d_i}{h_i}}−\displaystyle{\frac{h_i}{3}}\left(2b_i+b_{i+1}\right),$
+<br/>
+$a_i=\displaystyle{\frac{b_{i+1}−b_i}{3h_i}}.$
+</blockquote>
+
+<p>Esses coeficientes determinam todos os polinômios s<sub>i</sub>(x).</p>
+
+<form>
+<div class="overwrite"><input class="right-aligned" type="button" name="execute" value="Executar" onClick="ExecuteCodeEvent(this)"></div>
+<textarea class="invisible" name="library" readonly rows="20">
+var Interp=function(X,Y){
+ var d=Y.slice()
+ for(var k=0;++k<X.length;)for(var i=X.length;i-->k;)
+   d[i]=(d[i]-d[i-1])/(X[i]-X[i-k])
+
+ var p=function(x){
+  var r=d[d.length-1]
+  for(var k=d.length-1;k-->0;)r=d[k]+r*(x-X[k])
+  return r
+ }
+
+ return p
+}
+
+var Spline=function(X,Y){
+ var n=X.length-2
+ if(n<0||X.length>Y.length) return
+ var a=[], b=[], c=[], h=[]
+ for(var i=0;i<=n;++i){
+  h[i]=X[i+1]-X[i]
+  if(h[i]<=0) return
+  c[i]=(Y[i+1]-Y[i])/h[i]
+ }
+ a[0]=b[0]=0
+ for(var i=0;i++<n;){
+  var q=h[i-1]*a[i-1]
+  a[i]=1/(2*(h[i]+h[i-1])-h[i-1]*q)
+  b[i]=3*(c[i]-c[i-1])-b[i-1]*q
+ }
+
+ b[n]*=a[n]
+ for(var i=n;--i>0;)b[i]=(b[i]-h[i]*b[i+1])*a[i]
+ c[n]-=2*b[n]*h[n]/3
+ a[n]=-b[n]/(3*h[n])
+ for(var i=n;i-->0;){
+  c[i]-=(b[i+1]+2*b[i])*h[i]/3
+  a[i]=(b[i+1]-b[i])/(3*h[i])
+ }
+ return function(x){
+  x-=X[0]
+  for(var i=0;i<n;++i)
+   if(x<h[i]) return Y[i]+x*(c[i]+x*(b[i]+x*a[i]))
+   else x-=h[i]
+  return Y[n]+x*(c[n]+x*(b[n]+x*a[n]))
+ }
+}
+</textarea>
+<textarea class="wide" name="spline" readonly rows="33">
+var Spline=function(X,Y){
+ var n=X.length-2
+ if(n<0||X.length>Y.length) return
+ var a=[], b=[], c=[], h=[]
+ for(var i=0;i<=n;++i){
+  h[i]=X[i+1]-X[i]
+  if(h[i]<=0) return
+  c[i]=(Y[i+1]-Y[i])/h[i]
+ }
+ a[0]=b[0]=0
+ for(var i=0;i++<n;){
+  var q=h[i-1]*a[i-1]
+  a[i]=1/(2*(h[i]+h[i-1])-h[i-1]*q) // diagonal inversa
+  b[i]=3*(c[i]-c[i-1])-b[i-1]*q     // lado direito
+ }
+
+ b[n]*=a[n] // solução do sistema
+ for(var i=n;--i>0;)b[i]=(b[i]-h[i]*b[i+1])*a[i]
+ c[n]-=2*b[n]*h[n]/3
+ a[n]=-b[n]/(3*h[n])
+ for(var i=n;i-->0;){
+  c[i]-=(b[i+1]+2*b[i])*h[i]/3
+  a[i]=(b[i+1]-b[i])/(3*h[i])
+ }
+ return function(x){
+  x-=X[0]
+  for(var i=0;i<n;++i)
+   if(x<h[i]) return Y[i]+x*(c[i]+x*(b[i]+x*a[i]))
+   else x-=h[i]
+  return Y[n]+x*(c[n]+x*(b[n]+x*a[n]))
+ }
+}
+</textarea>
+<textarea class="wide" name="code" rows="14">
+var y=function(x){return 1/(1+25*x*x)}
+
+var a=-1
+var b=1
+var n=10
+
+var X=[], Y=[]
+for(var i=0;i<=n;++i) Y[i]=y(X[i]=a+(b-a)*i/n)
+var s=Spline(X,Y)
+var p=Interp(X,Y)
+
+var x=(X[0]+X[1])/2
+text=(y(x)-s(x))+"\n"+(y(x)-p(x))
+</textarea>
+<textarea class="wide" name="destination" readonly rows="2"></textarea>
+</form>
+
+<p>Entre as funções interpolantes para as quais o quadrado da segunda derivada é integrável, o spline cúbico natural é o único que minimiza</p>
+
+<blockquote class="formula">
+$\displaystyle{\int_{x_0}^{x_n}s\prime\prime\left(x\right)^2dx}.$
+</blockquote>
+
+<p>Essa propriedade permite interpretar o spline natural como a curva interpolante de menor energia de curvatura.</p>
+
+<h4>Outras condições de contorno</h4>
+
+<p>As condições adicionais devem ser incorporadas diretamente às equações correspondentes às extremidades. A escolha depende das informações disponíveis e do comportamento que desejamos representar:</p>
+
+<ul>
+  <li><strong>spline natural:</strong> impomos s′′(x<sub>0</sub>)=s′′(x<sub>n</sub>)=0, o que equivale a fixar b<sub>0</sub>=b<sub>n</sub>=0;</li>
+  <li><strong>spline completo:</strong> quando as inclinações nas extremidades são conhecidas, impomos s′(x<sub>0</sub>) e s′(x<sub>n</sub>);</li>
+  <li><strong>condição not-a-knot:</strong> exigimos que os dois primeiros trechos, assim como os dois últimos, pertençam ao mesmo polinômio cúbico, impondo a continuidade da terceira derivada nos nós x<sub>1</sub> e x<sub>n−1</sub>.</li>
+</ul>
+
+<p>No caso natural, a maneira mais simples é eliminar b<sub>0</sub> e b<sub>n</sub> antes de montar o sistema, como fizemos acima. Para derivadas prescritas ou para a condição not-a-knot, substituímos a primeira e a última equações pelas relações de contorno correspondentes. O sistema permanece esparso e pode ser resolvido por métodos especializados para matrizes em banda.</p>
+
+<h3>Interpolação de uma função periódica</h3>
+
+<p>Se os dados representam uma função periódica ao longo de um período [x<sub>0</sub>,x<sub>n</sub>], devemos ter inicialmente</p>
+
+<blockquote class="formula">
+$y_0=y_n.$
+</blockquote>
+
+<p>As condições naturais não são adequadas nesse caso, pois as extremidades representam o mesmo ponto da função periódica. Em vez delas, impomos condições periódicas de continuidade das derivadas. Em particular, para um spline cúbico,</p>
+
+<blockquote class="formula">
+$s\prime\left(x_0\right)=s\prime\left(x_n\right),\qquad s\prime\prime\left(x_0\right)=s\prime\prime\left(x_n\right).$
+</blockquote>
+
+<p>A segunda condição implica b<sub>0</sub>=b<sub>n</sub>. A igualdade das primeiras derivadas cria uma equação que envolve simultaneamente os coeficientes do primeiro e do último subintervalos. Por isso, a matriz deixa de ser estritamente tridiagonal e passa a ser <strong>tridiagonal cíclica</strong>: surgem elementos adicionais nos cantos superior direito e inferior esquerdo.</p>
+
+<p>Esse sistema ainda pode ser resolvido em 𝒪(n) operações por uma adaptação do método de Thomas, frequentemente combinada com a fórmula de Sherman-Morrison. O spline obtido pode ser estendido periodicamente para fora do intervalo por</p>
+
+<blockquote class="formula">
+$s\left(x+kT\right)=s\left(x\right),\qquad T=x_n−x_0,\quad k\inℤ.$
+</blockquote>
+
+<h3>Spline quíntico</h3>
+
+<p>Em um spline de grau 5, ou spline quíntico, cada trecho possui a forma</p>
+
+<blockquote class="formula">
+$s_i\left(x\right)=a_i\left(x−x_i\right)^5$ $+~b_i\left(x−x_i\right)^4$ $+~c_i\left(x−x_i\right)^3$ $+~d_i\left(x−x_i\right)^2$
+$+~e_i\left(x−x_i\right)+f_i.$
+</blockquote>
+
+<p>Os trechos são conectados de modo que s(x) e suas primeiras quatro derivadas sejam contínuas. Portanto, o spline quíntico pertence a C<sup>4</sup>[x<sub>0</sub>,x<sub>n</sub>] e é mais suave do que o spline cúbico. Após as condições de interpolação e continuidade, restam quatro parâmetros livres, o que permite impor duas condições em cada extremidade.</p>
+
+<p>As condições do <strong>spline quíntico natural</strong> são</p>
+
+<blockquote class="formula">
+$s\prime\prime\prime\left(x_0\right)=s^{\left(4\right)}\left(x_0\right)=0,$
+<br/>
+$s\prime\prime\prime\left(x_n\right)=s^{\left(4\right)}\left(x_n\right)=0.$
+</blockquote>
+
+<p>Essas quatro condições são simétricas e determinam uma solução única. Entre as funções suficientemente suaves que interpolam os dados, o spline quíntico natural minimiza</p>
+
+<blockquote class="formula">
+$\displaystyle{\int_{x_0}^{x_n}s\prime\prime\prime\left(x\right)^2dx}.$
+</blockquote>
+
+<p>Seu sistema linear continua sendo esparso, mas possui uma banda mais larga do que a do sistema cúbico. Assim, utilizamos uma eliminação adaptada a matrizes em banda. O custo permanece linear em n quando a largura da banda é fixa.</p>
+
+<p>As aplicações do spline de grau 5 são mais limitadas. O spline cúbico já produz uma função com as duas primeiras derivadas contínuas, isto é, uma função de classe C<sup>2</sup>. Essa regularidade é suficiente para a maioria das situações práticas, sobretudo porque muitos modelos matemáticos são formulados por equações diferenciais de segunda ordem e, portanto, envolvem derivadas somente até essa ordem.</p>
+
+<p>O spline quíntico acrescenta a continuidade das derivadas de terceira e quarta ordens, mas também exige mais condições de contorno e mais operações. Seu uso é justificado quando essas derivadas superiores possuem significado no problema, por exemplo, no planejamento de trajetórias com variações muito suaves da aceleração ou em projetos geométricos com requisitos elevados de suavidade. Fora desses casos, o spline cúbico costuma ser a escolha padrão para a interpolação de dados unidimensionais.</p>
+
+<h3>Aplicações</h3>
+
+<p>Os splines são utilizados sempre que precisamos representar uma função ou uma curva a partir de informações locais. Entre as aplicações principais, destacam-se:</p>
+
+<ul>
+  <li><strong>interpolação e visualização de dados:</strong> avaliação de funções conhecidas apenas em pontos discretos e construção de curvas suaves;</li>
+  <li><strong>computação gráfica e projeto geométrico:</strong> representação de curvas e superfícies por B-splines;</li>
+  <li><strong>processamento de sinais e imagens:</strong> reamostragem, ampliação, rotação e reconstrução de dados;</li>
+  <li><strong>planejamento de trajetórias:</strong> geração de movimentos com posição, velocidade e aceleração contínuas;</li>
+  <li><strong>métodos numéricos para equações diferenciais:</strong> aproximações por elementos finitos e métodos de colocação.</li>
+</ul>
+
+<h3>Resumo</h3>
+
+<ol>
+  <li>Um spline combina polinômios de grau baixo em subintervalos e impõe suavidade nos nós.</li>
+  <li>Condições de contorno simétricas podem ser divididas igualmente entre as extremidades quando o grau do spline é ímpar.</li>
+  <li>O spline cúbico é determinado por um sistema tridiagonal, resolvido em tempo linear pelo método de Thomas.</li>
+</ol>
+
+</section>
+
+</article>
+
+<footer>
+<a href="aula17.html">Próxima aula: Integração numérica: métodos de Newton-Cotes.</a>
+</footer>
+
+</body>
+
+</html>

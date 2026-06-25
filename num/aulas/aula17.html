@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width" />
+<title>Cálculo numérico: Integração numérica: métodos de Newton-Cotes.</title>
+<link rel="stylesheet" type="text/css" href="lstyle.css" />
+<link href="https://www.ufabc.edu.br/ensino/docentes/olexandr-zhydenko" rel="author" />
+<script type="text/javascript" src="execjavascript.js"></script>
+<script type="text/javascript" src="LaTeXMathML.js"></script>
+</head>
+
+<body>
+
+<header>
+</header>
+
+<nav>
+<a class="prev" href="aula16.html">Aula anterior</a>
+<a class="top" href="index.html">Índice</a>
+<a class="next" href="aula18.html">Próxima aula</a>
+</nav>
+
+<article>
+
+<section>
+<h2>Aula 17: Integração numérica: métodos de Newton-Cotes.</h2>
+
+<h3>Formulação do problema</h3>
+
+<p>Em muitas aplicações, a função que queremos integrar é definida numericamente. Isso significa que não conhecemos necessariamente uma fórmula simples para y(x), mas podemos calcular seu valor em pontos escolhidos do intervalo. Vamos supor que y(x) seja contínua em [a,b] e possua algumas derivadas contínuas, de modo que as estimativas de erro apresentadas abaixo façam sentido. O objetivo é calcular a integral definida</p>
+
+<blockquote class="formula">
+$I=\displaystyle{\int_a^b y\left(x\right)dx}.$
+</blockquote>
+
+<p>A integral definida é o limite das somas de Riemann:</p>
+
+<blockquote class="formula">
+$\displaystyle{\int_a^b y\left(x\right)dx}=\lim_{\max\Delta x_i\to0}
+\displaystyle{\sum_{i=0}^{n−1}y\left(\xi_i\right)\Delta x_i},$
+</blockquote>
+
+<p>onde cada ponto ξ<sub>i</sub> pertence ao subintervalo correspondente. A própria definição já sugere uma primeira fórmula numérica: em vez de tomar o limite, fixamos uma partição suficientemente fina e usamos uma soma finita. A escolha mais simples é considerar todos os subintervalos iguais e usar o ponto esquerdo de cada subintervalo para calcular o valor da função:</p>
+
+<blockquote class="formula">
+$\Delta x_i=h=\displaystyle{\frac{b−a}{n}},\qquad \xi_i=x_i=a+ih.$
+</blockquote>
+
+<p>Nessa abordagem, em cada subintervalo aproximamos a função y(x) pelo valor no seu extremo esquerdo. Assim, a integral é aproximada pela soma das áreas dos retângulos obtidos:</p>
+
+<blockquote class="formula">
+$I\approx\displaystyle{\sum_{i=0}^{n−1}y\left(x_i\right)h}$ $=~h\left(y\left(x_0\right)+y\left(x_1\right)+\ldots+y\left(x_{n−1}\right)\right).$
+</blockquote>
+
+<svg width="100%" height="270">
+  <line x1="8%" y1="235" x2="94%" y2="235" stroke="black"/>
+  <line x1="10%" y1="20" x2="10%" y2="260" stroke="black"/>
+  <text x="93%" y="250" text-anchor="end">x</text>
+  <text x="8%" y="30" text-anchor="end">y</text>
+
+  <svg x="10%" y="35" viewBox="0 0 650 250" width="80%" height="220px" preserveAspectRatio="none">
+    <rect x="40" y="205" width="72" height="20" fill="gold" opacity="0.5" stroke="tomato"/>
+    <rect x="112" y="130" width="72" height="95" fill="gold" opacity="0.5" stroke="tomato"/>
+    <rect x="184" y="94" width="72" height="131" fill="gold" opacity="0.5" stroke="tomato"/>
+    <rect x="256" y="115" width="72" height="110" fill="gold" opacity="0.5" stroke="tomato"/>
+    <rect x="328" y="154" width="72" height="71" fill="gold" opacity="0.5" stroke="tomato"/>
+    <rect x="400" y="162" width="72" height="63" fill="gold" opacity="0.5" stroke="tomato"/>
+    <rect x="472" y="118" width="72" height="107" fill="gold" opacity="0.5" stroke="tomato"/>
+    <rect x="544" y="89" width="72" height="136" fill="gold" opacity="0.5" stroke="tomato"/>
+
+    <path d="M40 205 C100 130, 165 75, 230 100 C295 125, 350 200, 420 150 C500 92, 560 72, 616 105"
+          fill="none" stroke="blue" stroke-width="3"/>
+    <line x1="40" y1="205" x2="40" y2="225" stroke="black" stroke-dasharray="7,4"/>
+    <line x1="616" y1="105" x2="616" y2="225" stroke="black" stroke-dasharray="7,4"/>
+  </svg>
+
+  <text x="27%" y="92" text-anchor="middle">y=y(x)</text>
+  <text x="15%" y="250" text-anchor="middle">a</text>
+  <text x="86%" y="250" text-anchor="middle">b</text>
+</svg>
+
+<p>Por isso, o método é chamado <strong>regra dos retângulos</strong>.</p>
+
+<p>Para estimar o erro, consideremos primeiro apenas o subintervalo [x<sub>0</sub>,x<sub>1</sub>]. Pelo teorema do valor médio, para cada x∈[x<sub>0</sub>,x<sub>1</sub>], existe um ponto ξ<sub>x</sub> entre x<sub>0</sub> e x tal que</p>
+
+<blockquote class="formula">
+$y\left(x\right)=y\left(x_0\right)+y\prime\left(\xi\right)\left(x−x_0\right).$
+</blockquote>
+
+<p>Se |y′(x)|≤M<sub>0</sub> nesse subintervalo, então</p>
+
+<blockquote class="formula">
+$\left|\Delta I_0\right|=\left|\displaystyle{\int_{x_0}^{x_1}y\left(x\right)dx}−h\cdot y\left(x_0\right)\right|$
+$=~\left|\displaystyle{\int_{x_0}^{x_1}\left(y\left(x\right)−y\left(x_0\right)\right)dx}\right|$
+$=~\left|\displaystyle{\int_{x_0}^{x_1}y\prime\left(\xi\right)\left(x−x_0\right)dx}\right|$
+$\le~\displaystyle{\int_{x_0}^{x_1}M_0\left(x−x_0\right)dx}=\displaystyle{\frac{M_0(x_1−x_0)^2}{2}}
+=\displaystyle{\frac{M_0h^2}{2}}.$
+</blockquote>
+
+<p>Como y′ é contínua em [a,b], podemos introduzir um limite válido para o intervalo inteiro:</p>
+
+<blockquote class="formula">
+$M=\max_{a\le x\le b}\left|y\prime\left(x\right)\right|.$
+</blockquote>
+
+<p>Esse mesmo número M limita |y′(x)| em todos os subintervalos. Repetindo o procedimento anterior em cada um deles, obtemos a estimativa do erro total:</p>
+
+<blockquote class="formula">
+$\left|\Delta I\right|=\left|\Delta I_0+\Delta I_1+\ldots+\Delta I_{n−1}\right|$ $\le~\left|\Delta I_0\right|+\left|\Delta I_1\right|+\ldots+\left|\Delta I_{n−1}\right|$
+$\le~\displaystyle{n\cdot\frac{M}{2}}h^2
+=\displaystyle{\frac{M}{2}}\left(b−a\right)h,$
+</blockquote>
+
+<p>Esse erro não é satisfatório, pois diminui apenas proporcionalmente a h. Para reduzir o erro aproximadamente dez vezes, precisamos usar cerca de dez vezes mais subintervalos.</p>
+
+<h3>Regra dos trapézios</h3>
+
+<p>O próximo passo é usar também o valor da função no ponto direito do subintervalo. Em vez de aproximar y(x) por uma constante, aproximamos a função no primeiro subintervalo pela reta que interpola os pontos (x<sub>0</sub>,y(x<sub>0</sub>)) e (x<sub>1</sub>,y(x<sub>1</sub>)). O polinômio interpolante linear é</p>
+
+<blockquote class="formula">
+$p_1\left(x\right)=y\left(x_0\right)L_0\left(x\right)+y\left(x_1\right)L_1\left(x\right),$
+</blockquote>
+
+<p>onde utilizamos os <a href="aula15.html">polinômios fundamentais de Lagrange</a>:</p>
+
+<blockquote class="formula">
+$L_0\left(x\right)=\displaystyle{\frac{x−x_1}{x_0−x_1}}=\displaystyle{\frac{x_1−x}{h}},\qquad$
+$L_1\left(x\right)=\displaystyle{\frac{x−x_0}{x_1−x_0}}=\displaystyle{\frac{x−x_0}{h}}.$
+</blockquote>
+
+<p>A integral pode então ser aproximada pelas integrais desses polinômios. Para calculá-las, introduzimos a variável</p>
+
+<blockquote class="formula">
+$t=\displaystyle{\frac{x−x_0}{h}},\qquad x=x_0+ht,\qquad dx=h\,dt.$
+</blockquote>
+
+<p>Quando x varia de x<sub>0</sub> até x<sub>1</sub>, a variável t varia de 0 até 1. Portanto,</p>
+
+<blockquote class="formula">
+$\displaystyle{\int_{x_0}^{x_1}L_0\left(x\right)dx}=h\displaystyle{\int_0^1\left(1−t\right)dt}=\displaystyle{\frac{h}{2}},\qquad$
+$\displaystyle{\int_{x_0}^{x_1}L_1\left(x\right)dx}=h\displaystyle{\int_0^1t\,dt}=\displaystyle{\frac{h}{2}}.$
+</blockquote>
+
+<p>Assim, obtemos a fórmula da área de um trapézio:</p>
+
+<blockquote class="formula">
+$\displaystyle{\int_{x_0}^{x_1}p_1\left(x\right)dx}$
+$=~y\left(x_0\right)\displaystyle{\int_{x_0}^{x_1}L_0\left(x\right)dx}$ $+~y\left(x_1\right)\displaystyle{\int_{x_0}^{x_1}L_1\left(x\right)dx}$
+$=~\displaystyle{\frac{y\left(x_0\right)+y\left(x_1\right)}{2}}\cdot h.$
+</blockquote>
+
+<p>Repetindo essa regra em todos os subintervalos, obtemos a fórmula composta:</p>
+
+<blockquote class="formula">
+$I\approx h\left(\displaystyle{\frac{y\left(x_0\right)+y\left(x_1\right)}{2}}\right.$ $+~\displaystyle{\frac{y\left(x_1\right)+y\left(x_2\right)}{2}}$ $+~\displaystyle{\frac{y\left(x_2\right)+y\left(x_3\right)}{2}}$ $+~\ldots+\left.\displaystyle{\frac{y\left(x_{n−1}\right)+y\left(x_n\right)}{2}}\right)$
+$=~h\left(\displaystyle{\frac{y\left(x_0\right)+y\left(x_n\right)}{2}}+\displaystyle{\sum_{i=1}^{n−1}y\left(x_i\right)}\right).$
+</blockquote>
+
+<svg width="100%" height="270">
+  <line x1="8%" y1="235" x2="94%" y2="235" stroke="black"/>
+  <line x1="10%" y1="20" x2="10%" y2="260" stroke="black"/>
+  <text x="93%" y="250" text-anchor="end">x</text>
+  <text x="8%" y="30" text-anchor="end">y</text>
+
+  <svg x="10%" y="35" viewBox="0 0 650 250" width="80%" height="220px" preserveAspectRatio="none">
+    <polygon points="40,225 40,205 112,130 112,225" fill="gold" opacity="0.5" stroke="tomato"/>
+    <polygon points="112,225 112,130 184,94 184,225" fill="gold" opacity="0.5" stroke="tomato"/>
+    <polygon points="184,225 184,94 256,115 256,225" fill="gold" opacity="0.5" stroke="tomato"/>
+    <polygon points="256,225 256,115 328,154 328,225" fill="gold" opacity="0.5" stroke="tomato"/>
+    <polygon points="328,225 328,154 400,162 400,225" fill="gold" opacity="0.5" stroke="tomato"/>
+    <polygon points="400,225 400,162 472,118 472,225" fill="gold" opacity="0.5" stroke="tomato"/>
+    <polygon points="472,225 472,118 544,89 544,225" fill="gold" opacity="0.5" stroke="tomato"/>
+    <polygon points="544,225 544,89 616,105 616,225" fill="gold" opacity="0.5" stroke="tomato"/>
+
+    <path d="M40 205 C100 130, 165 75, 230 100 C295 125, 350 200, 420 150 C500 92, 560 72, 616 105"
+          fill="none" stroke="blue" stroke-width="3"/>
+    <polyline points="40,205 112,130 184,94 256,115 328,154 400,162 472,118 544,89 616,105"
+          fill="none" stroke="red" stroke-width="2.5"/>
+    <line x1="40" y1="205" x2="40" y2="225" stroke="black" stroke-dasharray="7,4"/>
+    <line x1="616" y1="105" x2="616" y2="225" stroke="black" stroke-dasharray="7,4"/>
+  </svg>
+
+  <text x="27%" y="92" text-anchor="middle">y=y(x)</text>
+  <text x="15%" y="250" text-anchor="middle">a</text>
+  <text x="86%" y="250" text-anchor="middle">b</text>
+</svg>
+
+<p>Para estimar o erro, utilizamos a fórmula para o erro da interpolação polinomial:</p>
+
+<blockquote class="formula">
+$y\left(x\right)−p_1\left(x\right)=\displaystyle{\frac{y\prime\prime\left(\xi\right)}{2}}\left(x−x_0\right)\left(x−x_1\right).$
+</blockquote>
+
+<p>Se |y′′(x)|≤M<sub>0</sub> em [x<sub>0</sub>,x<sub>1</sub>], então</p>
+
+<blockquote class="formula">
+$\left|\Delta I_0\right|=\left|\displaystyle{\int_{x_0}^{x_1}\left(y\left(x\right)−p_1\left(x\right)\right)dx}\right|$
+$\le~\displaystyle{\frac{M_0}{2}}\displaystyle{\int_{x_0}^{x_1}\left(x−x_0\right)\left(x_1−x\right)dx}$ $=~\displaystyle{\frac{M_0h^3}{2}\int_0^1 t\left(1−t\right)dt}=\displaystyle{\frac{M_0h^3}{12}}.$
+</blockquote>
+
+<p>Como y′′(x) é contínua em [a,b], podemos introduzir o limite superior para o intervalo inteiro:</p>
+
+<blockquote class="formula">
+$M=\max_{a\le x\le b}\left|y\prime\prime\left(x\right)\right|,$
+</blockquote>
+
+<p>Então obtemos uma estimativa para o erro total:</p>
+
+<blockquote class="formula">
+$\left|\Delta I\right|\le\displaystyle{\sum_{i=0}^{n−1}\frac{Mh^3}{12}}=\displaystyle{\frac{M h^3}{12}}\cdot n=\displaystyle{\frac{M}{12}}\left(b−a\right)h^2.$
+</blockquote>
+
+<p>Assim, a regra dos trapézios composta é de segunda ordem: quando h é dividido por 2, o erro tende a ser dividido por aproximadamente 4.</p>
+
+<form>
+<div class="overwrite"><input class="right-aligned" type="button" name="execute"  value="Executar" onClick="ExecuteCodeEvent(this)"></div>
+<textarea class="wide" name="code"  rows="13">
+var Trap=function(f,a,b,n){
+ if(a==b) return 0
+ if(n<=0) return NaN
+ var h=(b-a)/n
+ var r=(f(a)+f(b))/2
+ var x=a
+ while(--n>0)r+=f(x+=h)
+ return r*h
+}
+
+var x=1
+text=Math.sin(x)-Trap(Math.cos,0,x,8)
+</textarea>
+<textarea class="wide" name="destination" readonly rows="2"></textarea>
+</form>
+
+<h3>Aproximações de ordem superior: fórmulas de Simpson</h3>
+
+<p>A ideia anterior pode ser generalizada para obter aproximações de ordem superior. Escolhemos alguns pontos no intervalo, construímos o polinômio interpolante nesses pontos e integramos esse polinômio.</p>
+
+<h4>Método de parábolas</h4>
+
+<p>Consideremos três pontos igualmente espaçados, dados por</p>
+
+<blockquote class="formula">
+$x_1=x_0+h,\qquad x_2=x_0+2h.$
+</blockquote>
+
+<p>Nesse caso, aproximamos y(x) pelo polinômio quadrático que interpola os valores y(x<sub>0</sub>), y(x<sub>1</sub>) e y(x<sub>2</sub>):</p>
+
+<blockquote class="formula">
+$p_2\left(x\right)$ $=~y\left(x_0\right)L_0\left(x\right)+y\left(x_1\right)L_1\left(x\right)+y\left(x_2\right)L_2\left(x\right),$
+</blockquote>
+
+<p>onde os <a href="aula15.html">polinômios fundamentais de Lagrange</a> são:</p>
+
+<blockquote class="formula">
+$L_0\left(x\right)=\displaystyle{\frac{\left(x−x_1\right)\left(x−x_2\right)}{2h^2}},\qquad$
+$L_1\left(x\right)=−\displaystyle{\frac{\left(x−x_0\right)\left(x−x_2\right)}{h^2}},\qquad$
+$L_2\left(x\right)=\displaystyle{\frac{\left(x−x_0\right)\left(x−x_1\right)}{2h^2}}.$
+</blockquote>
+
+<p>Usamos novamente a variável</p>
+
+<blockquote class="formula">
+$t=\displaystyle{\frac{x−x_0}{h}},\qquad x=x_0+ht,\qquad dx=h\,dt.$
+</blockquote>
+
+<p>Calculamos os pesos integrando esses polinômios:</p>
+
+<blockquote class="formula">
+$\displaystyle{\int_{x_0}^{x_2} L_0\left(x\right)dx}
+=\displaystyle{\frac{h}{2}}\displaystyle{\int_0^2\left(t−1\right)\left(t−2\right)dt}
+=\displaystyle{\frac{h}{3}},$
+<br/>
+$\displaystyle{\int_{x_0}^{x_2} L_1\left(x\right)dx}
+=h\displaystyle{\int_0^2\left(2t−t^2\right)dt}
+=\displaystyle{\frac{4h}{3}},$
+<br/>
+$\displaystyle{\int_{x_0}^{x_2} L_2\left(x\right)dx}
+=\displaystyle{\frac{h}{2}}\displaystyle{\int_0^2\left(t^2−t\right)dt}
+=\displaystyle{\frac{h}{3}}.$
+</blockquote>
+
+<p>Então, uma aproximação para a integral sobre os dois primeiros subintervalos é</p>
+
+<blockquote class="formula">
+$\displaystyle{\int_{x_0}^{x_2}p_2\left(x\right)dx}
+=y\left(x_0\right)\displaystyle{\int_{x_0}^{x_2}L_0\left(x\right)dx}$ $+~y\left(x_1\right)\displaystyle{\int_{x_0}^{x_2}L_1\left(x\right)dx}$ $+~y\left(x_2\right)\displaystyle{\int_{x_0}^{x_2}L_2\left(x\right)dx}$
+$=~\displaystyle{\frac{h}{3}}\left(y\left(x_0\right)+4y\left(x_1\right)+y\left(x_2\right)\right).$
+</blockquote>
+
+<p>Por causa do fator comum 1/3, essa fórmula é chamada <strong>regra de Simpson 1/3</strong>. Repetindo o procedimento nos demais pares de subintervalos, obtemos</p>
+
+<blockquote class="formula">
+$I\approx\displaystyle{\frac{h}{3}}\left(y\left(x_0\right)\right.+4y\left(x_1\right)+y\left(x_2\right)$ $+~y\left(x_2\right)+4y\left(x_3\right)+y\left(x_4\right)$ $+~y\left(x_4\right)+4y\left(x_5\right)+y\left(x_6\right)$
+$+~\ldots+\left.y\left(x_{n−2}\right)+4y\left(x_{n−1}\right)+y\left(x_n\right)\right).$
+</blockquote>
+
+<p>Observamos que os valores correspondentes aos nós internos com índices pares aparecem duas vezes. Portanto, se n é par,</p>
+
+<blockquote class="formula">
+$I\approx\displaystyle{\frac{h}{3}}\left(y\left(x_0\right)\right.$ $+~\displaystyle{4\sum_{i=1}^{n/2}y\left(x_{2i−1}\right)}$ $+~\displaystyle{2\sum_{i=1}^{n/2−1}y\left(x_{2i}\right)}$ $+~\left.y\left(x_n\right)\right).$
+</blockquote>
+
+<p>O erro pode ser estimado novamente utilizando o erro da aproximação pelo polinômio interpolante:</p>
+
+<blockquote class="formula">
+$y\left(x\right)−p_2\left(x\right)$ $=~\displaystyle{\frac{y\prime\prime\prime\left(\xi\right)}{3!}}\left(x−x_0\right)\left(x−x_1\right)\left(x−x_2\right).$
+</blockquote>
+
+<p>Portanto, se |y′′′(x)|≤M<sub>0</sub> em [x<sub>0</sub>,x<sub>2</sub>], então</p>
+
+<blockquote class="formula">
+$\left|\Delta I_0\right|=\left|\displaystyle{\int_{x_0}^{x_1}\left(y\left(x\right)−p_2\left(x\right)\right)dx}\right|$
+$\le~\displaystyle{\frac{M_0}{6}}\displaystyle{\int_{x_0}^{x_1}\left(x−x_0\right)\left(x_1−x\right)\left(x_2−x\right)dx}$
+$=~\displaystyle{\frac{M_0h^4}{6}\int_0^1 t\left(1−t\right)\left(2−t\right)dt}
+=\displaystyle{\frac{M_0h^4}{24}}.$
+</blockquote>
+
+<p>De modo semelhante, para outro subintervalo, obtemos</p>
+
+<blockquote class="formula">
+$\left|\Delta I_1\right|=\left|\displaystyle{\int_{x_1}^{x_2}\left(y\left(x\right)−p_2\left(x\right)\right)dx}\right|$
+$\le~\displaystyle{\frac{M_0}{6}}\displaystyle{\int_{x_1}^{x_2}\left(x−x_0\right)\left(x−x_1\right)\left(x_2−x\right)dx}$
+$=~\displaystyle{\frac{M_0h^4}{6}\int_1^2 t\left(t−1\right)\left(2−t\right)dt}
+=\displaystyle{\frac{M_0h^4}{24}}.$
+</blockquote>
+
+<p>Considerando o limite superior para o intervalo inteiro,</p>
+
+<blockquote class="formula">
+$M=\max_{a\le x\le b}\left|y\prime\prime\prime\left(x\right)\right|,$
+</blockquote>
+
+<p>obtemos a seguinte estimativa para o erro total, proporcional a h<sup>3</sup>:</p>
+
+<blockquote class="formula">
+$\left|\Delta I\right|\le\displaystyle{\sum_{i=0}^{n−1}\frac{Mh^4}{24}}
+=\displaystyle{\frac{Mh^4}{24}}\cdot n
+=\displaystyle{\frac{M}{24}}\left(b−a\right)h^3.$
+</blockquote>
+
+<h4>Fórmula de Simpson 3/8</h4>
+
+<p>Outra fórmula de Simpson é obtida quando usamos quatro pontos igualmente espaçados e integramos o polinômio cúbico interpolante. Consideremos</p>
+
+<blockquote class="formula">
+$x_1=x_0+h,\qquad x_2=x_0+2h,\qquad x_3=x_0+3h.$
+</blockquote>
+
+<p>Aproximamos y(x) pelo polinômio cúbico que interpola os valores y(x<sub>0</sub>), y(x<sub>1</sub>), y(x<sub>2</sub>) e y(x<sub>3</sub>):</p>
+
+<blockquote class="formula">
+$p_3\left(x\right)=y\left(x_0\right)L_0\left(x\right)$ $+~y\left(x_1\right)L_1\left(x\right)$ $+~y\left(x_2\right)L_2\left(x\right)$ $+~y\left(x_3\right)L_3\left(x\right).$
+<br/>
+<br/>
+$L_0\left(x\right)=−\displaystyle{\frac{\left(x−x_1\right)\left(x−x_2\right)\left(x−x_3\right)}{6h^3}},$
+<br/>
+$L_1\left(x\right)=\displaystyle{\frac{\left(x−x_0\right)\left(x−x_2\right)\left(x−x_3\right)}{2h^3}},$
+<br/>
+$L_2\left(x\right)=−\displaystyle{\frac{\left(x−x_0\right)\left(x−x_1\right)\left(x−x_3\right)}{2h^3}},$
+<br/>
+$L_3\left(x\right)=\displaystyle{\frac{\left(x−x_0\right)\left(x−x_1\right)\left(x−x_2\right)}{6h^3}}.$
+</blockquote>
+
+<p>Introduzindo a variável</p>
+
+<blockquote class="formula">
+$t=\displaystyle{\frac{x−x_0}{h}},\qquad x=x_0+ht,\qquad dx=h\,dt,$
+</blockquote>
+
+<p>calculamos os pesos da fórmula pelas integrais:</p>
+
+<blockquote class="formula">
+$\displaystyle{\int_{x_0}^{x_3}L_0\left(x\right)dx}
+=−\displaystyle{\frac{h}{6}}\displaystyle{\int_0^3\left(t^3−6t^2+11t−6\right)dt}
+=\displaystyle{\frac{3h}{8}},$
+<br/>
+$\displaystyle{\int_{x_0}^{x_3}L_1\left(x\right)dx}
+=\displaystyle{\frac{h}{2}}\displaystyle{\int_0^3\left(t^3−5t^2+6t\right)dt}
+=\displaystyle{\frac{9h}{8}},$
+<br/>
+$\displaystyle{\int_{x_0}^{x_3}L_2\left(x\right)dx}
+=−\displaystyle{\frac{h}{2}}\displaystyle{\int_0^3\left(t^3−4t^2+3t\right)dt}
+=\displaystyle{\frac{9h}{8}},$
+<br/>
+$\displaystyle{\int_{x_0}^{x_3}L_3\left(x\right)dx}
+=\displaystyle{\frac{h}{6}}\displaystyle{\int_0^3\left(t^3−3t^2+2t\right)dt}
+=\displaystyle{\frac{3h}{8}}.$
+</blockquote>
+
+<p>Então, uma aproximação para a integral sobre três subintervalos é</p>
+
+<blockquote class="formula">
+$\displaystyle{\int_{x_0}^{x_3}p_3\left(x\right)dx}$
+$=~\displaystyle{\frac{3h}{8}}\left(y\left(x_0\right)+3y\left(x_1\right)+3y\left(x_2\right)+y\left(x_3\right)\right).$
+</blockquote>
+
+<p>Por causa do fator comum 3/8, essa fórmula é chamada <strong>regra de Simpson 3/8</strong>. Repetindo o procedimento nos demais blocos de três subintervalos, obtemos</p>
+
+<blockquote class="formula">
+$I\approx\displaystyle{\frac{3h}{8}}\left(y\left(x_0\right)+3y\left(x_1\right)+3y\left(x_2\right)+y\left(x_3\right)$ $+~y\left(x_3\right)+3y\left(x_4\right)+3y\left(x_5\right)+y\left(x_6\right)+\ldots$ $+~\left.y\left(x_{n−3}\right)+3y\left(x_{n−2}\right)+3y\left(x_{n−1}\right)+y\left(x_n\right)\right).$
+</blockquote>
+
+<p>Observamos que os valores correspondentes aos nós internos com índices múltiplos de 3 aparecem duas vezes. Portanto, se n é múltiplo de 3,</p>
+
+<blockquote class="formula">
+$I\approx\displaystyle{\frac{3h}{8}}\left(y\left(x_0\right)\right.$ $+~\displaystyle{3\sum_{i=1}^{n/3}y\left(x_{3i−2}\right)}$ $+~\displaystyle{3\sum_{i=1}^{n/3}y\left(x_{3i−1}\right)}$ $+~\displaystyle{2\sum_{i=1}^{n/3−1}y\left(x_{3i}\right)}$ $+~\left.y\left(x_n\right)\right).$
+</blockquote>
+
+<p>O erro pode ser estimado utilizando o erro da aproximação pelo polinômio interpolante:</p>
+
+<blockquote class="formula">
+$y\left(x\right)−p_3\left(x\right)$ $=~\displaystyle{\frac{y^{\left(4\right)}\left(\xi\right)}{4!}}\left(x−x_0\right)\left(x−x_1\right)\left(x−x_2\right)\left(x−x_3\right).$
+</blockquote>
+
+<p>Se |y<sup>(4)</sup>(x)|≤M<sub>0</sub> em [x<sub>0</sub>,x<sub>3</sub>], então, no primeiro subintervalo,</p>
+
+<blockquote class="formula">
+$\left|\Delta I_0\right|$ $\le~\displaystyle{\frac{M_0}{24}}\displaystyle{\int_{x_0}^{x_1}\left(x−x_0\right)\left(x_1−x\right)\left(x_2−x\right)\left(x_3−x\right)dx}$
+$=~\displaystyle{\frac{M_0h^5}{24}\int_0^1t\left(1−t\right)\left(2−t\right)\left(3−t\right)dt}
+=\displaystyle{\frac{19M_0h^5}{720}}.$
+</blockquote>
+
+<p>No segundo subintervalo, obtemos</p>
+
+<blockquote class="formula">
+$\left|\Delta I_1\right|$ $\le~\displaystyle{\frac{M_0}{24}}\displaystyle{\int_{x_1}^{x_2}\left(x−x_0\right)\left(x−x_1\right)\left(x_2−x\right)\left(x_3−x\right)dx}$
+$=~\displaystyle{\frac{M_0h^5}{24}\int_1^2t\left(t−1\right)\left(2−t\right)\left(3−t\right)dt}
+=\displaystyle{\frac{11M_0h^5}{720}}.$
+</blockquote>
+
+<p>No terceiro subintervalo, temos</p>
+
+<blockquote class="formula">
+$\left|\Delta I_2\right|$ $\le~\displaystyle{\frac{M_0}{24}}\displaystyle{\int_{x_2}^{x_3}\left(x−x_0\right)\left(x−x_1\right)\left(x−x_2\right)\left(x_3−x\right)dx}$
+$=~\displaystyle{\frac{M_0h^5}{24}\int_2^3t\left(t−1\right)\left(t−2\right)\left(3−t\right)dt}
+=\displaystyle{\frac{19M_0h^5}{720}}.$
+</blockquote>
+
+<p>Logo, o erro de um bloco de três subintervalos satisfaz</p>
+
+<blockquote class="formula">
+$\left|\Delta I_0+\Delta I_1+\Delta I_2\right|$ $\le~\left|\Delta I_0\right|+\left|\Delta I_1\right|+\left|\Delta I_2\right|$
+$\le~\displaystyle{\frac{19M_0h^5}{720}}+\displaystyle{\frac{11M_0h^5}{720}}+\displaystyle{\frac{19M_0h^5}{720}}$
+$=~\displaystyle{\frac{49M_0h^5}{720}}.$
+</blockquote>
+
+<p>Considerando o limite superior para o intervalo inteiro,</p>
+
+<blockquote class="formula">
+$M=\max_{a\le x\le b}\left|y^{\left(4\right)}\left(x\right)\right|,$
+</blockquote>
+
+<p>obtemos a seguinte estimativa para o erro total:</p>
+
+<blockquote class="formula">
+$\left|\Delta I\right|\le\displaystyle{\frac{n}{3}}\cdot\displaystyle{\frac{49Mh^5}{720}}
+=\displaystyle{\frac{49M}{2160}}\left(b−a\right)h^4.$
+</blockquote>
+
+<p>Portanto, nessa estimativa, a regra composta de Simpson 3/8 possui erro proporcional a h<sup>4</sup>. Na prática, a regra 1/3 é usada com mais frequência, e a regra 3/8 é útil quando precisamos combinar blocos para cobrir um número de subintervalos que não é par.</p>
+
+<h3>Fórmulas de Newton-Cotes</h3>
+
+<p>As regras dos retângulos, dos trapézios e de Simpson são casos particulares de uma mesma família de fórmulas de quadratura, chamadas <strong>fórmulas de Newton-Cotes</strong>. A ideia geral é escolher alguns nós igualmente espaçados, construir o polinômio interpolante da função nesses nós e integrar esse polinômio em vez da função original.</p>
+
+<p>Quando os nós incluem as extremidades do intervalo, obtemos as <strong>fórmulas fechadas</strong>. Quando os nós ficam apenas no interior do intervalo, obtemos as <strong>fórmulas abertas</strong>. Em ambos os casos, a fórmula possui a estrutura</p>
+
+<blockquote class="formula">
+$\displaystyle{\int_a^b y\left(x\right)dx}\approx\displaystyle{\sum_{i=0}^{n}w_iy\left(x_i\right)},$
+</blockquote>
+
+<p>onde os nós x<sub>i</sub> são igualmente espaçados e os pesos w<sub>i</sub> dependem apenas da escolha desses nós. Eles são obtidos integrando os polinômios fundamentais de Lagrange correspondentes. Assim, uma vez escolhida a regra, os pesos ficam fixos e podem ser reutilizados para qualquer função y(x). Na prática, essas fórmulas são frequentemente usadas na forma composta, isto é, aplicadas repetidamente em blocos de subintervalos.</p>
+
+<p>Uma propriedade importante das fórmulas de Newton-Cotes é que elas são exatas para polinômios até certo grau. Entretanto, aumentar indefinidamente o grau não é necessariamente uma boa estratégia. Para muitos nós igualmente espaçados, alguns pesos podem se tornar negativos e grandes em módulo, o que amplifica erros de arredondamento e erros presentes nos valores calculados da função. Por isso, normalmente usamos fórmulas de grau baixo, aplicadas de forma composta, ou métodos adaptativos que refinam a malha apenas onde a função exige mais pontos.</p>
+
+<h4>Quadraturas de Gauss</h4>
+
+<p>Outra família importante de fórmulas de quadratura é formada pelas <strong>quadraturas de Gauss</strong>. Elas possuem uma estrutura semelhante:</p>
+
+<blockquote class="formula">
+$\displaystyle{\int_a^b \rho\left(x\right)y\left(x\right)dx}\approx\displaystyle{\sum_{i=1}^{n}w_iy\left(x_i\right)},$
+</blockquote>
+
+<p>mas, nesse caso, os nós x<sub>i</sub> não são igualmente espaçados. Eles são escolhidos de modo especial, como raízes de polinômios ortogonais associados à função peso ρ(x) e ao intervalo considerado. Por exemplo, aparecem quadraturas associadas aos polinômios de Legendre, Jacobi, Hermite e outras famílias ortogonais.</p>
+
+<p>Essa escolha torna as quadraturas de Gauss adaptadas a problemas mais específicos. Por exemplo, a quadratura de Gauss-Legendre é natural para integrais em intervalos finitos com peso constante, enquanto as quadraturas associadas a Hermite ou Jacobi são convenientes quando a integral possui pesos ou intervalos com estrutura própria. Em geral, essas fórmulas conseguem boas aproximações usando um número pequeno de nós, justamente porque os nós e os pesos são escolhidos para aproveitar melhor a classe de funções do problema.</p>
+
+<h3>Resumo</h3>
+
+<ol>
+  <li>A integração numérica substitui y(x) por uma aproximação p(x) e integra p(x) no lugar da função original.</li>
+  <li>As fórmulas de Newton-Cotes são obtidas pela integração de polinômios interpolantes em nós igualmente espaçados.</li>
+  <li>O erro global depende do grau do polinômio usado e da regularidade da função integrada.</li>
+  <li>As regras dos retângulos, dos trapézios e de Simpson são exemplos simples de fórmulas de Newton-Cotes.</li>
+  <li>As quadraturas de Gauss usam nós especiais, associados a polinômios ortogonais, para obter boas aproximações com poucos pontos.</li>
+</ol>
+
+</section>
+
+</article>
+
+<footer>
+<a href="aula18.html">Próxima aula: Soluções numéricas de equações diferenciais ordinárias: métodos de passo simples.</a>
+</footer>
+
+</body>
+
+</html>
