@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width" />
+<title>Cálculo numérico: Soluções numéricas de equações diferenciais ordinárias: métodos de passo simples.</title>
+<link rel="stylesheet" type="text/css" href="lstyle.css" />
+<link href="https://www.ufabc.edu.br/ensino/docentes/olexandr-zhydenko" rel="author" />
+<script type="text/javascript" src="execjavascript.js"></script>
+<script type="text/javascript" src="LaTeXMathML.js"></script>
+</head>
+
+<body>
+
+<header>
+</header>
+
+<nav>
+<a class="prev" href="aula17.html">Aula anterior</a>
+<a class="top" href="index.html">Índice</a>
+<a class="next" href="aula19.html">Próxima aula</a>
+</nav>
+
+<article>
+
+<section>
+<h2>Aula 18: Soluções numéricas de equações diferenciais ordinárias: métodos de passo simples.</h2>
+
+<h3>Problema de valor inicial</h3>
+
+<p>Consideremos uma equação diferencial ordinária de primeira ordem na forma</p>
+
+<blockquote class="formula">
+$y\prime\left(x\right)=f\left(x,y\left(x\right)\right),$
+</blockquote>
+
+<p>com a condição inicial</p>
+
+<blockquote class="formula">
+$y\left(x_0\right)=y_0.$
+</blockquote>
+
+<p>Esse problema é chamado <strong>problema de valor inicial</strong>. A função f(x,y) é dada, e procuramos uma função y(x) que satisfaça a equação diferencial e passe pelo ponto inicial (x<sub>0</sub>,y<sub>0</sub>).</p>
+
+<p>O teorema de existência e unicidade afirma que, se f(x,y) e sua derivada parcial em relação a y são contínuas em uma vizinhança do ponto inicial, então existe uma única solução, pelo menos em algum intervalo ao redor de x<sub>0</sub>. Em geral, a função f é definida numericamente; ainda assim, nós a tratamos como uma função suave no intervalo considerado. Portanto, a solução do problema de valor inicial é única, e nosso objetivo é determinar os valores aproximados de y em um intervalo fixo em torno de x<sub>0</sub>.</p>
+
+<p>Como nos métodos de integração numérica, dividimos o intervalo em subintervalos pequenos e calculamos a solução passo a passo. O modo de divisão mais simples é considerar n subintervalos iguais:</p>
+
+<blockquote class="formula">
+$h=\displaystyle{\frac{x_n−x_0}{n}}.$
+</blockquote>
+
+<p>Assim, h é o passo constante da malha, e os valores nos nós são:</p>
+
+<blockquote class="formula">
+$x_k=x_0+k\cdot h, \quad y_k=y\left(x_k\right)=y\left(x_0+k\cdot h\right), \quad$ $k=0,1,\ldots,n.$
+</blockquote>
+
+<p>Para calcular todos os valores y<sub>1</sub>, y<sub>2</sub>, …, y<sub>n</sub>, usamos o valor aproximado do nó anterior, partindo de y<sub>0</sub>, que é fixado pelo problema de valor inicial. Tais métodos são chamados de <strong>métodos de passo simples</strong>.</p>
+
+<h3>Método de Euler</h3>
+
+<p>A aproximação linear fornece a seguinte relação:</p>
+
+<blockquote class="formula">
+$y_{k+1}=y\left(x_{k+1}\right)=y\left(x_k+h\right)$ $=~y\left(x_k\right)+h\,y\prime\left(x_k\right)+
+\displaystyle{\frac{h^2}{2}}y\prime\prime\left(\xi_k\right)$ $=~y_k+f\left(x_k,y_k\right)\cdot h+\textrm{&Oscr;}\left(h^2\right),$
+</blockquote>
+
+<p>Essa fórmula é o <strong>método de Euler</strong>. Geometricamente, usamos a reta tangente à solução no ponto atual:</p>
+
+<blockquote class="formula">
+$y\left(x\right)\approx y_k+f\left(x_k,y_k\right)\left(x−x_k\right),\quad x\in\left[x_k,x_{k+1}\right].$
+</blockquote>
+
+<svg width="100%" height="440">
+   <text x="37%" y="35" text-anchor="start">y=y(x)</text>
+   <line x1="5%" y1="350" x2="95%" y2="350" stroke="black"/>
+   <line x1="50%" y1="77" x2="82%" y2="147" stroke="blue"/>
+   <line x1="10%" y1="5" x2="10%" y2="435" stroke="black"/>
+   <text x="93%" y="365" text-anchor="end">x</text>
+   <text x="9%" y="30" text-anchor="end">y</text>
+
+   <line x1="10%" y1="77" x2="50%" y2="77" stroke="black" stroke-dasharray="9,3" />
+   <line x1="50%" y1="350" x2="50%" y2="77" stroke="black" stroke-dasharray="9,3" />
+   <line x1="10%" y1="143" x2="80%" y2="143" stroke="black" stroke-dasharray="9,3" />
+   <line x1="80%" y1="350" x2="80%" y2="143" stroke="black" stroke-dasharray="9,3" />
+
+   <text x="50%" y="365" text-anchor="middle" font-size="100%">x<tspan dx="1" dy="4" font-size="75%">k</tspan></text>
+   <text x="80%" y="365" text-anchor="middle" font-size="100%">x<tspan dx="1" dy="4" font-size="75%">k+1</tspan></text>
+
+   <text x="9%" y="80" text-anchor="end" font-size="100%">y<tspan dx="1" dy="4" font-size="75%">k</tspan></text>
+   <text x="9%" y="145" text-anchor="end" font-size="100%">y<tspan dx="1" dy="4" font-size="75%">k+1</tspan></text>
+
+   <svg x="5%" y="10" viewBox="0 0 600 200" width="95%" height="400px" preserveAspectRatio="none">
+     <path d="M 35 0 C 170 5, 340 40, 550 100"
+           fill="none" stroke="red"/>
+   </svg>
+</svg>
+
+<h4>Estimativa do erro</h4>
+
+<p>O erro se acumula ao longo dos passos. Assim,</p>
+
+<blockquote class="formula">
+$\Delta y_{n}=n\cdot\textrm{&Oscr;}\left(h^2\right)=\left(x_n−x_0\right)\cdot\textrm{&Oscr;}\left(h\right).$
+</blockquote>
+
+<p>Para uma estimativa mais rigorosa, suponhamos que f satisfaça a condição de Lipschitz em relação a y, isto é, que exista uma constante L&gt;0 tal que</p>
+
+<blockquote class="formula">
+$\left|f\left(x,u\right)−f\left(x,v\right)\right|\le L\left|u−v\right|,$
+</blockquote>
+
+<p>Suponhamos também que M<sub>2</sub> seja um limite superior para |y′′(x)| em todo o intervalo considerado:</p>
+
+<blockquote class="formula">
+$M_2=\max_{x_0\le x\le x_n}\left|y\prime\prime\left(x\right)\right|.$
+</blockquote>
+
+<p>Então, a estimativa do erro satisfaz a recorrência</p>
+
+<blockquote class="formula">
+$\Delta y_{k+1}\le\left(1+Lh\right)\Delta y_k+\displaystyle{\frac{M_2h^2}{2}}.$
+</blockquote>
+
+<p>Se a condição inicial é conhecida exatamente, Δy<sub>0</sub>=0, obtemos</p>
+
+<blockquote class="formula">
+$\Delta y_k\le\displaystyle{\frac{M_2h}{2L}}\left(\left(1+Lh\right)^k−1\right)$
+$\le~\displaystyle{\frac{M_2h}{2L}}\left(e^{L\left(x_k−x_0\right)}−1\right)$ $=~\textrm{&Oscr;}\left(h\right).$
+</blockquote>
+
+<p>Portanto, para um intervalo fixo, o erro global do método de Euler é proporcional a h. Dizemos que o método de Euler é um método de primeira ordem. Apesar de simples, ele não é muito eficiente: na prática, o coeficiente na estimativa pode ser grande e, para diminuir o erro, precisamos aumentar proporcionalmente o número de subintervalos n.</p>
+
+<form>
+<div class="overwrite"><input class="right-aligned" type="button" name="execute"  value="Executar" onClick="ExecuteCodeEvent(this)"></div>
+<textarea class="wide" name="code"  rows="17">
+var Euler=function(f,x0,y0,x,n){
+  if(n<=0)return NaN
+  var h=(x-x0)/n
+  while(n-->0){
+     y0+=h*f(x0,y0)
+     x0+=h
+  }
+  return y0
+}
+
+var f=function(x,y){ return x*y }
+
+var y=function(x){ return Math.exp(x*x/2) }
+
+var x=1
+text=y(x)-Euler(f,0,1,x,100)
+</textarea>
+<textarea class="wide" name="destination" readonly rows="2"></textarea>
+</form>
+
+<h3>Métodos de ordem superior</h3>
+
+<h4>Fórmula de Taylor</h4>
+
+<p>Uma maneira natural de melhorar o método é usar mais termos da fórmula de Taylor. A fórmula de segunda ordem é</p>
+
+<blockquote class="formula">
+$y_{k+1}=y\left(x_k+h\right)$ $=~y\left(x_k\right)+h\,y\prime\left(x_k\right)+\displaystyle{\frac{h^2}{2}}y\prime\prime\left(x_k\right)+\textrm{&Oscr;}\left(h^3\right).$
+</blockquote>
+
+<p>Ela exige as duas primeiras derivadas, que podemos calcular como</p>
+
+<blockquote class="formula">
+$y\prime\left(x\right)=f\left(x,y\left(x\right)\right)$
+<br />
+$y\prime\prime\left(x\right)=\displaystyle{\frac{d}{dx}}f\left(x,y\left(x\right)\right)$
+$=~f_x\left(x,y\left(x\right)\right)+f_y\left(x,y\left(x\right)\right)y\prime\left(x\right)$
+$=~f_x\left(x,y\left(x\right)\right)+f_y\left(x,y\left(x\right)\right)f\left(x,y\left(x\right)\right),$
+</blockquote>
+
+<p>onde f<sub>x</sub> e f<sub>y</sub> denotam as derivadas parciais em relação a x e a y. Finalmente,</p>
+
+<blockquote class="formula">
+$y_{k+1}=y_k+h\,f\left(x_k,y_k\right)$ $+~\displaystyle{\frac{h^2}{2}}\left(f_x\left(x_k,y_k\right)+f_y\left(x_k,y_k\right)f\left(x_k,y_k\right)\right)$ $+~\textrm{&Oscr;}\left(h^3\right).$
+</blockquote>
+
+<p>Essa aproximação tem erro local proporcional a h<sup>3</sup>; assim, o erro acumulado será proporcional a h<sup>2</sup>. Porém, encontramos uma dificuldade no método: precisamos calcular várias derivadas parciais de f. Para ordens mais altas, aparecem derivadas parciais de ordens cada vez maiores e expressões que se tornam rapidamente mais longas.</p>
+
+<p>Mesmo assim, a expansão de Taylor é fundamental, porque dá uma estimativa da ordem de grandeza do erro. Quando um método coincide com a expansão de Taylor até os termos de ordem h<sup>p</sup>, dizemos que ele tem erro local de ordem h<sup>p+1</sup> e, sob hipóteses adequadas, erro global de ordem h<sup>p</sup>. Desse modo, podemos estimar os erros dos métodos mais eficientes.</p>
+
+<h4>Euler aperfeiçoado</h4>
+
+<p>O teorema de existência e unicidade tem uma interpretação geométrica importante. Por qualquer ponto de uma região onde as hipóteses do teorema são satisfeitas passa uma única curva solução. Essas curvas não se cruzam e se comportam como um fluido, ou, mais precisamente, como um fluxo no plano: pontos iniciais próximos geram soluções próximas, pelo menos por um intervalo suficientemente pequeno.</p>
+
+<p>Depois de um passo do método de Euler, chegamos ao ponto previsto (x<sub>k</sub>+h,ỹ<sub>k+1</sub>). Esse ponto não está necessariamente sobre a solução exata que passa por (x<sub>k</sub>,y<sub>k</sub>), mas, pela continuidade do campo f, a derivada no ponto previsto, f(x<sub>k</sub>+h,ỹ<sub>k+1</sub>), é uma aproximação para a inclinação da solução no fim do passo. Assim, a média entre a inclinação inicial e essa inclinação final aproximada deve representar melhor o comportamento da solução no subintervalo.</p>
+
+<svg width="100%" height="340">
+   <text x="15%" y="60" text-anchor="start">y=y(x)</text>
+   <text x="72%" y="105" text-anchor="start">y=ỹ(x)</text>
+   <line x1="5%" y1="250" x2="95%" y2="250" stroke="black"/>
+   <line x1="20%" y1="77" x2="80%" y2="145" stroke="blue" stroke-dasharray="3,2"/>
+   <line x1="20%" y1="77" x2="81%" y2="220" stroke="blue"/>
+   <line x1="10%" y1="5" x2="10%" y2="435" stroke="black"/>
+   <text x="93%" y="265" text-anchor="end">x</text>
+   <text x="9%" y="30" text-anchor="end">y</text>
+
+   <line x1="10%" y1="77" x2="20%" y2="77" stroke="black" stroke-dasharray="9,3" />
+   <line x1="20%" y1="250" x2="20%" y2="77" stroke="black" stroke-dasharray="9,3" />
+   <line x1="10%" y1="143" x2="80%" y2="143" stroke="black" stroke-dasharray="9,3" />
+   <line x1="10%" y1="218" x2="80%" y2="218" stroke="black" stroke-dasharray="9,3" />
+   <line x1="80%" y1="250" x2="80%" y2="143" stroke="black" stroke-dasharray="9,3" />
+
+   <text x="20%" y="265" text-anchor="middle" font-size="100%">x<tspan dx="1" dy="4" font-size="75%">k</tspan></text>
+   <text x="80%" y="265" text-anchor="middle" font-size="100%">x<tspan dx="1" dy="4" font-size="75%">k+1</tspan></text>
+
+   <text x="9%" y="80" text-anchor="end" font-size="100%">y<tspan dx="1" dy="4" font-size="75%">k</tspan></text>
+   <text x="9%" y="144" text-anchor="end" font-size="100%">ỹ<tspan dx="1" dy="4" font-size="75%">k+1</tspan></text>
+   <text x="9%" y="220" text-anchor="end" font-size="100%">y<tspan dx="1" dy="4" font-size="75%">k+1</tspan></text>
+
+   <svg x="5%" y="10" viewBox="0 0 600 200" width="95%" height="400px" preserveAspectRatio="none">
+     <path d="M 35 30 C 170 35, 340 70, 550 130"
+           fill="none" stroke="red"/>
+     <path d="M 220 0 C 200 0, 340 10, 550 95"
+           fill="none" stroke="red" stroke-dasharray="3,2"/>
+   </svg>
+</svg>
+
+
+<p>Então, primeiro, fazemos uma previsão pelo método de Euler:</p>
+
+<blockquote class="formula">
+$\widetilde y_{k+1}=y_k+h\,f\left(x_k,y_k\right).$
+</blockquote>
+
+<p>Depois calculamos a inclinação no ponto previsto e usamos a média das inclinações no início e no fim do passo:</p>
+
+<blockquote class="formula">
+$y_{k+1}=y_k+\displaystyle{\frac{h}{2}}\left(f\left(x_k,y_k\right)+f\left(x_k+h,\widetilde y_{k+1}\right)\right).$
+</blockquote>
+
+<p>Esse método é chamado <strong>Euler aperfeiçoado</strong> ou <strong>método de Heun</strong>. Ele tem a mesma ideia geométrica da regra dos trapézios: em vez de usar apenas a inclinação inicial, usamos a média entre a inclinação inicial e uma aproximação da inclinação final.</p>
+
+<p>Para estimar o erro, podemos comparar esse método com a fórmula de Taylor. Considerando a segunda inclinação como função de h em torno de h=0, obtemos</p>
+
+<blockquote class="formula">
+$f\left(x_k+h,\widetilde y_{k+1}\right)=f\left(x_k+h,y_k+h f\left(x_k,y_k\right)\right)$ $=~f\left(x_k,y_k\right)+f_x\left(x_k,y_k\right)\cdot h+f_y\left(x_k,y_k\right)\cdot h f\left(x_k,y_k\right)$ $+~\textrm{&Oscr;}\left(h^2\right).$
+</blockquote>
+
+<p>Substituindo essa expressão no método de Euler aperfeiçoado, temos</p>
+
+<blockquote class="formula">
+$y_{k+1}=y_k$ $+~\displaystyle{\frac{h}{2}}\left(f\left(x_k,y_k\right)+f\left(x_k,y_k\right)\right.$ $+~\left.h\left(f_x\left(x_k,y_k\right)+f_y\left(x_k,y_k\right)f\left(x_k,y_k\right)\right)+\textrm{&Oscr;}\left(h^2\right)\right)$
+$=~y_k+h\,f\left(x_k,y_k\right)$ $+~\displaystyle{\frac{h^2}{2}}\left(f_x\left(x_k,y_k\right)+f_y\left(x_k,y_k\right)f\left(x_k,y_k\right)\right)$ $+~\textrm{&Oscr;}\left(h^3\right).$
+</blockquote>
+
+<p>Essa expressão coincide com a fórmula de Taylor de segunda ordem até os termos de ordem h<sup>2</sup>. Portanto, concluímos que o erro local também é proporcional a h<sup>3</sup> e o erro global é proporcional a h<sup>2</sup>.</p>
+
+<form>
+<div class="overwrite"><input class="right-aligned" type="button" name="execute"  value="Executar" onClick="ExecuteCodeEvent(this)"></div>
+<textarea class="wide" name="code"  rows="17">
+var Heun=function(f,x0,y0,x,n){
+  if(n<=0)return NaN
+  var h=(x-x0)/n
+  while(n-->0){
+     hf=h*f(x0,y0)
+     y0+=(hf+h*f(x0+=h,y0+hf))/2
+  }
+  return y0
+}
+
+var f=function(x,y){ return x*y }
+
+var y=function(x){ return Math.exp(x*x/2) }
+
+var x=1
+text=y(x)-Heun(f,0,1,x,10)
+</textarea>
+<textarea class="wide" name="destination" readonly rows="2"></textarea>
+</form>
+
+<p>O método de Euler aperfeiçoado é mais eficiente do que o método de Taylor de segunda ordem quando f é dada numericamente ou possui expressão complicada. Ele usa apenas duas avaliações de f e não exige o cálculo das derivadas parciais f<sub>x</sub> e f<sub>y</sub>, que podem ser trabalhosas ou pouco estáveis numericamente. Essa diferença é importante na prática. A fórmula de Taylor de segunda ordem é conceitualmente simples, mas exige conhecer como f varia em relação a x e a y. Quando f é obtida por um código, por uma tabela, por uma simulação auxiliar ou por uma expressão longa, calcular derivadas parciais pode ser mais caro do que avaliar a própria função. O método de Euler aperfeiçoado troca essas derivadas por uma segunda avaliação de f, mantendo a mesma ordem de erro global.</p>
+
+<h4>Generalização de Heun</h4>
+
+<p>O método de Heun pode ser visto como um caso particular de uma família de métodos de segunda ordem com duas avaliações de f. A primeira avaliação é feita no ponto considerado, e a segunda é feita ao longo da reta tangente definida pela primeira avaliação. Tomemos um parâmetro α≠0 e definamos</p>
+
+<blockquote class="formula">
+$k_1=f\left(x_k,y_k\right),$
+<br/>
+$k_2=f\left(x_k+\alpha h,\,y_k+\alpha h k_1\right).$
+</blockquote>
+
+<p>Suponhamos que a aproximação final seja dada pela reta secante, cuja inclinação é uma combinação das inclinações obtidas:</p>
+
+<blockquote class="formula">
+$y_{k+1}=y_k+h\left(a_1k_1+a_2k_2\right),$
+</blockquote>
+
+<p>Podemos determinar os coeficientes comparando a fórmula obtida com a expansão de Taylor. Novamente, observamos que</p>
+
+<blockquote class="formula">
+$k_2=f\left(x_k,y_k\right)+f_x\left(x_k,y_k\right)\cdot \alpha h+f_y\left(x_k,y_k\right)\cdot \alpha h k_1$ $+~\textrm{&Oscr;}\left(h^2\right).$
+</blockquote>
+
+<p>Substituindo na fórmula do método e comparando com a fórmula de Taylor, obtemos as condições:</p>
+
+<blockquote class="formula">
+$a_1+a_2=1,\qquad a_2\alpha=\displaystyle{\frac{1}{2}}.$
+</blockquote>
+
+<p>Assim, obtemos a fórmula final do método:</p>
+
+<blockquote class="formula">
+$y_{k+1}=y_k+h\left(\left(1−\displaystyle{\frac{1}{2\alpha}}\right)k_1+\displaystyle{\frac{1}{2\alpha}}k_2\right).$
+</blockquote>
+
+<p>Para qualquer α≠0, a comparação com Taylor mostra que o erro local é proporcional a h<sup>3</sup>, e o erro global é proporcional a h<sup>2</sup>.</p>
+
+<p>Para α=1, obtemos o Euler aperfeiçoado escrito acima. Para α=1/2, obtemos o método do ponto médio:</p>
+
+<blockquote class="formula">
+$y_{k+1}=y_k+h\,f\left(x_k+\displaystyle{\frac{h}{2}},\,y_k+\displaystyle{\frac{h}{2}}f\left(x_k,y_k\right)\right).$
+</blockquote>
+
+<p>A vantagem da forma parametrizada é que ela permite escolher onde a segunda avaliação de f será feita. Isso pode ser útil quando f não está bem definida ou é numericamente instável em certas regiões do plano (x,y). Essa liberdade não elimina singularidades reais da equação diferencial, nem substitui a escolha adequada de h. Porém, ela dá uma margem de adaptação: podemos evitar pontos onde f tem perda de precisão, descontinuidade numérica ou grande sensibilidade. Ao mesmo tempo, valores muito pequenos de α aumentam os coeficientes da combinação final e podem amplificar erros de arredondamento.</p>
+
+<h3>Métodos de Runge-Kutta</h3>
+
+<p>Os métodos de ordem superior descritos acima são exemplos de métodos de Runge-Kutta. A ideia central é combinar várias avaliações de f para reproduzir os termos principais da expansão de Taylor sem calcular derivadas parciais explicitamente. Um método de Runge-Kutta de ordem p é construído de modo que sua expansão em potências de h coincida com a expansão de Taylor da solução até a ordem p.</p>
+
+<h4>Runge-Kutta de terceira ordem</h4>
+
+<p>A seguir, registramos duas fórmulas clássicas de terceira ordem:</p>
+
+<blockquote class="formula">
+$k_1=f\left(x_k,y_k\right),$
+<br/>
+$k_2=f\left(x_k+\displaystyle{\frac{h}{2}},\,y_k+\displaystyle{\frac{h}{2}}k_1\right),$
+<br/>
+$k_3=f\left(x_k+h,\,y_k−h k_1+2h k_2\right),$
+<br/>
+$y_{k+1}=y_k+\displaystyle{\frac{h}{6}}\left(k_1+4k_2+k_3\right).$
+</blockquote>
+
+<p>Também é possível construir a terceira inclinação utilizando apenas a segunda:</p>
+
+<blockquote class="formula">
+$k_1=f\left(x_k,y_k\right),$
+<br/>
+$k_2=f\left(x_k+\displaystyle{\frac{h}{2}},\,y_k+\displaystyle{\frac{h}{2}}k_1\right),$
+<br/>
+$k_3=f\left(x_k+\displaystyle{\frac{3h}{4}},\,y_k+\displaystyle{\frac{3h}{4}} k_2\right),$
+<br/>
+$y_{k+1}=y_k+\displaystyle{\frac{h}{9}}\left(2k_1+3k_2+4k_3\right).$
+</blockquote>
+
+<p>Ambas as fórmulas possuem erro local proporcional a h<sup>4</sup> e erro global proporcional a h<sup>3</sup>. A diferença entre elas está na escolha dos pontos internos onde f é avaliada e nos pesos usados para combinar essas inclinações.</p>
+
+<h4>Runge-Kutta de quarta ordem</h4>
+
+<p>Esse é um dos métodos de passo simples mais usados:</p>
+
+<blockquote class="formula">
+$k_1=f\left(x_k,y_k\right),$
+<br/>
+$k_2=f\left(x_k+\displaystyle{\frac{h}{2}},\,y_k+\displaystyle{\frac{h}{2}}k_1\right),$
+<br/>
+$k_3=f\left(x_k+\displaystyle{\frac{h}{2}},\,y_k+\displaystyle{\frac{h}{2}}k_2\right),$
+<br/>
+$k_4=f\left(x_k+h,\,y_k+h k_3\right),$
+<br/>
+$y_{k+1}=y_k+\displaystyle{\frac{h}{6}}\left(k_1+2k_2+2k_3+k_4\right).$
+</blockquote>
+
+<p>O método de Runge-Kutta de quarta ordem exige quatro avaliações de f por passo, mas possui erro local proporcional a h<sup>5</sup> e erro global proporcional a h<sup>4</sup>.</p>
+
+<p>Em geral, aumentar a ordem do método melhora a precisão para um mesmo passo, mas também aumenta o número de avaliações de f em cada subintervalo. Por isso, a escolha do método depende do custo de avaliar f e da precisão desejada. Quando f é barata e suave, métodos de ordem alta costumam ser vantajosos. Quando f é cara, irregular ou numericamente instável, pode ser melhor usar um método de ordem moderada com controle cuidadoso do passo.</p>
+
+<p>Uma estratégia natural para controlar o erro da solução aproximada é a variação do passo da malha. Se a solução muda lentamente, podemos usar passos maiores, mas quando a solução muda rapidamente, ou se o erro estimado cresce, reduzimos h. Na prática, muitos algoritmos calculam duas aproximações de ordens diferentes no mesmo passo e usam a diferença entre elas para estimar o erro local. Se o erro estiver acima da tolerância escolhida, o passo é rejeitado e repetido com h menor.</p>
+
+<h3>Resumo</h3>
+
+<ol>
+  <li>Os métodos de passo simples calculam os valores da solução passo a passo, utilizando a aproximação obtida no nó anterior.</li>
+  <li>Os métodos de Runge-Kutta usam várias avaliações de f para obter uma aproximação de ordem superior sem calcular derivadas parciais explicitamente.</li>
+  <li>Os coeficientes nos métodos de Runge-Kutta são determinados por comparação com a expansão de Taylor da mesma ordem.</li>
+</ol>
+
+</section>
+
+</article>
+
+<footer>
+<a href="aula19.html">Próxima aula: Soluções numéricas de equações diferenciais ordinárias: métodos de passo múltiplo.</a>
+</footer>
+
+</body>
+
+</html>
