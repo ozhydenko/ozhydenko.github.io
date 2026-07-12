@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width" />
+<title>Cálculo numérico: Soluções numéricas de equações diferenciais ordinárias: métodos de passo múltiplo.</title>
+<link rel="stylesheet" type="text/css" href="lstyle.css" />
+<link href="https://www.ufabc.edu.br/ensino/docentes/olexandr-zhydenko" rel="author" />
+<script type="text/javascript" src="execjavascript.js"></script>
+<script type="text/javascript" src="LaTeXMathML.js"></script>
+</head>
+
+<body>
+
+<header>
+</header>
+
+<nav>
+<a class="prev" href="aula18.html">Aula anterior</a>
+<a class="top" href="index.html">Índice</a>
+<a class="next" href="aula20.html">Próxima aula</a>
+</nav>
+
+<article>
+
+<section>
+<h2>Aula 19: Soluções numéricas de equações diferenciais ordinárias: métodos de passo múltiplo.</h2>
+
+<h3>Ideia dos métodos</h3>
+
+<p>Na <a href="aula18.html">aula anterior</a>, consideramos métodos de passo simples para resolver o problema de valor inicial</p>
+
+<blockquote class="formula">
+$y\prime\left(x\right)=f\left(x,y\left(x\right)\right),\qquad y\left(x_0\right)=y_0.$
+</blockquote>
+
+<p>Nesses métodos, para calcular o valor de y no próximo nó, y<sub>k+1</sub>, usamos apenas o valor aproximado y<sub>k</sub> no ponto atual. Mesmo os métodos de Runge-Kutta de ordem superior não utilizam diretamente a informação obtida nos passos anteriores. Por isso, para obter uma aproximação de ordem superior, esses métodos fazem várias avaliações de f dentro do passo, o que pode levar muito tempo quando a função f é definida por um algoritmo complicado.</p>
+
+<p>A ideia dos <strong>métodos de passo múltiplo</strong> é utilizar os valores obtidos nos passos anteriores (y<sub>k</sub>, y<sub>k−1</sub>, y<sub>k−2</sub>, …) para reduzir o número de cálculos no próximo passo.</p>
+
+<p>Vamos considerar uma malha uniforme, com</p>
+
+<blockquote class="formula">
+$x_k=x_0+kh,\qquad y_k=y(x_k), \qquad f_k=f\left(x_k,y_k\right).$
+</blockquote>
+
+<p>A partir da equação diferencial, temos a relação exata</p>
+
+<blockquote class="formula">
+$y\left(x_{k+1}\right)=y\left(x_k\right)+\displaystyle\int_{x_k}^{x_{k+1}} f\left(x,y\left(x\right)\right)\,dx.$
+</blockquote>
+
+<p>Portanto, se já conhecemos aproximações para a função f(x,y(x)) em vários nós, podemos aproximar essa função usando <a href="aula15.html">interpolação polinomial</a> e calcular aproximadamente a integral. Essa é a ideia comum dos métodos de Adams.</p>
+
+<p>Como esses métodos usam valores anteriores, eles precisam ser iniciados por outro método. Por exemplo, se uma fórmula usa y<sub>k</sub>, y<sub>k−1</sub> e y<sub>k−2</sub>, então os primeiros valores y<sub>1</sub> e y<sub>2</sub> devem ser obtidos por um método de passo simples, como Runge-Kutta. A vantagem é que, depois da inicialização, muitas informações já calculadas podem ser reutilizadas. Assim, é possível obter métodos de ordem mais alta sem aumentar muito o número de novas avaliações de f em cada passo.</p>
+
+<p>O método de ordem mínima é obtido aproximando a função f(x,y(x)) por uma constante no intervalo [x<sub>k</sub>,x<sub>k+1</sub>]. Tomamos essa constante igual ao valor no ponto inicial do intervalo:</p>
+
+<blockquote class="formula">
+$f\left(x,y\left(x\right)\right)\approx f_k.$
+</blockquote>
+
+<p>Substituindo na fórmula integral, obtemos</p>
+
+<blockquote class="formula">
+$y_{k+1}=y_k+\displaystyle\int_{x_k}^{x_{k+1}}f_k\,dx=y_k+hf_k.$
+</blockquote>
+
+<p>Essa é exatamente a fórmula do método de Euler explícito. Embora ainda não seja um método de passo múltiplo no sentido estrito, ela é o primeiro método da família de Adams-Bashforth e mostra a ideia básica: substituir a função dentro da integral por um polinômio simples. É claro que o método de primeira ordem possui erro global proporcional a h e por isso não é eficiente.</p>
+
+<p>Métodos de ordem superior usam mais informação sobre o comportamento da solução. Em vez de aproximar a função f apenas por uma constante, aproximamos essa função por polinômios construídos com os valores já calculados nos passos anteriores. Assim, a integral que determina o próximo valor de y é aproximada com maior precisão, e o erro passa a ser proporcional a uma potência maior de h. Ao mesmo tempo, depois da inicialização, precisamos de apenas uma nova avaliação de f por passo.</p>
+
+<h3>Métodos de Adams-Bashforth</h3>
+
+<p>Os métodos de <strong>Adams-Bashforth</strong> são métodos explícitos. Isso significa que y<sub>k+1</sub> é calculado usando apenas valores já conhecidos:</p>
+
+<blockquote class="formula">
+$f_k,\quad f_{k−1},\quad f_{k−2},\quad \ldots$
+</blockquote>
+
+<p>Para deduzir as fórmulas, fazemos a mudança de variável</p>
+
+<blockquote class="formula">
+$t=\displaystyle{\frac{x−x_k}{h}},\qquad x=x_k+th,\qquad dx=h\,dt.$
+</blockquote>
+
+<p>Então, a relação integral fica</p>
+
+<blockquote class="formula">
+$y_{k+1}=y_k+h\displaystyle\int_0^1 f\left(x_k+th,y\left(x_k+th\right)\right)\,dt.$
+</blockquote>
+
+<p>A função dentro da integral é aproximada pelo polinômio interpolante construído nos nós anteriores:</p>
+
+<blockquote class="formula">
+$f\left(x_k+th,y\left(x_k+th\right)\right)=P(t).$
+</blockquote>
+
+<p>Assim, a derivação dos métodos de Adams-Bashforth consiste em interpolar a função nos pontos já conhecidos t=0,−1,−2,... e integrar o polinômio interpolante no intervalo [0,1].</p>
+
+<h4>Método de ordem 2</h4>
+
+<p>Para obter o método de segunda ordem, utilizamos os valores conhecidos nos pontos t=0 e t=−1:</p>
+
+<blockquote class="formula">
+$P_1\left(t\right)=f_kL_0\left(t\right)+f_{k−1}L_1\left(t\right),$
+<br /><br />
+$L_0\left(t\right)=t+1,\qquad L_1\left(t\right)=−t.$
+</blockquote>
+
+<p>Integrando o polinômio interpolante, obtemos</p>
+
+<blockquote class="formula">
+$\displaystyle\int_0^1P_1\left(t\right)\,dt=f_k+\left(f_k−f_{k−1}\right)\displaystyle{\int_0^1tdt}$ $=~\displaystyle{\frac{3}{2}f_k−\frac{1}{2}f_{k−1}}.$
+</blockquote>
+
+<p>Portanto, o método de Adams-Bashforth de segunda ordem é</p>
+
+<blockquote class="formula">
+$y_{k+1}=y_k+\displaystyle{\frac{3h}{2}}f_k−\displaystyle{\frac{h}{2}}f_{k−1}.$
+</blockquote>
+
+<p>Para estimar o erro local, utilizamos o erro da interpolação:</p>
+
+<blockquote class="formula">
+$\Delta_{k+1}=|\displaystyle\int_{x_k}^{x_{k+1}}\Delta f\left(x\right)\,dx|$ $=~|\displaystyle{\int_{x_k}^{x_{k+1}}\frac{f\prime\prime\left(\xi,y\left(\xi\right)\right)}{2}\left(x−x_k\right)\left(x−x_{k−1}\right)dx}|,$
+</blockquote>
+
+<p>onde as derivadas são calculadas considerando f como função de ξ. Lembrando que y′(x)=f(x,y(x)), podemos reescrever a estimativa do erro utilizando um limite superior para a terceira derivada de y(x) no intervalo [x<sub>k−1</sub>,x<sub>k+1</sub>]:</p>
+
+<blockquote class="formula">
+$\left|y\prime\prime\prime\left(x\right)\right|\leq M.$
+</blockquote>
+
+<p>Utilizando o fato de que o valor absoluto da integral é menor ou igual à integral do valor absoluto, obtemos</p>
+
+<blockquote class="formula">
+$\Delta_{k+1}\le\displaystyle{\int_{x_k}^{x_{k+1}}|\frac{y\prime\prime\prime(\xi)}{2}\left(x−x_k\right)\left(x−x_{k−1}\right)|dx}$
+$\le~\displaystyle{\frac{M}{2}\int_{x_k}^{x_{k+1}}\left(x−x_k\right)\left(x−x_{k−1}\right)dx}$
+$=~\displaystyle{\frac{Mh^3}{2}}\displaystyle{\int_0^1t\left(t+1\right)dt}$
+$=~\displaystyle{\frac{5Mh^3}{12}}.$
+</blockquote>
+
+<p>Finalmente, para o erro total, temos</p>
+
+<blockquote class="formula">
+$\Delta y_{n}=|\displaystyle{\int_{x_0}^{x_n}\Delta f\left(x\right)dx}|\le\Delta_1+\Delta_2+\ldots+\Delta_n$ $=~\displaystyle{\frac{5Mh^3}{12}\cdot n}$ $=~\displaystyle{\frac{5Mh^2}{12}|x_n−x_0|}=\textrm{&Oscr;}\left(h^2\right),$
+</blockquote>
+
+<p>onde M é o limite superior da terceira derivada de y no intervalo inteiro:</p>
+
+<blockquote class="formula">
+$M=\max_{x\in[x_0,x_n]}\left|y\prime\prime\prime\left(x\right)\right|.$
+</blockquote>
+
+<p>Na prática, o valor de M é desconhecido, mas sabemos que o erro é proporcional a h<sup>2</sup>. Como mantemos a interpolação por polinômios do mesmo grau, M é independente de h e pode ser estimado comparando aproximações calculadas com dois valores diferentes do passo h.</p>
+
+<h4>Método de ordem 3</h4>
+
+<p>Para a terceira ordem, usamos os nós t=0,−1,−2 para aproximar a função por uma parábola.</p>
+
+<blockquote class="formula">
+$P_2\left(t\right)=f_kL_0\left(t\right)+f_{k−1}L_1\left(t\right)+f_{k−2}L_2\left(t\right).$
+<br /><br />
+$L_0\left(t\right)=\displaystyle{\frac{\left(t+1\right)\left(t+2\right)}{2}},\qquad$
+$L_1\left(t\right)=−t\left(t+2\right),\qquad$
+$L_2\left(t\right)=\displaystyle{\frac{t\left(t+1\right)}{2}}.$
+</blockquote>
+
+<p>As integrais dos polinômios fundamentais são</p>
+
+<blockquote class="formula">
+$\displaystyle{\int_0^1L_0\left(t\right)\,dt=\frac{23}{12}},\qquad$
+$\displaystyle{\int_0^1L_1\left(t\right)\,dt=−\frac{16}{12}},\qquad$
+$\displaystyle{\int_0^1L_2\left(t\right)\,dt=\frac{5}{12}}.$
+</blockquote>
+
+<p>Portanto,</p>
+
+<blockquote class="formula">
+$y_{k+1}=y_k+\displaystyle{\frac{h}{12}}\left(23f_k−16f_{k−1}+5f_{k−2}\right).$
+</blockquote>
+
+<p>O erro local é estimado usando um limite superior para a quarta derivada de y:</p>
+<blockquote class="formula">
+$\Delta_{k+1}$
+$\le~\displaystyle{\frac{M}{6}}\displaystyle\int_{x_k}^{x_{k+1}}\left(x−x_k\right)\left(x−x_{k−1}\right)\left(x−x_{k−2}\right)\,dx$
+$=~\displaystyle{\frac{Mh^4}{6}}\displaystyle\int_0^1t\left(t+1\right)\left(t+2\right)\,dt$
+$=~\displaystyle{\frac{3Mh^4}{8}}.$
+</blockquote>
+
+<p>O erro total é</p>
+
+<blockquote class="formula">
+$\Delta y_{n}\le \displaystyle{\frac{3Mh^4}{8}\cdot n} = \displaystyle{\frac{3Mh^3}{8}|x_n−x_0|}=\textrm{&Oscr;}\left(h^3\right),$
+</blockquote>
+
+<p>onde</p>
+
+<blockquote class="formula">
+$M=\max_{x\in[x_0,x_n]}\left|y^{(4)}\left(x\right)\right|.$
+</blockquote>
+
+<h4>Método de ordem 4</h4>
+
+<p>Para a quarta ordem, usamos os quatro nós:</p>
+
+<blockquote class="formula">
+$P_3\left(t\right)~=$ $f_kL_0\left(t\right)+f_{k−1}L_1\left(t\right)+f_{k−2}L_2\left(t\right)+f_{k−3}L_3\left(t\right).$
+<br />
+<br />
+$L_0\left(t\right)=\displaystyle{\frac{\left(t+1\right)\left(t+2\right)\left(t+3\right)}{6}},\qquad$
+$L_1\left(t\right)=−\displaystyle{\frac{t\left(t+2\right)\left(t+3\right)}{2}},\qquad$
+$L_2\left(t\right)=\displaystyle{\frac{t\left(t+1\right)\left(t+3\right)}{2}},\qquad$
+$L_3\left(t\right)=−\displaystyle{\frac{t\left(t+1\right)\left(t+2\right)}{6}}.$
+</blockquote>
+
+<p>Integrando cada termo, temos</p>
+
+<blockquote class="formula">
+$\displaystyle{\int_0^1L_0\left(t\right)\,dt=\frac{55}{24}},\qquad$
+$\displaystyle{\int_0^1L_1\left(t\right)\,dt=−\frac{59}{24}},\qquad$
+$\displaystyle{\int_0^1L_2\left(t\right)\,dt=\frac{37}{24}},\qquad$
+$\displaystyle{\int_0^1L_3\left(t\right)\,dt=−\frac{9}{24}}.$
+</blockquote>
+
+<p>Assim, obtemos</p>
+
+<blockquote class="formula">
+$y_{k+1}~=$ $y_k+\displaystyle{\frac{h}{24}}\left(55f_k−59f_{k−1}+37f_{k−2}−9f_{k−3}\right).$
+</blockquote>
+
+<p>Neste caso, o erro local é</p>
+
+<blockquote class="formula">
+$\Delta_{k+1}$
+$\le~\displaystyle{\frac{M}{24}}\displaystyle\int_{x_k}^{x_{k+1}}\left(x−x_k\right)\left(x−x_{k−1}\right)\left(x−x_{k−2}\right)\left(x−x_{k−3}\right)\,dx$
+$=~\displaystyle{\frac{Mh^5}{24}}\displaystyle\int_0^1t\left(t+1\right)\left(t+2\right)\left(t+3\right)\,dt$
+$=~\displaystyle{\frac{251Mh^5}{720}},$
+</blockquote>
+
+<p>e o erro total é</p>
+
+<blockquote class="formula">
+$\Delta y_{n}\le \displaystyle{\frac{251Mh^5}{720}\cdot n} = \displaystyle{\frac{251Mh^4}{720}|x_n−x_0|}=\textrm{&Oscr;}\left(h^4\right),\qquad$
+$M=\max_{x\in[x_0,x_n]}\left|y^{(5)}\left(x\right)\right|.$
+</blockquote>
+
+<form>
+<div class="overwrite"><input class="right-aligned" type="button" name="execute"  value="Executar" onClick="ExecuteCodeEvent(this)"></div>
+<textarea class="wide" name="code"  rows="32">
+var AdamsBashforth=function(f,x0,y0,x,n){
+  if(n<=0)return NaN
+  var h=(x-x0)/n
+  var hf=[0,0,0]
+
+  for(var rk=3;rk-->0;){ // Runge-Kutta
+    var k1=hf[rk]=h*f(x0,y0)
+    var k2=h*f(x0+h/2,y0+k1/2)
+    var k3=h*f(x0+h/2,y0+k2/2)
+    var k4=h*f(x0+=h,y0+k3)
+    y0+=(k1+2*k2+2*k3+k4)/6
+    if(--n==0)return y0
+  }
+
+  while(n-->0){
+     var hfk=h*f(x0,y0)
+     y0+=(55*hfk-59*hf[0]+37*hf[1]-9*hf[2])/24
+     x0+=h
+     hf[2]=hf[1]
+     hf[1]=hf[0]
+     hf[0]=hfk
+  }
+  return y0
+}
+
+var f=function(x,y){ return x*y }
+
+var y=function(x){ return Math.exp(x*x/2) }
+
+var x=1
+text=y(x)-AdamsBashforth(f,0,1,x,10)
+</textarea>
+<textarea class="wide" name="destination" readonly rows="2"></textarea>
+</form>
+
+<h3>Métodos de Adams-Moulton</h3>
+
+<p>Os métodos de <strong>Adams-Moulton</strong> são construídos pela mesma ideia, mas incluem o valor no ponto novo x<sub>k+1</sub>. Por isso, a interpolação usa também</p>
+
+<blockquote class="formula">
+$f_{k+1}=f\left(x_{k+1},y_{k+1}\right).$
+</blockquote>
+
+<p>Como y<sub>k+1</sub> é desconhecido, esses métodos são implícitos. Para calcular y<sub>k+1</sub>, precisamos resolver uma equação, em geral não linear. A derivação é análoga à dos métodos de Adams-Bashforth, mas agora os nós de interpolação incluem t=1.</p>
+
+<h4>Adams-Moulton de ordem 2</h4>
+
+<p>A fórmula mais simples é obtida usando a reta interpolante pelos pontos t=0 e t=1:</p>
+
+<blockquote class="formula">
+$P_1\left(t\right)=f_k\left(1−t\right)+f_{k+1}t.$
+</blockquote>
+
+<p>Integrando no intervalo [0,1], obtemos a fórmula trapezoidal:</p>
+
+<blockquote class="formula">
+$y_{k+1}=y_k+h\displaystyle{\int_0^1P_1\left(t\right)dt}=y_k+\displaystyle{\frac{h}{2}\left(f_k+f_{k+1}\right)}.$
+</blockquote>
+
+<p>Novamente, assumindo que a terceira derivada de y(x) seja limitada no intervalo [x<sub>k</sub>,x<sub>k+1</sub>],</p>
+
+<blockquote class="formula">
+$\left|y\prime\prime\prime\left(x\right)\right|\leq M,$
+</blockquote>
+
+<p>obtemos para o erro local</p>
+
+<blockquote class="formula">
+$\Delta_{k+1}\le\displaystyle{\frac{M}{2}\int_{x_k}^{x_{k+1}}\left|\left(x−x_k\right)\left(x−x_{k+1}\right)\right|}dx$
+$=~\displaystyle{\frac{M}{2}\int_{x_k}^{x_{k+1}}\left(x_{k+1}−x\right)\left(x−x_k\right)}dx$
+$=~\displaystyle{\frac{Mh^3}{2}\int_0^1\left(1−t\right)t}\,dt$
+$=~\displaystyle{\frac{Mh^3}{12}}.$
+</blockquote>
+
+<p>Assim, para o erro total, temos</p>
+
+<blockquote class="formula">
+$\Delta y_{n}\le\displaystyle{\frac{Mh^3}{12}\cdot n}=\displaystyle{\frac{Mh^2}{12}|x_n−x_0|}=\textrm{&Oscr;}\left(h^2\right),\qquad$
+$M=\max_{x\in[x_0,x_n]}\left|y\prime\prime\prime\left(x\right)\right|,$
+</blockquote>
+
+<p>Esse erro é aproximadamente cinco vezes menor que o erro do método de Adams-Bashforth de segunda ordem.</p>
+
+<h4>Adams-Moulton de ordem 3</h4>
+
+<p>De modo semelhante, para a terceira ordem, usamos os nós t=1,0,−1 e a interpolação por uma parábola:</p>
+
+<blockquote class="formula">
+$P_2\left(t\right)=f_{k+1}L_1\left(t\right)+f_kL_0\left(t\right)+f_{k−1}L_{−1}\left(t\right).$
+<br />
+<br />
+$L_1\left(t\right)=\displaystyle{\frac{t\left(t+1\right)}{2}},\qquad$
+$L_0\left(t\right)=1−t^2,\qquad$
+$L_{−1}\left(t\right)=\displaystyle{\frac{t\left(t−1\right)}{2}}.$
+</blockquote>
+
+<p>Integrando os polinômios fundamentais em [0,1], obtemos</p>
+
+<blockquote class="formula">
+$\displaystyle\int_0^1L_1\left(t\right)\,dt=\displaystyle{\frac{5}{12}},\qquad$
+$\displaystyle\int_0^1L_0\left(t\right)\,dt=\displaystyle{\frac{8}{12}},\qquad$
+$\displaystyle\int_0^1L_{−1}\left(t\right)\,dt=−\displaystyle{\frac{1}{12}}.$
+</blockquote>
+
+<p>Assim, a fórmula de terceira ordem é</p>
+
+<blockquote class="formula">
+$y_{k+1}=y_k+\displaystyle{\frac{h}{12}}\left(5f_{k+1}+8f_k−f_{k−1}\right).$
+</blockquote>
+
+<p>O erro local é</p>
+
+<blockquote class="formula">
+$\Delta_{k+1}$
+$\le~\displaystyle{\frac{M}{6}\int_{x_k}^{x_{k+1}}\left|\left(x−x_{k+1}\right)\left(x−x_k\right)\left(x−x_{k−1}\right)\right|}dx$
+$=~\displaystyle{\frac{Mh^4}{6}\int_0^1\left(1−t\right)t\left(t+1\right)}\,dt$
+$=~\displaystyle{\frac{Mh^4}{24}}.$
+</blockquote>
+
+<p>O erro total é aproximadamente nove vezes menor do que o erro do método de Adams-Bashforth de terceira ordem:</p>
+
+<blockquote class="formula">
+$\Delta y_{n}\le \displaystyle{\frac{Mh^3}{24}|x_n−x_0|},\qquad$
+$M=\max_{x\in[x_0,x_n]}\left|y^{(4)}\left(x\right)\right|.$
+</blockquote>
+
+<h4>Adams-Moulton de ordem 4</h4>
+
+<p>Para a quarta ordem, usamos os nós t=1,0,−1,−2:</p>
+
+<blockquote class="formula">
+$P_3\left(t\right)~=$ $f_{k+1}L_1\left(t\right)+f_kL_0\left(t\right)+f_{k−1}L_{−1}\left(t\right)+f_{k−2}L_{−2}\left(t\right),$
+<br />
+<br />
+$L_1\left(t\right)=\displaystyle{\frac{t\left(t+1\right)\left(t+2\right)}{6}},\qquad$
+$L_0\left(t\right)=−\displaystyle{\frac{\left(t−1\right)\left(t+1\right)\left(t+2\right)}{2}},\qquad$
+$L_{−1}\left(t\right)=\displaystyle{\frac{\left(t−1\right)t\left(t+2\right)}{2}},\qquad$
+$L_{−2}\left(t\right)=−\displaystyle{\frac{\left(t−1\right)t\left(t+1\right)}{6}}.$
+</blockquote>
+
+<p>As integrais dos polinômios fundamentais são</p>
+
+<blockquote class="formula">
+$\displaystyle{\int_0^1L_1\left(t\right)\,dt=\frac{9}{24}},\qquad$
+$\displaystyle{\int_0^1L_0\left(t\right)\,dt=\frac{19}{24}},\qquad$
+$\displaystyle{\int_0^1L_{−1}\left(t\right)\,dt=−\frac{5}{24}},\qquad$
+$\displaystyle{\int_0^1L_{−2}\left(t\right)\,dt=\frac{1}{24}}.$
+</blockquote>
+
+<p>Portanto,</p>
+
+<blockquote class="formula">
+$y_{k+1}=y_k+\displaystyle{\frac{h}{24}}\left(9f_{k+1}+19f_k−5f_{k−1}+f_{k−2}\right).$
+</blockquote>
+
+<p>A estimativa para o erro é</p>
+
+<blockquote class="formula">
+$\Delta_{k+1}$
+$\le~\displaystyle{\frac{M}{24}}\displaystyle\int_{x_k}^{x_{k+1}}\left|\left(x−x_{k+1}\right)\left(x−x_k\right)\left(x−x_{k−1}\right)\left(x−x_{k−2}\right)\right|\,dx$
+$=~\displaystyle{\frac{Mh^5}{24}}\displaystyle\int_0^1\left(1−t\right)t\left(t+1\right)\left(t+2\right)\,dt$
+$=~\displaystyle{\frac{19Mh^5}{720}},$
+<br />
+<br />
+$\Delta y_{n}\le \displaystyle{\frac{19Mh^4}{720}|x_n−x_0|},\qquad$
+$M=\max_{x\in[x_0,x_n]}\left|y^{(5)}\left(x\right)\right|.$
+</blockquote>
+
+<h4>Previsor e corretor</h4>
+
+<p>Podemos observar que os métodos de Adams-Moulton fornecem aproximações com erro muitas vezes menor que o dos métodos de Adams-Bashforth da mesma ordem. A razão é que utilizamos o comportamento da função f também no ponto previsto dentro do intervalo de integração. A desvantagem da fórmula de Adams-Moulton é que ela é implícita: o lado direito da fórmula depende de y<sub>k+1</sub>, pois</p>
+
+<blockquote class="formula">
+$f_{k+1}=f\left(x_{k+1},y_{k+1}\right).$
+</blockquote>
+
+<p>Essa equação é não linear, e sua resolução pode ser complicada. Como trabalhamos apenas com uma aproximação, não precisamos resolver essa equação com alta precisão. Na prática, usamos o lado direito como função de iteração no <a href="aula08.html">método de ponto fixo</a>. Com esse método, podemos fazer uma iteração para corrigir o valor aproximado de y<sub>k+1</sub> obtido por algum outro método. Por isso, o procedimento é chamado <strong>método previsor-corretor</strong>.</p>
+
+<p>Essa estratégia permite aproveitar a simplicidade do método explícito e, ao mesmo tempo, obter parte da estabilidade e da precisão do método implícito. Como o coeficiente de f<sub>k+1</sub> em todas as ordens é pequeno,</p>
+
+<blockquote class="formula">
+$\displaystyle{\frac{9h}{24}&lt;\frac{5h}{12}&lt;\frac{h}{2}},$
+</blockquote>
+
+<p>o teorema de convergência do método do ponto fixo garante a convergência desde que</p>
+
+<blockquote class="formula">
+$\displaystyle{\frac{h}{2}|f_y\left(x,y\right)|&lt;1}.$
+</blockquote>
+
+<p>Como, na prática, h é escolhido pequeno, uma iteração do método do ponto fixo diminui o erro significativamente, usando apenas uma avaliação da função f no ponto previsto.</p>
+
+<form>
+<div class="overwrite"><input class="right-aligned" type="button" name="execute"  value="Executar" onClick="ExecuteCodeEvent(this)"></div>
+<textarea class="wide" name="code"  rows="33">
+var AdamsMoulton=function(f,x0,y0,x,n){
+  if(n<=0)return NaN
+  var h=(x-x0)/n
+  var hf=[0,0,0]
+
+  for(var rk=3;rk-->0;){ // Runge-Kutta
+    var k1=hf[rk]=h*f(x0,y0)
+    var k2=h*f(x0+h/2,y0+k1/2)
+    var k3=h*f(x0+h/2,y0+k2/2)
+    var k4=h*f(x0+=h,y0+k3)
+    y0+=(k1+2*k2+2*k3+k4)/6
+    if(--n==0)return y0
+  }
+
+  while(n-->0){
+     var hfk=h*f(x0,y0)
+     var ypre=y0+(55*hfk-59*hf[0]+37*hf[1]-9*hf[2])/24
+     x0+=h
+     y0+=(9*h*f(x0,ypre)+19*hfk-5*hf[0]+hf[1])/24
+     hf[2]=hf[1]
+     hf[1]=hf[0]
+     hf[0]=hfk
+  }
+  return y0
+}
+
+var f=function(x,y){ return x*y }
+
+var y=function(x){ return Math.exp(x*x/2) }
+
+var x=1
+text=y(x)-AdamsMoulton(f,0,1,x,10)
+</textarea>
+<textarea class="wide" name="destination" readonly rows="2"></textarea>
+</form>
+
+<h3>Resumo</h3>
+
+<ol>
+  <li>Métodos de passo múltiplo usam valores calculados em nós anteriores para obter o próximo valor da solução.</li>
+  <li>A construção dos métodos de Adams vem da fórmula integral da equação diferencial e da interpolação polinomial da função f(x,y(x)).</li>
+  <li>Os métodos de Adams-Bashforth são explícitos e usam apenas valores já conhecidos de f.</li>
+  <li>Os métodos de Adams-Moulton são implícitos, dependendo do valor desconhecido y<sub>k+1</sub>, e são usados nos métodos previsor-corretor.</li>
+</ol>
+
+</section>
+
+</article>
+
+<footer>
+<a href="aula20.html">Próxima aula: Sistemas de equações diferenciais.</a>
+</footer>
+
+</body>
+
+</html>
