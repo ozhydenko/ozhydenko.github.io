@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width" />
+<title>Cálculo numérico: Sistemas de equações diferenciais.</title>
+<link rel="stylesheet" type="text/css" href="lstyle.css" />
+<link href="https://www.ufabc.edu.br/ensino/docentes/olexandr-zhydenko" rel="author" />
+<script type="text/javascript" src="execjavascript.js"></script>
+<script type="text/javascript" src="LaTeXMathML.js"></script>
+</head>
+
+<body>
+
+<header>
+</header>
+
+<nav>
+<a class="prev" href="aula19.html">Aula anterior</a>
+<a class="top" href="index.html">Índice</a>
+<a class="next" href="aula21.html">Próxima aula</a>
+</nav>
+
+<article>
+
+<section>
+<h2>Aula 20: Sistemas de equações diferenciais.</h2>
+
+<h3>Problema de valor inicial</h3>
+
+<p>Nas aulas anteriores, estudamos métodos numéricos para o problema de valor inicial de uma equação diferencial ordinária de primeira ordem. Agora consideraremos o caso em que há várias funções desconhecidas, y<sub>1</sub>(x), y<sub>2</sub>(x), …, y<sub>m</sub>(x), ligadas por um sistema de equações:</p>
+
+<blockquote class="formula">
+$y_1\prime\left(x\right)=f_1\left(x,y_1,\ldots,y_m\right),$
+<br />
+$y_2\prime\left(x\right)=f_2\left(x,y_1,\ldots,y_m\right),$
+<br />
+$\ldots$
+<br />
+$y_m\prime\left(x\right)=f_m\left(x,y_1,\ldots,y_m\right).$
+</blockquote>
+
+<p>O problema de valor inicial é obtido quando fornecemos o valor inicial de todas as funções desconhecidas:</p>
+
+<blockquote class="formula">
+$y_1\left(x_0\right)=y_{1,0},\qquad y_2\left(x_0\right)=y_{2,0},\qquad\ldots,$
+$\qquad y_m\left(x_0\right)=y_{m,0}.$
+</blockquote>
+
+<p>Assim, o problema de valor inicial consiste em determinar todas as funções y<sub>1</sub>(x), y<sub>2</sub>(x), …, y<sub>m</sub>(x) que satisfazem simultaneamente o sistema e as condições iniciais.</p>
+
+<p>O teorema de existência e unicidade para sistemas é análogo ao caso de uma única equação. Se as funções f<sub>1</sub>, f<sub>2</sub>, …, f<sub>m</sub> e suas derivadas parciais em relação às variáveis y<sub>1</sub>, y<sub>2</sub>, …, y<sub>m</sub> são contínuas em uma vizinhança do ponto inicial, então existe uma única solução, pelo menos em algum intervalo ao redor de x<sub>0</sub>. Em aplicações numéricas, as funções f<sub>i</sub> podem ser definidas por fórmulas, algoritmos ou dados computacionais. Como antes, assumimos que elas são suficientemente suaves no intervalo considerado, de modo que o problema tenha uma única solução e que os métodos numéricos possam ser aplicados de forma estável.</p>
+
+<h3>Notação vetorial</h3>
+
+<p>Utilizando a notação vetorial, podemos observar que é possível tratar o problema de modo análogo ao caso de uma equação.</p>
+
+<blockquote class="formula">
+$Y\prime\left(x\right)=F\left(x,Y\left(x\right)\right),\qquad Y\left(x_0\right)=Y_0.$
+</blockquote>
+
+<p>A diferença é que o valor desconhecido em cada ponto não é mais um número, mas um vetor de m coordenadas, definido para cada x como uma coluna:</p>
+
+<blockquote class="formula">
+$Y\left(x\right)=
+\left(\begin{array}{c}
+y_1\left(x\right)\\
+y_2\left(x\right)\\
+\vdots\\
+y_m\left(x\right)
+\end{array}\right),\qquad$
+$F\left(x,Y\right)=
+\left(\begin{array}{c}
+f_1\left(x,y_1,\ldots,y_m\right)\\
+f_2\left(x,y_1,\ldots,y_m\right)\\
+\vdots\\
+f_m\left(x,y_1,\ldots,y_m\right)
+\end{array}\right).$
+</blockquote>
+
+<p>O vetor inicial também é uma coluna de valores iniciais:</p>
+
+<blockquote class="formula">
+$Y_0=
+\left(\begin{array}{c}
+y_{1,0}\\
+y_{2,0}\\
+\vdots\\
+y_{m,0}
+\end{array}\right).$
+</blockquote>
+
+<h3>Aplicação dos métodos numéricos</h3>
+
+<p>A passagem do caso escalar para o caso vetorial é direta. A diferença principal é que y<sub>k</sub> deixa de ser um número e passa a ser um vetor:</p>
+
+<blockquote class="formula">
+$Y_k = Y\left(x_k\right).$
+</blockquote>
+
+<p>Do mesmo modo, a inclinação calculada no nó x<sub>k</sub> também é um vetor:</p>
+
+<blockquote class="formula">
+$F_k=F\left(x_k,Y_k\right).$
+</blockquote>
+
+<p>Todas as fórmulas das aulas anteriores continuam válidas se interpretarmos as somas e multiplicações por escalares como operações vetoriais, feitas componente a componente.</p>
+
+<h4>Método de Euler</h4>
+
+<p>Por exemplo, o método de Euler fica:</p>
+
+<blockquote class="formula">
+$Y_{k+1}=Y_k+hF\left(x_k,Y_k\right).$
+</blockquote>
+
+<p>Na forma explícita, isso significa:</p>
+
+<blockquote class="formula">
+$y_{1,k+1}=y_{1,k}+h f_1\left(x_k,Y_k\right),$
+<br />
+$y_{2,k+1}=y_{2,k}+h f_2\left(x_k,Y_k\right),$
+<br />
+$\ldots$
+<br />
+$y_{m,k+1}=y_{m,k}+h f_m\left(x_k,Y_k\right).$
+</blockquote>
+
+<p>Portanto, em cada passo, calculamos todas as componentes do vetor F(x<sub>k</sub>,Y<sub>k</sub>) e atualizamos todas as coordenadas de Y<sub>k</sub> ao mesmo tempo.</p>
+
+<h4>Métodos de Runge-Kutta</h4>
+
+<p>Os métodos de Runge-Kutta também são aplicados da mesma forma. Para entender por que isso funciona, lembremos que, no caso escalar, a construção desses métodos reproduz os termos principais da expansão de Taylor sem calcular derivadas parciais explicitamente. No caso vetorial, a expansão de Taylor de Y(x) envolve todas as componentes e também todas as derivadas parciais das funções f<sub>i</sub>.</p>
+
+<p>De fato, como</p>
+
+<blockquote class="formula">
+$Y\prime(x)=F\left(x,Y\right),$
+</blockquote>
+
+<p>a segunda derivada é dada por</p>
+
+<blockquote class="formula">
+$Y\prime\prime(x)=F_x\left(x,Y\right)+F_Y\left(x,Y\right)F\left(x,Y\right),$
+</blockquote>
+
+<p>onde F<sub>x</sub> é o vetor das derivadas parciais em relação a x, e F<sub>Y</sub> é a matriz jacobiana das derivadas parciais em relação às coordenadas de Y:</p>
+
+<blockquote class="formula">
+$F_Y=
+\left(\begin{array}{cccc}
+\displaystyle{\frac{\partial f_1}{\partial y_1}} & \displaystyle{\frac{\partial f_1}{\partial y_2}} & \ldots & \displaystyle{\frac{\partial f_1}{\partial y_m}}\\
+\displaystyle{\frac{\partial f_2}{\partial y_1}} & \displaystyle{\frac{\partial f_2}{\partial y_2}} & \ldots & \displaystyle{\frac{\partial f_2}{\partial y_m}}\\
+\vdots & \vdots & \ddots & \vdots\\
+\displaystyle{\frac{\partial f_m}{\partial y_1}} & \displaystyle{\frac{\partial f_m}{\partial y_2}} & \ldots & \displaystyle{\frac{\partial f_m}{\partial y_m}}
+\end{array}\right).$
+</blockquote>
+
+<p>As derivadas de ordem superior contêm combinações ainda mais longas dessas derivadas parciais. Portanto, se usássemos diretamente a fórmula de Taylor, precisaríamos calcular muitas derivadas de todas as funções f<sub>i</sub>. Os métodos de Runge-Kutta evitam esse cálculo: as avaliações de F em pontos intermediários incorporam, por aproximação, as contribuições dessas derivadas parciais.</p>
+
+<p>No método de quarta ordem, por exemplo, calculamos vetores K<sub>1</sub>, K<sub>2</sub>, K<sub>3</sub> e K<sub>4</sub>:</p>
+
+<blockquote class="formula">
+$K_1=F\left(x_k,Y_k\right),$
+<br />
+$K_2=F\left(x_k+\displaystyle{\frac{h}{2}},\,Y_k+\displaystyle{\frac{h}{2}}K_1\right),$
+<br />
+$K_3=F\left(x_k+\displaystyle{\frac{h}{2}},\,Y_k+\displaystyle{\frac{h}{2}}K_2\right),$
+<br />
+$K_4=F\left(x_k+h,\,Y_k+hK_3\right).$
+</blockquote>
+
+<p>Depois, combinamos essas inclinações vetoriais:</p>
+
+<blockquote class="formula">
+$Y_{k+1}=Y_k+\displaystyle{\frac{h}{6}}\left(K_1+2K_2+2K_3+K_4\right).$
+</blockquote>
+
+<p>Cada vetor K<sub>i</sub> possui m componentes. Por isso, uma única etapa do método fornece simultaneamente aproximações para todas as funções y<sub>1</sub>, y<sub>2</sub>, …, y<sub>m</sub>.</p>
+
+<h4>Métodos de Adams</h4>
+
+<p>Nos métodos de Adams, a situação é diferente da dos métodos de Runge-Kutta. Como as fórmulas são obtidas pela interpolação da função que aparece no lado direito da equação diferencial, podemos aplicar a construção a cada equação separadamente. Para a i-ésima equação, interpolamos os valores</p>
+
+<blockquote class="formula">
+$f_{i,k},\quad f_{i,k−1},\quad f_{i,k−2},\quad \ldots$
+</blockquote>
+
+<p>Como os coeficientes da interpolação são os mesmos para todas as componentes, podemos juntar todas as equações em uma única fórmula vetorial. Assim, armazenamos os vetores</p>
+
+<blockquote class="formula">
+$F_k,\quad F_{k−1},\quad F_{k−2},\quad \ldots,$
+</blockquote>
+
+<p>onde F<sub>k</sub>=F(x<sub>k</sub>,Y<sub>k</sub>). A fórmula de Adams-Bashforth de quarta ordem torna-se</p>
+
+<blockquote class="formula">
+$Y_{k+1}=Y_k+\displaystyle{\frac{h}{24}}\left(55F_k−59F_{k−1}+37F_{k−2}−9F_{k−3}\right).$
+</blockquote>
+
+<p>Essa fórmula é explícita: todos os vetores no lado direito já foram calculados nos passos anteriores. Para combinar essa previsão com a fórmula implícita de Adams-Moulton de quarta ordem, primeiro calculamos o valor previsto</p>
+
+<blockquote class="formula">
+$\widetilde Y_{k+1}=Y_k+\displaystyle{\frac{h}{24}}\left(55F_k−59F_{k−1}+37F_{k−2}−9F_{k−3}\right).$
+</blockquote>
+
+<p>Em seguida, calculamos</p>
+
+<blockquote class="formula">
+$\widetilde F_{k+1}=F\left(x_{k+1},\widetilde Y_{k+1}\right),$
+</blockquote>
+
+<p>e usamos a fórmula corretora de Adams-Moulton de quarta ordem:</p>
+
+<blockquote class="formula">
+$Y_{k+1}=Y_k+\displaystyle{\frac{h}{24}}\left(9\widetilde F_{k+1}+19F_k−5F_{k−1}+F_{k−2}\right).$
+</blockquote>
+
+<h3>Equações de ordem superior</h3>
+
+<p>Uma razão importante para estudar sistemas de primeira ordem é que qualquer equação diferencial ordinária de ordem superior pode ser transformada em um sistema equivalente de primeira ordem. Considere, por exemplo, uma equação de ordem n escrita na forma</p>
+
+<blockquote class="formula">
+$y^{\left(n\right)}(x)=f\left(x,y(x),y\prime(x),\ldots,y^{\left(n−1\right)}(x)\right),$
+</blockquote>
+
+<p>com condições iniciais</p>
+
+<blockquote class="formula">
+$y\left(x_0\right)=a_0,\qquad y\prime\left(x_0\right)=a_1,\qquad y\prime\prime\left(x_0\right)=a_2,$ $\qquad\ldots,\qquad y^{\left(n−1\right)}\left(x_0\right)=a_{n−1}.$
+</blockquote>
+
+<p>Introduzimos novas funções</p>
+
+<blockquote class="formula">
+$u_1(x)=y(x),\qquad u_2(x)=y\prime(x),\qquad$ $u_3(x)=y\prime\prime(x),\qquad \ldots,\qquad u_n(x)=y^{\left(n−1\right)}(x).$
+</blockquote>
+
+<p>Então, obtemos o sistema de primeira ordem</p>
+
+<blockquote class="formula">
+$u_1(x)\prime=u_2(x),$
+<br />
+$u_2(x)\prime=u_3(x),$
+<br />
+$\ldots$
+<br />
+$u_{n−1}(x)\prime=u_n(x),$
+<br />
+$u_n\prime(x)=f\left(x,u_1,u_2,\ldots,u_n\right).$
+</blockquote>
+
+<p>As condições iniciais tornam-se</p>
+
+<blockquote class="formula">
+$u_1\left(x_0\right)=a_0,\qquad
+u_2\left(x_0\right)=a_1,\qquad
+u_3\left(x_0\right)=a_2,$
+$\qquad
+\ldots,\qquad
+u_n\left(x_0\right)=a_{n−1}.$
+</blockquote>
+
+<p>Assim, a equação original de ordem n é substituída por um sistema de n equações de primeira ordem. Depois dessa transformação, podemos aplicar diretamente qualquer método numérico estudado nas aulas anteriores.</p>
+
+<p>Quando resolvemos numericamente uma equação de ordem superior por meio de um sistema de primeira ordem, os dados obtidos não contêm apenas os valores da função desconhecida. Para uma equação de ordem n, o vetor calculado em cada nó tem a forma</p>
+
+<blockquote class="formula">
+$U_k=
+\left(\begin{array}{c}
+u_{1,k}\\
+u_{2,k}\\
+\vdots\\
+u_{n,k}
+\end{array}\right)
+=
+\left(\begin{array}{c}
+y\left(x_k\right)\\
+y\prime\left(x_k\right)\\
+\vdots\\
+y^{\left(n−1\right)}\left(x_k\right)
+\end{array}\right).$
+</blockquote>
+
+<p>A primeira coordenada fornece a aproximação para y(x<sub>k</sub>). A segunda coordenada fornece a aproximação para y′(x<sub>k</sub>), a terceira para y′′(x<sub>k</sub>), e assim por diante, até a derivada de ordem n−1. Essas derivadas são obtidas numericamente dentro da mesma aproximação que fornece os valores da função y. Como o cálculo numérico das derivadas pode levar a um crescimento significativo do erro, normalmente, uma aproximação melhor para y<sup>(n)</sup>(x) pode ser obtida substituindo os valores de y e de suas derivadas na função f.</p>
+
+<h3>Resumo</h3>
+
+<ol>
+  <li>Um sistema de equações diferenciais ordinárias pode ser resolvido utilizando os métodos desenvolvidos para uma equação, tratando as funções como coordenadas de um vetor.</li>
+  <li>Uma equação diferencial ordinária de ordem superior pode ser transformada em um sistema equivalente de primeira ordem, e o problema de valor inicial passa a ser resolvido como um problema para esse sistema.</li>
+  <li>Ao resolver um sistema equivalente a uma equação de ordem superior, obtemos aproximações para a função desconhecida e também para suas derivadas.</li>
+</ol>
+
+</section>
+
+</article>
+
+<footer>
+<a href="aula21.html">Próxima aula: Solução de problemas com condições de contorno.</a>
+</footer>
+
+</body>
+
+</html>

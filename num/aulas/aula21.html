@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width" />
+<title>Cálculo numérico: Solução de problemas com condições de contorno.</title>
+<link rel="stylesheet" type="text/css" href="lstyle.css" />
+<link href="https://www.ufabc.edu.br/ensino/docentes/olexandr-zhydenko" rel="author" />
+<script type="text/javascript" src="execjavascript.js"></script>
+<script type="text/javascript" src="LaTeXMathML.js"></script>
+</head>
+
+<body>
+
+<header>
+</header>
+
+<nav>
+<a class="prev" href="aula20.html">Aula anterior</a>
+<a class="top" href="index.html">Índice</a>
+</nav>
+
+<article>
+
+<section>
+<h2>Aula 21: Solução de problemas com condições de contorno.</h2>
+
+<h3>Problema de contorno</h3>
+
+<p>Nas aulas anteriores, estudamos problemas de valor inicial. Nesse tipo de problema, conhecemos o valor da função e, quando necessário, os valores das suas derivadas no mesmo ponto inicial. Agora consideraremos outro tipo de problema, no qual as condições são impostas em pontos diferentes do intervalo. Comecemos com uma equação diferencial ordinária de segunda ordem:</p>
+
+<blockquote class="formula">
+$y\prime\prime(x)=f\left(x,y(x),y\prime(x)\right),\qquad x\in\left[a,b\right].$
+</blockquote>
+
+<p>Em um problema de contorno, as condições podem fixar os valores da função nas extremidades, como em</p>
+
+<blockquote class="formula">
+$y\left(a\right)=\alpha,\qquad y\left(b\right)=\beta.$
+</blockquote>
+
+<p>Também podemos fixar as derivadas nas extremidades:</p>
+
+<blockquote class="formula">
+$y\prime\left(a\right)=\alpha,\qquad y\prime\left(b\right)=\beta,$
+</blockquote>
+
+<p>ou o valor em uma das extremidades e a derivada na outra:</p>
+
+<blockquote class="formula">
+$y\left(a\right)=\alpha,\qquad y\prime\left(b\right)=\beta.$
+</blockquote>
+
+<p>De modo mais geral, uma condição de contorno pode envolver uma combinação do valor da função e da sua derivada. Nesta aula, usaremos a forma</p>
+
+<blockquote class="formula">
+$\gamma_0y\left(a\right)+\gamma_1y\prime\left(a\right)=\alpha,\qquad
+\delta_0y\left(b\right)+\delta_1y\prime\left(b\right)=\beta.$
+</blockquote>
+
+<p>Em cada extremidade, os dois coeficientes da condição não podem ser simultaneamente nulos. As condições com valores fixos são um caso particular, obtido quando γ<sub>1</sub>=δ<sub>1</sub>=0. As condições com derivadas fixas são obtidas quando γ<sub>0</sub>=δ<sub>0</sub>=0. Quando aparecem ao mesmo tempo o valor e a derivada, temos uma condição mista. Assim, diferentemente do problema de valor inicial, não conhecemos todos os dados em um mesmo ponto. Em vez disso, temos duas informações impostas nas extremidades do intervalo.</p>
+
+<p>No problema de valor inicial, sob hipóteses de suavidade, o teorema de existência e unicidade garante uma solução local única. Para problemas de contorno, não existe uma garantia geral desse tipo. Dependendo da equação e das condições impostas, o problema pode não ter solução, pode ter uma única solução ou pode ter várias soluções.</p>
+
+<p>Por exemplo, a equação</p>
+
+<blockquote class="formula">
+$y\prime\prime+y=0$
+</blockquote>
+
+<p>possui soluções da forma y(x)=C<sub>1</sub>cos x+C<sub>2</sub>sen x. No intervalo [0,π], se impomos</p>
+
+<blockquote class="formula">
+$y\left(0\right)=0,\qquad y\left(\pi\right)=0,$
+</blockquote>
+
+<p>obtemos C<sub>1</sub>=0, mas C<sub>2</sub> permanece livre. Assim, existem infinitas soluções da forma y(x)=C<sub>2</sub>sen x.</p>
+
+<p>Se impomos</p>
+
+<blockquote class="formula">
+$y\left(0\right)=0,\qquad y\prime\left(\pi\right)=1,$
+</blockquote>
+
+<p>obtemos C<sub>1</sub>=0 e C<sub>2</sub>=−1. Portanto, existe uma única solução: y(x)=−sen x.</p>
+
+<p>Finalmente, se impomos</p>
+
+<blockquote class="formula">
+$y\left(0\right)=0,\qquad y\left(\pi\right)=1,$
+</blockquote>
+
+<p>obtemos C<sub>1</sub>=0, mas então y(π)=0 para qualquer valor de C<sub>2</sub>. Logo, essa condição de contorno não pode ser satisfeita e o problema não possui solução.</p>
+
+<h3>Método de chute</h3>
+
+<p>O <strong>método de chute</strong> transforma o problema de contorno em uma família de problemas de valor inicial. A condição imposta na extremidade esquerda não determina, em geral, os dois dados iniciais y(a) e y′(a). Por isso, introduzimos um parâmetro s e escolhemos dados iniciais que satisfaçam essa condição.</p>
+
+<p>Se γ<sub>1</sub>≠0, podemos tomar</p>
+
+<blockquote class="formula">
+$y\left(a\right)=s,\qquad
+y\prime\left(a\right)=\displaystyle{\frac{\alpha−\gamma_0s}{\gamma_1}}.$
+</blockquote>
+
+<p>Se γ<sub>1</sub>=0 e γ<sub>0</sub>≠0, então o valor y(a) fica fixo, e podemos usar</p>
+
+<blockquote class="formula">
+$y\left(a\right)=\displaystyle{\frac{\alpha}{\gamma_0}},\qquad
+y\prime\left(a\right)=s.$
+</blockquote>
+
+<p>Para cada valor de s, obtemos um problema de valor inicial. Esse problema pode ser resolvido por qualquer método estudado nas aulas anteriores, por exemplo, Runge-Kutta. Denotemos por y(x) a solução numérica obtida com o chute s.</p>
+
+<p>O objetivo é escolher s de modo que a condição no outro extremo seja satisfeita:</p>
+
+<blockquote class="formula">
+$\delta_0y\left(b\right)+\delta_1y\prime\left(b\right)=\beta.$
+</blockquote>
+
+<p>Portanto, definimos a função</p>
+
+<blockquote class="formula">
+$\Phi\left(s\right)=\delta_0y\left(b\right)+\delta_1y\prime\left(b\right)−\beta,$
+</blockquote>
+
+<p>e procuramos numericamente a solução da equação</p>
+
+<blockquote class="formula">
+$\Phi\left(s\right)=0.$
+</blockquote>
+
+<p>Assim, o problema de contorno é reduzido à solução de uma equação algébrica em uma variável. Para encontrar essa raiz, podemos usar os métodos de bisseção, secantes ou Newton, desde que seja possível calcular ou estimar os valores de Φ(s). A função Φ(s) é definida pelo algoritmo numérico: para calcular seu valor, resolvemos numericamente o problema de valor inicial que corresponde ao dado s.</p>
+
+<p>Geometricamente, o nome do método vem da seguinte ideia: fazemos um chute para o dado inicial que falta, resolvemos o problema de valor inicial e observamos se a combinação de contorno no ponto b fica acima ou abaixo do valor β. Em seguida, ajustamos o chute até atingir a condição de contorno.</p>
+
+<h4>Chute para equações lineares</h4>
+
+<p>Quando a equação é linear, o método de chute pode ser simplificado. Considere</p>
+
+<blockquote class="formula">
+$y\prime\prime(x)=p\left(x\right)y\prime(x)+q\left(x\right)y(x)+r\left(x\right),$
+</blockquote>
+
+<p>com as condições gerais de contorno. Pela linearidade, basta calcular duas funções auxiliares. A função u resolve a equação não homogênea e satisfaz a condição de contorno esquerda:</p>
+
+<blockquote class="formula">
+$u\prime\prime(x)=p\left(x\right)u\prime(x)+q\left(x\right)u(x)+r\left(x\right),\qquad$
+$\gamma_0u\left(a\right)+\gamma_1u\prime\left(a\right)=\alpha.$
+</blockquote>
+
+<p>A função v resolve a equação homogênea e satisfaz a condição esquerda homogênea:</p>
+
+<blockquote class="formula">
+$v\prime\prime(x)=p\left(x\right)v\prime(x)+q\left(x\right)v(x),\qquad\qquad$
+$\gamma_0v\left(a\right)+\gamma_1v\prime\left(a\right)=0.$
+</blockquote>
+
+<p>Na prática, u e v são obtidas por problemas de valor inicial, escolhendo os dados iniciais restantes de forma conveniente. A função v deve ser não nula e deve representar a direção livre que resta depois de impor a condição de contorno esquerda. Então, a solução procurada tem a forma</p>
+
+<blockquote class="formula">
+$y\left(x\right)=u\left(x\right)+s\,v\left(x\right).$
+</blockquote>
+
+<p>A condição de contorno direita fornece diretamente</p>
+
+<blockquote class="formula">
+$s=\displaystyle{\frac{\beta−\delta_0u\left(b\right)−\delta_1u\prime\left(b\right)}
+{\delta_0v\left(b\right)+\delta_1v\prime\left(b\right)}}.$
+</blockquote>
+
+<p>Essa fórmula vale quando o denominador é diferente de zero. Se o denominador for zero, a situação precisa ser analisada separadamente: o problema pode não ter solução ou pode não ter solução única.</p>
+
+<h3>Método de diferenças finitas</h3>
+
+<p>Outra abordagem importante é substituir a equação diferencial por um sistema de equações algébricas. Consideremos novamente a equação linear com as condições gerais de contorno:</p>
+
+<blockquote class="formula">
+$y\prime\prime=p\left(x\right)y\prime+q\left(x\right)y+r\left(x\right),$
+<br />
+<br />
+$\gamma_0y\left(a\right)+\gamma_1y\prime\left(a\right)=\alpha,\qquad$
+$\delta_0y\left(b\right)+\delta_1y\prime\left(b\right)=\beta.$
+</blockquote>
+
+<p>Dividimos o intervalo [a,b] em n subintervalos iguais:</p>
+
+<blockquote class="formula">
+$x_i=a+ih,\qquad h=\displaystyle{\frac{b−a}{n}},\qquad i=0,1,\ldots,n.$
+</blockquote>
+
+<p>Denotemos por y<sub>i</sub> uma aproximação para y(x<sub>i</sub>). Quando as condições fixam os valores da função, y<sub>0</sub> e y<sub>n</sub> são conhecidos. Para condições com derivadas ou condições mistas, esses valores também podem ser incógnitas, e as próprias condições de contorno fornecem as equações adicionais.</p>
+
+<p>Valores aproximados das derivadas podem ser obtidos por meio de <a href="aula06.html">expansões de Taylor</a>:</p>
+
+<blockquote class="formula">
+$y\left(x_i+h\right)=y\left(x_i\right)+hy\prime\left(x_i\right)$
+$+~\displaystyle{\frac{h^2}{2}}y\prime\prime\left(x_i\right)$
+$+~\displaystyle{\frac{h^3}{6}}y^{(3)}\left(x_i\right)$
+$+~\textrm{&Oscr;}\left(h^4\right),$
+<br />
+<br />
+$y\left(x_i−h\right)=y\left(x_i\right)−hy\prime\left(x_i\right)$
+$+~\displaystyle{\frac{h^2}{2}}y\prime\prime\left(x_i\right)$
+$−~\displaystyle{\frac{h^3}{6}}y^{(3)}\left(x_i\right)$
+$+~\textrm{&Oscr;}\left(h^4\right).$
+</blockquote>
+
+<p>Subtraindo essas duas expansões, obtemos a aproximação para a primeira derivada. Somando as expansões e isolando a segunda derivada, obtemos a aproximação para a segunda derivada. Portanto, para cada nó interno, usamos</p>
+
+<blockquote class="formula">
+$y\prime\left(x_i\right)$ $=~\displaystyle{\frac{y\left(x_i+h\right)−y\left(x_i−h\right)}{2h}}+\textrm{&Oscr;}\left(h^2\right)$ $=~\displaystyle{\frac{y_{i+1}−y_{i−1}}{2h}}+\textrm{&Oscr;}\left(h^2\right)$
+<br />
+<br />
+$y\prime\prime\left(x_i\right)$ $=~\displaystyle{\frac{y\left(x_i+h\right)−2y\left(x_i\right)+y\left(x_i−h\right)}{h^2}}+\textrm{&Oscr;}\left(h^2\right)$ $=~\displaystyle{\frac{y_{i+1}−2y_i+y_{i−1}}{h^2}}+\textrm{&Oscr;}\left(h^2\right).$
+</blockquote>
+
+<p>Substituindo essas aproximações na equação diferencial, obtemos</p>
+
+<blockquote class="formula">
+$\displaystyle{\frac{y_{i+1}−2y_i+y_{i−1}}{h^2}}
+=p_i\displaystyle{\frac{y_{i+1}−y_{i−1}}{2h}}+q_iy_i+r_i,$
+</blockquote>
+
+<p>onde p<sub>i</sub>=p(x<sub>i</sub>), q<sub>i</sub>=q(x<sub>i</sub>) e r<sub>i</sub>=r(x<sub>i</sub>). Reorganizando os termos, temos</p>
+
+<blockquote class="formula">
+$\left(\displaystyle{\frac{1}{h^2}}+\displaystyle{\frac{p_i}{2h}}\right)y_{i−1}
++\left(−\displaystyle{\frac{2}{h^2}}−q_i\right)y_i
++\left(\displaystyle{\frac{1}{h^2}}−\displaystyle{\frac{p_i}{2h}}\right)y_{i+1}
+=r_i.$
+</blockquote>
+
+<p>Quando as condições de contorno envolvem derivadas, também precisamos aproximá-las. Uma escolha simples é usar diferenças unilaterais nas extremidades:</p>
+
+<blockquote class="formula">
+$y\prime\left(a\right)\approx\displaystyle{\frac{y_1−y_0}{h}},\qquad
+y\prime\left(b\right)\approx\displaystyle{\frac{y_n−y_{n−1}}{h}}.$
+</blockquote>
+
+<p>Com isso, as condições de contorno fornecem as equações</p>
+
+<blockquote class="formula">
+$\gamma_0y_0+\gamma_1\displaystyle{\frac{y_1−y_0}{h}}=\alpha,\qquad
+\delta_0y_n+\delta_1\displaystyle{\frac{y_n−y_{n−1}}{h}}=\beta.$
+</blockquote>
+
+<p>Juntando essas equações com as equações dos nós internos, obtemos um sistema linear para os valores desconhecidos da malha. No caso particular y(a)=α e y(b)=β, os valores y<sub>0</sub> e y<sub>n</sub> são conhecidos, e o sistema se reduz às incógnitas y<sub>1</sub>, y<sub>2</sub>, …, y<sub>n−1</sub>.</p>
+
+<p>A matriz desse sistema é tridiagonal, pois cada equação envolve apenas y<sub>i−1</sub>, y<sub>i</sub> e y<sub>i+1</sub>. Assim, o problema pode ser resolvido pelo <a href="aula16.html">método de Thomas</a> e, em condições regulares, o erro da aproximação obtida é proporcional a h<sup>2</sup>.</p>
+
+<p>O método de diferenças finitas é particularmente natural para problemas lineares. Para problemas não lineares, a mesma discretização gera um sistema não linear, que normalmente precisa ser resolvido por métodos iterativos, como o método de Newton para sistemas.</p>
+
+<h3>Outros métodos</h3>
+
+<p>O método de chute e o método de diferenças finitas são duas abordagens básicas, mas não são as únicas. Em problemas mais difíceis, outras estratégias podem ser mais estáveis ou mais precisas.</p>
+
+<p>Uma possibilidade é o <strong>método de chute múltiplo</strong>. Em vez de resolver o problema em todo o intervalo com um único chute inicial, dividimos o intervalo em partes menores e introduzimos valores desconhecidos nos pontos de divisão. Depois, impomos condições de continuidade entre as soluções locais. Esse método reduz a sensibilidade a erros no chute inicial.</p>
+
+<p>Outra classe importante é formada pelos <strong>métodos variacionais</strong>, como o método de Galerkin e o método dos elementos finitos. Nesses métodos, procuramos uma aproximação em um espaço finito de funções e impomos que o resíduo da equação seja ortogonal a certas funções de teste. Essa abordagem é especialmente importante em problemas de contorno para equações diferenciais parciais, mas também pode ser aplicada a equações ordinárias.</p>
+
+<p>Em problemas de equações diferenciais parciais, as condições de contorno são impostas não apenas em dois pontos, mas em uma curva, superfície ou fronteira de uma região. Por exemplo, em problemas elípticos, como a equação de Laplace ou a equação de Poisson, a solução dentro da região é determinada pela equação diferencial e pelas condições impostas na fronteira. Depois da discretização, aparecem sistemas lineares grandes e esparsos. Diferenças finitas, elementos finitos e volumes finitos são algumas das ferramentas mais usadas para construir e resolver esses sistemas.</p>
+
+<p>Também existem métodos de <strong>colocação</strong>, nos quais a solução aproximada é escolhida dentro de uma família de funções, e a equação diferencial é imposta exatamente em certos pontos do intervalo. Métodos espectrais seguem uma ideia semelhante, mas usam bases globais, como polinômios ortogonais ou funções trigonométricas, e podem produzir alta precisão quando a solução é suave.</p>
+
+<p>Para equações diferenciais parciais dependentes do tempo, as condições iniciais e as condições de contorno aparecem juntas. Nesse caso, além da precisão da aproximação, a estabilidade do método se torna uma questão central: uma escolha inadequada da malha ou do método pode amplificar erros de arredondamento e perturbações dos dados.</p>
+
+<p>A escolha do método depende do tipo de equação, da estabilidade do problema, da suavidade da solução e da precisão desejada. Também precisamos lembrar que alguns problemas são numericamente instáveis por natureza, como certos modelos com comportamento caótico ou mal posto. Além disso, há problemas que não podem ser resolvidos de forma confiável por um algoritmo particular, pois o próprio método pode introduzir instabilidade numérica. Por exemplo, pode acontecer que o mesmo algoritmo seja estável para alguns valores dos parâmetros e numericamente instável para outros. Em situações desse tipo, métodos apropriados podem não ser conhecidos, e talvez seja necessário reformular o modelo ou acrescentar algum tipo de regularização.</p>
+
+<h3>Resumo</h3>
+
+<ol>
+  <li>Problemas de contorno impõem condições em pontos diferentes do intervalo, podendo envolver valores, derivadas ou combinações dos dois. Para esses problemas, não há garantia geral de existência e unicidade.</li>
+  <li>O método de chute transforma o problema de contorno em uma família de problemas de valor inicial.</li>
+  <li>O método de diferenças finitas reduz uma equação diferencial linear de segunda ordem com condições de contorno a um sistema linear.</li>
+</ol>
+
+</section>
+
+</article>
+
+<footer>
+<a href="index.html">Índice</a>
+</footer>
+
+</body>
+
+</html>
