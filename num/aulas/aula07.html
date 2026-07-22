@@ -87,34 +87,36 @@ $\Delta x=\displaystyle{\frac{|b−a|}{2^{n+1}}}.$
 
 <form>
 <div class="overwrite"><input class="right-aligned" type="button" name="execute"  value="Executar" onClick="ExecuteCodeEvent(this)"></div>
-<textarea class="wide" name="code"  rows="25">
+<textarea class="wide" name="code"  rows="28">
 var prec=0.00001
-var bisseção=function(a,b,f){
 
-var fa=f(a)
-if(fa==0)return a
-var fb=f(b)
-if(fb==0)return b
-if(fa*fb>0)return NaN
+var Bissec=function(a,b,f){
 
-while(Math.abs(b-a)>prec){
-var c=(a+b)*0.5
-var fc=f(c)
-if(fc==0)return c
-if(fc*fa<0){
- b=c
- fb=fc
-}else{
- a=c
- fa=fc
+ var fa=f(a)
+ if(fa==0)return a
+ var fb=f(b)
+ if(fb==0)return b
+ if(fa*fb>0)return NaN
+
+ while(Math.abs(b-a)>prec){
+  var c=(a+b)*0.5
+  var fc=f(c)
+  if(fc==0)return c
+  if(fc*fa<0){
+   b=c
+   fb=fc
+  }else{
+   a=c
+   fa=fc
+  }
+ }
+
+ return (a+b)*0.5
 }
-}//end while
-return (a+b)*0.5
-}//end function
 
-text=bisseção(1,1.7,Math.cos)+"\n"+Math.PI/2
+text=Bissec(1,1.7,Math.cos)+"\n"+Math.PI/2
 </textarea>
-<textarea class="wide" name="destination" readonly rows="7"></textarea>
+<textarea class="wide" name="destination" readonly rows="4"></textarea>
 </form>
 
 <h3>Método da falsa posição</h3>
@@ -156,7 +158,7 @@ $\displaystyle{\frac{x−a}{b−a}=\frac{y−f(a)}{f(b)−f(a)}}.$
 
 </svg>
 
-<p>Para encontrar o ponto c de interseção com o eixo x, substituimos x=c e y=0 na equação e isolamos c:</p>
+<p>Para encontrar o ponto c de interseção com o eixo x, substituímos x=c e y=0 na equação e isolamos c:</p>
 <blockquote class="formula">
 $c=\displaystyle{\frac{a\times f(b)−b\times f(a)}{f(b)−f(a)}}.$
 </blockquote>
@@ -165,34 +167,36 @@ $c=\displaystyle{\frac{a\times f(b)−b\times f(a)}{f(b)−f(a)}}.$
 
 <form>
 <div class="overwrite"><input class="right-aligned" type="button" name="execute"  value="Executar" onClick="ExecuteCodeEvent(this)"></div>
-<textarea class="wide" name="code"  rows="25">
+<textarea class="wide" name="code"  rows="28">
 var prec=0.00001
-var falsaposição =function(a,b,f){
 
-var fa=f(a)
-if(fa==0)return a
-var fb=f(b)
-if(fb==0)return b
-if(fa*fb>0)return NaN
+var Falspos =function(a,b,f){
 
-while(Math.abs(b-a)>prec){
-var c=(a*fb-b*fa)/(fb-fa)
-var fc=f(c)
-if(fc==0)return c
-if(fc*fa<0){
- b=c
- fb=fc
-}else{
- a=c
- fa=fc
+ var fa=f(a)
+ if(fa==0)return a
+ var fb=f(b)
+ if(fb==0)return b
+ if(fa*fb>0)return NaN
+
+ while(Math.abs(b-a)>prec){
+  var c=(a*fb-b*fa)/(fb-fa)
+  var fc=f(c)
+  if(fc==0)return c
+  if(fc*fa<0){
+   b=c
+   fb=fc
+  }else{
+   a=c
+   fa=fc
+  }
+ }
+
+ return c=(a*fb-b*fa)/(fb-fa)
 }
-}//end while
-return c=(a*fb-b*fa)/(fb-fa)
-}//end function
 
-text=falsaposição(1,1.7,Math.cos)+"\n"+Math.PI/2
+text=Falspos(1,1.7,Math.cos)+"\n"+Math.PI/2
 </textarea>
-<textarea class="wide" name="destination" readonly rows="7"></textarea>
+<textarea class="wide" name="destination" readonly rows="4"></textarea>
 </form>
 
 <p>Quando os valores absolutos de f(a) e f(b) são iguais, isto é, quando f(a) = −f(b), o ponto c coincide com o ponto médio do intervalo. Nesse caso, o método da falsa posição torna-se equivalente ao método de bisseção.</p>

@@ -256,21 +256,21 @@ var AdamsBashforth=function(f,x0,y0,x,n){
   var hf=[0,0,0]
 
   for(var rk=3;rk-->0;){ // Runge-Kutta
-    var k1=hf[rk]=h*f(x0,y0)
-    var k2=h*f(x0+h/2,y0+k1/2)
-    var k3=h*f(x0+h/2,y0+k2/2)
-    var k4=h*f(x0+=h,y0+k3)
-    y0+=(k1+2*k2+2*k3+k4)/6
-    if(--n==0)return y0
+   var k1=hf[rk]=h*f(x0,y0)
+   var k2=h*f(x0+h/2,y0+k1/2)
+   var k3=h*f(x0+h/2,y0+k2/2)
+   var k4=h*f(x0+=h,y0+k3)
+   y0+=(k1+2*k2+2*k3+k4)/6
+   if(--n==0)return y0
   }
 
   while(n-->0){
-     var hfk=h*f(x0,y0)
-     y0+=(55*hfk-59*hf[0]+37*hf[1]-9*hf[2])/24
-     x0+=h
-     hf[2]=hf[1]
-     hf[1]=hf[0]
-     hf[0]=hfk
+   var hfk=h*f(x0,y0)
+   y0+=(55*hfk-59*hf[0]+37*hf[1]-9*hf[2])/24
+   x0+=h
+   hf[2]=hf[1]
+   hf[1]=hf[0]
+   hf[0]=hfk
   }
   return y0
 }
@@ -451,22 +451,22 @@ var AdamsMoulton=function(f,x0,y0,x,n){
   var hf=[0,0,0]
 
   for(var rk=3;rk-->0;){ // Runge-Kutta
-    var k1=hf[rk]=h*f(x0,y0)
-    var k2=h*f(x0+h/2,y0+k1/2)
-    var k3=h*f(x0+h/2,y0+k2/2)
-    var k4=h*f(x0+=h,y0+k3)
-    y0+=(k1+2*k2+2*k3+k4)/6
-    if(--n==0)return y0
+   var k1=hf[rk]=h*f(x0,y0)
+   var k2=h*f(x0+h/2,y0+k1/2)
+   var k3=h*f(x0+h/2,y0+k2/2)
+   var k4=h*f(x0+=h,y0+k3)
+   y0+=(k1+2*k2+2*k3+k4)/6
+   if(--n==0)return y0
   }
 
   while(n-->0){
-     var hfk=h*f(x0,y0)
-     var ypre=y0+(55*hfk-59*hf[0]+37*hf[1]-9*hf[2])/24
-     x0+=h
-     y0+=(9*h*f(x0,ypre)+19*hfk-5*hf[0]+hf[1])/24
-     hf[2]=hf[1]
-     hf[1]=hf[0]
-     hf[0]=hfk
+   var hfk=h*f(x0,y0)
+   var ypre=y0+(55*hfk-59*hf[0]+37*hf[1]-9*hf[2])/24
+   x0+=h
+   y0+=(9*h*f(x0,ypre)+19*hfk-5*hf[0]+hf[1])/24
+   hf[2]=hf[1]
+   hf[1]=hf[0]
+   hf[0]=hfk
   }
   return y0
 }

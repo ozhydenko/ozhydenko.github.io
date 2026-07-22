@@ -136,21 +136,21 @@ $x_{k+1}=x_k−f\left(x_k\right)\displaystyle{\frac{x_k−x_{k−1}}{f\left(x_k\
 <div class="overwrite"><input class="right-aligned" type="button" name="execute" value="Executar" onClick="ExecuteCodeEvent(this)"></div>
 <textarea class="wide" name="code" rows="17">
 var prec=0.00000001
-var Secantes=function(f,x0,x1){
-var f0=f(x0)
-while(Math.abs(x1-x0)>prec){
-var f1=f(x1)
-var x=(x0*f1-x1*f0)/(f1-f0)
-x0=x1
-f0=f1
-x1=x
-}
-return x1
+var Sec=function(f,x0,x1){
+ var f0=f(x0)
+ while(Math.abs(x1-x0)>prec){
+  var f1=f(x1)
+  var x=(x0*f1-x1*f0)/(f1-f0)
+  x0=x1
+  f0=f1
+  x1=x
+ }
+ return x1
 }
 
 var f=function(x){return Math.cos(x)-x}
 
-text=Secantes(f,0,1)
+text=Sec(f,0,1)
 </textarea>
 <textarea class="wide" name="destination" readonly rows="3"></textarea>
 </form>
@@ -219,7 +219,7 @@ $p=\displaystyle{\frac{1+\sqrt{5}}{2}}\approx 1.618.$
 
 <p>Esse número é conhecido como <strong>seção de ouro</strong>, ou razão áurea.</p>
 
-<p>Portanto, o método de secantes tem convergência superlinear: sua ordem é maior que 1, mas menor que a ordem 2 do método de Newton-Raphson. Como a fórmula do novo ponto coincide com a fórmula da falsa posição, essa é também a ordem associada à aproximação por secantes usada nesse método, quando a iteração segue o mesmo comportamento assintótico.</p>
+<p>Portanto, o método de secantes tem convergência superlinear: sua ordem é maior que 1, mas menor que a ordem 2 do método de Newton-Raphson. Essa conclusão utiliza especificamente a regra do método de secantes, que conserva as duas aproximações mais recentes. Ela não pode ser transferida para o método da falsa posição apenas porque a fórmula do novo ponto é a mesma. A ordem de convergência depende também da sequência de pares de pontos produzida pela regra de atualização. Como a falsa posição preserva um intervalo com mudança de sinal, uma das extremidades pode permanecer fixa durante várias iterações. Por isso, a sequência obtida é diferente e, em geral, a convergência do método padrão da falsa posição é apenas linear.</p>
 
 <h3>Resumo</h3>
 

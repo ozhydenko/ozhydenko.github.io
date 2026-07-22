@@ -30,28 +30,28 @@
 
 <h3>Funções numéricas e fórmula de Taylor</h3>
 
-<p>Uma função que devolve o resultado que depende somente dos argumentos é chamada pura. Chamaremos uma função pura de <strong>numérica</strong> quando os argumentos e resultado são os números na aritmética de ponto flutuante. Qualquer função que retorna um valor aproximado de uma função matemática, por exemplo, uma função elementar (combinação das funções trigonométricas, a exponencial, e o logaritmo), é uma função numérica.</p>
+<p>Uma função cujo resultado depende somente dos argumentos é chamada pura. Chamaremos uma função pura de <strong>numérica</strong> quando seus argumentos e seu resultado forem números da aritmética de ponto flutuante. Qualquer função que retorne um valor aproximado de uma função matemática, por exemplo, uma função elementar formada por uma combinação de funções trigonométricas, exponenciais e logarítmicas, é uma função numérica.</p>
 
-<p>É importante lembrar que, devido ao fato que quantidade de números diferentes na aritmética de ponto flutuante é finita, qualquer função numérica podemos representar por uma tabela finita (apesar que pode ser muito grande) de valores para todas as combinações possíveis dos argumentos. Por isso, não é possível definir tais características, como limite, continuidade e diferenciabilidade.</p>
+<p>É importante lembrar que, como a quantidade de números distintos na aritmética de ponto flutuante é finita, qualquer função numérica pode ser representada por uma tabela finita, embora possivelmente muito grande, que contenha os valores correspondentes a todas as combinações possíveis dos argumentos. Por isso, não é possível definir diretamente para essas funções características como limite, continuidade e diferenciabilidade.</p>
 
-<p>Ao mesmo tempo, na prática, não estudamos numericamente as funções que têm propriedades extremos: crescimento e decrescimento rápido, comportamento variado nos intervalos diferentes ou valores muito diferentes nos pontos próximos.</p>
+<p>Ao mesmo tempo, na prática, evitamos estudar numericamente funções com propriedades extremas, como crescimento ou decrescimento muito rápido, comportamento muito variável em intervalos diferentes ou valores muito distintos em pontos próximos.</p>
 
-<p>Por isso, vamos normalmente assumir que tais funções retornam os valores aproximados para funções contínuas com derivadas contínuas e ainda que ordem de grandeza das derivadas não varia muito. Estas funções são bem aproximadas pela série de Taylor, que permite obter uma aproximação pelo valor de um polinômio de grau n, cujos coeficientes dependem das derivadas em algum ponto fixo x<sub>0</sub>.</p>
+<p>Por isso, normalmente assumimos que essas funções retornam valores aproximados de funções contínuas com derivadas contínuas e que a ordem de grandeza dessas derivadas não varia muito. Essas funções são bem aproximadas pela série de Taylor, que fornece uma aproximação por um polinômio de grau n cujos coeficientes dependem das derivadas em algum ponto fixo x<sub>0</sub>.</p>
 
 <blockquote class="formula">
 $f(x)=f(x_0)+f'(x_0)(x-x_0)$ $\displaystyle{+~\frac{f''(x_0)}{2!}\left(x-x_0\right)^2}$ $\displaystyle{+~\frac{f'''(x_0)}{3!}\left(x-x_0\right)^3}$ $\displaystyle{+~\ldots+\frac{f^{(n)}(x_0)}{n!}\left(x-x_0\right)^n+R_n}.$
 </blockquote>
 
-<p>O resto R<sub>n</sub> depende da derivada de ordem n+1 em algum ponto ξ do intervalo de x<sub>0</sub> e x.</p>
+<p>O resto R<sub>n</sub> depende da derivada de ordem n+1 em algum ponto ξ do intervalo entre x<sub>0</sub> e x.</p>
 
 <blockquote class="formula">
 $\displaystyle{R_n=\frac{f^{(n+1)}(\xi)}{(n+1)!}\left(x-x_0\right)^{n+1}}.$
 </blockquote>
 
-<p>Portanto, o valor aproximado da função podemos calcular utilizando o polinômio e o erro desta aproximação podemos determinar utilizando o resto. Quando podemos provar que, para todos ξ,</p>
+<p>Portanto, podemos calcular o valor aproximado da função usando o polinômio e determinar o erro dessa aproximação por meio do resto. Quando podemos provar que, para todo ξ,</p>
 
 <blockquote class="formula">
-$\displaystyle{\frac{\left│f^{(n+1)}(\xi)\right│}{(n+1)!}\leq M,$
+$\displaystyle{\frac{\left│f^{(n+1)}(\xi)\right│}{(n+1)!}}\leq M,$
 </blockquote>
 
 <p>podemos especificar o intervalo do valor aproximado da função como</p>
@@ -68,13 +68,13 @@ $f(x)=f(x_0)+f'(x_0)(x-x_0)$&nbsp;$\displaystyle{+~\frac{f''(x_0)}{2!}\left(x-x_
 $\displaystyle{e^x=1+x+\frac{x^2}{2!}+\frac{x^3}{3!}+\ldots+\frac{x^n}{n!}\pmM|x|^{n+1}}.$
 </blockquote>
 
-<p>Para x&gt;0, 0≤ξ≤x. Como exponencial é uma função crescente, podemos concluir que</p>
+<p>Para x&gt;0, temos 0≤ξ≤x. Como a exponencial é uma função crescente, podemos concluir que</p>
 
 <blockquote class="formula">
 $\displaystyle{M=\frac{e^x}{(n+1)!}}.$
 </blockquote>
 
-<p>Então, podemos calcular a soma até o valor de n que corresponde ao erro relativo tanto pequeno quanto quisermos.</p>
+<p>Então, podemos calcular a soma até um valor de n que corresponda a um erro relativo tão pequeno quanto desejarmos.</p>
 
 <p>De modo semelhante, para x&lt;0, ξ≤0 e</p>
 
@@ -82,7 +82,7 @@ $\displaystyle{M=\frac{e^x}{(n+1)!}}.$
 $\displaystyle{M=\frac{1}{(n+1)!}}.$
 </blockquote>
 
-<p>Isso significa que podemos atingir o erro absoluto arbitrariamente pequeno. Contudo, como neste caso o valor da exponencial também é pequeno, aplicamos a fórmula de Taylor somente para x&gt;0, quando é possível atingir o erro relativo desejado com menor quantidade de cálculos. Para calcular a exponencial de um número relativo, utiliza-se a relação</p>
+<p>Isso significa que podemos atingir um erro absoluto arbitrariamente pequeno. Contudo, como nesse caso o valor da exponencial também é pequeno, aplicamos a fórmula de Taylor somente para x&gt;0, quando é possível atingir o erro relativo desejado com uma quantidade menor de cálculos. Para calcular a exponencial de um número negativo, utiliza-se a relação</p>
 
 <blockquote class="formula">
 $\displaystyle{e^{−x}=\frac{1}{e^x}}.$
@@ -93,9 +93,9 @@ $\displaystyle{e^{−x}=\frac{1}{e^x}}.$
 <textarea class="wide" name="code"  rows="14">
 var Exp=function(x){
  var ExpTaylor=function(x){
-   var r=1,sum=1,n=0
-   while(sum+r>sum)sum+=r*=x/++n
-   return sum
+  var r=1,sum=1,n=0
+  while(sum+r>sum)sum+=r*=x/++n
+  return sum
  }
 
  if(x<0) return 1/ExpTaylor(-x)
@@ -118,7 +118,7 @@ $\textrm{sen}x=x−\displaystyle{\frac{x^3}{3!}+\frac{x^5}{5!}}$ $\displaystyle{
 $\textrm{cos}x=1−\displaystyle{\frac{x^2}{2!}+\frac{x^4}{4!}}$ $\displaystyle{+~\ldots+\frac{\left(−1\right)^nx^{2n}}{(2n)!}\pm\frac{|x|^{2n+1}}{(2n+1)!}}.$
 </blockquote>
 
-<p>Para o logaritmo temos que utilizar x<sub>0</sub>=1,</p>
+<p>Para o logaritmo, utilizamos x<sub>0</sub>=1,</p>
 
 <blockquote class="formula">
 $\textrm{ln}(1+h)$&nbsp;$=\displaystyle{h−\frac{h^2}{2}+\frac{h^3}{3}+\ldots+\frac{\left(−1\right)^nh^{n+1}}{n+1}\pm\frac{|h|^{n+2}}{n+2}},$
@@ -126,7 +126,7 @@ $\textrm{ln}(1+h)$&nbsp;$=\displaystyle{h−\frac{h^2}{2}+\frac{h^3}{3}+\ldots+\
 
 <p>onde definimos h&nbsp;=&nbsp;x&nbsp;−&nbsp;x<sub>0</sub>&nbsp;=&nbsp;x&nbsp;−&nbsp;1.</p>
 
-<p>A fórmula para calcular o logaritmo se aplica somente para |h|&lt;1, isto é 0&lt;x&lt;2. Para calcular o logaritmo quando x≥2, utilizamos a igualdade:</p>
+<p>A fórmula para calcular o logaritmo aplica-se somente quando |h|&lt;1, isto é, quando 0&lt;x&lt;2. Para calcular o logaritmo quando x≥2, utilizamos a igualdade:</p>
 
 <blockquote class="formula">
 $\displaystyle{\textrm{ln}x=−\textrm{ln}\frac{1}{x}}.$
@@ -134,26 +134,26 @@ $\displaystyle{\textrm{ln}x=−\textrm{ln}\frac{1}{x}}.$
 
 <h3>Ordem de erro</h3>
 
-<p>Quando não podemos determinar o valor de M na expressão para o erro, supormos que este valor existe. Neste caso introduzimos a notação seguinte</p>
+<p>Quando não podemos determinar o valor de M na expressão do erro, supomos que esse valor existe. Nesse caso, introduzimos a seguinte notação:</p>
 
 <blockquote class="formula">
 $M h^n=\textrm{&Oscr;}(h^n).$
 </blockquote>
 
-<p>O símbolo &Oscr; significa que o fator na frente da potência de h é desconhecido. Todavia, a potência de h permite a estimativa da ordem de grandeza do erro. Por isso nós sempre desconsideramos as contribuições de ordem superior, que são desprezáveis quando h≪1,</p>
+<p>O símbolo &Oscr; significa que o fator que multiplica a potência de h é desconhecido. Todavia, a potência de h permite estimar a ordem de grandeza do erro. Por isso, desconsideramos as contribuições de ordem superior, que são desprezíveis quando h≪1,</p>
 
 <blockquote class="formula">
 $\textrm{&Oscr;}(h^n)+\textrm{&Oscr;}(h^m)=\textrm{&Oscr;}(h^{\textrm{min}(n,m)}).$
 </blockquote>
 
-<p>A notação de ordem vai simplificar a derivação de estimativas da ordem de grandeza do erro. Quando concluímos que o erro é proporcional a certa potência de um parâmetro, então, variando este parâmetro podemos fazer a conclusão sobre o erro da aproximação, por exemplo, comparando aproximações obtidas com valores diferentes do parâmetro.</p>
+<p>A notação de ordem simplifica a derivação de estimativas da ordem de grandeza do erro. Quando concluímos que o erro é proporcional a certa potência de um parâmetro, podemos variar esse parâmetro e tirar conclusões sobre o erro da aproximação, por exemplo, comparando aproximações obtidas com valores diferentes do parâmetro.</p>
 
 <h3>Resumo</h3>
 
 <ol>
-  <li>Às funções numéricas não podemos aplicar as características de limite, continuidade e diferenciabilidade.</li>
-  <li>Entretanto, supormos que uma função numérica retorna um valor aproximado de uma função contínua com derivadas contínuas da mesma ordem de grandeza.</li>
-  <li>Tais funções podem ser bem aproximadas pela fórmula de Taylor, que ainda dá uma estimativa do erro de aproximação.</li>
+  <li>Não podemos aplicar diretamente às funções numéricas os conceitos de limite, continuidade e diferenciabilidade.</li>
+  <li>Entretanto, supomos que uma função numérica retorne um valor aproximado de uma função contínua com derivadas contínuas da mesma ordem de grandeza.</li>
+  <li>Essas funções podem ser bem aproximadas pela fórmula de Taylor, que também fornece uma estimativa do erro de aproximação.</li>
 </ol>
 
 </section>
@@ -161,7 +161,7 @@ $\textrm{&Oscr;}(h^n)+\textrm{&Oscr;}(h^m)=\textrm{&Oscr;}(h^{\textrm{min}(n,m)}
 </article>
 
 <footer>
-<a href="aula06.html">Próxima aula: Cálculo de derivadas e problema com precisão.</a>
+<a href="aula06.html">Próxima aula: Cálculo numérico de derivadas e limitações de precisão.</a>
 </footer>
 
 </body>

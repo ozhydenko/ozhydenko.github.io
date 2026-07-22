@@ -148,14 +148,14 @@ $a_{ij}=\left\langle g_i,g_j\right\rangle,\qquad b_i=\left\langle y,g_i\right\ra
 $V=\textrm{span}\left\{g_1,g_2,\ldots,g_n\right\}.$
 </blockquote>
 
-<p>Se essas funções são linearmente independentes, então elas formam uma <strong>base</strong> de V. Isso significa que cada função de V pode ser escrita de modo único como combinação linear dessas funções. Nesse caso, a matriz A é simétrica e definida positiva, pois, para qualquer coluna não nula C,</p>
+<p>Se essas funções são linearmente independentes, então elas formam uma <strong>base</strong> de V. Isso significa que cada função de V pode ser escrita de modo único como combinação linear dessas funções. Nesse caso, a matriz A é simétrica e positivamente definida, pois, para qualquer coluna não nula C,</p>
 
 <blockquote class="formula">
 $C^TAC~=$ $\left\langle c_1g_1+c_2g_2+\ldots+c_ng_n,\,
 c_1g_1+c_2g_2+\ldots+c_ng_n\right\rangle&gt;0.$
 </blockquote>
 
-<p>Portanto, o sistema AC=B possui uma única solução. Se as funções geradoras são dependentes, a mesma aproximação pode ter mais de uma representação por coeficientes, e a matriz A deixa de ser inversível. Nesse caso, o problema dos quadrados mínimos não possui uma única solução.</p>
+<p>Portanto, quando as funções geradoras são linearmente independentes, o sistema AC=B possui uma única solução, e os coeficientes c<sub>1</sub>, c<sub>2</sub>, ..., c<sub>n</sub> determinam de modo único a função aproximante f. Se as funções geradoras são linearmente dependentes, a matriz A deixa de ser inversível e os coeficientes não são únicos: diferentes listas de coeficientes podem representar a mesma função f. Entretanto, o subespaço V gerado por essas funções não muda, e a melhor função aproximante em V continua sendo única. Assim, a dependência linear cria uma ambiguidade na representação da solução, mas não na função projetada. Para obter coeficientes únicos, podemos eliminar funções redundantes e escolher uma base de V.</p>
 
 <p>A linguagem de produto interno também permite reformular o problema usando a norma:</p>
 
@@ -169,7 +169,7 @@ $\left\|u\right\|\equiv\sqrt{\left\langle u,u\right\rangle}.$
 $\sigma=\left\|y−f\right\|^2,\qquad f\in V.$
 </blockquote>
 
-<p>A solução é a <strong>projeção ortogonal</strong> de y sobre o subespaço V. Isso significa que o erro y−f é ortogonal a todas as funções do subespaço V. Em particular, ele é ortogonal a cada função da base:</p>
+<p>Como V é um subespaço de dimensão finita, existe uma única função f∈V que minimiza essa norma. Essa função é a <strong>projeção ortogonal</strong> de y sobre V. Isso significa que o erro y−f é ortogonal a todas as funções do subespaço V. Em particular, ele é ortogonal a cada função geradora:</p>
 
 <blockquote class="formula">
 $\left\langle y−f,g_i\right\rangle=0,\qquad i=1,2,\ldots,n.$
@@ -436,7 +436,7 @@ $\psi_{a,b}\left(x\right)=\displaystyle{\frac{1}{\sqrt{|a|}}}\,
 </article>
 
 <footer>
-<a href="aula15.html">Próxima aula: Interpolação polinomial. Erro da interpolação e fenômeno de Runge.</a>
+<a href="aula15.html">Próxima aula: Interpolação polinomial.</a>
 </footer>
 
 </body>

@@ -136,13 +136,13 @@ $|x_{k+1}−x_k|&lt;\varepsilon.$
 
 <form>
 <div class="overwrite"><input class="right-aligned" type="button" name="execute" value="Executar" onClick="ExecuteCodeEvent(this)"></div>
-<textarea class="wide" name="code" rows="12">
+<textarea class="wide" name="code" rows="14">
 var Newton=function(f,df,x){
-var prec=0.00000001
-var phi=function(x){return x-f(x)/df(x)}
-var y=phi(x)
-while(Math.abs(y-x)>prec) y=phi(x=y)
-return y
+ var prec=0.00000001
+ var phi=function(x){return x-f(x)/df(x)}
+ var y=phi(x)
+ while(Math.abs(y-x)>prec) y=phi(x=y)
+ return y
 }
 
 var f=function(x){return Math.cos(x)-x}
@@ -179,20 +179,21 @@ $\phi\left(x\right)=x−\displaystyle{\frac{x^2−a}{2x}}=\displaystyle{\frac{x+
 
 <form>
 <div class="overwrite"><input class="right-aligned" type="button" name="execute" value="Executar" onClick="ExecuteCodeEvent(this)"></div>
-<textarea class="wide" name="code" rows="16">
+<textarea class="wide" name="code" rows="18">
 var prec=0.00000001
 var Sqrt=function(a){
-if(a<0)return NaN
-if(a==0||a==1)return a
-var x=1
-while(x*x<a)x*=2
-while(x*x>a)x/=2
-var y=(x+a/x)/2
-while(Math.abs(y-x)>prec){
-x=y
-y=(x+a/x)/2
-}
-return y
+ if(a<0)return NaN
+ if(a==0||a==1)return a
+
+ var x=1
+ while(x*x<a)x*=2
+ while(x*x>a)x/=2
+ var y=(x+a/x)/2
+ while(Math.abs(y-x)>prec){
+  x=y
+  y=(x+a/x)/2
+ }
+ return y
 }
 
 text=Sqrt(2)+"\n"+Math.sqrt(2)
@@ -204,19 +205,20 @@ text=Sqrt(2)+"\n"+Math.sqrt(2)
 
 <form>
 <div class="overwrite"><input class="right-aligned" type="button" name="execute" value="Executar" onClick="ExecuteCodeEvent(this)"></div>
-<textarea class="wide" name="code" rows="16">
+<textarea class="wide" name="code" rows="17">
 var Sqrt=function(a){
-if(a<0)return NaN
-if(a==0||a==1)return a
-var x=1
-while(x*x<a)x*=2
-while(x*x>a)x/=2
-x=(x+a/x)/2
-x=(x+a/x)/2
-x=(x+a/x)/2
-x=(x+a/x)/2
-x=(x+a/x)/2
-return x
+ if(a<0)return NaN
+ if(a==0||a==1)return a
+
+ var x=1
+ while(x*x<a)x*=2
+ while(x*x>a)x/=2
+ x=(x+a/x)/2
+ x=(x+a/x)/2
+ x=(x+a/x)/2
+ x=(x+a/x)/2
+ x=(x+a/x)/2
+ return x
 }
 
 text=Sqrt(2)+"\n"+Math.sqrt(2)

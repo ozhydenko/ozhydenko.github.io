@@ -7,6 +7,7 @@
 <title>Cálculo numérico: Números aproximados. Erro absoluto e relativo.</title>
 <link rel="stylesheet" type="text/css" href="lstyle.css" />
 <link href="https://www.ufabc.edu.br/ensino/docentes/olexandr-zhydenko" rel="author" />
+<script type="text/javascript" src="execjavascript.js"></script>
 <script type="text/javascript" src="LaTeXMathML.js"></script>
 </head>
 
@@ -27,7 +28,7 @@
 
 <h3>Números exatos</h3>
 
-<p>Todos os números reais, para os quais as operações aritméticas são bem definidas, podem ser representados graficamente no eixo real. Cada ponto do eixo corresponde precisamente a um número real; chamaremos esses números de números exatos. Um número exato é uma quantidade que pode ser expressa sem qualquer incerteza. Esses números incluem inteiros, frações racionais, decimais finitos e dízimas periódicas, bem como números irracionais, que correspondem a frações decimais infinitas e não periódicas.</p>
+<p>Todos os números reais para os quais as operações aritméticas são bem definidas podem ser representados graficamente no eixo real. Cada ponto do eixo corresponde precisamente a um número real; chamaremos esses números de números exatos. Um número exato é uma quantidade que pode ser expressa sem qualquer incerteza. Esses números incluem inteiros, frações racionais, decimais finitos e dízimas periódicas, bem como números irracionais, que correspondem a frações decimais infinitas e não periódicas.</p>
 
 <svg width="100%" height="30px">
     <line x1="10%" y1="5" x2="90%" y2="5" stroke="black" />
@@ -55,7 +56,7 @@
 
 <p>Em situações em que não é possível localizar um número em um ponto específico, mas podemos apenas afirmar que ele está em alguma faixa (ou intervalo) do eixo real, diremos que esse número é aproximado.</p>
 
-<p>Um número aproximado não corresponde a um ponto do eixo real, mas a um intervalo, que podemos identificar pelo comprimento e a posição. Assim, um número aproximado V vamos identificar pelo centro do intervalo V&#773; e a metade do comprimento do intervalo ΔV,</p>
+<p>Um número aproximado não corresponde a um ponto do eixo real, mas a um intervalo, que podemos identificar por seu comprimento e sua posição. Assim, identificaremos um número aproximado V pelo centro do intervalo V&#773; e pela metade de seu comprimento ΔV,</p>
 <blockquote class="formula">
 $V=\bar{V}\pm\Delta V.$
 </blockquote>
@@ -83,9 +84,9 @@ V = 3.21 ± 0.005.
 
 <h4>Erro relativo</h4>
 
-<p>O erro absoluto não é uma medida adequada para caracterizar a qualidade de uma aproximação ou medição, pois não leva em consideração a magnitude do valor em questão. Por exemplo, se temos duas medições, a altura de uma pessoa e a distância entre a Terra e a Lua, com erro absoluto de 1 metro, é claro que a interpretação desses erros é completamente diferente. No caso da altura de uma pessoa, um erro de 1 metro é significativo e indica que a medição é muito imprecisa. Por outro lado, para a distância entre a Terra e a Lua, que é de milhares de quilômetros, um erro de 1 metro é quase desprezível.</p>
+<p>O erro absoluto não é uma medida adequada para caracterizar a qualidade de uma aproximação ou medição, pois não leva em consideração a magnitude do valor em questão. Por exemplo, se temos duas medições, a altura de uma pessoa e a distância entre a Terra e a Lua, com erro absoluto de 1 metro, esses erros possuem significados quantitativos muito diferentes. No caso da altura de uma pessoa, um erro de 1 metro é significativo e indica que a medição é muito imprecisa. Por outro lado, para a distância entre a Terra e a Lua, que é de milhares de quilômetros, um erro de 1 metro é quase desprezível.</p>
 
-<p>A característica mais adequada de qualidade da aproximação é o erro relativo, definido como fração</p>
+<p>Uma medida mais adequada da qualidade da aproximação é o erro relativo, definido como a fração</p>
 
 <blockquote class="formula">
 $\displaystyle{\varepsilon_V=\frac{\Delta V}{|\bar{V}|}}$, que também podemos medir em por cento $\displaystyle{\varepsilon_V=\frac{\Delta V}{|\bar{V}|}\times 100%}.$
@@ -122,7 +123,7 @@ $B=\bar{B}\pm\Delta B.$
 
 <h4>Soma e diferença</h4>
 
-<p>A soma C tem seu valor máximo possível quando A e B assumirem seus valores máximos, A&#773;&nbsp;+&nbsp;ΔA e B&#773;&nbsp;+&nbsp;ΔB. O valor mínimo possível é atingido para valores mínimos de A e B, que são A&#773;&nbsp;−&nbsp;ΔA e B&#773;&nbsp;−&nbsp;ΔB.</p>
+<p>A soma C tem seu valor máximo possível quando A e B assumem seus valores máximos, A&#773;&nbsp;+&nbsp;ΔA e B&#773;&nbsp;+&nbsp;ΔB. O valor mínimo possível é atingido quando A e B assumem seus valores mínimos, A&#773;&nbsp;−&nbsp;ΔA e B&#773;&nbsp;−&nbsp;ΔB.</p>
 
 <p>Assim,</p>
 <blockquote class="formula">
@@ -133,7 +134,7 @@ $C=A+B=\bar{A}\pm\Delta A+\bar{B}\pm\Delta B$ $=(\bar{A}+\bar{B})\pm(\Delta A+\D
 $\bar{C}=\bar{A}+\bar{B}, \qquad \Delta C=\Delta A+\Delta B.$
 </blockquote>
 
-<p>De modo semelhante, quando subtraímos A e B o valor máximo obtemos quando A assume o seu máximo e B tem o valor mínimo possível. Para obter o mínimo da diferença é vice-versa.</p>
+<p>De modo semelhante, quando subtraímos B de A, o valor máximo é obtido quando A assume seu valor máximo e B assume seu valor mínimo. Para obter o valor mínimo da diferença, ocorre o contrário.</p>
 <blockquote class="formula">
 $C=A−B=\bar{A}\pm\Delta A−(\bar{B}\pm\Delta B)$ $=(\bar{A}−\bar{B})\pm(\Delta A+\Delta B),$
 </blockquote>
@@ -144,13 +145,13 @@ $\bar{C}=\bar{A}−\bar{B}, \qquad \Delta C=\Delta A+\Delta B.$
 
 <p><strong>Observação importante:</strong> Tanto na soma quanto na diferença, o erro absoluto é igual à <strong>soma</strong> dos erros absolutos de ΔA e ΔB. No resultado, o erro absoluto total cresce.</p>
 
-<p>O erro relativo pode ter crescimento ainda mais drástico quando o valor médio do resultado é menor em comparação com A&#773; e B&#773;. Isso ocorre quando subtraímos dois números positivos (ou negativos), cujos valores são próximos ou adicionamos dois números com sinais opostos. Neste caso o denominador do erro relativo pode ser relativamente pequeno</p>
+<p>O erro relativo pode crescer de modo ainda mais drástico quando o valor médio do resultado é pequeno em comparação com A&#773; e B&#773;. Isso ocorre quando subtraímos dois números positivos (ou negativos) cujos valores são próximos, ou quando adicionamos dois números com sinais opostos. Nesse caso, o denominador do erro relativo pode ser relativamente pequeno,</p>
 
 <blockquote class="formula">
-$\displaystyle{\varepsilon_C=\frac{\Delta C}{|\bar{C}|}.$
+$\varepsilon_C=\displaystyle{\frac{\Delta C}{|\bar{C}|}}.$
 </blockquote>
 
-<p>Neste caso, mesmo se $\varepsilon_A$ e $\varepsilon_B$ forem pequenos, o erro relativo $\varepsilon_C$ pode ser grande. E, no pior cenário, pode ser maior que 100%.</p>
+<p>Nesse caso, mesmo que $\varepsilon_A$ e $\varepsilon_B$ sejam pequenos, o erro relativo $\varepsilon_C$ pode ser grande e, no pior cenário, pode ultrapassar 100%.</p>
 
 <h4>Produto</h4>
 
@@ -160,9 +161,9 @@ $\displaystyle{\varepsilon_C=\frac{\Delta C}{|\bar{C}|}.$
 $C=A\times B=(\bar{A}\pm\Delta A)\times(\bar{B}\pm\Delta B),$
 </blockquote>
 
-<p>considerando o valor mínimo e máximo do resultado, podemos facilmente determinar que o centro do intervalo é diferente do produto de A&#773; e B&#773;.</p>
+<p>considerando o valor mínimo e o valor máximo do resultado, podemos determinar que o centro do intervalo é diferente do produto de A&#773; e B&#773;.</p>
 
-<p>Para simplificar estimativa do erro do resultado dos cálculos, para valor aproximado de C é normalmente utilizado o intervalo com centro em A&#773;×B&#773;. Tal intervalo é o maior do que intervalo de todos os resultados possíveis de produtos de valores do intervalo A e B, contendo o último. Isto dá fórmulas mais simples para os valores de</p>
+<p>Para simplificar a estimativa do erro do resultado dos cálculos, normalmente usamos como valor aproximado de C um intervalo com centro em A&#773;×B&#773;. Esse intervalo contém todos os resultados possíveis dos produtos de valores pertencentes aos intervalos A e B. Essa escolha fornece fórmulas mais simples para</p>
 
 <blockquote class="formula">
 $\bar{C}=\bar{A}\times\bar{B},$ $\qquad \Delta C=\Delta A\times|\bar{B}|+\Delta B\times|\bar{A}|+\Delta A\times\Delta B.$
@@ -176,7 +177,7 @@ $\varepsilon_C=\displaystyle{\frac{\Delta C}{|\bar{C}|}=\frac{\Delta A\times|\ba
 $\varepsilon_C=\varepsilon_A+\varepsilon_B+\varepsilon_A\times\varepsilon_B.$
 </blockquote>
 
-<p>Em geral, os erros relativos são pequenos. O produto dos valores pequenos é ainda menor e pode ser desprezado, então obtemos</p>
+<p>Em geral, os erros relativos são pequenos. O produto de dois valores pequenos é ainda menor e pode ser desprezado. Assim, obtemos</p>
 
 <blockquote class="formula">
 $\varepsilon_C\approx\varepsilon_A+\varepsilon_B$.
@@ -190,7 +191,7 @@ $\varepsilon_C\approx\varepsilon_A+\varepsilon_B$.
 $\displaystyle{C=\frac{A}{B}=\frac{\bar{A}\pm\Delta A}{\bar{B}\pm\Delta B}, \qquad \bar{B}\neq0\quad&amp;\quad\varepsilon_B&lt;1}.$
 </blockquote>
 
-<p>De novo, para simplificar os cálculos, o intervalo do quociente C é escolhido com centro em</p>
+<p>Novamente, para simplificar os cálculos, o intervalo do quociente C é escolhido com centro em</p>
 
 <blockquote class="formula">
 $\displaystyle{\bar{C}=\frac{\bar{A}}{\bar{B}}}.$
@@ -205,11 +206,11 @@ $\displaystyle{\varepsilon_C=\frac{\varepsilon_A+\varepsilon_B}{1−\varepsilon_
 <h3>Resumo</h3>
 
 <ol>
-  <li>Números aproximados são caracterizados por intervalos no eixo real. Boa aproximação corresponde a um pequeno intervalo (erro absoluto) onde o valor é localizado.</li>
-  <li>Erro relativo é uma característica essencial de números aproximados. Para que a aproximação seja boa, o erro relativo deve ser pequeno.</li>
-  <li>Quando erro relativo é maior que 100% a aproximação não é útil na prática.</li>
-  <li>Qualquer erro nos dados iniciais vai propagar nos cálculos e o resultado será um número aproximado.</li>
-  <li>Erro relativo pode crescer sem limites quando subtraímos dois números próximos. Temos que evitar tal tipo de operações.</li>
+  <li>Números aproximados são caracterizados por intervalos no eixo real. Uma boa aproximação corresponde a um pequeno intervalo, determinado pelo erro absoluto, no qual o valor está localizado.</li>
+  <li>O erro relativo é uma característica essencial dos números aproximados. Para que a aproximação seja boa, o erro relativo deve ser pequeno.</li>
+  <li>Quando o erro relativo é maior que 100%, a aproximação não é útil na prática.</li>
+  <li>Qualquer erro nos dados iniciais se propaga pelos cálculos, e o resultado será um número aproximado.</li>
+  <li>O erro relativo pode crescer sem limites quando subtraímos dois números próximos. Devemos evitar esse tipo de operação.</li>
 </ol>
 
 </section>

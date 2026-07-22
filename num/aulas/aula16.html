@@ -205,7 +205,7 @@ $b_0=0,\qquad b_n=0.$
 
 <p>Considerando essas condições, o sistema pode ser escrito como</p>
 
-<blockquote class="formula">
+<blockquote class="formula responsive-table">
 $\left(\begin{array}{ccccc}
 2\left(h_0+h_1\right) & h_1 & 0 & \ldots & 0\\
 h_1 & 2\left(h_1+h_2\right) & h_2 & \ddots & \vdots\\
@@ -215,14 +215,13 @@ h_1 & 2\left(h_1+h_2\right) & h_2 & \ddots & \vdots\\
 \end{array}\right)
 \left(\begin{array}{c}
 b_1\\b_2\\b_3\\\vdots\\b_{n−1}
-\end{array}\right)
-=
+\end{array}\right)$ $=~
 \left(\begin{array}{c}
 r_1\\r_2\\r_3\\\vdots\\r_{n−1}
 \end{array}\right).$
 </blockquote>
 
-<p>A matriz dos coeficientes desse sistema é simétrica, positiva definida e tridiagonal. Portanto, não é necessário aplicar um método geral de eliminação de Gauss, que teria complexidade 𝒪(n<sup>3</sup>). O <strong>método de Thomas</strong>, que é uma eliminação de Gauss adaptada a matrizes tridiagonais, resolve o sistema em 𝒪(n) operações e pode usar apenas 𝒪(n) posições de memória. Como os elementos h<sub>i</sub> são positivos, a matriz possui dominância diagonal estrita, e o método pode ser aplicado sem pivotamento.</p>
+<p>A matriz dos coeficientes desse sistema é simétrica, positivamente definida e tridiagonal. Portanto, não é necessário aplicar um método geral de eliminação de Gauss, que teria complexidade 𝒪(n<sup>3</sup>). O <strong>método de Thomas</strong>, que é uma eliminação de Gauss adaptada a matrizes tridiagonais, resolve o sistema em 𝒪(n) operações e pode usar apenas 𝒪(n) posições de memória. Como os elementos h<sub>i</sub> são positivos, a matriz possui dominância diagonal estrita, e o método pode ser aplicado sem pivotamento.</p>
 
 <p>Depois de resolver o sistema para b<sub>1</sub>,b<sub>2</sub>,...,b<sub>n−1</sub>, completamos a lista com b<sub>0</sub>=b<sub>n</sub>=0 e calculamos os demais coeficientes de cada subintervalo:</p>
 
@@ -436,7 +435,7 @@ $\displaystyle{\int_{x_0}^{x_n}s\prime\prime\prime\left(x\right)^2dx}.$
 </article>
 
 <footer>
-<a href="aula17.html">Próxima aula: Integração numérica: métodos de Newton-Cotes.</a>
+<a href="aula17.html">Próxima aula: Integração numérica.</a>
 </footer>
 
 </body>

@@ -140,7 +140,7 @@ $G^TGC=G^TY.$
 $C=\left(G^TG\right)^{−1}G^TY.$
 </blockquote>
 
-<p>Assim como nas aulas anteriores, essa fórmula com a matriz inversa é principalmente uma expressão formal. Na prática, normalmente resolvemos o sistema linear G<sup>T</sup>GC=G<sup>T</sup>Y. A matriz principal desse sistema é simétrica e definida positiva quando as colunas de G são linearmente independentes. Por isso, é possível aplicar a <a href="aula11.html">decomposição de Cholesky</a>. Uma vantagem desse método é que ele também verifica se as funções foram escolhidas de modo adequado: se a decomposição falhar, as colunas de G não são linearmente independentes e o problema não está bem formulado.</p>
+<p>Assim como nas aulas anteriores, essa fórmula com a matriz inversa é principalmente uma expressão formal. Na prática, normalmente resolvemos o sistema linear G<sup>T</sup>GC=G<sup>T</sup>Y. A matriz principal desse sistema é simétrica e positivamente definida quando as colunas de G são linearmente independentes. Por isso, é possível aplicar a <a href="aula11.html">decomposição de Cholesky</a>. Uma vantagem desse método é que ele também verifica se as funções foram escolhidas de modo adequado: se a decomposição falhar, as colunas de G não são linearmente independentes e o problema não está bem formulado.</p>
 
 <p>No exemplo abaixo, ajustamos uma reta aos pontos (0,1), (1,2) e (2,2), usando as funções g<sub>1</sub>(x)=1 e g<sub>2</sub>(x)=x.</p>
 
@@ -313,7 +313,7 @@ var SolveMin=function(G,Y){
 }
 </textarea>
 <textarea class="wide" name="code" rows="18">
-var Ajuste=function(X,Y,funcs){
+var Funccoef=function(X,Y,funcs){
  var G=[]
  for(var i=0;i<X.length;++i){
   G[i]=[]
@@ -329,7 +329,7 @@ for(var i=0;i<500;++i){
  X[i]=0.01*i
  Y[i]=f(X[i])
 }
-text=Ajuste(X,Y,[Math.sin,Math.cos,Math.exp]).join("\n")
+text=Funccoef(X,Y,[Math.sin,Math.cos,Math.exp]).join("\n")
 </textarea>
 <textarea class="wide" name="destination" readonly rows="4"></textarea>
 </form>
@@ -548,7 +548,7 @@ $\ln f=\ln c_1+c_2x.$
 </article>
 
 <footer>
-<a href="aula14.html">Próxima aula: Método dos quadrados mínimos: caso contínuo.</a>
+<a href="aula14.html">Próxima aula: Caso contínuo do método dos quadrados mínimos.</a>
 </footer>
 
 </body>
