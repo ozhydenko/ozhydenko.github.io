@@ -39,13 +39,13 @@
 <p>Por isso, normalmente assumimos que essas funções retornam valores aproximados de funções contínuas com derivadas contínuas e que a ordem de grandeza dessas derivadas não varia muito. Essas funções são bem aproximadas pela série de Taylor, que fornece uma aproximação por um polinômio de grau n cujos coeficientes dependem das derivadas em algum ponto fixo x<sub>0</sub>.</p>
 
 <blockquote class="formula">
-$f(x)=f(x_0)+f'(x_0)(x-x_0)$ $\displaystyle{+~\frac{f''(x_0)}{2!}\left(x-x_0\right)^2}$ $\displaystyle{+~\frac{f'''(x_0)}{3!}\left(x-x_0\right)^3}$ $\displaystyle{+~\ldots+\frac{f^{(n)}(x_0)}{n!}\left(x-x_0\right)^n+R_n}.$
+$f(x)=f(x_0)+f\prime(x_0)(x−x_0)$ $\displaystyle{+~\frac{f\prime\prime(x_0)}{2!}\left(x−x_0\right)^2}$ $\displaystyle{+~\frac{f\prime\prime\prime(x_0)}{3!}\left(x−x_0\right)^3}$ $\displaystyle{+~\ldots+\frac{f^{(n)}(x_0)}{n!}\left(x−x_0\right)^n+R_n}.$
 </blockquote>
 
 <p>O resto R<sub>n</sub> depende da derivada de ordem n+1 em algum ponto ξ do intervalo entre x<sub>0</sub> e x.</p>
 
 <blockquote class="formula">
-$\displaystyle{R_n=\frac{f^{(n+1)}(\xi)}{(n+1)!}\left(x-x_0\right)^{n+1}}.$
+$\displaystyle{R_n=\frac{f^{(n+1)}(\xi)}{(n+1)!}\left(x−x_0\right)^{n+1}}.$
 </blockquote>
 
 <p>Portanto, podemos calcular o valor aproximado da função usando o polinômio e determinar o erro dessa aproximação por meio do resto. Quando podemos provar que, para todo ξ,</p>
@@ -57,7 +57,7 @@ $\displaystyle{\frac{\left│f^{(n+1)}(\xi)\right│}{(n+1)!}}\leq M,$
 <p>podemos especificar o intervalo do valor aproximado da função como</p>
 
 <blockquote class="formula">
-$f(x)=f(x_0)+f'(x_0)(x-x_0)$&nbsp;$\displaystyle{+~\frac{f''(x_0)}{2!}\left(x-x_0\right)^2}$ $\displaystyle{+~\frac{f'''(x_0)}{3!}\left(x-x_0\right)^3}$ $\displaystyle{+~\ldots+\frac{f^{(n)}(x_0)}{n!}\left(x-x_0\right)^n}\pmM|x-x_0|^{n+1}.$
+$f(x)=f(x_0)+f\prime(x_0)(x−x_0)$&nbsp;$\displaystyle{+~\frac{f\prime\prime(x_0)}{2!}\left(x−x_0\right)^2}$ $\displaystyle{+~\frac{f\prime\prime\prime(x_0)}{3!}\left(x−x_0\right)^3}$ $\displaystyle{+~\ldots+\frac{f^{(n)}(x_0)}{n!}\left(x−x_0\right)^n}\pmM|x−x_0|^{n+1}.$
 </blockquote>
 
 <h3>Exemplos de utilização</h3>
